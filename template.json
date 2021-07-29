@@ -1,0 +1,44 @@
+{
+    "Actor": {
+
+    },
+    "Item": {
+        "types": [
+            "weapon",
+            "armor",
+            "effectItem",
+            "genericItem"
+        ],
+        "templates": {
+            "itemDescription": {
+                "description": "This is an item description."
+            }
+        },
+        "weapon": {
+            "templates": ["itemDescription"],
+            "attackWith": "meleeweapon",
+            "slashDamage": 0,
+            "pierceDamage": 0,
+            "bluntDamage": 0,
+            "energyDamage": 0,
+            "shockDamage": 0,
+            "reach": 0,
+            "blockValue": 0
+        },
+        "armor": {
+            "templates": ["itemDescription"],
+            "coverage": 0,
+            "slashProtection": 0,
+            "pierceProtection": 0,
+            "bluntProtection": 0,
+            "energyProtection": 0,
+            "shockProtection": 0
+        },
+        "effectItem": {
+            "templates": ["itemDescription"]
+        },
+        "genericItem": {
+            "templates": ["itemDescription"]
+        }
+    }
+}

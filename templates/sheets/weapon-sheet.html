@@ -1,0 +1,59 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <header class="sheet-header">
+        <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64" />
+        <h1><input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'Name' }}" /></h1>
+    </header>
+    <div class="sheet-content">
+        <table>
+            <tr>
+                <th>{{localize "cd10.weapon.attackWith"}}</th>
+                <th>{{localize "cd10.weapon.slashDamage"}}</th>
+                <th>{{localize "cd10.weapon.pierceDamage"}}</th>
+                <th>{{localize "cd10.weapon.bluntDamage"}}</th>
+                <th>{{localize "cd10.weapon.energyDamage"}}</th>
+                <th>{{localize "cd10.weapon.shockDamage"}}</th>
+                <th>{{localize "cd10.weapon.reach"}}</th>
+                <th>{{localize "cd10.weapon.blockValue"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <select name="data.attackWith">
+                        {{#select data.data.attackWith}}
+                            {{#each config.combatSkills as |name type|}}
+                                <option value="{{type}}">{{localize name}}</option>
+                            {{/each}}
+                        {{/select}}
+                    </select>
+                </td>
+                <td>
+                    <input name="data.slashDamage" type="text" value="{{data.data.slashDamage}}" data-dtype=" Number" />
+                </td>
+                <td>
+                    <input name="data.pierceDamage" type="text" value="{{data.data.pierceDamage}}" data-dtype=" Number" />
+                </td>
+                <td>
+                    <input name="data.bluntDamage" type="text" value="{{data.data.bluntDamage}}" data-dtype="Number" />
+                </td>
+                <td>
+                    <input name="data.energyDamage" type="text" value="{{data.data.energyDamage}}" data-dtype="Number" />
+                </td>
+                <td>
+                    <input name="data.shockDamage" type="text" value="{{data.data.shockDamage}}" data-dtype="Number" />
+                </td>
+                <td>
+                    <select name="data.reach">
+                        {{#select data.data.reach}}
+                            {{#each config.reach as |name type|}}
+                                <option value="{{type}}">{{localize name}}</option>
+                            {{/each}}
+                        {{/select}}
+                    </select>
+                </td>
+                <td>
+                    <input name="data.blockValue" type="text" value="{{data.data.blockValue}}" data-dtype="Number" />
+                </td>
+            </tr>
+        </table>
+        {{editor content=data.data.description target="data.description" button=true owner=owner editable=editable}}
+    </div>
+</form>

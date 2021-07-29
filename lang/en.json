@@ -1,0 +1,55 @@
+{
+    "cd10": {
+        "attack": {
+            "none": "None",
+            "archery": "Archery",
+            "assaultRifles": "Assault Rifles",
+            "balanced1HWeapons": "Balanced One-Handed Weapons",
+            "bastardWeapons": "Bastard Weapons",
+            "brawl": "Brawl",
+            "crossbow": "Crossbow",
+            "duelWeapons": "Duel Weapons",
+            "handguns": "Handguns",
+            "heavyEnergyWeapons": "Heavy Energy Weapons",
+            "heavy1HWeapons": "Heavy One-handed Weapons",
+            "heavyPolearms": "Heavy Polearms",
+            "heavyWeapons": "Heavy Weapons",
+            "lightEnergyWeapons": "Light Energy Weapons",
+            "lightPolearms": "Light Polearms",
+            "meleeWeapons": "Melee Weapons",
+            "OneHandWeaponsShield": "One-handed Weapons And Shield",
+            "polearmShield": "Polearm and Shield"
+        },
+        "weapon": {
+            "attackWith": "Skill:",
+            "slashDamage": "Slash",
+            "pierceDamage": "Pierce",
+            "bluntDamage": "Blunt",
+            "energyDamage": "Energy",
+            "shockDamage": "Shock",
+            "reach": "Reach",
+            "blockValue": "Block"
+        },
+        "armor": {
+            "coverage": "Coverage",
+            "slashProtection": "Slash",
+            "pierceProtection": "Pierce",
+            "bluntProtection": "Blunt",
+            "energyProtection": "Energy",
+            "shockProtection": "Shock"
+        },
+        "effectItem": {
+
+        },
+        "genericItem": {
+
+        },
+        "reach": {
+            "grappling": "Grappling",
+            "close": "Close",
+            "normal": "Normal",
+            "long": "Long",
+            "vlong": "Very Long"
+        }
+    }
+}
