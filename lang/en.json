@@ -50,6 +50,14 @@
             "normal": "Normal",
             "long": "Long",
             "vlong": "Very Long"
+        },
+        "injuries": {
+            "shock": "Shock",
+            "stress": "Stress",
+            "blight": "Blight",
+            "linjury": "Light Injury",
+            "sinjury": "Serious Injury",
+            "finjury": "Fatal Injury"
         }
     }
 }

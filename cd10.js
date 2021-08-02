@@ -3,6 +3,7 @@ import {
 } from "./module/config.js";
 
 import CD10ItemSheet from "./module/sheets/CD10ItemSheet.js";
+import CD10HeroSheet from "./module/sheets/CD10HeroSheet.js";
 
 Hooks.once("init", function() {
     console.log("CD10 | Initialising CD10 RPG System");
@@ -11,6 +12,11 @@ Hooks.once("init", function() {
 
     Items.unregisterSheet("core", ItemSheet);
     Items.registerSheet("cd10", CD10ItemSheet, {
+        makeDefault: true
+    });
+
+    Actors.unregisterSheet("core", ActorSheet);
+    Actors.registerSheet("cd10", CD10HeroSheet, {
         makeDefault: true
     });
 });

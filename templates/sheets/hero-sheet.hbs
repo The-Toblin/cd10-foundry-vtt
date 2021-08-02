@@ -1,0 +1,58 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <header class="sheet-header">
+        <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="64" width="64" />
+        <h1><input name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'Name' }}" /></h1>
+    </header>
+    <div class="sheet-content">
+        <div class="statblock">
+            <div class="stattitle">
+                {{localize "cd10.injuries.shock"}}:
+            </div>
+            <div class="statvalue" data-edit="data.shock" contenteditable>
+                {{data.data.shock}}
+            </div>
+        </div>
+        <div class="statblock">
+            <div class="stattitle">
+                {{localize "cd10.injuries.stress"}}:
+            </div>
+            <div class="statvalue" data-edit="data.stress" contenteditable>
+                {{data.data.stress}}
+            </div>
+        </div>
+        <div class="statblock">
+            <div class="stattitle">
+                {{localize "cd10.injuries.blight"}}:
+            </div>
+            <div class="statvalue" data-edit="data.blight" contenteditable>
+                {{data.data.blight}}
+            </div>
+        </div>
+        <div class="statblock">
+            <div class="stattitle">
+                {{localize "cd10.injuries.linjury"}}:
+            </div>
+            <div class="statvalue" data-edit="data.linjury" contenteditable>
+                {{data.data.linjury}}
+            </div>
+        </div>
+        <div class="statblock">
+            <div class="stattitle">
+                {{localize "cd10.injuries.sinjury"}}:
+            </div>
+            <div class="statvalue" data-edit="data.sinjury" contenteditable>
+                {{data.data.sinjury}}
+            </div>
+        </div>
+        <div class="statblock">
+            <div class="stattitle">
+                {{localize "cd10.injuries.finjury"}}:
+            </div>
+            <div class="statvalue" data-edit="data.finjury" contenteditable>
+                {{data.data.finjury}}
+            </div>
+        </div>
+        <h1>Description</h1>
+        {{editor content=data.data.description target="data.description" button=true owner=owner editable=editable}}
+    </div>
+</form>

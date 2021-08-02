@@ -1,6 +1,62 @@
 {
     "Actor": {
-
+        "types": [
+            "hero",
+            "nemesis",
+            "fodder"
+        ],
+        "templates": {
+            "commonStats": {
+                "name": "",
+                "shock": {
+                    "value": 0,
+                    "max": 15
+                },
+                "stress": {
+                    "value": 0,
+                    "max": 15
+                },
+                "blight": {
+                    "value": 0,
+                    "max": 15
+                },
+                "linjury": {
+                    "value": 0,
+                    "max": 15
+                },
+                "sinjury": {
+                    "value": 0,
+                    "max": 5
+                },
+                "finjury": {
+                    "value": 0,
+                    "max": 5
+                },
+                "description": ""
+            },
+            "monster": {
+                "naturalAttack": "",
+                "slashDamage": 0,
+                "pierceDamage": 0,
+                "bluntDamage": 0,
+                "energyDamage": 0,
+                "slashProtection": 0,
+                "pierceProtection": 0,
+                "bluntProtection": 0,
+                "energyProtection": 0
+            }
+        },
+        "hero": {
+            "templates": [
+                "commonStats"
+            ],
+            "playerName": "",
+            "heroTitle": "",
+            "heroSpecies": "",
+            "heroAge": "",
+            "heroMainhand": "Right",
+            "heroExperiencePoints": 0
+        }
     },
     "Item": {
         "types": [
@@ -40,5 +96,25 @@
         "genericItem": {
             "templates": ["itemDescription"]
         }
+    },
+    "Skill": {
+        "name": "",
+        "description": "",
+        "value": {
+            "max": 12,
+            "min": 0
+        }
+    },
+    "Trait": {
+        "name": "",
+        "description": "",
+        "value": {
+            "max": 4,
+            "min": -4
+        }
+    },
+    "Ability": {
+        "name": "",
+        "description": ""
     }
 }
