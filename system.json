@@ -22,7 +22,7 @@
     }],
     "gridDistance": 1,
     "gridUnits": "m",
-    "primaryTokenAttribute": "shock",
-    "secondaryTokenAttribute": "wounds",
+    "primaryTokenAttribute": "wounds",
+    "secondaryTokenAttribute": "shock",
     "initiative": "@combatskill"
 }

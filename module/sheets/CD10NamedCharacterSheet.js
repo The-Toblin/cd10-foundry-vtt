@@ -1,19 +1,19 @@
-export default class CD10HeroSheet extends ActorSheet {
+export default class CD10NamedCharacterSheet extends ActorSheet {
 
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            template: "systems/CD10/templates/sheets/hero-sheet.hbs",
-            classes: ["cd10", "sheet", "hero"]
+            template: "systems/CD10/templates/sheets/namedCharacter-sheet.hbs",
+            classes: ["cd10", "sheet", "namedCharacter"]
         });
     }
 
     get template() {
-        return `systems/cd10/templates/sheets/hero-sheet.hbs`;
+        return `systems/cd10/templates/sheets/namedCharacter-sheet.hbs`;
     }
 
     getData() {
-        const data = super.getData();
-        data.config = CONFIG.cd10;
+        const sheetData = super.getData();
+        sheetData.config = CONFIG.cd10;
         /*
         data.skills = data.skills.filter(function(skill) {
             return skill.name == "skill"
@@ -25,6 +25,6 @@ export default class CD10HeroSheet extends ActorSheet {
             return ability.name == "ability"
         }); 
         */
-        return data;
+        return sheetData;
     }
 }

@@ -1,49 +1,24 @@
-/* Item Sheet */
 .cd10.sheet.item form {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
-
 .cd10.sheet.item .sheet-content {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
-
 .cd10.sheet.item .sheet-content .editor {
-    height: 100%;
+  height: 100%;
 }
-
-/* Hero Sheet */
-.cd10.sheet.hero form {
-    display: flex;
-    flex-direction: column;
+.cd10.sheet.namedCharacter form {
+  display: flex;
+  flex-direction: column;
 }
-
-.cd10.sheet.hero .sheet-content {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+.cd10.sheet.namedCharacter .sheet-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
-
-.cd10.sheet.hero .sheet-content .editor {
-    height: 100%;
-}
-
-.cd10.sheet.hero .sheet-content .statblock {
-    display: flex;
-}
-
-.statblock>div {
-    margin: 5px;
-    padding: 5px;
-}
-
-.cd10.sheet.hero .sheet-content .stattitle {
-    font-size: 1.2em;
-}
-
-.cd10.sheet.hero .sheet-content .statvalue {
-    font-size: 1.2em;
-    font-weight: bold;
+.cd10.sheet.namedCharacter .sheet-content .editor {
+  height: 100%;
 }

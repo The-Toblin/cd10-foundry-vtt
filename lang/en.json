@@ -3,22 +3,19 @@
         "attack": {
             "none": "None",
             "archery": "Archery",
-            "assaultRifles": "Assault Rifles",
-            "balanced1HWeapons": "Balanced One-Handed Weapons",
-            "bastardWeapons": "Bastard Weapons",
             "brawl": "Brawl",
             "crossbow": "Crossbow",
-            "duelWeapons": "Duel Weapons",
+            "energyWeapons": "Energy Weapons",
             "handguns": "Handguns",
-            "heavyEnergyWeapons": "Heavy Energy Weapons",
-            "heavy1HWeapons": "Heavy One-handed Weapons",
-            "heavyPolearms": "Heavy Polearms",
             "heavyWeapons": "Heavy Weapons",
-            "lightEnergyWeapons": "Light Energy Weapons",
-            "lightPolearms": "Light Polearms",
-            "meleeWeapons": "Melee Weapons",
-            "OneHandWeaponsShield": "One-handed Weapons And Shield",
-            "polearmShield": "Polearm and Shield"
+            "oneHandedWeapons": "One handed weapons",
+            "oneHandWeaponsShield": "One-handed Weapons And Shield",
+            "polearms": "Polearms",
+            "polearmShield": "Polearm and Shield",
+            "rifles": "Rifles",
+            "sling": "Sling",
+            "throwing": "Throwing",
+            "twoHandedWeapons": "Two-handed weapons"
         },
         "weapon": {
             "attackWith": "Skill:",
@@ -53,11 +50,7 @@
         },
         "injuries": {
             "shock": "Shock",
-            "stress": "Stress",
-            "blight": "Blight",
-            "linjury": "Light Injury",
-            "sinjury": "Serious Injury",
-            "finjury": "Fatal Injury"
+            "wounds": "Wounds"
         }
     }
 }

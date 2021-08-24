@@ -3,8 +3,15 @@ import {
 } from "./module/config.js";
 
 import CD10ItemSheet from "./module/sheets/CD10ItemSheet.js";
-import CD10HeroSheet from "./module/sheets/CD10HeroSheet.js";
+import CD10NamedCharacterSheet from "./module/sheets/CD10NamedCharacterSheet.js";
 
+async function preloadHandlebarsTemplates() {
+    const templatePaths = [
+
+    ];
+
+    return loadTemplates(templatePaths);
+}
 Hooks.once("init", function() {
     console.log("CD10 | Initialising CD10 RPG System");
 
@@ -16,7 +23,9 @@ Hooks.once("init", function() {
     });
 
     Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("cd10", CD10HeroSheet, {
+    Actors.registerSheet("cd10", CD10NamedCharacterSheet, {
         makeDefault: true
     });
+
+    preloadHandlebarsTemplates();
 });

@@ -3,7 +3,8 @@
         "types": [
             "hero",
             "nemesis",
-            "fodder"
+            "fodder",
+            "monster"
         ],
         "templates": {
             "commonStats": {
@@ -12,50 +13,60 @@
                     "value": 0,
                     "max": 15
                 },
-                "stress": {
+                "wounds": {
                     "value": 0,
                     "max": 15
                 },
-                "blight": {
-                    "value": 0,
-                    "max": 15
+                "attackPrimary": {
+                    "name": "",
+                    "value": 4
                 },
-                "linjury": {
-                    "value": 0,
-                    "max": 15
+                "defensePrimary": {
+                    "name": "",
+                    "value": 2
                 },
-                "sinjury": {
-                    "value": 0,
-                    "max": 5
-                },
-                "finjury": {
-                    "value": 0,
-                    "max": 5
-                },
-                "description": ""
+                "description": "This is a description."
             },
-            "monster": {
-                "naturalAttack": "",
-                "slashDamage": 0,
-                "pierceDamage": 0,
-                "bluntDamage": 0,
-                "energyDamage": 0,
-                "slashProtection": 0,
-                "pierceProtection": 0,
-                "bluntProtection": 0,
-                "energyProtection": 0
+            "namedCharacter": {
+                "templates": [
+                    "commonStats"
+                ],
+                "namedTitle": "",
+                "namedSpecies": "",
+                "namedAge": "",
+                "namedMainhand": "Right",
+                "attackSecondary": {
+                    "name": "",
+                    "value": 0
+                },
+                "defenseSecondary": {
+                    "name": "",
+                    "value": 0
+                }
             }
         },
         "hero": {
             "templates": [
-                "commonStats"
+                "commonstats",
+                "namedCharacter"
             ],
-            "playerName": "",
-            "heroTitle": "",
-            "heroSpecies": "",
-            "heroAge": "",
-            "heroMainhand": "Right",
-            "heroExperiencePoints": 0
+            "heroEXP": 0
+        },
+        "nemesis": {
+            "templates": [
+                "commonStats",
+                "namedCharacter"
+            ]
+        },
+        "fodder": {
+            "templates": [
+                "commonStats"
+            ]
+        },
+        "monster": {
+            "templates": [
+                "commonStats"
+            ]
         }
     },
     "Item": {
@@ -72,7 +83,7 @@
         },
         "weapon": {
             "templates": ["itemDescription"],
-            "attackWith": "meleeweapon",
+            "attackWith": "",
             "slashDamage": 0,
             "pierceDamage": 0,
             "bluntDamage": 0,
