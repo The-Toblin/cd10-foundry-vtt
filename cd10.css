@@ -14,11 +14,63 @@
   display: flex;
   flex-direction: column;
 }
+.cd10.sheet.namedCharacter .actor-image {
+  max-width: 160px;
+}
 .cd10.sheet.namedCharacter .sheet-content {
   height: 100%;
   display: flex;
   flex-direction: column;
+  margin: 5px;
 }
 .cd10.sheet.namedCharacter .sheet-content .editor {
   height: 100%;
+}
+.cd10.sheet.namedCharacter .character-description-box {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+}
+.cd10.sheet.namedCharacter .character-description-box .editor {
+  height: 100%;
+}
+.cd10.sheet.namedCharacter .character-description-box .experiencebox {
+  display: inline-flex;
+}
+.cd10.sheet.namedCharacter .character-description-box .tablebox th {
+  text-align: left;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.cd10.sheet.namedCharacter .statelement {
+  margin-bottom: 10px;
+}
+.cd10.sheet.namedCharacter .sheet-text {
+  background: none;
+  text-align: left;
+  padding: 5px;
+  margin-bottom: 2px;
+}
+.cd10.sheet.namedCharacter .stats-and-weapons {
+  margin: 5px;
+}
+.cd10.sheet.namedCharacter .topsheet {
+  display: flex;
+  flex-direction: row;
+}
+.cd10.sheet.namedCharacter .sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cd10.sheet.namedCharacter h1,
+.cd10.sheet.namedCharacter h3,
+.cd10.sheet.namedCharacter .statvalue {
+  text-align: center;
+}
+.cd10.sheet.namedCharacter input {
+  border: none;
+  margin-bottom: 0.25em;
+  text-align: center;
 }

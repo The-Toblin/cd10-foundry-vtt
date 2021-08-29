@@ -1,26 +1,18 @@
 <form class="{{cssClass}}" autocomplete="off">
-    <header class="sheet-header">
-        <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="64" width="64" />
-        <h1><input name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'Name' }}" /></h1>
-    </header>
-    <div class="sheet-content">
-        <div class="statblock">
-            <div class="stattitle">
-                {{localize "cd10.injuries.shock"}}:
-            </div>
-            <div class="statvalue" data-edit="data.shock" contenteditable>
-                {{data.data.shock}}
+    <div class="topsheet">
+        <div>
+            <header class="sheet-header">
+                <h1>
+                    <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "cd10.stats.name"}}" />
+                </h1>
+            </header>
+            {{> "systems/cd10/templates/partials/character-description-block.hbs"}}
+        </div>
+        <div class="sidebar">
+            <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" class="actor-image" />
+            <div class="stats-and-weapons">
+                {{> "systems/cd10/templates/partials/character-stat-block.hbs"}}
             </div>
         </div>
-        <div class="statblock">
-            <div class="stattitle">
-                {{localize "cd10.injuries.wounds"}}:
-            </div>
-            <div class="statvalue" data-edit="data.wounds" contenteditable>
-                {{data.data.wounds}}
-            </div>
-        </div>
-        <h1>Description</h1>
-        {{editor content=data.data.description target="data.description" button=true owner=owner editable=editable}}
     </div>
 </form>

@@ -1,14 +1,80 @@
 .cd10.sheet.namedCharacter {
-    form {
-        display:flex;
-        flex-direction:column;
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .actor-image {
+    max-width: 160px;
+  }
+
+  .sheet-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+
+    .editor {
+      height: 100%;
     }
-    .sheet-content {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        .editor {
-            height: 100%;
-        }
+  }
+
+  .character-description-box {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+
+    .editor {
+      height: 100%;
     }
+    .experiencebox {
+      display: inline-flex;
+    }
+    .tablebox {
+      th {
+        text-align: left;
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+    }
+  }
+
+  .statelement {
+    margin-bottom: 10px;
+  }
+
+  .sheet-text {
+    background: none;
+    text-align: left;
+    padding: 5px;
+    margin-bottom: 2px;
+  }
+
+  .stats-and-weapons {
+    margin: 5px;
+  }
+
+  .topsheet {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1,
+  h3,
+  .statvalue {
+    text-align: center;
+  }
+
+  input {
+    border: none;
+    margin-bottom: 0.25em;
+    text-align: center;
+  }
 }

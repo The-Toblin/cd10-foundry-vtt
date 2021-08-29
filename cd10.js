@@ -7,6 +7,9 @@ import CD10NamedCharacterSheet from "./module/sheets/CD10NamedCharacterSheet.js"
 
 async function preloadHandlebarsTemplates() {
     const templatePaths = [
+        "systems/cd10/templates/partials/character-stat-block.hbs",
+        "systems/cd10/templates/partials/character-description-block.hbs",
+        "systems/cd10/templates/partials/weapon-card.hbs",
 
     ];
 

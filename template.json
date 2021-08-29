@@ -28,13 +28,15 @@
                 "description": "This is a description."
             },
             "namedCharacter": {
-                "templates": [
-                    "commonStats"
-                ],
-                "namedTitle": "",
-                "namedSpecies": "",
-                "namedAge": "",
-                "namedMainhand": "Right",
+                "title": "",
+                "species": "",
+                "age": "",
+                "sex": "",
+                "gender": "",
+                "mainHand": "Right",
+                "appearance": "",
+                "personality": "",
+                "goal": "",
                 "attackSecondary": {
                     "name": "",
                     "value": 0
@@ -47,10 +49,19 @@
         },
         "hero": {
             "templates": [
-                "commonstats",
+                "commonStats",
                 "namedCharacter"
             ],
-            "heroEXP": 0
+            "playername": "Keeper of Tales",
+            "exp": 0,
+            "birthplace": "",
+            "family": {
+                "mother": "",
+                "father": "",
+                "siblings": [
+
+                ]
+            }
         },
         "nemesis": {
             "templates": [
@@ -89,7 +100,7 @@
             "bluntDamage": 0,
             "energyDamage": 0,
             "shockDamage": 0,
-            "reach": 0,
+            "reach": "",
             "blockValue": 0
         },
         "armor": {

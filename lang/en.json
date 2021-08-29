@@ -35,12 +35,8 @@
             "energyProtection": "Energy",
             "shockProtection": "Shock"
         },
-        "effectItem": {
-
-        },
-        "genericItem": {
-
-        },
+        "effectItem": {},
+        "genericItem": {},
         "reach": {
             "grappling": "Grappling",
             "close": "Close",
@@ -50,7 +46,29 @@
         },
         "injuries": {
             "shock": "Shock",
-            "wounds": "Wounds"
+            "wounds": "Wounds",
+            "linjury": "Light Injury",
+            "sinjury": "Serious Injury",
+            "finjury": "Fatal Injury",
+            "debilitation": "Debilitation",
+            "dao": "Down and out",
+            "unconscious": "Unconscious"
+        },
+        "stats": {
+            "name": "Name",
+            "title": "Title",
+            "playername": "Player Name",
+            "species": "Species",
+            "age": "Age",
+            "mainHand": "Main Hand",
+            "exp": "Experience",
+            "sex": "Sex",
+            "gender": "Gender",
+            "appearance": "Appearance",
+            "personality": "Personality"
+        },
+        "terms": {
+            "bio": "Biography"
         }
     }
 }

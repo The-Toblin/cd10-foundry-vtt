@@ -18,7 +18,7 @@
             <tr>
                 <td>
                     <select name="data.attackWith">
-                        {{#select data.data.attackWith}}
+                        {{#select data.attackWith}}
                             {{#each config.combatSkills as |name type|}}
                                 <option value="{{type}}">{{localize name}}</option>
                             {{/each}}
@@ -26,23 +26,23 @@
                     </select>
                 </td>
                 <td>
-                    <input name="data.slashDamage" type="text" value="{{data.data.slashDamage}}" data-dtype=" Number" />
+                    <input name="data.slashDamage" type="text" value="{{data.slashDamage}}" data-dtype=" Number" />
                 </td>
                 <td>
-                    <input name="data.pierceDamage" type="text" value="{{data.data.pierceDamage}}" data-dtype=" Number" />
+                    <input name="data.pierceDamage" type="text" value="{{data.pierceDamage}}" data-dtype=" Number" />
                 </td>
                 <td>
-                    <input name="data.bluntDamage" type="text" value="{{data.data.bluntDamage}}" data-dtype="Number" />
+                    <input name="data.bluntDamage" type="text" value="{{data.bluntDamage}}" data-dtype="Number" />
                 </td>
                 <td>
-                    <input name="data.energyDamage" type="text" value="{{data.data.energyDamage}}" data-dtype="Number" />
+                    <input name="data.energyDamage" type="text" value="{{data.energyDamage}}" data-dtype="Number" />
                 </td>
                 <td>
-                    <input name="data.shockDamage" type="text" value="{{data.data.shockDamage}}" data-dtype="Number" />
+                    <input name="data.shockDamage" type="text" value="{{data.shockDamage}}" data-dtype="Number" />
                 </td>
                 <td>
                     <select name="data.reach">
-                        {{#select data.data.reach}}
+                        {{#select data.reach}}
                             {{#each config.reach as |name type|}}
                                 <option value="{{type}}">{{localize name}}</option>
                             {{/each}}
@@ -50,10 +50,10 @@
                     </select>
                 </td>
                 <td>
-                    <input name="data.blockValue" type="text" value="{{data.data.blockValue}}" data-dtype="Number" />
+                    <input name="data.blockValue" type="text" value="{{data.blockValue}}" data-dtype="Number" />
                 </td>
             </tr>
         </table>
-        {{editor content=data.data.description target="data.description" button=true owner=owner editable=editable}}
+        {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
     </div>
 </form>
