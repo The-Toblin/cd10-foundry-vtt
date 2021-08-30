@@ -22,5 +22,13 @@ cd10.reach = {
     close: "cd10.reach.close",
     normal: "cd10.reach.normal",
     long: "cd10.reach.long",
-    vlong: "cd10.reach.vlong",
+    vlong: "cd10.reach.vlong"
+}
+cd10.coverage = {
+    head: "cd10.armor.coverage.head",
+    chest: "cd10.armor.coverage.chest",
+    torso: "cd10.armor.coverage.torso",
+    torsoArms: "cd10.armor.coverage.torsoArms",
+    arms: "cd10.armor.coverage.arms",
+    legs: "cd10.armor.coverage.legs"
 }

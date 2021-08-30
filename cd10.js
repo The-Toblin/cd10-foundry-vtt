@@ -10,7 +10,7 @@ async function preloadHandlebarsTemplates() {
         "systems/cd10/templates/partials/character-stat-block.hbs",
         "systems/cd10/templates/partials/character-description-block.hbs",
         "systems/cd10/templates/partials/weapon-card.hbs",
-
+        "systems/cd10/templates/partials/armor-card.hbs"
     ];
 
     return loadTemplates(templatePaths);

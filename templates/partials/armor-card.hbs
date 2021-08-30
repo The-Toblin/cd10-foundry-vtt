@@ -1,0 +1,57 @@
+<section class="armor-card">
+    <div class="weapon-info weapon-name">
+        <p>{{name}}</p>
+    </div>
+    <div class="weapon-stats">
+        <div class="stat-name">
+            {{localize "cd10.armor.slashProtection"}}
+        </div>
+        <div class="weapon-statvalue">
+            {{data.slashProtection}}
+        </div>
+    </div>
+    <div class="weapon-stats">
+        <div class="stat-name">
+            {{localize "cd10.armor.pierceProtection"}}
+        </div>
+        <div class="weapon-statvalue">
+            {{data.pierceProtection}}
+        </div>
+    </div>
+    <div class="weapon-stats">
+        <div class="stat-name">
+            {{localize "cd10.armor.bluntProtection"}}
+        </div>
+        <div class="weapon-statvalue">
+            {{data.bluntProtection}}
+        </div>
+    </div>
+    {{#if data.energyProtection}}
+    <div class="weapon-stats">
+        <div class="stat-name">
+            {{localize "cd10.armor.energyProtection"}}
+        </div>
+    </div>
+    <div class="weapon-stats">
+        <div class="weapon-statvalue">
+            {{data.energyProtection}}
+        </div>
+    </div>
+    {{/if}}
+    <div class="weapon-stats">
+        <div class="stat-name">
+            {{localize "cd10.armor.shockProtection"}}
+        </div>
+        <div class="weapon-statvalue">
+            {{data.shockProtection}}
+        </div>
+    </div>
+    <div class="weapon-stats">
+        <div class="stat-name">
+            {{localize "cd10.terms.coverage"}}
+        </div>
+        <div class="weapon-statvalue">
+            {{data.coverage}}
+        </div>
+    </div>
+</section>

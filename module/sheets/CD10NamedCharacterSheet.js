@@ -14,7 +14,14 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     getData() {
         let sheetData = super.getData();
         sheetData.config = CONFIG.cd10;
-        sheetData.data = sheetData.data.data
+        sheetData.data = sheetData.data.data;
+        sheetData.weapons = sheetData.items.filter(function(item) {
+            return item.type == "weapon"
+        });
+        sheetData.armors = sheetData.items.filter(function(item) {
+            return item.type == "armor"
+        });
+
         /*
         data.skills = data.skills.filter(function(skill) {
             return skill.name == "skill"

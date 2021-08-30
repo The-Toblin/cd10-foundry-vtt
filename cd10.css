@@ -10,6 +10,9 @@
 .cd10.sheet.item .sheet-content .editor {
   height: 100%;
 }
+.cd10.sheet.item .sheet-content select {
+  margin-right: 2px;
+}
 .cd10.sheet.namedCharacter form {
   display: flex;
   flex-direction: column;
@@ -43,7 +46,7 @@
   padding-left: 5px;
   padding-right: 5px;
 }
-.cd10.sheet.namedCharacter .statelement {
+.cd10.sheet.namedCharacter .health-info .statelement {
   margin-bottom: 10px;
 }
 .cd10.sheet.namedCharacter .sheet-text {
@@ -62,7 +65,47 @@
 .cd10.sheet.namedCharacter .sidebar {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
+}
+.cd10.sheet.namedCharacter .sidebar .weapon-list {
+  padding: 5px;
+  margin-bottom: 10px;
+}
+.cd10.sheet.namedCharacter .sidebar .weapon-card,
+.cd10.sheet.namedCharacter .sidebar .armor-card {
+  display: flex;
+  flex-direction: column;
+}
+.cd10.sheet.namedCharacter .sidebar .weapon-card .weapon-name,
+.cd10.sheet.namedCharacter .sidebar .armor-card .weapon-name {
+  text-transform: uppercase;
+  text-align: center;
+}
+.cd10.sheet.namedCharacter .sidebar .weapon-card .weapon-stats,
+.cd10.sheet.namedCharacter .sidebar .armor-card .weapon-stats {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.cd10.sheet.namedCharacter .sidebar .weapon-card .weapon-stats .stat-name,
+.cd10.sheet.namedCharacter .sidebar .armor-card .weapon-stats .stat-name {
+  padding: 2px;
+  /*border: 1px solid black;
+          border-radius: 5px;*/
+  width: 49%;
+  text-align: left;
+  margin-bottom: 2px;
+  text-transform: capitalize;
+}
+.cd10.sheet.namedCharacter .sidebar .weapon-card .weapon-stats .weapon-statvalue,
+.cd10.sheet.namedCharacter .sidebar .armor-card .weapon-stats .weapon-statvalue {
+  padding: 2px;
+  /*border: 1px solid black;
+          border-radius: 5px;*/
+  width: 49%;
+  text-align: center;
+  margin-bottom: 2px;
+  text-transform: capitalize;
 }
 .cd10.sheet.namedCharacter h1,
 .cd10.sheet.namedCharacter h3,

@@ -1,0 +1,65 @@
+<section class="weapon-card">
+    <div class="weapon-info weapon-name">
+        <p>{{name}}</p>
+    </div>
+    <div class="weapon-stats">
+        <div class="stat-name">
+            {{localize "cd10.weapon.slashDamage"}}
+        </div>
+        <div class="weapon-statvalue">
+            {{data.slashDamage}}
+        </div>
+    </div>
+    <div class="weapon-stats">
+        <div class="stat-name">
+            {{localize "cd10.weapon.pierceDamage"}}
+        </div>
+        <div class="weapon-statvalue">
+            {{data.pierceDamage}}
+        </div>
+    </div>
+    <div class="weapon-stats">
+        <div class="stat-name">
+            {{localize "cd10.weapon.bluntDamage"}}
+        </div>
+        <div class="weapon-statvalue">
+            {{data.bluntDamage}}
+        </div>
+    </div>
+    {{#if data.energyDamage}}
+    <div class="weapon-stats">
+        <div class="stat-name">
+            {{localize "cd10.weapon.energyDamage"}}
+        </div>
+    </div>
+    <div class="weapon-stats">
+        <div class="weapon-statvalue">
+            {{data.energyDamage}}
+        </div>
+    </div>
+    {{/if}}
+    <div class="weapon-stats">
+        <div class="stat-name">
+            {{localize "cd10.weapon.shockDamage"}}
+        </div>
+        <div class="weapon-statvalue">
+            {{data.shockDamage}}
+        </div>
+    </div>
+    <div class="weapon-stats">
+        <div class="stat-name">
+            {{localize "cd10.weapon.reach"}}
+        </div>
+        <div class="weapon-statvalue">
+            {{data.reach}}
+        </div>
+    </div>
+    <div class="weapon-stats">
+        <div class="stat-name">
+            {{localize "cd10.weapon.blockValue"}}
+        </div>
+        <div class="weapon-statvalue">
+            {{data.blockValue}}
+        </div>
+    </div>
+</section>

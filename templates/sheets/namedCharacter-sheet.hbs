@@ -10,8 +10,27 @@
         </div>
         <div class="sidebar">
             <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" class="actor-image" />
-            <div class="stats-and-weapons">
+            <div class="character-stats">
+                <h1 class="sheet-header">
+                   {{localize "cd10.terms.health"}}
+                </h1>
                 {{> "systems/cd10/templates/partials/character-stat-block.hbs"}}
+            </div>
+            <h1>
+                {{localize "cd10.terms.weapons"}}
+            </h1>
+            <div class="weapon-list">
+                {{#each weapons as |weapon id|}}
+                {{> "systems/cd10/templates/partials/weapon-card.hbs" weapon}}
+                {{/each}}
+            </div>
+            <h1>
+                {{localize "cd10.terms.armor"}}
+            </h1>
+            <div class="armor-list">
+                {{#each armors as |armor id|}}
+                {{> "systems/cd10/templates/partials/armor-card.hbs" armor}}
+                {{/each}}
             </div>
         </div>
     </div>

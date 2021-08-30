@@ -28,7 +28,14 @@
             "blockValue": "Block"
         },
         "armor": {
-            "coverage": "Coverage",
+            "coverage": {
+                "head": "Head",
+                "chest": "Chest",
+                "torso": "Torso",
+                "torsoArms": "Torso and arms",
+                "arms": "Arms",
+                "legs": "Legs"
+            },
             "slashProtection": "Slash",
             "pierceProtection": "Pierce",
             "bluntProtection": "Blunt",
@@ -68,7 +75,11 @@
             "personality": "Personality"
         },
         "terms": {
-            "bio": "Biography"
+            "bio": "Biography",
+            "weapons": "Weapons",
+            "armor": "Armor",
+            "health": "Health",
+            "coverage": "Coverage"
         }
     }
 }
