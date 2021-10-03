@@ -3,20 +3,54 @@
         <div>
             <header class="sheet-header">
                 <h1>
-                    <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "cd10.stats.name"}}" />
+                    <input
+                        name="name"
+                        type="text"
+                        value="{{actor.name}}"
+                        placeholder="{{localize "cd10.stats.name"}}"
+                    />
                 </h1>
             </header>
-            {{> "systems/cd10/templates/partials/character-description-block.hbs"}}
+            <div class="character-description">
+                {{> "systems/cd10/templates/partials/character-description-block.hbs"}}
+            </div>
+            <hr>
+            <div class="skill-trait-box">
+                <div class="skill-card">
+                    <h3>
+                        {{localize "cd10.stats.skills"}}
+                    </h3>
+                    {{#each skills as |skill id|}}
+                    {{> "systems/cd10/templates/partials/skill-card.hbs" skill}}
+                    {{/each}}
+                </div>
+                <div class="trait-card">
+                    <h3>
+                        {{localize "cd10.stats.traits"}}
+                    </h3>
+                    {{#each traits as |trait id|}}
+                    {{> "systems/cd10/templates/partials/trait-card.hbs" trait}}
+                    {{/each}}
+                </div>
+            </div>
+            <div class="ability-card">
+                <h3>
+                    {{localize "cd10.stats.abilities"}}
+                </h3>
+                {{#each abilities as |ability id|}}
+                {{> "systems/cd10/templates/partials/ability-card.hbs" ability}}
+                {{/each}}
+            </div>
         </div>
         <div class="sidebar">
             <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" class="actor-image" />
             <div class="character-stats">
                 <h1 class="sheet-header">
-                   {{localize "cd10.terms.health"}}
+                    {{localize "cd10.terms.health"}}
                 </h1>
                 {{> "systems/cd10/templates/partials/character-stat-block.hbs"}}
             </div>
-            <h1>
+            <h1 class="sheet-header">
                 {{localize "cd10.terms.weapons"}}
             </h1>
             <div class="weapon-list">
@@ -24,7 +58,7 @@
                 {{> "systems/cd10/templates/partials/weapon-card.hbs" weapon}}
                 {{/each}}
             </div>
-            <h1>
+            <h1 class="sheet-header">
                 {{localize "cd10.terms.armor"}}
             </h1>
             <div class="armor-list">

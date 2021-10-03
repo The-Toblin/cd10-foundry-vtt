@@ -9,6 +9,9 @@ async function preloadHandlebarsTemplates() {
     const templatePaths = [
         "systems/cd10/templates/partials/character-stat-block.hbs",
         "systems/cd10/templates/partials/character-description-block.hbs",
+        "systems/cd10/templates/partials/skill-card.hbs",
+        "systems/cd10/templates/partials/trait-card.hbs",
+        "systems/cd10/templates/partials/ability-card.hbs",
         "systems/cd10/templates/partials/weapon-card.hbs",
         "systems/cd10/templates/partials/armor-card.hbs"
     ];

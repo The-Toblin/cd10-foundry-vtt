@@ -21,18 +21,16 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         sheetData.armors = sheetData.items.filter(function(item) {
             return item.type == "armor"
         });
-
-        /*
-        data.skills = data.skills.filter(function(skill) {
-            return skill.name == "skill"
+        sheetData.skills = sheetData.items.filter(function(item) {
+            return item.type == "skill"
         });
-        data.traits = data.traits.filter(function(trait) {
-            return trait.name == "trait"
+        sheetData.traits = sheetData.items.filter(function(item) {
+            return item.type == "trait"
         });
-        data.abilities = data.abilities.filter(function(ability) {
-            return ability.name == "ability"
-        }); 
-        */
+        sheetData.abilities = sheetData.items.filter(function(item) {
+            return item.type == "ability"
+        });
+        console.log(sheetData.items)
         return sheetData;
     }
 }

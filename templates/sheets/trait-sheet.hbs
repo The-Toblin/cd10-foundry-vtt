@@ -1,0 +1,62 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <div class="headerbox">
+    <header class="sheet-header">
+      <img
+        src="{{item.img}}"
+        data-edit="img"
+        title="{{item.name}}"
+        height="64"
+        width="64"
+      />
+      <h1>
+        <input
+          name="name"
+          type="text"
+          value="{{item.name}}"
+          placeholder="{{localize "cd10.trait.trait"}}"
+        />
+      </h1>
+      {{localize "cd10.trait.type"}}
+      <input
+          name="data.type"
+          type="text"
+          value="{{data.type}}"
+          placeholder="{{localize "cd10.trait.value"}}"
+        />
+    </header>
+  </div>
+  <div class="sheet-content">
+    <div class="stat-box">
+      <div class="value-box">
+        <div class="stat-name">
+          <label>
+            {{localize "cd10.trait.range"}}
+          </label>
+        </div>
+        <div class="stat-value">
+          <input
+            name="data.min"
+            type="text"
+            value="{{data.min}}"
+            placeholder="{{localize "cd10.terms.min"}}"
+        />
+        </div>
+        <div class="stat-value">
+          <input
+            name="data.max"
+            type="text"
+            value="{{data.max}}"
+            placeholder="{{localize "cd10.terms.max"}}"
+        />
+        </div>
+      </div>
+    </div>
+    {{editor
+      content=data.description
+      target="data.description"
+      button=true
+      owner=owner
+      editable=editable
+    }}
+  </div>
+</form>

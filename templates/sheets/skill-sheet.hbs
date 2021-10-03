@@ -1,0 +1,57 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <div class="headerbox">
+    <header class="sheet-header">
+      <img
+        src="{{item.img}}"
+        data-edit="img"
+        title="{{item.name}}"
+        height="64"
+        width="64"
+      />
+      <h1>
+        <input
+          name="name"
+          type="text"
+          value="{{item.name}}"
+          placeholder="{{localize "cd10.skill.skill"}}"
+        />
+      </h1>
+      <h3>
+          <input
+          name="Category"
+          type="text"
+          value="{{data.type}}"
+          placeholder="{{localize "cd10.skill.category"}}"
+        />
+      </h3>
+    </header>
+  </div>
+  <div class="sheet-content">
+    <div class="stat-box">
+      <div class="value-box">
+        <div class="stat-name">
+          <label>
+            {{localize "cd10.skill.range"}}
+          </label>
+        </div>
+        <div class="stat-value">
+          0 / 12
+        </div>
+      </div>
+      <div class="teachable-box">
+        {{#if data.teachable}}
+          {{localize "cd10.skill.teachableYes"}}
+        {{else}}
+          {{localize "cd10.skill.teachableNo"}}
+        {{/if}}
+      </div>
+    </div>
+    {{editor
+      content=data.description
+      target="data.description"
+      button=true
+      owner=owner
+      editable=editable
+    }}
+  </div>
+</form>

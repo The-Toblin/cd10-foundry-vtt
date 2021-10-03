@@ -17,6 +17,24 @@
             "throwing": "Throwing",
             "twoHandedWeapons": "Two-handed weapons"
         },
+        "skill": {
+            "teachableYes": "Requires a teacher.",
+            "teachableNo": "No teacher required",
+            "range": "Range",
+            "skill": "Skill name",
+            "category": "Category"
+        },
+        "trait": {
+            "trait": "Trait name",
+            "range": "Range",
+            "type": "Type",
+            "situational": "Situational",
+            "uncheckable": "Uncheckable",
+            "value": "Value"
+        },
+        "ability": {
+            "ability": "Ability name"
+        },
         "weapon": {
             "attackWith": "Skill:",
             "slashDamage": "Slash",
@@ -72,14 +90,19 @@
             "sex": "Sex",
             "gender": "Gender",
             "appearance": "Appearance",
-            "personality": "Personality"
+            "personality": "Personality",
+            "skills": "Skills",
+            "traits": "Traits",
+            "abilities": "Abilities"
         },
         "terms": {
             "bio": "Biography",
             "weapons": "Weapons",
             "armor": "Armor",
             "health": "Health",
-            "coverage": "Coverage"
+            "coverage": "Coverage",
+            "min": "Min",
+            "max": "Max"
         }
     }
 }
