@@ -108,6 +108,7 @@
 }
 .cd10.sheet.namedCharacter {
   max-width: 740px;
+  min-height: 870px;
 }
 .cd10.sheet.namedCharacter form {
   display: flex;
