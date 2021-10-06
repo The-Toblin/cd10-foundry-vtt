@@ -107,8 +107,8 @@
                 "weight": 0
             },
             "skillsTraits": {
-                "type": "",
-                "value": 0,
+                "skillType": "",
+                "skillLevel": 0,
                 "min": 0,
                 "max": 12
             }
@@ -118,7 +118,8 @@
                 "skillsTraits",
                 "itemDescription"
             ],
-            "teachable": true
+            "teachable": true,
+            "levelUp": false
         },
         "trait": {
             "templates": [
@@ -128,12 +129,6 @@
             "min": -4,
             "max": 4,
             "reversed": false
-        },
-        "ability": {
-            "templates": [
-                "skillsTraits",
-                "itemDescription"
-            ]
         },
         "weapon": {
             "templates": [

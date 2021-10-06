@@ -5,11 +5,11 @@
         {{name}}
       </label>
     </div>
-    <div class="skill-value">
-      <input
-        name="data.value"
+    <div class="skill-value" data-item-id="{{skill._id}}">
+      <input class="item-create"
         type="text"
-        value="{{data.value}}"
+        value="{{skill.data.value}}"
+        placeholder="0"
         data-dtype="Number"
       />
     </div>

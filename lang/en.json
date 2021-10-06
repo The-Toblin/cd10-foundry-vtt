@@ -1,5 +1,12 @@
 {
     "cd10": {
+        "sheet": {
+            "addSkill": "Add a new skill",
+            "addTrait": "Add a new trait",
+            "newItem": "Name",
+            "removeSkill": "Remove the skill",
+            "removeTrait": "Remove the trait"
+        },
         "attack": {
             "none": "None",
             "archery": "Archery",
@@ -22,7 +29,9 @@
             "teachableNo": "No teacher required",
             "range": "Range",
             "skill": "Skill name",
-            "category": "Category"
+            "category": "Category",
+            "name": "Skill name",
+            "skillLevel": "Skill level"
         },
         "trait": {
             "trait": "Trait name",
@@ -30,10 +39,9 @@
             "type": "Type",
             "situational": "Situational",
             "uncheckable": "Uncheckable",
-            "value": "Value"
-        },
-        "ability": {
-            "ability": "Ability name"
+            "value": "Value",
+            "name": "Trait name",
+            "skillLevel": "Trait level"
         },
         "weapon": {
             "attackWith": "Skill:",

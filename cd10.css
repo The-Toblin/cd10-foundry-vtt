@@ -106,12 +106,17 @@
 .cd10.sheet.item hr {
   border-bottom: 2px solid black;
 }
+.cd10.sheet.namedCharacter {
+  max-width: 740px;
+}
 .cd10.sheet.namedCharacter form {
   display: flex;
   flex-direction: column;
 }
 .cd10.sheet.namedCharacter form input {
+  /*border: 1px solid rgba(0, 0, 0, 0.1);*/
   border: none;
+  background: none;
   margin-bottom: 0.25em;
   text-align: center;
 }
@@ -135,7 +140,47 @@
 .cd10.sheet.namedCharacter form .skill-trait-box {
   display: flex;
   flex-direction: row;
-  align-items: stretch;
+  justify-content: space-evenly;
+}
+.cd10.sheet.namedCharacter form .skill-trait-box .skill-card {
+  display: inherit;
+  flex-direction: column;
+  align-content: flex-start;
+  min-width: 265px;
+  margin-right: 10px;
+}
+.cd10.sheet.namedCharacter form .skill-trait-box .skill-card .skill-card-header {
+  display: flex;
+}
+.cd10.sheet.namedCharacter form .skill-trait-box .skill-card .skill-card-header h3 {
+  text-align: center;
+}
+.cd10.sheet.namedCharacter form .skill-trait-box .skill-card .skill-card-header .item-create {
+  margin-left: auto;
+}
+.cd10.sheet.namedCharacter form .skill-trait-box .skill-card .skill-list {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+}
+.cd10.sheet.namedCharacter form .skill-trait-box .skill-card .skill-list .skill-pair {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.cd10.sheet.namedCharacter form .skill-trait-box .skill-card .skill-list .skill-pair .skill-name {
+  padding: 5px 2px 0 2px;
+  text-align: left;
+  width: 75%;
+}
+.cd10.sheet.namedCharacter form .skill-trait-box .skill-card .skill-list .skill-pair .skill-value {
+  padding: 2px 2px 0 2px;
+  text-align: center;
+  width: 10%;
+}
+.cd10.sheet.namedCharacter form .skill-trait-box .skill-card .skill-list .skill-pair .item-delete,
+.cd10.sheet.namedCharacter form .skill-trait-box .skill-card .skill-list .skill-pair .skill-levelUp {
+  padding-top: 5px;
 }
 .cd10.sheet.namedCharacter form .sheet-text {
   background: none;
@@ -150,6 +195,10 @@
 .cd10.sheet.namedCharacter form .topsheet {
   display: flex;
   flex-direction: row;
+  justify-content: flex-start;
+}
+.cd10.sheet.namedCharacter form .bio-box {
+  margin-right: 10px;
 }
 .cd10.sheet.namedCharacter form .sidebar {
   display: flex;
@@ -180,6 +229,7 @@
 .skill-card .skill-box .skill-value {
   padding: 2px 2px 0 2px;
   text-align: center;
+  width: 25%;
 }
 .trait-card .trait-box {
   display: flex;
@@ -193,6 +243,7 @@
 .trait-card .trait-box .trait-value {
   padding: 2px 2px 0 2px;
   text-align: center;
+  width: 25%;
 }
 .weapon-card {
   display: flex;

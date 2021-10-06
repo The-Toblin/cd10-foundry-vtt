@@ -1,10 +1,9 @@
 <form class="{{cssClass}}" autocomplete="off">
     <div class="topsheet">
-        <div>
+        <div class="bio-box">
             <header class="sheet-header">
                 <h1>
-                    <input
-                        name="name"
+                    <input name="name"
                         type="text"
                         value="{{actor.name}}"
                         placeholder="{{localize "cd10.stats.name"}}"
@@ -17,55 +16,121 @@
             <hr>
             <div class="skill-trait-box">
                 <div class="skill-card">
-                    <h3>
-                        {{localize "cd10.stats.skills"}}
-                    </h3>
-                    {{#each skills as |skill id|}}
-                    {{> "systems/cd10/templates/partials/skill-card.hbs" skill}}
-                    {{/each}}
+                    <div class="skill-card-header">
+                        <h3>
+                            {{localize "cd10.stats.skills"}}
+                        </h3>
+                        <a class="item-create" 
+                            data-type="skill" 
+                            title={{localize "cd10.sheet.addSkill" }}
+                        >
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </div>
+                    <div class="skill-list">
+                        {{#each skills as |skill id|}}
+                        <div class="skill-pair item" data-item-id="{{skill._id}}">
+                            <input
+                                class="skill-name inline-edit"
+                                data-field="name"
+                                type="text" 
+                                value="{{skill.name}}" 
+                                placeholder="{{localize "cd10.skill.name"}}"
+                            />
+                            <input
+                                class="skill-value inline-edit"
+                                data-field="data.skillLevel"
+                                type="text" 
+                                value="{{skill.data.skillLevel}}" 
+                                placeholder="{{localize "cd10.skill.skillLevel"}}"
+                            />
+                            <input
+                                class="skill-levelUp"
+                                name="data.levelUp"
+                                data-field="data.levelUp"
+                                type="checkbox"
+                                value="{{data.levelUp}}"
+                            />
+                            <a 
+                                class="item-delete" 
+                                data-type="skill" 
+                                title={{localize "cd10.sheet.removeSkill" }}
+                             >
+                            <i class="fas fa-minus"></i>
+                            </a>
+                        </div>
+                        {{/each}}
+                    </div>
                 </div>
-                <div class="trait-card">
-                    <h3>
-                        {{localize "cd10.stats.traits"}}
-                    </h3>
-                    {{#each traits as |trait id|}}
-                    {{> "systems/cd10/templates/partials/trait-card.hbs" trait}}
-                    {{/each}}
+                <div class="skill-card">
+                    <div class="skill-card-header">
+                        <h3>
+                            {{localize "cd10.stats.traits"}}
+                        </h3>
+                        <a class="item-create" 
+                            data-type="trait" 
+                            title={{localize "cd10.sheet.addTrait" }}
+                        >
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </div>
+                    <div class="skill-list">
+                        {{#each traits as |trait id|}}
+                        <div class="skill-pair item" data-item-id="{{trait._id}}">
+                            <input
+                                class="skill-name inline-edit"
+                                data-field="name"
+                                type="text" 
+                                value="{{trait.name}}" 
+                                placeholder="{{localize "cd10.skill.name"}}"
+                            />
+                            <input
+                                class="skill-value inline-edit"
+                                data-field="data.skillLevel"
+                                type="text" 
+                                value="{{trait.data.skillLevel}}" 
+                                placeholder="{{localize "cd10.trait.skillLevel"}}"
+                            />
+                            <a 
+                                class="item-delete" 
+                                data-type="skill" 
+                                title={{localize "cd10.sheet.removeTrait" }}
+                             >
+                            <i class="fas fa-minus"></i>
+                            </a>
+                        </div>
+                        {{/each}}
+                    </div>
                 </div>
-            </div>
-            <div class="ability-card">
-                <h3>
-                    {{localize "cd10.stats.abilities"}}
-                </h3>
-                {{#each abilities as |ability id|}}
-                {{> "systems/cd10/templates/partials/ability-card.hbs" ability}}
-                {{/each}}
             </div>
         </div>
         <div class="sidebar">
-            <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" class="actor-image" />
-            <div class="character-stats">
+                <img src="{{actor.img}}"
+                    data-edit="img"
+                    title="{{actor.name}}"
+                    class="actor-image"
+                />
+                <div class="character-stats">
+                    <h1 class="sheet-header">
+                        {{localize "cd10.terms.health"}}
+                    </h1>
+                    {{> "systems/cd10/templates/partials/character-stat-block.hbs"}}
+                </div>
                 <h1 class="sheet-header">
-                    {{localize "cd10.terms.health"}}
+                    {{localize "cd10.terms.weapons"}}
                 </h1>
-                {{> "systems/cd10/templates/partials/character-stat-block.hbs"}}
+                <div class="weapon-list">
+                    {{#each weapons as |weapon id|}}
+                    {{> "systems/cd10/templates/partials/weapon-card.hbs" weapon}}
+                    {{/each}}
+                </div>
+                <h1 class="sheet-header">
+                    {{localize "cd10.terms.armor"}}
+                </h1>
+                <div class="armor-list">
+                    {{#each armors as |armor id|}}
+                    {{> "systems/cd10/templates/partials/armor-card.hbs" armor}}
+                    {{/each}}
+                </div>
             </div>
-            <h1 class="sheet-header">
-                {{localize "cd10.terms.weapons"}}
-            </h1>
-            <div class="weapon-list">
-                {{#each weapons as |weapon id|}}
-                {{> "systems/cd10/templates/partials/weapon-card.hbs" weapon}}
-                {{/each}}
-            </div>
-            <h1 class="sheet-header">
-                {{localize "cd10.terms.armor"}}
-            </h1>
-            <div class="armor-list">
-                {{#each armors as |armor id|}}
-                {{> "systems/cd10/templates/partials/armor-card.hbs" armor}}
-                {{/each}}
-            </div>
-        </div>
-    </div>
 </form>

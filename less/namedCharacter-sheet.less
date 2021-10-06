@@ -1,10 +1,14 @@
 .cd10.sheet.namedCharacter {
+  max-width: 740px;
+
   form {
     display: flex;
     flex-direction: column;
 
     input {
+      /*border: 1px solid rgba(0, 0, 0, 0.1);*/
       border: none;
+      background: none;
       margin-bottom: 0.25em;
       text-align: center;
     }
@@ -31,9 +35,57 @@
     }
 
     .skill-trait-box {
-        display: flex;
-        flex-direction: row;
-        align-items: stretch;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+
+      .skill-card {
+        display: inherit;
+        flex-direction: column;
+        align-content: flex-start;
+        min-width: 265px;
+        margin-right: 10px;
+
+        .skill-card-header {
+          display: flex;
+          
+          h3 {
+            text-align: center;
+          }
+
+          .item-create {
+            margin-left: auto;
+          }
+        }
+
+        .skill-list {
+          display: flex;
+          flex-direction: column;
+          align-content: flex-start;
+
+          .skill-pair {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            .skill-name {
+              padding: 5px 2px 0 2px;
+              text-align: left;
+              width: 75%;
+            }
+
+            .skill-value {
+              padding: 2px 2px 0 2px;
+              text-align: center;
+              width: 10%;
+            }
+
+            .item-delete, .skill-levelUp  {
+                padding-top: 5px;
+            }
+          }
+        }
+      }
     }
 
     .sheet-text {
@@ -51,6 +103,11 @@
     .topsheet {
       display: flex;
       flex-direction: row;
+      justify-content: flex-start;
+    }
+
+    .bio-box {
+      margin-right: 10px;
     }
 
     .sidebar {

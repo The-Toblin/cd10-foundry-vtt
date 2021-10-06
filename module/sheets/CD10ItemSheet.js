@@ -14,9 +14,15 @@ export default class CD10ItemSheet extends ItemSheet {
     }
 
     getData() {
-        let sheetData = super.getData();
-        sheetData.config = CONFIG.cd10;
-        sheetData.data = sheetData.data.data
+        const baseData = super.getData();
+        let sheetData = {
+            owner: this.item.isOwner,
+            editable: this.isEditable,
+            item: baseData.item,
+            data: baseData.item.data.data,
+            config: CONFIG.cd10
+        };
+
         return sheetData;
     }
 }

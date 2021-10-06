@@ -18,9 +18,9 @@
       </h1>
       <h3>
           <input
-          name="Category"
+          name="data.skillType"
           type="text"
-          value="{{data.type}}"
+          value="{{data.skillType}}"
           placeholder="{{localize "cd10.skill.category"}}"
         />
       </h3>
@@ -39,12 +39,13 @@
         </div>
       </div>
       <div class="teachable-box">
-        {{#if data.teachable}}
-          {{localize "cd10.skill.teachableYes"}}
-        {{else}}
-          {{localize "cd10.skill.teachableNo"}}
-        {{/if}}
-      </div>
+        {{localize "cd10.skill.teachableYes"}}
+        <input
+          name="data.teachable"
+          type="checkbox"
+          value="{{data.teachable}}"
+        />
+        </div>
     </div>
     {{editor
       content=data.description
