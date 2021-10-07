@@ -10,6 +10,26 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         return `systems/cd10/templates/sheets/namedCharacter-sheet.hbs`;
     }
 
+    itemContextMenu = [{
+            name: game.i18n.localize("cd10.sheet.edit"),
+            icon: '<i class="fas fa-edit"></i>',
+            callback: element => {
+                const itemId = element.data("item-id");
+                const item = this.actor.items.get(itemId);
+                console.log("Element:", element);
+                console.log("ItemId:", itemId);
+                item.sheet.render(true);
+            }
+        },
+        {
+            name: game.i18n.localize("cd10.sheet.remove"),
+            icon: '<i class="fas fa-trash"></i>',
+            callback: element => {
+                this.actor.deleteEmbeddedDocuments("Item", [element.data("item-id")]);
+            }
+        }
+    ];
+
     getData() {
         let sheetData = super.getData();
         sheetData.config = CONFIG.cd10;
@@ -34,6 +54,8 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         html.find(".item-create").click(this._onItemCreate.bind(this));
         html.find(".inline-edit").change(this._onSkillEdit.bind(this));
         html.find(".item-delete").click(this._onItemDelete.bind(this));
+
+        new ContextMenu(html, ".weapon-card", this.itemContextMenu);
 
         super.activateListeners(html);
     }

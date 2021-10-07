@@ -3,9 +3,13 @@
         "sheet": {
             "addSkill": "Add a new skill",
             "addTrait": "Add a new trait",
+            "edit": "Edit",
+            "remove": "Remove",
             "newItem": "Name",
             "removeSkill": "Remove the skill",
-            "removeTrait": "Remove the trait"
+            "removeTrait": "Remove the trait",
+            "removeWeapon": "Remove weapon",
+            "removeArmor": "Remove armor"
         },
         "attack": {
             "none": "None",
@@ -28,13 +32,11 @@
             "teachableYes": "Requires a teacher.",
             "teachableNo": "No teacher required",
             "range": "Range",
-            "skill": "Skill name",
             "category": "Category",
             "name": "Skill name",
             "skillLevel": "Skill level"
         },
         "trait": {
-            "trait": "Trait name",
             "range": "Range",
             "type": "Type",
             "situational": "Situational",
