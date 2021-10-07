@@ -80,13 +80,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         const item = this.actor.items.get(itemId);
         const field = element.dataset.field;
 
-        /* DEBUG */
-        console.log("ItemId:", event.currentTarget.closest(".item").dataset.itemId);
-        console.log("Dataset class: ", event.currentTarget.closest(".item").dataset);
-        console.log("Actor items: ", this.actor.items);
-        console.log("Contents of 'item'", item);
-        console.log("Contents of 'field'", field);
-
         await item.update({
             [field]: element.value
         });
