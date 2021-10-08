@@ -1,4 +1,6 @@
-node-modules/**
-.vscode/**
+# Ignore the gulp directories and files
+node_modules/
+.vscode/
+/gulpfile.js
 /package-lock.json
 /package.json
