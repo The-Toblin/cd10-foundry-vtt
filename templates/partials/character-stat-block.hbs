@@ -1,38 +1,33 @@
 <section class="health-info">
-  <div class="stat-element">
-    <label>
-      <h3 class="stattitle">
-        {{localize "cd10.injuries.debilitation"}}
-      </h3>
-    </label>
-    <div class="stat-value">
-      Placeholder text
+    <div class="stat-element"> 
+        <div class="stat-value">
+            {{#if (gte data.modifier 1)}}-{{data.modifier}} {{data.debilitationType}}{{else}}No debilitation{{/if}}
+        </div>
     </div>
-  </div>
-  <div class="stat-element">
-    <label>
-      <h3 class="stattitle">
-        {{localize "cd10.injuries.shock"}}
-      </h3>
-    </label>
-    <input
-      name="data.shock.value"
-      type="text"
-      value="{{data.shock.value}}"
-      data-dtype="Number"
-    />
-  </div>
-  <div class="stat-element">
-    <label>
-      <h3 class="stattitle">
-        {{localize "cd10.injuries.wounds"}}
-      </h3>
-    </label>
-    <input
-      name="data.wounds.value"
-      type="text"
-      value="{{data.wounds.value}}"
-      data-dtype="Number"
-    />
-  </div>
+    <div class="stat-element">
+        <label>
+            <h3 class="stattitle">
+                {{localize "cd10.injuries.shock"}} {{data.shock.value}}
+            </h3>
+        </label>
+        <div class="shock-icons">
+            {{#times 15}}
+            <div class="img-container">
+                <div class="dot-container {{#if (gte ../data.shock.value @index)}}crossed{{/if}}"> <img
+                        src="systems/cd10/icons/sheets/injury-dot-white.png" height="20"> </div>
+            </div>{{/times}}
+        </div>
+    </div>
+    <div class="stat-element"> <label>
+            <h3 class="stattitle">{{localize "cd10.injuries.wounds"}} {{data.wounds.value}}
+            </h3>
+        </label>
+        <div class="wounds-icons">
+            {{#times 15}}
+            <div class="img-container">
+                <div class="dot-container {{#if (gte ../data.wounds.value @index)}}crossed{{/if}}"> <img
+                        src="systems/cd10/icons/sheets/injury-dot-white.png" height="20"> </div>
+            </div>{{/times}}
+        </div>
+    </div>
 </section>

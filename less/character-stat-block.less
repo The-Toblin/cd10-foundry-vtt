@@ -1,9 +1,43 @@
 .health-info {
-  .stat-element {
-    margin-bottom: 10px;
-  }
-  
-  .stat-value {
-      text-align: center;
-  }
+    .stat-element {
+        margin-bottom: 10px;
+
+        .shock-icons {
+            display: flex;
+            flex-direction: row;
+
+            .img-container {
+                
+                img {
+                    border: none;
+                    margin: 1px;
+                }
+            }
+
+            .crossed {
+                filter: invert();
+            }
+        }
+        .wounds-icons {
+            display: flex;
+            flex-direction: row;
+
+
+            .img-container {
+                
+                img {
+                    border: none;
+                    margin: 1px;
+                }
+            }
+
+            .crossed {
+                filter: invert();
+            }
+        }
+    }
+
+    .stat-value {
+        text-align: center;
+    }
 }

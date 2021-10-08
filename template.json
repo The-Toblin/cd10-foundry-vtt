@@ -26,7 +26,8 @@
                     "name": "",
                     "value": 2
                 },
-                "description": "This is a description."
+                "description": "This is a description.",
+                "debilitationType": ""
             },
             "namedCharacter": {
                 "title": "",

@@ -3,7 +3,7 @@
     "title": "Celenia D10 Roleplaying System",
     "description": "A narratively focused, lightweight system focused on tension and rule of cool.",
     "author": "The Toblin",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "minimumCoreVersion": "0.8.7",
     "compatibleCoreVersion": "0.8.9",
     "esmodules": [
@@ -24,5 +24,5 @@
     "gridUnits": "m",
     "primaryTokenAttribute": "wounds",
     "secondaryTokenAttribute": "shock",
-    "initiative": "@combatskill"
+    "initiative": ""
 }

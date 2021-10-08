@@ -48,6 +48,28 @@
 .health-info .stat-element {
   margin-bottom: 10px;
 }
+.health-info .stat-element .shock-icons {
+  display: flex;
+  flex-direction: row;
+}
+.health-info .stat-element .shock-icons .img-container img {
+  border: none;
+  margin: 1px;
+}
+.health-info .stat-element .shock-icons .crossed {
+  filter: invert();
+}
+.health-info .stat-element .wounds-icons {
+  display: flex;
+  flex-direction: row;
+}
+.health-info .stat-element .wounds-icons .img-container img {
+  border: none;
+  margin: 1px;
+}
+.health-info .stat-element .wounds-icons .crossed {
+  filter: invert();
+}
 .health-info .stat-value {
   text-align: center;
 }

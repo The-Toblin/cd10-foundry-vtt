@@ -111,26 +111,31 @@
                     class="actor-image"
                 />
                 <div class="character-stats">
-                    <h1 class="sheet-header">
+                    <h3 class="sheet-header">
                         {{localize "cd10.terms.health"}}
-                    </h1>
+                    </h3>
                     {{> "systems/cd10/templates/partials/character-stat-block.hbs"}}
+                    <hr>
                 </div>
-                <h1 class="sheet-header">
+                
+                <h3 class="sheet-header">
                     {{localize "cd10.terms.weapons"}}
-                </h1>
+                </h3>
                 <div class="weapon-list">
                     {{#each weapons as |weapon id|}}
                     {{> "systems/cd10/templates/partials/weapon-card.hbs" weapon}}
                     {{/each}}
+                    <hr>
                 </div>
-                <h1 class="sheet-header">
+                
+                <h3 class="sheet-header">
                     {{localize "cd10.terms.armor"}}
-                </h1>
+                </h3>
                 <div class="armor-list">
                     {{#each armors as |armor id|}}
                     {{> "systems/cd10/templates/partials/armor-card.hbs" armor}}
                     {{/each}}
+                    <hr>
                 </div>
             </div>
 </form>

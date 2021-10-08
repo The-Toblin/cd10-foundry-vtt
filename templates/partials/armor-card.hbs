@@ -59,7 +59,19 @@
             {{localize "cd10.terms.coverage"}}
         </div>
         <div class="armor-statvalue">
-            {{data.coverage}}
+            {{#if (eq data.coverage "head")}}
+                {{localize "cd10.armor.coverage.head"}}
+            {{else if (eq data.coverage "chest")}}
+                {{localize "cd10.armor.coverage.chest"}}
+            {{else if (eq data.coverage "torso")}}
+                {{localize "cd10.armor.coverage.torso"}}
+            {{else if (eq data.coverage "torsoArms")}}
+                {{localize "cd10.armor.coverage.torsoArms"}}
+            {{else if (eq data.coverage "arms")}}
+                {{localize "cd10.armor.coverage.arms"}}
+            {{else if (eq data.coverage "legs")}}
+                {{localize "cd10.armor.coverage.legs"}}
+            {{/if}}
         </div>
     </div>
 </div>
