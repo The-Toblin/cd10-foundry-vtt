@@ -12,10 +12,10 @@
         </label>
         <div class="shock-icons">
             {{#times 15}}
-            <div class="img-container">
-                <div class="dot-container {{#if (gte ../data.shock.value @index)}}crossed{{/if}}"> <img
-                        src="systems/cd10/icons/sheets/injury-dot-white.png" height="20"> </div>
-            </div>{{/times}}
+                <div class="dot-container {{#if (gte ../data.shock.value @index)}}crossed{{/if}}"> 
+                    <i class="fas fa-circle fa-xs"></i>
+                </div>
+            {{/times}}
         </div>
     </div>
     <div class="stat-element"> <label>
@@ -24,10 +24,10 @@
         </label>
         <div class="wounds-icons">
             {{#times 15}}
-            <div class="img-container">
-                <div class="dot-container {{#if (gte ../data.wounds.value @index)}}crossed{{/if}}"> <img
-                        src="systems/cd10/icons/sheets/injury-dot-white.png" height="20"> </div>
-            </div>{{/times}}
+                <div class="dot-container {{#if (gte ../data.wounds.value @index)}}crossed{{/if}}"> 
+                    <i class="fas fa-circle fa-xs"></i>
+                </div>
+            {{/times}}
         </div>
     </div>
 </section>

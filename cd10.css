@@ -52,9 +52,8 @@
   display: flex;
   flex-direction: row;
 }
-.health-info .stat-element .shock-icons .img-container img {
-  border: none;
-  margin: 1px;
+.health-info .stat-element .shock-icons .dot-container {
+  color: white;
 }
 .health-info .stat-element .shock-icons .crossed {
   filter: invert();
@@ -63,14 +62,13 @@
   display: flex;
   flex-direction: row;
 }
-.health-info .stat-element .wounds-icons .img-container img {
-  border: none;
-  margin: 1px;
+.health-info .stat-element .wounds-icons .dot-container {
+  color: white;
 }
 .health-info .stat-element .wounds-icons .crossed {
   filter: invert();
 }
-.health-info .stat-value {
+.stat-value {
   text-align: center;
 }
 .cd10.sheet.item form {
