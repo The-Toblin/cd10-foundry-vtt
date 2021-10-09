@@ -16,13 +16,17 @@
           placeholder="{{localize "cd10.trait.name"}}"
         />
       </h1>
-      {{localize "cd10.trait.type"}}
-      <input
-          name="data.type"
-          type="text"
-          value="{{data.type}}"
-          placeholder="{{localize "cd10.trait.value"}}"
-        />
+      <h1>
+        <select name="data.skillType">
+          {{#select data.skillType}}
+            {{#each config.traits as |name type|}}
+              <option value="{{type}}">
+                {{localize name}}
+              </option>
+            {{/each}}
+          {{/select}}
+        </select>
+      </h1>
     </header>
   </div>
   <div class="sheet-content">
@@ -39,7 +43,7 @@
             type="text"
             value="{{data.min}}"
             placeholder="{{localize "cd10.terms.min"}}"
-        />
+          />
         </div>
         <div class="stat-value">
           <input
@@ -47,7 +51,7 @@
             type="text"
             value="{{data.max}}"
             placeholder="{{localize "cd10.terms.max"}}"
-        />
+          />
         </div>
       </div>
     </div>

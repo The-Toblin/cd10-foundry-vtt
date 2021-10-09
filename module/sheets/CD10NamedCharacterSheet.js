@@ -82,12 +82,14 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         item.sheet.render(true);
     }
 
-    _onItemDelete(event) {
+    async _onItemDelete(event) {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemId;
 
-        return this.actor.deleteEmbeddedDocuments("Item", [itemId]);
+        await this.actor.deleteEmbeddedDocuments("Item", [itemId]);
+        this._updateTotalTraitValue();
+
     }
 
     async _onSkillEdit(event) {
@@ -105,6 +107,8 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         await item.update({
             [field]: element.value
         });
+
+        this._updateTotalTraitValue();
     }
 
     _onShockMarkChange(event) {
@@ -210,5 +214,28 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             "data.modifier": newModifier,
             "data.debilitationType": debilitationType
         })
+    }
+
+    _updateTotalTraitValue() {
+
+        const totalItems = this.actor.items;
+        let totalTraits;
+        let totalValue = 0;
+
+        totalTraits = totalItems.filter(trait => trait.type === 'trait');
+
+        console.log(totalTraits);
+
+        for (let i = 0; i < totalTraits.length; i++) {
+            let adder = 0;
+            adder = +parseInt(totalTraits[i].data.data.skillLevel);
+
+            totalValue += adder;
+        }
+
+        this.actor.update({
+            "data.totalTraitValue": totalValue
+        })
+
     }
 }

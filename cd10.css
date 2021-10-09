@@ -78,7 +78,13 @@
 .cd10.sheet.item form .headerbox {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  justify-content: flex-start;
+}
+.cd10.sheet.item form .headerbox .sheet-header h1 {
+  margin-right: 10px;
+}
+.cd10.sheet.item form .headerbox .sheet-header h1 input {
+  width: auto;
 }
 .cd10.sheet.item form .sheet-content {
   height: 100%;
@@ -174,7 +180,10 @@
   display: flex;
 }
 .cd10.sheet.namedCharacter form .skill-trait-box .skill-card .skill-card-header h3 {
-  text-align: center;
+  text-align: left;
+}
+.cd10.sheet.namedCharacter form .skill-trait-box .skill-card .skill-card-header .traits-total {
+  margin-left: auto;
 }
 .cd10.sheet.namedCharacter form .skill-trait-box .skill-card .skill-card-header .item-create {
   margin-left: auto;

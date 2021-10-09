@@ -1,69 +1,79 @@
 .cd10.sheet.item {
-  form {
-    display: flex;
-    flex-direction: column;
+    form {
+        display: flex;
+        flex-direction: column;
+
+        .headerbox {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+
+            .sheet-header {
+                h1 {
+                    margin-right: 10px;
+
+                    input {
+                        width: auto;
+                    }
+                }
+            }
+        }
+
+        .sheet-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+
+            .editor {
+                height: 100%;
+            }
+            select {
+                margin-right: 2px;
+            }
+
+            .stat-box {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                margin-bottom: 10px;
+
+                .value-box {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: start;
+
+                    .stat-name {
+                        label {
+                            padding: 2px;
+                            text-align: left;
+                        }
+                    }
+
+                    .stat-value {
+                        padding-left: 2px;
+                        padding-right: 2px;
+                        width: 50%;
+
+                        input {
+                            border: none;
+                            /*width: 25%;*/
+                            text-align: center;
+                        }
+                    }
+                }
+
+                .teachable-box {
+                    display: flex;
+                    flex-direction: row;
+                }
+            }
+        }
+    }
 
     .headerbox {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-    }
-    
-    .sheet-content {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-
-      .editor {
-        height: 100%;
-      }
-      select {
-        margin-right: 2px;
-      }
-
-      .stat-box {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
         margin-bottom: 10px;
-
-        .value-box {
-          display: flex;
-          flex-direction: row;
-          justify-content: start;
-
-          .stat-name {
-            label {
-              padding: 2px;
-              text-align: left;
-            }
-          }
-
-          .stat-value {
-            padding-left: 2px;
-            padding-right: 2px;
-            width: 50%;
-
-            input {
-              border: none;
-              /*width: 25%;*/
-              text-align: center;
-            }
-          }
-        }
-
-        .teachable-box {
-          display: flex;
-          flex-direction: row;
-        }
-      }
     }
-  }
-
-  .headerbox {
-    margin-bottom: 10px;
-  }
-  hr {
-    border-bottom: 2px solid black;
-  }
+    hr {
+        border-bottom: 2px solid black;
+    }
 }

@@ -46,7 +46,8 @@
                 "defenseSecondary": {
                     "name": "",
                     "value": 0
-                }
+                },
+                "totalTraitValue": 0
             }
         },
         "hero": {

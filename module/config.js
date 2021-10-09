@@ -32,3 +32,11 @@ cd10.coverage = {
     arms: "cd10.armor.coverage.arms",
     legs: "cd10.armor.coverage.legs"
 }
+cd10.skills = {
+
+}
+cd10.traits = {
+    situational: "cd10.trait.situational",
+    uncheckable: "cd10.trait.uncheckable",
+    value: "cd10.trait.value",
+}

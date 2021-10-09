@@ -40,11 +40,9 @@
       </div>
       <div class="teachable-box">
         {{localize "cd10.skill.teachableYes"}}
-        <input
-          name="data.teachable"
-          type="checkbox"
-          value="{{data.teachable}}"
-        />
+        <input 
+            name="data.teachable"
+            type="checkbox" {{checked data.teachable}} data-dtype="Boolean"/>
         </div>
     </div>
     {{editor
