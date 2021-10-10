@@ -47,7 +47,9 @@
                     "name": "",
                     "value": 0
                 },
-                "totalTraitValue": 0
+                "totalTraitValue": 0,
+                "notes": "Notes",
+                "money": 0
             }
         },
         "hero": {

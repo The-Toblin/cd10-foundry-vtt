@@ -1,7 +1,7 @@
 <section>
   <div class="character-description-box">
       <h3>
-          {{localize "cd10.terms.bio"}}
+          {{localize "cd10.sheet.bio"}}
       </h3>
     <div class="tablebox">
       <table>
@@ -113,15 +113,29 @@
         <h3>
             {{localize "cd10.stats.appearance"}}
         </h3>
-        <div class="sheet-text" data-edit="data.stats.appearance" contenteditable>
-            {{data.stats.appearance}}
+        <div class="sheet-text">
+            {{editor
+                content=data.stats.appearance
+                target="data.stats.appearance"
+                button=true
+                owner=owner
+                editable=editable
+                placeholder="Appearance"
+            }}
         </div>
     <div>
         <h3>
         {{localize "cd10.stats.personality"}}
         </h3>
-        <div class="sheet-text" data-edit="data.stats.personality" contenteditable>
-            {{data.stats.personality}}
+        <div class="sheet-text" >
+            {{editor
+                content=data.stats.personality
+                target="data.stats.personality"
+                button=true
+                owner=owner
+                editable=editable
+                placeholder="Personality"
+            }}
         </div>
     </div>
   </div>

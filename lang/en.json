@@ -1,15 +1,18 @@
 {
     "cd10": {
         "sheet": {
-            "addSkill": "Add a new skill",
-            "addTrait": "Add a new trait",
+            "add": "Add",
             "edit": "Edit",
             "remove": "Remove",
             "newItem": "Name",
-            "removeSkill": "Remove the skill",
-            "removeTrait": "Remove the trait",
-            "removeWeapon": "Remove weapon",
-            "removeArmor": "Remove armor"
+            "bio": "Biography",
+            "weapons": "Weapons",
+            "armor": "Armor",
+            "health": "Health",
+            "coverage": "Coverage",
+            "total": "Total",
+            "inventory": "Inventory",
+            "notes": "Notes"
         },
         "attack": {
             "none": "None",
@@ -103,16 +106,8 @@
             "personality": "Personality",
             "skills": "Skills",
             "traits": "Traits",
-            "abilities": "Abilities"
-        },
-        "terms": {
-            "bio": "Biography",
-            "weapons": "Weapons",
-            "armor": "Armor",
-            "health": "Health",
-            "coverage": "Coverage",
-            "min": "Min",
-            "max": "Max"
+            "abilities": "Abilities",
+            "money": "Coins"
         }
     }
 }

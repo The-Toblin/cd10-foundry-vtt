@@ -22,7 +22,7 @@
                         </h3>
                         <a class="item-create" 
                             data-type="skill" 
-                            title={{localize "cd10.sheet.addSkill" }}
+                            title={{localize "cd10.sheet.add" }}
                         >
                             <i class="fas fa-plus"></i>
                         </a>
@@ -54,7 +54,7 @@
                             <a 
                                 class="item-delete" 
                                 data-type="skill" 
-                                title={{localize "cd10.sheet.removeSkill" }}
+                                title={{localize "cd10.sheet.remove"}}
                              >
                             <i class="fas fa-trash"></i>
                             </a>
@@ -72,7 +72,7 @@
                         </h3>
                         <a class="item-create" 
                             data-type="trait" 
-                            title={{localize "cd10.sheet.addTrait" }}
+                            title={{localize "cd10.sheet.add"}}
                         >
                             <i class="fas fa-plus"></i>
                         </a>
@@ -97,7 +97,7 @@
                             <a 
                                 class="item-delete" 
                                 data-type="skill" 
-                                title={{localize "cd10.sheet.removeTrait" }}
+                                title={{localize "cd10.sheet.remove" }}
                              >
                             <i class="fas fa-trash"></i>
                             </a>
@@ -106,39 +106,74 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="sidebar">
-                <img src="{{actor.img}}"
-                    data-edit="img"
-                    title="{{actor.name}}"
-                    class="actor-image"
-                />
-                <div class="character-stats">
-                    <h3 class="sheet-header">
-                        {{localize "cd10.terms.health"}}
+            <hr>
+            <div class="inv-box">
+                <div class="sheet-header">
+                    <h3>
+                        {{localize "cd10.sheet.notes"}}
                     </h3>
-                    {{> "systems/cd10/templates/partials/character-stat-block.hbs"}}
-                    <hr>
                 </div>
-                
-                <h3 class="sheet-header">
-                    {{localize "cd10.terms.weapons"}}
-                </h3>
-                <div class="weapon-list">
-                    {{#each weapons as |weapon id|}}
-                    {{> "systems/cd10/templates/partials/weapon-card.hbs" weapon}}
-                    {{/each}}
-                    <hr>
-                </div>
-                
-                <h3 class="sheet-header">
-                    {{localize "cd10.terms.armor"}}
-                </h3>
-                <div class="armor-list">
-                    {{#each armors as |armor id|}}
-                    {{> "systems/cd10/templates/partials/armor-card.hbs" armor}}
-                    {{/each}}
-                    <hr>
+                <div class="notes">
+                    {{editor
+                        content=data.notes
+                        target="data.notes"
+                        button=true
+                        owner=owner
+                        editable=editable
+                    }}
                 </div>
             </div>
+        </div>
+        <div class="sidebar">
+            <img src="{{actor.img}}"
+                data-edit="img"
+                title="{{actor.name}}"
+                class="actor-image"
+            />
+            <hr>
+            <div class="character-stats">
+                <h3 class="sheet-header">
+                    {{localize "cd10.sheet.health"}}
+                </h3>
+                {{> "systems/cd10/templates/partials/character-stat-block.hbs"}}
+                <hr>
+            </div>
+             <h3 class="sheet-header">
+                {{localize "cd10.stats.money"}}
+            </h3>
+            <div class="flex-row-box">
+                <div>
+                    <input
+                        data-field="data.money"
+                        type="text" 
+                        value="{{data.money}}" 
+                        data-dtype="Number"
+                        placeholder=0
+                    /> 
+                </div>
+                <div class="silvermark">
+                    silver
+                </div>
+            </div>
+            <hr>
+            <h3 class="sheet-header">
+                {{localize "cd10.sheet.weapons"}}
+            </h3>
+            <div class="weapon-list">
+                {{#each weapons as |weapon id|}}
+                {{> "systems/cd10/templates/partials/weapon-card.hbs" weapon}}
+                {{/each}}
+            </div>
+            <hr>
+            <h3 class="sheet-header">
+                {{localize "cd10.sheet.armor"}}
+            </h3>
+            <div class="armor-list">
+                {{#each armors as |armor id|}}
+                {{> "systems/cd10/templates/partials/armor-card.hbs" armor}}
+                {{/each}}
+            </div>
+            <hr>
+        </div>
+    </div>
 </form>
