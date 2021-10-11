@@ -6,6 +6,8 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         });
     }
 
+
+
     get template() {
         return `systems/cd10/templates/sheets/namedCharacter-sheet.hbs`;
     }
@@ -44,6 +46,8 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         sheetData.traits = sheetData.items.filter(function(item) {
             return item.type == "trait";
         });
+
+
         return sheetData;
     }
 
