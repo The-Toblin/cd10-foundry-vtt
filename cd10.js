@@ -33,6 +33,8 @@ Hooks.once("init", function() {
     preloadHandlebarsTemplates();
 
     Handlebars.registerHelper("times", function(n, content) {
+        /* Handlebars helper to run a for-loop. Used to render dots on sheets. */
+
         let result = "";
         for (let i = 0; i < n; ++i) {
             content.data.index = i + 1;

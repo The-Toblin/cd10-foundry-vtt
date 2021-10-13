@@ -57,7 +57,7 @@
                 "commonStats",
                 "namedCharacter"
             ],
-            "playername": "Keeper of Tales",
+            "playername": "",
             "exp": 0,
             "birthplace": "",
             "family": {
@@ -70,7 +70,8 @@
             "templates": [
                 "commonStats",
                 "namedCharacter"
-            ]
+            ],
+            "playername": "Keeper of Tales"
         },
         "fodder": {
             "templates": [

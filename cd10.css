@@ -170,6 +170,9 @@
 .cd10.sheet.namedCharacter form .actor-image {
   max-width: 160px;
 }
+.cd10.sheet.namedCharacter form hr {
+  width: 150px;
+}
 .cd10.sheet.namedCharacter form .flex-row {
   display: flex;
   flex-direction: row;
