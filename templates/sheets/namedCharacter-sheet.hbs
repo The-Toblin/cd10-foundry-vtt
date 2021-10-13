@@ -1,47 +1,47 @@
 <form class="{{cssClass}}" autocomplete="off">
-    <div class="topsheet">
-        <div class="bio-box">
-            <header class="sheet-header">
-                <h1>
-                    <input name="name"
-                        type="text"
-                        value="{{actor.name}}"
-                        placeholder="{{localize "cd10.stats.name"}}"
-                    />
-                </h1>
-            </header>
+    <div class="cd10-sheet flex-row flex-evenly">
+        <div class="flex-column flex-start bio-box">
+            <h1> 
+                <input 
+                    name="name"
+                    type="text"
+                    value="{{actor.name}}"
+                    placeholder="{{localize "cd10.stats.name"}}"
+                 />
+            </h1>
             <div class="character-description">
                 {{> "systems/cd10/templates/partials/character-description-block.hbs"}}
             </div>
             <hr>
-            <div class="skill-trait-box">
-                <div class="skill-card">
-                    <div class="skill-card-header">
+            <div class="attribute-box flex-row flex-between">
+                <div class="attribute-card flex-column flex-start">
+                    <div class="skill-trait-header flex-row flex-between">
                         <h3>
                             {{localize "cd10.stats.skills"}}
                         </h3>
-                        <a class="item-create" 
-                            data-type="skill" 
-                            title={{localize "cd10.sheet.add" }}
-                        >
-                            <i class="fas fa-plus"></i>
+                        <a 
+                            class="item-create"
+                            data-type="skill"
+                            title={{localize "cd10.sheet.add" }}>
+                            <i
+                                class="fas fa-plus">
+                            </i>
                         </a>
                     </div>
-                    <div class="skill-list">
+                    <div class="skill-list flex-column flex-start">
                         {{#each skills as |skill id|}}
-                        <div class="skill-pair item" data-item-id="{{skill._id}}">
+                        <div class="attribute-pair item flex-row flex-evenly" data-item-id="{{skill._id}}">
                             <input
-                                class="skill-name inline-edit"
+                                class="attribute-name inline-edit"
                                 data-field="name"
-                                type="text" 
-                                value="{{skill.name}}" 
+                                type="text"
+                                value="{{skill.name}}"
                                 placeholder="{{localize "cd10.skill.name"}}"
                             />
                             <input
-                                class="skill-value inline-edit"
+                                class="attribute-value inline-edit"
                                 data-field="data.skillLevel"
-                                type="text" 
-                                value="{{skill.data.skillLevel}}" 
+                                type="text" value="{{skill.data.skillLevel}}"
                                 placeholder="{{localize "cd10.skill.skillLevel"}}"
                             />
                             <input
@@ -50,109 +50,103 @@
                                 data-field="data.levelUp"
                                 type="checkbox"
                                 value="{{data.levelUp}}"
-                            />
-                            <a 
-                                class="item-delete" 
-                                data-type="skill" 
-                                title={{localize "cd10.sheet.remove"}}
-                             >
-                            <i class="fas fa-trash"></i>
+                            /> 
+                            <a
+                                class="item-delete"
+                                data-type="skill"
+                                title={{localize "cd10.sheet.remove" }}>
+                                <i class="fas fa-trash"></i>
                             </a>
                         </div>
                         {{/each}}
                     </div>
                 </div>
-                <div class="skill-card">
-                    <div class="skill-card-header">
+                <div class="attribute-card flex-column flex-start">
+                    <div class="skill-trait-header flex-row flex-between">
                         <h3>
                             {{localize "cd10.stats.traits"}}
                         </h3>
                         <h3 class="traits-total">
                             Total: {{data.totalTraitValue}}
-                        </h3>
-                        <a class="item-create" 
-                            data-type="trait" 
-                            title={{localize "cd10.sheet.add"}}
-                        >
-                            <i class="fas fa-plus"></i>
-                        </a>
-                    </div>
-                    <div class="skill-list">
-                        {{#each traits as |trait id|}}
-                        <div class="skill-pair item" data-item-id="{{trait._id}}">
-                            <input
-                                class="skill-name inline-edit"
-                                data-field="name"
-                                type="text" 
-                                value="{{trait.name}}" 
-                                placeholder="{{localize "cd10.skill.name"}}"
-                            />
-                            <input
-                                class="skill-value inline-edit"
-                                data-field="data.skillLevel"
-                                type="text" 
-                                value="{{trait.data.skillLevel}}" 
-                                placeholder="{{localize "cd10.trait.skillLevel"}}"
-                            />
-                            <a 
-                                class="item-delete" 
-                                data-type="skill" 
-                                title={{localize "cd10.sheet.remove" }}
-                             >
-                            <i class="fas fa-trash"></i>
+                        </h3> 
+                            <a
+                                class="item-create"
+                                data-type="trait"
+                                title={{localize "cd10.sheet.add" }}
+                            >
+                                <i class="fas fa-plus"></i>
                             </a>
-                        </div>
-                        {{/each}}
                     </div>
+                    <div class="trait-list flex-column flex-start">
+                            {{#each traits as |trait id|}}
+                            <div class="attribute-pair flex-row flex-evenly item" data-item-id="{{trait._id}}">
+                                <input
+                                    class="attribute-name inline-edit"
+                                    data-field="name"
+                                    type="text"
+                                    value="{{trait.name}}"
+                                    placeholder="{{localize "cd10.skill.name"}}"
+                                />
+                                <input
+                                    class="attribute-value inline-edit"
+                                    data-field="data.skillLevel"
+                                    type="text"
+                                    value="{{trait.data.skillLevel}}"
+                                    placeholder="{{localize "cd10.trait.skillLevel"}}"
+                                />
+                                <a
+                                    class="item-delete"
+                                    data-type="skill"
+                                    title={{localize "cd10.sheet.remove" }}>
+                                    
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                                </div>
+                            {{/each}}
+                        </div>
                 </div>
             </div>
-            <hr>
-            <div class="inv-box">
+             <hr>
+            <div class="inv-box flex-column flex-start">
                 <div class="sheet-header">
-                    <h3>
-                        {{localize "cd10.sheet.notes"}}
+                    <h3>{{localize "cd10.sheet.notes"}}
                     </h3>
                 </div>
                 <div class="notes">
                     {{editor
-                        content=data.notes
-                        target="data.notes"
-                        button=true
-                        owner=owner
-                        editable=editable
-                    }}
+                    content=data.notes
+                    target="data.notes"
+                    button=true
+                    owner=owner
+                    editable=editable}}
                 </div>
             </div>
         </div>
         <div class="sidebar">
-            <img src="{{actor.img}}"
-                data-edit="img"
-                title="{{actor.name}}"
-                class="actor-image"
-            />
+            <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" class="actor-image" />
             <hr>
             <div class="character-stats">
-                <h3 class="sheet-header">
-                    {{localize "cd10.sheet.health"}}
+                <h3 
+                    class="sheet-header">{{localize "cd10.sheet.health"}}
                 </h3>
                 {{> "systems/cd10/templates/partials/character-stat-block.hbs"}}
                 <hr>
             </div>
-             <h3 class="sheet-header">
+            <h3 class="sheet-header">
                 {{localize "cd10.stats.money"}}
             </h3>
-            <div class="flex-row-box">
+            <div class="flex-row flex-center">
                 <div>
-                    <input
+                    <input 
                         name="data.money"
-                        type="text" 
-                        value="{{data.money}}" 
+                        type="text"
+                        value="{{data.money}}"
                         data-dtype="Number"
                         placeholder=0
                     />
                 </div>
-                <div class="silvermark">
-                    silver
+                <div class="money">
+                    {{localize "cd10.stats.currency"}}
                 </div>
             </div>
             <hr>
@@ -165,8 +159,7 @@
                 {{/each}}
             </div>
             <hr>
-            <h3 class="sheet-header">
-                {{localize "cd10.sheet.armor"}}
+            <h3 class="sheet-header">{{localize "cd10.sheet.armor"}}
             </h3>
             <div class="armor-list">
                 {{#each armors as |armor id|}}
