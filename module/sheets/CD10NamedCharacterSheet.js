@@ -6,8 +6,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         });
     }
 
-
-
     get template() {
         return `systems/cd10/templates/sheets/namedCharacter-sheet.hbs`;
     }
