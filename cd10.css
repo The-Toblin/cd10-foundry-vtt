@@ -154,10 +154,8 @@
   justify-content: space-between;
 }
 .cd10.sheet.namedCharacter form input {
-  /*border: 1px solid rgba(0, 0, 0, 0.1);*/
   border: none;
   background: none;
-  margin-bottom: 0.25em;
   text-align: center;
 }
 .cd10.sheet.namedCharacter form .actor-image {

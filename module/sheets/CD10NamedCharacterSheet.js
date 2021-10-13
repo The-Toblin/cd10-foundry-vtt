@@ -31,9 +31,17 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     ];
 
     getData() {
+        /* Override default getData() function */
         let sheetData = super.getData();
         sheetData.config = CONFIG.cd10;
         sheetData.data = sheetData.data.data;
+
+        /* Sort items alphabetically */
+        sheetData.items.sort(function(a, b) {
+            return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+        })
+
+        /* Create subproperties for item types */
         sheetData.weapons = sheetData.items.filter(function(item) {
             return item.type == "weapon";
         });
@@ -46,7 +54,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         sheetData.traits = sheetData.items.filter(function(item) {
             return item.type == "trait";
         });
-
 
         return sheetData;
     }
