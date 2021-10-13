@@ -160,6 +160,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
 
     _setDebilitation(type, updateValue) {
 
+        /* This function calculates the proper debilitation for a character */
         let debilitationType;
         let currentShock = this.actor.data.data.shock.value;
         let currentWounds = this.actor.data.data.wounds.value;

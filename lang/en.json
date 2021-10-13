@@ -107,7 +107,8 @@
             "skills": "Skills",
             "traits": "Traits",
             "abilities": "Abilities",
-            "money": "Coins"
+            "money": "Coins",
+            "currency": "Silver"
         }
     }
 }
