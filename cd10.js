@@ -4,6 +4,7 @@ import {
 
 import CD10ItemSheet from "./module/sheets/CD10ItemSheet.js";
 import CD10NamedCharacterSheet from "./module/sheets/CD10NamedCharacterSheet.js";
+import CD10MookCharacterSheet from "./module/sheets/CD10MookCharacterSheet.js";
 
 async function preloadHandlebarsTemplates() {
     const templatePaths = [
@@ -27,7 +28,14 @@ Hooks.once("init", function() {
 
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("cd10", CD10NamedCharacterSheet, {
-        makeDefault: true
+        types: ["hero", "nemesis"],
+        makeDefault: true,
+        label: "CD10 Hero/Villain Sheet"
+    });
+    Actors.registerSheet("cd10", CD10MookCharacterSheet, {
+        types: ["fodder", "monster"],
+        makeDefault: true,
+        label: "CD10 Mook/Monster Sheet"
     });
 
     preloadHandlebarsTemplates();
