@@ -6,6 +6,13 @@
   text-transform: uppercase;
   text-align: center;
 }
+.armor-card .item-img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  width: 50px;
+}
 .armor-card .armor-stats {
   display: flex;
   flex-direction: row;
@@ -199,6 +206,7 @@
 }
 .cd10.sheet.namedCharacter .bio-box {
   padding: 10px;
+  width: 100%;
 }
 .cd10.sheet.namedCharacter .sidebar {
   padding: 10px;
@@ -259,6 +267,14 @@
 .weapon-card {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+}
+.weapon-card .item-img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  width: 50px;
 }
 .weapon-card .weapon-name {
   text-transform: uppercase;
