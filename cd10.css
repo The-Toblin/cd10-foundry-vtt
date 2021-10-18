@@ -1,10 +1,7 @@
 .armor-card {
   display: flex;
   flex-direction: column;
-}
-.armor-card .armor-name {
-  text-transform: uppercase;
-  text-align: center;
+  justify-content: space-between;
 }
 .armor-card .item-img {
   display: block;
@@ -13,20 +10,29 @@
   width: 50%;
   width: 50px;
 }
-.armor-card .armor-stats {
+.armor-card .armor-name {
+  text-transform: uppercase;
+  text-align: center;
+}
+.armor-card .armor-pair-box {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-.armor-card .armor-stats .stat-name {
-  padding: 2px;
-  width: 49%;
+.armor-card .armor-pair-box .armor-stats {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.armor-card .armor-pair-box .armor-stats .stat-name,
+.armor-card .armor-pair-box .armor-stats .armor-statvalue {
+  padding: 2px 5px 2px 0px;
+}
+.armor-card .armor-pair-box .armor-stats .stat-name {
   text-align: left;
   text-transform: capitalize;
 }
-.armor-card .armor-stats .armor-statvalue {
-  padding: 2px;
-  width: 49%;
+.armor-card .armor-pair-box .armor-stats .armor-statvalue {
   text-align: center;
   text-transform: capitalize;
 }
@@ -55,23 +61,17 @@
 .health-info .stat-element {
   margin-bottom: 10px;
 }
-.health-info .stat-element .shock-icons {
-  display: flex;
-  flex-direction: row;
-}
-.health-info .stat-element .shock-icons .dot-container {
-  color: white;
-}
-.health-info .stat-element .shock-icons .crossed {
-  filter: invert();
-}
+.health-info .stat-element .shock-icons,
 .health-info .stat-element .wounds-icons {
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
+.health-info .stat-element .shock-icons .dot-container,
 .health-info .stat-element .wounds-icons .dot-container {
   color: white;
 }
+.health-info .stat-element .shock-icons .crossed,
 .health-info .stat-element .wounds-icons .crossed {
   filter: invert();
 }
@@ -151,7 +151,6 @@
   flex-direction: column;
   /* Headers */
   /* General settings */
-  /* Containers for content */
 }
 .cd10.sheet.namedCharacter form h1 {
   font-size: 2em;
@@ -175,34 +174,10 @@
   min-height: 100px;
 }
 .cd10.sheet.namedCharacter form .actor-image {
-  max-width: 160px;
+  max-height: 200px;
 }
 .cd10.sheet.namedCharacter form hr {
   width: 150px;
-}
-.cd10.sheet.namedCharacter form .flex-row {
-  display: flex;
-  flex-direction: row;
-}
-.cd10.sheet.namedCharacter form .flex-column {
-  display: flex;
-  flex-direction: column;
-}
-.cd10.sheet.namedCharacter form .flex-start {
-  justify-content: flex-start;
-  align-content: flex-start;
-}
-.cd10.sheet.namedCharacter form .flex-even {
-  justify-content: space-evenly;
-  align-content: flex-start;
-}
-.cd10.sheet.namedCharacter form .flex-between {
-  justify-content: space-between;
-  align-content: flex-start;
-}
-.cd10.sheet.namedCharacter form .flex-center {
-  justify-content: center;
-  align-content: flex-start;
 }
 .cd10.sheet.namedCharacter .bio-box {
   padding: 10px;
@@ -233,6 +208,87 @@
   text-align: left;
 }
 .cd10.sheet.namedCharacter .attribute-box .attribute-pair .attribute-value {
+  text-align: right;
+  width: 25px;
+}
+.cd10.sheet.mookCharacter {
+  min-height: 700px;
+  max-width: 480px;
+}
+.cd10.sheet.mookCharacter form {
+  display: flex;
+  flex-direction: column;
+  /* Headers */
+  /* General settings */
+  /* Skills and trait */
+}
+.cd10.sheet.mookCharacter form h1 {
+  font-size: 2em;
+  margin-right: 5px;
+  border: none;
+}
+.cd10.sheet.mookCharacter form h1 input {
+  height: auto;
+  padding: 5px;
+}
+.cd10.sheet.mookCharacter form h1,
+.cd10.sheet.mookCharacter form h3 {
+  text-align: center;
+}
+.cd10.sheet.mookCharacter form input {
+  border: none;
+  background: none;
+  text-align: center;
+}
+.cd10.sheet.mookCharacter form .actor-image {
+  max-height: 200px;
+}
+.cd10.sheet.mookCharacter form hr {
+  width: 150px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.cd10.sheet.mookCharacter form .header-box,
+.cd10.sheet.mookCharacter form .title-box,
+.cd10.sheet.mookCharacter form .equipment-list {
+  width: 100%;
+}
+.cd10.sheet.mookCharacter form .body-box {
+  padding: 10px;
+}
+.cd10.sheet.mookCharacter form .body-box .equipment-list {
+  justify-content: space-evenly;
+}
+.cd10.sheet.mookCharacter form .quote textarea {
+  resize: none;
+  min-height: unset;
+  max-height: 27px;
+  text-align: center;
+  font-style: italic;
+  border: none;
+  background: none;
+  font-family: "Signika", sans-serif;
+}
+.cd10.sheet.mookCharacter form .ability-card {
+  width: 100%;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.cd10.sheet.mookCharacter form .ability-card .skill-trait-header .fa-plus {
+  padding-top: 3px;
+  margin-left: 5px;
+}
+.cd10.sheet.mookCharacter form .ability-card .skill-list .attribute-pair .fa-trash,
+.cd10.sheet.mookCharacter form .ability-card .trait-list .attribute-pair .fa-trash {
+  padding-top: 6px;
+  margin-left: 5px;
+}
+.cd10.sheet.mookCharacter form .ability-card .skill-list .attribute-pair .attribute-name,
+.cd10.sheet.mookCharacter form .ability-card .trait-list .attribute-pair .attribute-name {
+  text-align: left;
+}
+.cd10.sheet.mookCharacter form .ability-card .skill-list .attribute-pair .attribute-value,
+.cd10.sheet.mookCharacter form .ability-card .trait-list .attribute-pair .attribute-value {
   text-align: right;
   width: 25px;
 }
@@ -280,20 +336,50 @@
   text-transform: uppercase;
   text-align: center;
 }
-.weapon-card .weapon-stats {
+.weapon-card .weapon-pair-box {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-.weapon-card .weapon-stats .stat-name {
-  padding: 2px;
-  width: 49%;
+.weapon-card .weapon-pair-box .weapon-stats {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.weapon-card .weapon-pair-box .weapon-stats .stat-name,
+.weapon-card .weapon-pair-box .weapon-stats .weapon-statvalue {
+  padding: 2px 5px 2px 0px;
+}
+.weapon-card .weapon-pair-box .weapon-stats .stat-name {
   text-align: left;
   text-transform: capitalize;
 }
-.weapon-card .weapon-stats .weapon-statvalue {
-  padding: 2px;
-  width: 49%;
+.weapon-card .weapon-pair-box .weapon-stats .weapon-statvalue {
   text-align: center;
   text-transform: capitalize;
+}
+/* Containers for content */
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+.flex-start {
+  justify-content: flex-start;
+  align-content: flex-start;
+}
+.flex-even {
+  justify-content: space-evenly;
+  align-content: flex-start;
+}
+.flex-between {
+  justify-content: space-between;
+  align-content: flex-start;
+}
+.flex-center {
+  justify-content: flex-start;
+  align-content: center;
 }

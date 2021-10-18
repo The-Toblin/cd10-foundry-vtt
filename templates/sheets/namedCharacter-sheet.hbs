@@ -78,32 +78,32 @@
                             </a>
                     </div>
                     <div class="trait-list flex-column flex-start">
-                            {{#each traits as |trait id|}}
-                            <div class="attribute-pair flex-row flex-evenly item" data-item-id="{{trait._id}}">
-                                <input
-                                    class="attribute-name inline-edit"
-                                    data-field="name"
-                                    type="text"
-                                    value="{{trait.name}}"
-                                    placeholder="{{localize "cd10.skill.name"}}"
-                                />
-                                <input
-                                    class="attribute-value inline-edit"
-                                    data-field="data.skillLevel"
-                                    type="text"
-                                    value="{{trait.data.skillLevel}}"
-                                    placeholder="{{localize "cd10.trait.skillLevel"}}"
-                                />
-                                <a
-                                    class="item-delete"
-                                    data-type="skill"
-                                    title={{localize "cd10.sheet.remove" }}>
-                                    
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                                </div>
-                            {{/each}}
-                        </div>
+                        {{#each traits as |trait id|}}
+                        <div class="attribute-pair flex-row flex-evenly item" data-item-id="{{trait._id}}">
+                            <input
+                                class="attribute-name inline-edit"
+                                data-field="name"
+                                type="text"
+                                value="{{trait.name}}"
+                                placeholder="{{localize "cd10.skill.name"}}"
+                            />
+                            <input
+                                class="attribute-value inline-edit"
+                                data-field="data.skillLevel"
+                                type="text"
+                                value="{{trait.data.skillLevel}}"
+                                placeholder="{{localize "cd10.trait.skillLevel"}}"
+                            />
+                            <a
+                                class="item-delete"
+                                data-type="skill"
+                                title={{localize "cd10.sheet.remove" }}>
+                                
+                                <i class="fas fa-trash"></i>
+                            </a>
+                            </div>
+                        {{/each}}
+                    </div>
                 </div>
             </div>
              <hr>

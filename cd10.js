@@ -33,7 +33,7 @@ Hooks.once("init", function() {
         label: "CD10 Hero/Villain Sheet"
     });
     Actors.registerSheet("cd10", CD10MookCharacterSheet, {
-        types: ["fodder", "monster"],
+        types: ["mook", "monster"],
         makeDefault: true,
         label: "CD10 Mook/Monster Sheet"
     });

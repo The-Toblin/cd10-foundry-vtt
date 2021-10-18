@@ -3,7 +3,7 @@
         "types": [
             "hero",
             "nemesis",
-            "fodder",
+            "mook",
             "monster"
         ],
         "templates": {
@@ -17,17 +17,11 @@
                     "value": 0,
                     "max": 15
                 },
-                "modifier": "0",
-                "attackPrimary": {
-                    "name": "",
-                    "value": 4
-                },
-                "defensePrimary": {
-                    "name": "",
-                    "value": 2
-                },
+                "modifier": 0,
                 "description": "This is a description.",
-                "debilitationType": ""
+                "debilitationType": "",
+                "totalTraitValue": 0,
+                "quote": ""
             },
             "namedCharacter": {
                 "title": "",
@@ -39,15 +33,6 @@
                 "appearance": "",
                 "personality": "",
                 "goal": "",
-                "attackSecondary": {
-                    "name": "",
-                    "value": 0
-                },
-                "defenseSecondary": {
-                    "name": "",
-                    "value": 0
-                },
-                "totalTraitValue": 0,
                 "notes": "Notes",
                 "money": 0
             }
@@ -73,7 +58,7 @@
             ],
             "playername": "Keeper of Tales"
         },
-        "fodder": {
+        "mook": {
             "templates": [
                 "commonStats"
             ]
@@ -86,13 +71,12 @@
     },
     "Item": {
         "types": [
-            "skill",
-            "trait",
-            "ability",
-            "weapon",
             "armor",
             "effectItem",
-            "genericItem"
+            "genericItem",
+            "skill",
+            "trait",
+            "weapon"
         ],
         "templates": {
             "itemDescription": {
@@ -159,7 +143,8 @@
             "pierceProtection": 0,
             "bluntProtection": 0,
             "energyProtection": 0,
-            "shockProtection": 0
+            "shockProtection": 0,
+            "blockValue": 0
         },
         "effectItem": {
             "templates": [

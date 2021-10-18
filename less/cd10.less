@@ -3,6 +3,40 @@
 @import "./character-stat-block.less";
 @import "./item-sheet.less";
 @import "./namedCharacter-sheet.less";
+@import "./mookCharacter-sheet.less";
 @import "./skill-card.less";
 @import "./trait-card.less";
 @import "./weapon-card.less";
+
+/* Containers for content */
+.flex-row {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.flex-start {
+    justify-content: flex-start;
+    align-content: flex-start;
+}
+
+.flex-even {
+    justify-content: space-evenly;
+    align-content: flex-start;
+}
+
+.flex-between {
+    justify-content: space-between;
+    align-content: flex-start;
+}
+
+.flex-center {
+    justify-content: flex-start;
+    align-content: center;
+}

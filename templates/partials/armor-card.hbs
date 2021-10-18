@@ -7,51 +7,74 @@
         title="{{name}}"
         class="item-img"
     />
-    <div class="armor-stats">
-    {{#if data.slashProtection}}
-        <div class="stat-name">
-            {{localize "cd10.armor.slashProtection"}}
+     <div class="armor-pair-box">
+        <div class="armor-stats">
+            {{#if data.slashProtection}}
+            <div class="stat-name">
+                {{localize "cd10.armor.slashProtection"}}
+            </div>
+            <div class="armor-statvalue">
+                {{data.slashProtection}}
+            </div>
+            {{/if}}
+            {{#if data.pierceProtection}}
+            <div class="stat-name">
+                {{localize "cd10.armor.pierceProtection"}}
+            </div>
+            <div class="armor-statvalue">
+                {{data.pierceProtection}}
+            </div>
+            {{/if}}
         </div>
-        <div class="armor-statvalue">
-            {{data.slashProtection}}
-        </div>
-    {{/if}}
-    {{#if data.pierceProtection}}
-        <div class="stat-name">
-            {{localize "cd10.armor.pierceProtection"}}
-        </div>
-        <div class="armor-statvalue">
-            {{data.pierceProtection}}
-        </div>
-    {{/if}}
     </div>
-    <div class="armor-stats">
-    {{#if data.bluntProtection}}
-        <div class="stat-name">
-            {{localize "cd10.armor.bluntProtection"}}
-        </div>
-        <div class="armor-statvalue">
-            {{data.bluntProtection}}
-        </div>
-    {{/if}}
-    {{#if data.shockProtection}}
-        <div class="stat-name">
-            {{localize "cd10.armor.shockProtection"}}
-        </div>
-        <div class="armor-statvalue">
-            {{data.shockProtection}}
-        </div>
-    {{/if}}
-    </div>
-    <div class="armor-stats">
-        {{#if data.energyProtection}}
-        <div class="stat-name">
-            {{localize "cd10.armor.energyProtection"}}
-        </div>
-        <div class="armor-statvalue">
-            {{data.energyProtection}}
-        </div>
+    <div class="armor-pair-box">
+        <div class="armor-stats">
+        {{#if data.bluntProtection}}
+            <div class="stat-name">
+                {{localize "cd10.armor.bluntProtection"}}
+            </div>
+            <div class="armor-statvalue">
+                {{data.bluntProtection}}
+            </div>
         {{/if}}
+        {{#if data.energyProtection}}
+            <div class="stat-name">
+                {{localize "cd10.armor.energyProtection"}}
+            </div>
+            <div class="armor-statvalue">
+                {{data.energyProtection}}
+            </div>
+        {{else}}
+            {{#if data.shockProtection}}
+                <div class="stat-name">
+                    {{localize "cd10.armor.shockProtection"}}
+                </div>
+                <div class="armor-statvalue">
+                    {{data.shockProtection}}
+                </div>
+            {{/if}}
+        {{/if}}
+        </div>
+    </div>
+    <div class="armor-pair-box">
+        <div class="armor-stats">
+            {{#if data.energyProtection}}
+                <div class="stat-name">
+                    {{localize "cd10.armor.shockProtection"}}
+                </div>
+                <div class="armor-statvalue">
+                    {{data.shockProtection}}
+                </div>
+            {{/if}}
+            {{#if data.blockValue}}
+                <div class="stat-name">
+                    {{localize "cd10.armor.blockValue"}}
+                </div>
+                <div class="armor-statvalue">
+                    {{data.blockValue}}
+                </div>
+            {{/if}}
+        </div>
     </div>
     <div class="stat-name" style="text-align:center;">
     {{localize "cd10.sheet.coverage"}}
