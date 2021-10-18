@@ -1,0 +1,101 @@
+.cd10.sheet.mookCharacter {
+  min-height: 700px;
+  max-width: 480px;
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    /* Headers */
+    h1 {
+      font-size: 2em;
+      margin-right: 5px;
+      border: none;
+
+      input {
+        height: auto;
+        padding: 5px;
+      }
+    }
+
+    h1,
+    h3 {
+      text-align: center;
+    }
+
+    /* General settings */
+    input {
+      border: none;
+      background: none;
+      text-align: center;
+    }
+
+    .actor-image {
+      max-height: 200px;
+    }
+
+    hr {
+      width: 150px;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+
+    .header-box,
+    .title-box,
+    .equipment-list {
+      width: 100%;
+    }
+
+    .body-box {
+      padding: 10px;
+
+      .equipment-list {
+        justify-content: space-evenly;
+      }
+    }
+
+    .quote {
+      textarea {
+        resize: none;
+        min-height: unset;
+        max-height: 27px;
+        text-align: center;
+        font-style: italic;
+        border: none;
+        background: none;
+        font-family: "Signika", sans-serif;
+      }
+    }
+
+    /* Skills and trait */
+    .ability-card {
+      width: 100%;
+      margin-left: 10px;
+      margin-right: 10px;
+
+      .skill-trait-header {
+        .fa-plus {
+          padding-top: 3px;
+          margin-left: 5px;
+        }
+      }
+
+      .skill-list,
+      .trait-list {
+        .attribute-pair {
+          .fa-trash {
+            padding-top: 6px;
+            margin-left: 5px;
+          }
+          .attribute-name {
+            text-align: left;
+          }
+          .attribute-value {
+            text-align: right;
+            width: 25px;
+          }
+        }
+      }
+    }
+  }
+}
