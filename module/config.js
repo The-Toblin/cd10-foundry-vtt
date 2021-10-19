@@ -25,6 +25,7 @@ cd10.reach = {
     vlong: "cd10.reach.vlong"
 }
 cd10.coverage = {
+    all: "cd10.armor.coverage.all",
     head: "cd10.armor.coverage.head",
     chest: "cd10.armor.coverage.chest",
     torso: "cd10.armor.coverage.torso",

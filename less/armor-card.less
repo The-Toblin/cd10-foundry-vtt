@@ -1,46 +1,43 @@
 .armor-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  
-    .item-img {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      width: 50%;
-      width: 50px;
-    }
-  
-    .armor-name {
-      text-transform: uppercase;
-      text-align: center;
-    }
-  
-    .armor-pair-box {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-  
-      .armor-stats {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-  
-        .stat-name,
-        .armor-statvalue {
-          padding: 2px 5px 2px 0px;
-        }
-  
-        .stat-name {
-          text-align: left;
-          text-transform: capitalize;
-        }
-  
-        .armor-statvalue {
-          text-align: center;
-          text-transform: capitalize;
-        }
-      }
-    }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .item-img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    width: 50px;
+  }
+
+  .armor-name {
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .armor-coverage {
+      justify-content: center;
   }
   
+  .armor-stats {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .stat-name,
+    .armor-statvalue {
+      padding: 2px 5px 2px 0px;
+    }
+
+    .stat-name {
+      text-align: left;
+      text-transform: capitalize;
+    }
+
+    .armor-statvalue {
+      text-align: center;
+      text-transform: capitalize;
+    }
+  }
+}

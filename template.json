@@ -74,6 +74,7 @@
             "armor",
             "effectItem",
             "genericItem",
+            "shield",
             "skill",
             "trait",
             "weapon"
@@ -119,6 +120,18 @@
             "max": 4,
             "reversed": false
         },
+        "armor": {
+            "templates": [
+                "commonStats",
+                "itemDescription"
+            ],
+            "coverage": "",
+            "slashProtection": 0,
+            "pierceProtection": 0,
+            "bluntProtection": 0,
+            "energyProtection": 0,
+            "shockProtection": 0
+        },
         "weapon": {
             "templates": [
                 "commonStats",
@@ -133,18 +146,28 @@
             "reach": "",
             "blockValue": 0
         },
-        "armor": {
+        "shield": {
             "templates": [
                 "commonStats",
                 "itemDescription"
             ],
-            "coverage": "",
             "slashProtection": 0,
             "pierceProtection": 0,
             "bluntProtection": 0,
             "energyProtection": 0,
             "shockProtection": 0,
             "blockValue": 0
+        },
+        "ammunition": {
+            "templates": [
+                "commonStats",
+                "itemDescription"
+            ],
+            "slashDamage": 0,
+            "pierceDamage": 0,
+            "bluntDamage": 0,
+            "energyDamage": 0,
+            "shockDamage": 0
         },
         "effectItem": {
             "templates": [

@@ -52,6 +52,9 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         sheetData.traits = sheetData.items.filter(function(item) {
             return item.type == "trait";
         });
+        sheetData.shields = sheetData.items.filter(function(item) {
+            return item.type == "shield";
+        });
 
         return sheetData;
     }

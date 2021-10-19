@@ -16,30 +16,24 @@
     text-align: center;
   }
 
-  .weapon-pair-box {
+  .weapon-stats {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 
-    .weapon-stats {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
+    .stat-name,
+    .weapon-statvalue {
+      padding: 2px 5px 2px 0px;
+    }
 
-      .stat-name,
-      .weapon-statvalue {
-        padding: 2px 5px 2px 0px;
-      }
+    .stat-name {
+      text-align: left;
+      text-transform: capitalize;
+    }
 
-      .stat-name {
-        text-align: left;
-        text-transform: capitalize;
-      }
-
-      .weapon-statvalue {
-        text-align: center;
-        text-transform: capitalize;
-      }
+    .weapon-statvalue {
+      text-align: center;
+      text-transform: capitalize;
     }
   }
 }

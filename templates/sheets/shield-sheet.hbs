@@ -6,28 +6,14 @@
     <div class="sheet-content">
         <table>
             <tr>
-                {{#unless (eq item.type "shield")}}
-                <th>{{localize "cd10.sheet.coverage"}}</th>
-                {{/unless}}
                 <th>{{localize "cd10.armor.slashProtection"}}</th>
                 <th>{{localize "cd10.armor.pierceProtection"}}</th>
                 <th>{{localize "cd10.armor.bluntProtection"}}</th>
                 <th>{{localize "cd10.armor.energyProtection"}}</th>
                 <th>{{localize "cd10.armor.shockProtection"}}</th>
-                {{#if (eq item.type "shield")}}
                 <th>{{localize "cd10.weapon.blockValue"}}</th>
-                {{/if}}
             </tr>
             <tr>
-                <td>
-                    <select name="data.coverage">
-                        {{#select data.coverage}}
-                            {{#each config.coverage as |name type|}}
-                                <option value="{{type}}">{{localize name}}</option>
-                            {{/each}}
-                        {{/select}}
-                    </select>
-                </td>
                 <td>
                     <input name="data.slashProtection" type="text" value="{{data.slashProtection}}" data-dtype=" Number" />
                 </td>
@@ -43,11 +29,9 @@
                 <td>
                     <input name="data.shockProtection" type="text" value="{{data.shockProtection}}" data-dtype="Number" />
                 </td>
-                {{#if (eq item.type "shield")}}
                 <td>
-                    <input name="data.shockProtection" type="text" value="{{data.shockProtection}}" data-dtype="Number" />
+                    <input name="data.blockValue" type="text" value="{{data.blockValue}}" data-dtype="Number" />
                 </td>
-                {{/if}}
             </tr>
         </table>
         {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
