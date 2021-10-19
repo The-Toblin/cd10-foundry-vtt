@@ -60,6 +60,7 @@
         },
         "armor": {
             "coverage": {
+                "all": "All",
                 "head": "Head",
                 "chest": "Chest",
                 "torso": "Torso",

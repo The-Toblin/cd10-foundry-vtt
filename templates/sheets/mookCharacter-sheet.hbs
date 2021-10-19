@@ -128,6 +128,11 @@
                     {{> "systems/cd10/templates/partials/armor-card.hbs" armor}}
                     {{/each}}
                 </div>
+                <div class="shield-list">
+                    {{#each shields as |shield id|}}
+                    {{> "systems/cd10/templates/partials/armor-card.hbs" shield}}
+                    {{/each}}
+                </div>
             </div>
         </div>
     </div>

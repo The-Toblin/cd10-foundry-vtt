@@ -1,0 +1,80 @@
+<div class="weapon-card" data-item-id="{{_id}}">
+    <div class="weapon-info weapon-name">
+        <p>{{name}}</p>
+    </div>
+    <img 
+        src="{{img}}"
+        title="{{name}}"
+        class="item-img"
+    />
+    <div class="weapon-pair-box">
+        <div class="weapon-stats">
+            {{#if data.slashDamage}}
+            <div class="stat-name">
+                {{localize "cd10.weapon.slashDamage"}}
+            </div>
+            <div class="weapon-statvalue">
+                {{data.slashDamage}}
+            </div>
+            {{/if}}
+            {{#if data.pierceDamage}}
+            <div class="stat-name">
+                {{localize "cd10.weapon.pierceDamage"}}
+            </div>
+            <div class="weapon-statvalue">
+                {{data.pierceDamage}}
+            </div>
+            {{/if}}
+        </div>
+    </div>
+    <div class="weapon-pair-box">
+        <div class="weapon-stats">
+            {{#if data.bluntDamage}}
+            <div class="stat-name">
+                {{localize "cd10.weapon.bluntDamage"}}
+            </div>
+            <div class="weapon-statvalue">
+                {{data.bluntDamage}}
+            </div>
+            {{/if}}
+            {{#if data.energyDamage}}
+            <div class="stat-name">
+                {{localize "cd10.weapon.energyDamage"}}
+            </div>
+            <div class="weapon-statvalue">
+                {{data.energyDamage}}
+            </div>
+            {{/if}}
+        </div>
+    </div>
+    <div class="weapon-pair-box">
+        <div class="weapon-stats">
+        {{#if data.shockDamage}}
+            <div class="stat-name">
+                {{localize "cd10.weapon.shockDamage"}}
+            </div>
+            <div class="weapon-statvalue">
+                {{data.shockDamage}}
+            </div>
+        {{/if}}
+        {{#if data.blockValue}}
+            <div class="stat-name">
+                {{localize "cd10.weapon.blockValue"}}
+            </div>
+            <div class="weapon-statvalue">
+                {{data.blockValue}}
+            </div>
+        {{/if}}
+        </div>
+    </div>
+    <div class="weapon-pair-box">
+        <div class="weapon-stats">
+            <div class="stat-name">
+                {{localize "cd10.weapon.reach"}}
+            </div>
+            <div class="weapon-statvalue">
+                {{data.reach}}
+            </div>
+        </div>
+    </div>
+</div>

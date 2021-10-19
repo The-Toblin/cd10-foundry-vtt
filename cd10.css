@@ -14,25 +14,23 @@
   text-transform: uppercase;
   text-align: center;
 }
-.armor-card .armor-pair-box {
+.armor-card .armor-coverage {
+  justify-content: center;
+}
+.armor-card .armor-stats {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-.armor-card .armor-pair-box .armor-stats {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-.armor-card .armor-pair-box .armor-stats .stat-name,
-.armor-card .armor-pair-box .armor-stats .armor-statvalue {
+.armor-card .armor-stats .stat-name,
+.armor-card .armor-stats .armor-statvalue {
   padding: 2px 5px 2px 0px;
 }
-.armor-card .armor-pair-box .armor-stats .stat-name {
+.armor-card .armor-stats .stat-name {
   text-align: left;
   text-transform: capitalize;
 }
-.armor-card .armor-pair-box .armor-stats .armor-statvalue {
+.armor-card .armor-stats .armor-statvalue {
   text-align: center;
   text-transform: capitalize;
 }
@@ -336,25 +334,20 @@
   text-transform: uppercase;
   text-align: center;
 }
-.weapon-card .weapon-pair-box {
+.weapon-card .weapon-stats {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-.weapon-card .weapon-pair-box .weapon-stats {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-.weapon-card .weapon-pair-box .weapon-stats .stat-name,
-.weapon-card .weapon-pair-box .weapon-stats .weapon-statvalue {
+.weapon-card .weapon-stats .stat-name,
+.weapon-card .weapon-stats .weapon-statvalue {
   padding: 2px 5px 2px 0px;
 }
-.weapon-card .weapon-pair-box .weapon-stats .stat-name {
+.weapon-card .weapon-stats .stat-name {
   text-align: left;
   text-transform: capitalize;
 }
-.weapon-card .weapon-pair-box .weapon-stats .weapon-statvalue {
+.weapon-card .weapon-stats .weapon-statvalue {
   text-align: center;
   text-transform: capitalize;
 }
@@ -380,6 +373,6 @@
   align-content: flex-start;
 }
 .flex-center {
-  justify-content: flex-start;
-  align-content: center;
+  justify-content: center;
+  align-content: flex-start;
 }
