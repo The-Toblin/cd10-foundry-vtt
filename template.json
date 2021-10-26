@@ -56,10 +56,10 @@
             "templates": [
                 "commonStats"
             ],
-            "playername": {
+            "playerName": {
                 "type": "String",
                 "label": "Player Name",
-                "value": 0
+                "value": ""
             },
             "exp": {
                 "type": "Number",

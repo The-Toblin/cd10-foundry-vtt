@@ -3,6 +3,11 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         return mergeObject(super.defaultOptions, {
             template: "systems/cd10_dev/templates/sheets/namedCharacter-sheet.hbs",
             classes: ["cd10", "sheet", "namedCharacter"],
+            tabs: [{
+                navSelector: ".sheet-tabs",
+                contentSelector: ".sheet-body",
+                initial: "biography"
+            }]
         });
     }
 
@@ -42,21 +47,20 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         })
 
         /* Create subproperties for item types */
-        sheetData.ammunition = this.actor.getAmmo;
-        sheetData.armors = this.actor.getArmors;
-        sheetData.shields = this.actor.getShields;
-        sheetData.meleeWeapons = this.actor.getMeleeWeapons;
-        sheetData.rangedWeapons = this.actor.getRangedWeapons;
-        sheetData.skills = this.actor.getSkills;
-        sheetData.traits = this.actor.getTraits;
-        sheetData.spells = this.actor.getSpells;
+        sheetData.ammunition = sheetData.items.filter(p => p.type == "ammunition");
+        sheetData.armors = sheetData.items.filter(p => p.type == "armor");
+        sheetData.shields = sheetData.items.filter(p => p.type == "shield");
+        sheetData.meleeWeapons = sheetData.items.filter(p => p.type == "weapon" && !p.data.isRanged.value);
+        sheetData.rangedWeapons = sheetData.items.filter(p => p.type == "weapon" && p.data.isRanged.value);
+        sheetData.skills = sheetData.items.filter(p => p.type == "skill");
+        sheetData.traits = sheetData.items.filter(p => p.type == "trait");
+        sheetData.spells = sheetData.items.filter(p => p.type == "spell");
 
         return sheetData;
     }
 
     activateListeners(html) {
         html.find(".item-create").click(this._onItemCreate.bind(this));
-        html.find(".log-output").click(this._logOutputTest.bind(this));
         html.find(".inline-edit").change(this._onSkillEdit.bind(this));
         html.find(".item-delete").click(this._onItemDelete.bind(this));
         html.find('.shock-icons').on("click contextmenu", this._onShockMarkChange.bind(this));
@@ -66,17 +70,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         new ContextMenu(html, ".armor-card", this.itemContextMenu);
 
         super.activateListeners(html);
-    }
-
-    _logOutputTest(event) {
-        event.preventDefault();
-
-        console.log("Skills: ", this.actor.getSkills);
-        console.log("Traits: ", this.actor.getTraits);
-        console.log("Melee: ", this.actor.getMeleeWeapons);
-        console.log("Ranged: ", this.actor.getRangedWeapons);
-        console.log("Shock: ", this.actor.getShock);
-        console.log("Wounds: ", this.actor.getWounds);
     }
 
     _onItemCreate(event) {
@@ -105,9 +98,12 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemId;
+        const item = this.actor.items.get(itemId);
 
         await this.actor.deleteEmbeddedDocuments("Item", [itemId]);
-        this._updateTotalTraitValue();
+        if (item.type == "trait") {
+            this._updateTotalTraitValue();
+        }
 
     }
 
@@ -123,14 +119,19 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         const item = this.actor.items.get(itemId);
         const field = element.dataset.field;
 
+        console.log("Item", item);
         console.log("Item ID: ", itemId);
         console.log("Field: ", field);
+        console.log("Item Type: ", item.type);
+        console.log("Value: ", element.value);
 
         await item.update({
             [field]: element.value
         });
 
-        this._updateTotalTraitValue();
+        if (item.type == "trait") {
+            this._updateTotalTraitValue();
+        }
     }
 
     async _onShockMarkChange(event) {

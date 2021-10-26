@@ -42,17 +42,23 @@
 .character-description-box .experiencebox {
   display: inline-flex;
 }
-.character-description-box .tablebox th {
+.character-description-box .tablebox table {
+  border: none;
+}
+.character-description-box .tablebox table tr {
+  background-color: unset;
+}
+.character-description-box .tablebox table th {
   text-align: left;
   padding-left: 5px;
   padding-right: 5px;
 }
-.character-description-box .tablebox td {
+.character-description-box .tablebox table td {
   border: none;
   padding-left: 5px;
   padding-right: 5px;
 }
-.character-description-box .tablebox td input {
+.character-description-box .tablebox table td input {
   text-align: right !important;
 }
 .health-info .stat-element {
@@ -64,9 +70,9 @@
   flex-direction: row;
   justify-content: center;
 }
-.health-info .stat-element .shock-icons .dot-container,
-.health-info .stat-element .wounds-icons .dot-container {
-  color: white;
+.health-info .stat-element .shock-icons z .dot-container,
+.health-info .stat-element .wounds-icons z .dot-container {
+  color: var(--font-color);
 }
 .health-info .stat-element .shock-icons .crossed,
 .health-info .stat-element .wounds-icons .crossed {
@@ -139,7 +145,36 @@
 .cd10.sheet.namedCharacter {
   min-width: 200px;
   min-height: 300px;
-  background-image: url("./assets/backgrounds/sheet-background.jpeg");
+  max-width: 1200px;
+  max-height: 1920px;
+}
+.cd10.sheet.namedCharacter .window-content {
+  background: url(./assets/backgrounds/sheet_background.jpg);
+}
+.cd10.sheet.namedCharacter form {
+  color: var(--font-color);
+}
+.cd10.sheet.namedCharacter form .editor {
+  height: 100%;
+  min-height: auto;
+}
+.cd10.sheet.namedCharacter form .editor .editor-content {
+  min-height: auto;
+  color: var(--font-color);
+}
+.cd10.sheet.namedCharacter form input {
+  border: none;
+  background: none;
+  color: var(--font-color);
+}
+.cd10.sheet.namedCharacter form .sheet-card {
+  background: url(./assets/backgrounds/card_background.jpg);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, var(--font-color)) 1;
+  margin: 2px;
+  padding: 2px;
+  box-shadow: 5px 10px #000000;
 }
 .cd10.sheet.namedCharacter form h1 {
   font-size: 2em;
@@ -150,12 +185,41 @@
 .cd10.sheet.namedCharacter form h3 {
   text-align: center;
 }
-.cd10.sheet.namedCharacter form input {
-  border: none;
+.cd10.sheet.namedCharacter form hr {
+  border-color: var(--font-color);
+  width: 150px;
 }
 .cd10.sheet.namedCharacter form .sheet-main-content {
   margin-right: 10px;
   width: 80%;
+}
+.cd10.sheet.namedCharacter form .sheet-main-content .sheet-body .sheet-skills .skill-list,
+.cd10.sheet.namedCharacter form .sheet-main-content .sheet-body .sheet-skills .traits-list {
+  width: 49%;
+}
+.cd10.sheet.namedCharacter form .sheet-main-content .sheet-body .sheet-skills .skill-list .attribute-pair .attribute-name,
+.cd10.sheet.namedCharacter form .sheet-main-content .sheet-body .sheet-skills .traits-list .attribute-pair .attribute-name {
+  text-align: left;
+  vertical-align: middle;
+  padding: 2px;
+  padding-top: 4px;
+  width: calc(100% - 2px);
+}
+.cd10.sheet.namedCharacter form .sheet-main-content .sheet-body .sheet-skills .skill-list .attribute-pair .attribute-value,
+.cd10.sheet.namedCharacter form .sheet-main-content .sheet-body .sheet-skills .traits-list .attribute-pair .attribute-value {
+  text-align: right;
+  width: 25px;
+}
+.cd10.sheet.namedCharacter form .sheet-main-content .sheet-body .sheet-skills .skill-list .item-delete,
+.cd10.sheet.namedCharacter form .sheet-main-content .sheet-body .sheet-skills .traits-list .item-delete {
+  vertical-align: middle;
+  padding-top: 4px;
+}
+.cd10.sheet.namedCharacter form .sheet-main-content .sheet-body .sheet-skills .skill-list input,
+.cd10.sheet.namedCharacter form .sheet-main-content .sheet-body .sheet-skills .traits-list input {
+  width: 20px;
+  text-align: center;
+  vertical-align: middle;
 }
 .cd10.sheet.namedCharacter form .image-box {
   width: 20%;
@@ -163,16 +227,21 @@
 .cd10.sheet.namedCharacter form .image-box img {
   min-width: 200px;
   min-height: 200px;
+  box-shadow: 5px 10px #000000;
 }
 .cd10.sheet.namedCharacter form .sheet-sidebar {
   padding: 10px;
+}
+.cd10.sheet.namedCharacter form .sheet-sidebar .sheet-card {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 .cd10.sheet.namedCharacter form .sheet-sidebar input {
   width: 30px;
   text-align: center;
 }
 .cd10.sheet.namedCharacter form .sheet-sidebar .sheet-money .money {
-  padding-top: 5px;
+  padding-top: 4px;
 }
 .cd10.sheet.mookCharacter {
   min-height: 700px;
@@ -314,6 +383,10 @@
 .weapon-card .weapon-stats .weapon-statvalue {
   text-align: center;
   text-transform: capitalize;
+}
+/* Variables */
+:root {
+  --font-color: #dfbb61;
 }
 /* Containers for content */
 .flex-row {

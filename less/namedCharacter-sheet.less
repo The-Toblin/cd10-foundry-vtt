@@ -1,9 +1,42 @@
 .cd10.sheet.namedCharacter {
   min-width: 200px;
   min-height: 300px;
-  background-image: url("./assets/backgrounds/sheet-background.jpeg");
+  max-width: 1200px;
+  max-height: 1920px;
+
+  .window-content {
+    background: url(./assets/backgrounds/sheet_background.jpg);
+  }
 
   form {
+    color: var(--font-color);
+
+    .editor {
+      height: 100%;
+      min-height: auto;
+
+      .editor-content {
+        min-height: auto;
+        color: var(--font-color);
+      }
+    }
+
+    input {
+      border: none;
+      background: none;
+      color: var(--font-color);
+    }
+
+    .sheet-card {
+      background: url(./assets/backgrounds/card_background.jpg);
+      border-style: solid;
+      border-width: 3px;
+      border-image: radial-gradient(black, var(--font-color)) 1;
+      margin: 2px;
+      padding: 2px;
+      box-shadow: 5px 10px rgb(0, 0, 0, 0.5);
+    }
+
     h1 {
       font-size: 2em;
       border: none;
@@ -15,13 +48,48 @@
       text-align: center;
     }
 
-    input {
-      border: none;
+    hr {
+      border-color: var(--font-color);
+      width: 150px;
     }
 
     .sheet-main-content {
       margin-right: 10px;
       width: 80%;
+
+      .sheet-body {
+        .sheet-skills {
+          .skill-list,
+          .traits-list {
+            width: 49%;
+
+            .attribute-pair {
+              .attribute-name {
+                text-align: left;
+                vertical-align: middle;
+                padding: 2px;
+                padding-top: 4px;
+                width: calc(100% - 2px);
+              }
+              .attribute-value {
+                text-align: right;
+                width: 25px;
+              }
+            }
+
+            .item-delete {
+              vertical-align: middle;
+              padding-top: 4px;
+            }
+
+            input {
+              width: 20px;
+              text-align: center;
+              vertical-align: middle;
+            }
+          }
+        }
+      }
     }
 
     .image-box {
@@ -30,21 +98,26 @@
       img {
         min-width: 200px;
         min-height: 200px;
+        box-shadow: 5px 10px rgb(0, 0, 0, 0.5);
       }
     }
 
     .sheet-sidebar {
       padding: 10px;
 
+      .sheet-card {
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+
       input {
         width: 30px;
         text-align: center;
-        
       }
 
       .sheet-money {
         .money {
-          padding-top: 5px;
+          padding-top: 4px;
         }
       }
     }

@@ -121,7 +121,7 @@
         "stats": {
             "name": "Name",
             "title": "Title",
-            "playername": "Player Name",
+            "playerName": "Player Name",
             "species": "Species",
             "age": "Age",
             "mainHand": "Main Hand",

@@ -6,6 +6,38 @@
                 <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize " cd10.stats.name"}}" />
             </h1>
         </div>
+        <nav class="sheet-tabs tabs" data-group="primary">
+            <a class="item" data-tab="biography">Biography</a>
+            <a class="item" data-tab="skills">Skills</a>
+            <a class="item" data-tab="combat">Combat</a>
+            <a class="item" data-tab="spells">Spells</a>
+            <a class="item" data-tab="inventory">Inventory</a>
+        </nav>
+        <section id="tabs" class="sheet-body">
+            {{!-- Biography Tab --}}
+            <div class="tab sheet-bio sheet-card" data-group="primary" data-tab="biography">
+                {{> "systems/cd10_dev/templates/partials/character-description-block.hbs"}}
+            </div>
+            {{!-- Skills Tab --}}
+            <div class="tab sheet-skills" data-group="primary" data-tab="skills">
+                {{> "systems/cd10_dev/templates/partials/skill-list.hbs"}}
+            </div>
+
+            {{!-- Combat Tab --}}
+            <div class="tab sheet-combat sheet-card" data-group="primary" data-tab="combat">
+                COMBAT
+            </div>
+
+            {{!-- Spells Tab --}}
+            <div class="tab sheet-spells sheet-card" data-group="primary" data-tab="spells">
+                Spells
+            </div>
+
+            {{!-- Inventory Tab --}}
+            <div class="tab sheet-inventory sheet-card" data-group="primary" data-tab="inventory">
+                Inventory
+            </div>
+        </section>
     </div>
     {{!-- Main Sidebar --}}
     <div class="sheet-sidebar flex-column flex-start">
@@ -13,13 +45,13 @@
             <img class="actor-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="200"
                 width="200" />
         </div>
-        <div class="sheet-health">
+        <div class="sheet-health sheet-card">
             <h3>
                 {{localize "cd10.sheet.health"}}
             </h3>
             {{> "systems/cd10_dev/templates/partials/character-stat-block.hbs"}}
         </div>
-        <div class="sheet-money">
+        <div class="sheet-money sheet-card">
             <h3 class="sheet-header">
                 {{localize "cd10.stats.money"}}
             </h3>

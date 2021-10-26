@@ -17,8 +17,8 @@
         />
       </h1>
       <h1>
-        <select name="data.skillType">
-          {{#select data.skillType}}
+        <select name="data.skillType.value">
+          {{#select data.skillType.value}}
             {{#each config.traits as |name type|}}
               <option value="{{type}}">
                 {{localize name}}
@@ -39,25 +39,25 @@
         </div>
         <div class="stat-value">
           <input
-            name="data.min"
+            name="data.skillLevel.min"
             type="text"
-            value="{{data.min}}"
+            value="{{data.skillLevel.min}}"
             placeholder="{{localize "cd10.sheet.min"}}"
           />
         </div>
         <div class="stat-value">
           <input
-            name="data.max"
+            name="data.skillLevel.max"
             type="text"
-            value="{{data.max}}"
+            value="{{data.skillLevel.max}}"
             placeholder="{{localize "cd10.sheet.max"}}"
           />
         </div>
       </div>
     </div>
     {{editor
-      content=data.description
-      target="data.description"
+      content=data.description.value
+      target="data.description.value"
       button=true
       owner=owner
       editable=editable
