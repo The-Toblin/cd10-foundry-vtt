@@ -14,7 +14,7 @@
                     <h3 
                         class="sheet-header">{{localize "cd10.sheet.health"}}
                     </h3>
-                    {{> "systems/cd10/templates/partials/character-stat-block.hbs"}}
+                    {{> "systems/cd10_dev/templates/partials/character-stat-block.hbs"}}
                 </div>
             </div>
             <img 
@@ -120,17 +120,22 @@
             <div class="flex-row flex-evenly equipment-list">
                 <div class="weapon-list">
                     {{#each weapons as |weapon id|}}
-                    {{> "systems/cd10/templates/partials/weapon-card.hbs" weapon}}
+                    {{> "systems/cd10_dev/templates/partials/weapon-card.hbs" weapon }}
+                    {{/each}}
+                </div>
+                <div class="weapon-list">
+                    {{#each rangedWeapons as |rangedWeapon id|}}
+                    {{> "systems/cd10_dev/templates/partials/weapon-card.hbs" rangedWeapon }}
                     {{/each}}
                 </div>
                 <div class="armor-list">
                     {{#each armors as |armor id|}}
-                    {{> "systems/cd10/templates/partials/armor-card.hbs" armor}}
+                    {{> "systems/cd10_dev/templates/partials/armor-card.hbs" armor }}
                     {{/each}}
                 </div>
                 <div class="shield-list">
                     {{#each shields as |shield id|}}
-                    {{> "systems/cd10/templates/partials/armor-card.hbs" shield}}
+                    {{> "systems/cd10_dev/templates/partials/armor-card.hbs" shield }}
                     {{/each}}
                 </div>
             </div>

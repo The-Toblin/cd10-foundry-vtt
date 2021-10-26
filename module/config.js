@@ -1,5 +1,14 @@
 export const cd10 = {};
 
+cd10.ammunitionTypes = {
+    none: "cd10.attack.none",
+    arrows: "cd10.ammunition.arrows",
+    bolts: "cd10.ammunition.bolts",
+    bullets: "cd10.ammunition.bullets",
+    rocks: "cd10.ammunition.rocks",
+    rockets: "cd10.ammunition.rockets",
+    shells: "cd10.ammunition.shells"
+}
 cd10.combatSkills = {
     none: "cd10.attack.none",
     archery: "cd10.attack.archery",
@@ -34,6 +43,14 @@ cd10.coverage = {
     legs: "cd10.armor.coverage.legs"
 }
 cd10.skills = {
+    communication: "cd10.skill.communication",
+    crafts: "cd10.skill.crafts",
+    firearms: "cd10.skill.firearms",
+    knowledge: "cd10.skill.knowledge",
+    maneuvers: "cd10.skill.maneuvers",
+    technology: "cd10.skill.technology",
+    occultism: "cd10.skill.occultism",
+    willpower: "cd10.skill.willpower"
 
 }
 cd10.traits = {

@@ -7,7 +7,6 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 50%;
   width: 50px;
 }
 .armor-card .armor-name {
@@ -138,22 +137,14 @@
   border-bottom: 2px solid black;
 }
 .cd10.sheet.namedCharacter {
-  min-width: 800px;
-  min-height: 1000px;
-  /* Left major content column */
-  /* Right major column, AKA sidebar */
-  /* Skills and trait */
-}
-.cd10.sheet.namedCharacter form {
-  display: flex;
-  flex-direction: column;
-  /* Headers */
-  /* General settings */
+  min-width: 200px;
+  min-height: 300px;
+  background-image: url("./assets/backgrounds/sheet-background.jpeg");
 }
 .cd10.sheet.namedCharacter form h1 {
   font-size: 2em;
-  margin-right: 5px;
   border: none;
+  padding: 3px;
 }
 .cd10.sheet.namedCharacter form h1,
 .cd10.sheet.namedCharacter form h3 {
@@ -161,53 +152,27 @@
 }
 .cd10.sheet.namedCharacter form input {
   border: none;
-  background: none;
+}
+.cd10.sheet.namedCharacter form .sheet-main-content {
+  margin-right: 10px;
+  width: 80%;
+}
+.cd10.sheet.namedCharacter form .image-box {
+  width: 20%;
+}
+.cd10.sheet.namedCharacter form .image-box img {
+  min-width: 200px;
+  min-height: 200px;
+}
+.cd10.sheet.namedCharacter form .sheet-sidebar {
+  padding: 10px;
+}
+.cd10.sheet.namedCharacter form .sheet-sidebar input {
+  width: 30px;
   text-align: center;
 }
-.cd10.sheet.namedCharacter form .editor {
-  height: 100%;
-  min-height: 100px;
-}
-.cd10.sheet.namedCharacter form .editor .editor-content {
-  min-height: 100px;
-}
-.cd10.sheet.namedCharacter form .actor-image {
-  max-height: 200px;
-}
-.cd10.sheet.namedCharacter form hr {
-  width: 150px;
-}
-.cd10.sheet.namedCharacter .bio-box {
-  padding: 10px;
-  width: 100%;
-}
-.cd10.sheet.namedCharacter .sidebar {
-  padding: 10px;
-}
-.cd10.sheet.namedCharacter .sidebar .weapon-list,
-.cd10.sheet.namedCharacter .sidebar .armor-list {
-  padding: 5px;
-  margin-bottom: 10px;
-}
-.cd10.sheet.namedCharacter .sidebar .money {
-  padding-top: 4px;
-}
-.cd10.sheet.namedCharacter .sidebar input {
-  width: 30px;
-}
-.cd10.sheet.namedCharacter .attribute-box .fas {
+.cd10.sheet.namedCharacter form .sheet-sidebar .sheet-money .money {
   padding-top: 5px;
-  margin-left: 5px;
-}
-.cd10.sheet.namedCharacter .attribute-box .attribute-card {
-  flex-basis: 45%;
-}
-.cd10.sheet.namedCharacter .attribute-box .attribute-pair .attribute-name {
-  text-align: left;
-}
-.cd10.sheet.namedCharacter .attribute-box .attribute-pair .attribute-value {
-  text-align: right;
-  width: 25px;
 }
 .cd10.sheet.mookCharacter {
   min-height: 700px;
@@ -327,7 +292,6 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 50%;
   width: 50px;
 }
 .weapon-card .weapon-name {

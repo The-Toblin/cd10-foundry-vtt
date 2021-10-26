@@ -1,69 +1,132 @@
 {
     "Actor": {
         "types": [
-            "hero",
-            "nemesis",
-            "mook",
-            "monster"
+            "named",
+            "mook"
         ],
         "templates": {
             "commonStats": {
-                "name": "",
+                "species": {
+                    "type": "String",
+                    "label": "Species",
+                    "value": ""
+                },
                 "shock": {
+                    "type": "Number",
+                    "label": "Shock",
                     "value": 0,
-                    "max": 15
+                    "max": 15,
+                    "min": 0
                 },
                 "wounds": {
+                    "type": "Number",
+                    "label": "Wounds",
                     "value": 0,
-                    "max": 15
+                    "max": 15,
+                    "min": 0
                 },
-                "modifier": 0,
-                "description": "This is a description.",
-                "debilitationType": "",
-                "totalTraitValue": 0,
-                "quote": ""
-            },
-            "namedCharacter": {
-                "title": "",
-                "species": "",
-                "age": "",
-                "sex": "",
-                "gender": "",
-                "mainHand": "Right",
-                "appearance": "",
-                "personality": "",
-                "goal": "",
-                "notes": "Notes",
-                "money": 0
+                "modifier": {
+                    "type": "Number",
+                    "label": "Modifier",
+                    "value": 0
+                },
+                "debilitationType": {
+                    "type": "String",
+                    "label": "Debilitation Type",
+                    "value": ""
+                },
+                "totalTraitValue": {
+                    "type": "Number",
+                    "label": "Total Trait Value",
+                    "value": 0
+                },
+                "quote": {
+                    "type": "String",
+                    "label": "Quote",
+                    "value": ""
+                },
+                "downAndOut": {
+                    "type": "Boolean",
+                    "label": "Down and out",
+                    "value": false
+                }
             }
         },
-        "hero": {
-            "templates": [
-                "commonStats",
-                "namedCharacter"
-            ],
-            "playername": "",
-            "exp": 0,
-            "birthplace": "",
-            "family": {
-                "mother": "",
-                "father": "",
-                "siblings": []
-            }
-        },
-        "nemesis": {
-            "templates": [
-                "commonStats",
-                "namedCharacter"
-            ],
-            "playername": "Keeper of Tales"
-        },
-        "mook": {
+        "named": {
             "templates": [
                 "commonStats"
-            ]
+            ],
+            "playername": {
+                "type": "String",
+                "label": "Player Name",
+                "value": 0
+            },
+            "exp": {
+                "type": "Number",
+                "label": "Experience",
+                "total": 0,
+                "spent": 0
+            },
+            "birthplace": {
+                "type": "String",
+                "label": "Birthplace",
+                "value": ""
+            },
+            "family": {
+                "mother": {
+                    "type": "String",
+                    "label": "Mother's Name",
+                    "value": ""
+                },
+                "father": {
+                    "type": "String",
+                    "label": "Father's Name",
+                    "value": ""
+                },
+                "siblings": []
+            },
+            "title": {
+                "type": "String",
+                "label": "Title",
+                "value": ""
+            },
+            "age": {
+                "type": "Number",
+                "label": "Age",
+                "value": 0
+            },
+            "sex": {
+                "type": "String",
+                "label": "Sex",
+                "value": ""
+            },
+            "gender": {
+                "type": "String",
+                "label": "Gender",
+                "value": ""
+            },
+            "mainHand": {
+                "type": "String",
+                "label": "Main Hand",
+                "value": "Right"
+            },
+            "goal": {
+                "type": "String",
+                "label": "Goal",
+                "value": ""
+            },
+            "notes": {
+                "type": "String",
+                "label": "Notes",
+                "value": "Notes"
+            },
+            "money": {
+                "type": "Number",
+                "label": "Money",
+                "value": 0
+            }
         },
-        "monster": {
+        "mook": {
             "templates": [
                 "commonStats"
             ]
@@ -71,36 +134,126 @@
     },
     "Item": {
         "types": [
+            "ammunition",
             "armor",
-            "effectItem",
-            "genericItem",
-            "shield",
+            "disease",
             "skill",
+            "spell",
             "trait",
             "weapon"
         ],
         "templates": {
             "itemDescription": {
-                "description": "Enter your description here."
+                "description": {
+                    "type": "String",
+                    "label": "Description",
+                    "value": "This is a description."
+                }
             },
             "commonStats": {
-                "availability": [
-                    "common",
-                    "normal",
-                    "rare",
-                    "very rare",
-                    "unique"
-                ],
-                "trader": "",
-                "tradeGroup": "",
-                "cost": "",
-                "weight": 0
+                "availability": {
+                    "label": "Availability",
+                    "value": [
+                        "common",
+                        "normal",
+                        "rare",
+                        "very rare",
+                        "unique"
+                    ]
+                },
+                "trader": {
+                    "type": "String",
+                    "label": "Trader",
+                    "value": ""
+                },
+                "tradeGroup": {
+                    "type": "Number",
+                    "label": "Trade Group",
+                    "value": 1
+                },
+                "price": {
+                    "type": "Number",
+                    "label": "Price",
+                    "value": 0
+                },
+                "weight": {
+                    "type": "Number",
+                    "label": "Weight",
+                    "value": 1
+                },
+                "quantity": {
+                    "type": "Number",
+                    "label": "Quantity",
+                    "value": 1
+                }
             },
             "skillsTraits": {
-                "skillType": "",
-                "skillLevel": 0,
-                "min": 0,
-                "max": 12
+                "skillCategory": {
+                    "type": "String",
+                    "label": "Category",
+                    "value": ""
+                },
+                "skillLevel": {
+                    "type": "Number",
+                    "label": "Level",
+                    "value": 0,
+                    "min": 0,
+                    "max": 12
+                }
+            }
+        },
+        "ammunition": {
+            "templates": [
+                "commonStats",
+                "itemDescription"
+            ],
+            "ammoCount": 0,
+            "ammoType": "",
+            "slashDamage": 0,
+            "pierceDamage": 0,
+            "bluntDamage": 0,
+            "energyDamage": 0,
+            "shockDamage": 0
+        },
+        "armor": {
+            "templates": [
+                "commonStats",
+                "itemDescription"
+            ],
+            "coverage": {
+                "type": "String",
+                "label": "Coverage",
+                "value": "All"
+            },
+            "slashProtection": {
+                "type": "Number",
+                "label": "Slash Protection",
+                "value": 0
+            },
+            "pierceProtection": {
+                "type": "Number",
+                "label": "Pierce Protection",
+                "value": 0
+            },
+            "bluntProtection": {
+                "type": "Number",
+                "label": "Blunt Protection",
+                "value": 0
+            },
+            "energyProtection": {
+                "type": "Number",
+                "label": "Energy Protection",
+                "value": 0
+            },
+            "shockProtection": {
+                "type": "Number",
+                "label": "Shock Protection",
+                "value": 0
+            },
+            "isShield": {
+                "type": "Boolean",
+                "label": "Is Shield?",
+                "value": false
             }
         },
         "skill": {
@@ -108,72 +261,119 @@
                 "skillsTraits",
                 "itemDescription"
             ],
-            "teachable": true,
-            "levelUp": false
+            "teacher": {
+                "type": "Boolean",
+                "label": "Teacher required",
+                "value": false
+            },
+            "levelUp": {
+                "type": "Boolean",
+                "label": "Eligable for levelup",
+                "value": false
+            }
         },
         "trait": {
             "templates": [
                 "skillsTraits",
                 "itemDescription"
             ],
-            "min": -4,
-            "max": 4,
-            "reversed": false
-        },
-        "armor": {
-            "templates": [
-                "commonStats",
-                "itemDescription"
-            ],
-            "coverage": "",
-            "slashProtection": 0,
-            "pierceProtection": 0,
-            "bluntProtection": 0,
-            "energyProtection": 0,
-            "shockProtection": 0
+            "skillLevel": {
+                "min": -4,
+                "max": 4
+            },
+            "reversed": {
+                "type": "Boolean",
+                "label": "Reversed",
+                "value": false
+            }
         },
         "weapon": {
             "templates": [
                 "commonStats",
                 "itemDescription"
             ],
-            "attackWith": "",
-            "slashDamage": 0,
-            "pierceDamage": 0,
-            "bluntDamage": 0,
-            "energyDamage": 0,
-            "shockDamage": 0,
-            "reach": "",
-            "blockValue": 0
-        },
-        "shield": {
-            "templates": [
-                "commonStats",
-                "itemDescription"
-            ],
-            "slashProtection": 0,
-            "pierceProtection": 0,
-            "bluntProtection": 0,
-            "energyProtection": 0,
-            "shockProtection": 0,
-            "blockValue": 0
-        },
-        "ammunition": {
-            "templates": [
-                "commonStats",
-                "itemDescription"
-            ],
-            "slashDamage": 0,
-            "pierceDamage": 0,
-            "bluntDamage": 0,
-            "energyDamage": 0,
-            "shockDamage": 0
-        },
-        "effectItem": {
-            "templates": [
-                "commonStats",
-                "itemDescription"
-            ]
+            "attackSkill": {
+                "type": "String",
+                "label": "Skill",
+                "value": ""
+            },
+            "damage": {
+                "slashDamage": {
+                    "type": "Number",
+                    "label": "Slash Damage",
+                    "value": 0
+                },
+                "pierceDamage": {
+                    "type": "Number",
+                    "label": "Pierce Damage",
+                    "value": 0
+                },
+                "bluntDamage": {
+                    "type": "Number",
+                    "label": "Blunt Damage",
+                    "value": 0
+                },
+                "energyDamage": {
+                    "type": "Number",
+                    "label": "Energy Damage",
+                    "value": 0
+                },
+                "shockDamage": {
+                    "type": "Number",
+                    "label": "Shock Damage",
+                    "value": 0
+                }
+            },
+            "reach": {
+                "type": "String",
+                "label": "Reach",
+                "value": "Normal"
+            },
+            "blockValue": {
+                "type": "Number",
+                "label": "Block",
+                "value": 0
+            },
+            "isRanged": {
+                "type": "Boolean",
+                "label": "Ranged weapon?",
+                "value": false
+            },
+            "consumesAmmo": {
+                "type": "Boolean",
+                "label": "Consumes ammo?",
+                "value": false
+            },
+            "ammoGroup": {
+                "type": "String",
+                "label": "Ammo Group",
+                "value": ""
+            },
+            "selectedAmmo": {
+                "type": "String",
+                "label": "Selected Ammo",
+                "value": "No ammo selected"
+            },
+            "magazine": {
+                "type": "Number",
+                "label": "Magazine size",
+                "value": 0
+            },
+            "ammoCount": {
+                "type": "Number",
+                "label": "Ammo count",
+                "value": 0
+            },
+            "range": {
+                "type": "Number",
+                "label": "Range",
+                "value": {
+                    "rangeClose": 0,
+                    "rangeNormal": 0,
+                    "rangeLong": 0,
+                    "rangeMax": 0
+                }
+            }
         },
         "genericItem": {
             "templates": [

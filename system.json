@@ -1,9 +1,9 @@
 {
-    "name": "cd10",
-    "title": "Celenia D10 Roleplaying System",
+    "name": "cd10_dev",
+    "title": "Celenia D10 Roleplaying System (Development Branch)",
     "description": "A narratively focused, lightweight system focused on tension and rule of cool.",
     "author": "The Toblin",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "minimumCoreVersion": "0.8.7",
     "compatibleCoreVersion": "0.8.9",
     "esmodules": [

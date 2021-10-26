@@ -1,0 +1,89 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="sheet-header">
+    <img
+      src="{{item.img}}"
+      data-edit="img"
+      title="{{item.name}}"
+      height="64"
+      width="64"
+    />
+    <h1><input
+        name="name"
+        type="text"
+        value="{{item.name}}"
+        placeholder="{{localize "cd10.stats.name"}}"
+      />
+    </h1>
+  </header>
+  <div class="sheet-content">
+    <table>
+      <tr>
+        <th>{{localize "cd10.rangedWeapon.attackWith"}}</th>
+        <th>{{localize "cd10.rangedWeapon.rangeClose"}}</th>
+        <th>{{localize "cd10.rangedWeapon.rangeNormal"}}</th>
+        <th>{{localize "cd10.rangedWeapon.rangeLong"}}</th>
+        <th>{{localize "cd10.rangedWeapon.rangeMax"}}</th>
+        <th>{{localize "cd10.rangedWeapon.ammunition"}}</th>
+      </tr>
+      <tr>
+        <td>
+          <select name="data.attackWith">
+            {{#select data.attackWith}}
+              {{#each config.combatSkills as |name type|}}
+                <option value="{{type}}">{{localize name}}</option>
+              {{/each}}
+            {{/select}}
+          </select>
+        </td>
+        <td>
+          <input
+            name="data.rangeClose"
+            type="text"
+            value="{{data.rangeClose}}"
+            data-dtype=" Number"
+          />
+        </td>
+        <td>
+          <input
+            name="data.rangeNormal"
+            type="text"
+            value="{{data.rangeNormal}}"
+            data-dtype="Number"
+          />
+        </td>
+        <td>
+          <input
+            name="data.rangeLong"
+            type="text"
+            value="{{data.rangeLong}}"
+            data-dtype="Number"
+          />
+        </td>
+        <td>
+          <input
+            name="data.rangeMax"
+            type="text"
+            value="{{data.rangeMax}}"
+            data-dtype="Number"
+          />
+        </td>
+        <td>
+            <select name="data.acceptedAmmo">
+                {{#select data.acceptedAmmo}}
+                    {{#each config.ammunitionTypes as |name type|}}
+                        <option value="{{type}}">{{localize name}}</option>
+                    {{/each}}
+                {{/select}}
+            </select>
+        </td>
+      </tr>
+    </table>
+    {{editor
+      content=data.description
+      target="data.description"
+      button=true
+      owner=owner
+      editable=editable
+    }}
+  </div>
+</form>

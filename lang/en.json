@@ -1,5 +1,14 @@
 {
     "cd10": {
+        "ammunition": {
+            "type": "Type",
+            "arrows": "Arrows",
+            "bolts": "Bolts",
+            "bullets": "Bullets",
+            "rockets": "Rockets",
+            "shells": "Shells",
+            "rocks": "Rocks"
+        },
         "sheet": {
             "add": "Add",
             "edit": "Edit",
@@ -37,7 +46,15 @@
             "range": "Range",
             "category": "Category",
             "name": "Skill name",
-            "skillLevel": "Skill level"
+            "skillLevel": "Skill level",
+            "communication": "Communication",
+            "crafts": "Crafts",
+            "firearms": "Firearms",
+            "knowledge": "Knowledge",
+            "maneuvers": "Maneuvers",
+            "technology": "Technology",
+            "occultism": "Occultism",
+            "willpower": "Willpower"
         },
         "trait": {
             "range": "Range",
@@ -57,6 +74,14 @@
             "shockDamage": "Shock",
             "reach": "Reach",
             "blockValue": "Block"
+        },
+        "rangedWeapon": {
+            "attackWith": "Skill:",
+            "rangeClose": "Close",
+            "rangeNormal": "Normal",
+            "rangeLong": "Long",
+            "rangeMax": "Max",
+            "ammunition": "Ammo"
         },
         "armor": {
             "coverage": {

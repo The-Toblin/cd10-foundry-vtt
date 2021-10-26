@@ -1,13 +1,13 @@
-export default class CD10NamedCharacterSheet extends ActorSheet {
+export default class CD10MookCharacterSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            template: "systems/CD10/templates/sheets/mookCharacter-sheet.hbs",
+            template: "systems/cd10_dev/templates/sheets/mookCharacter-sheet.hbs",
             classes: ["cd10", "sheet", "mookCharacter"],
         });
     }
 
     get template() {
-        return `systems/cd10/templates/sheets/mookCharacter-sheet.hbs`;
+        return `systems/cd10_dev/templates/sheets/mookCharacter-sheet.hbs`;
     }
 
     itemContextMenu = [{
@@ -39,23 +39,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
         })
 
-        /* Create subproperties for item types */
-        sheetData.weapons = sheetData.items.filter(function(item) {
-            return item.type == "weapon";
-        });
-        sheetData.armors = sheetData.items.filter(function(item) {
-            return item.type == "armor";
-        });
-        sheetData.skills = sheetData.items.filter(function(item) {
-            return item.type == "skill";
-        });
-        sheetData.traits = sheetData.items.filter(function(item) {
-            return item.type == "trait";
-        });
-        sheetData.shields = sheetData.items.filter(function(item) {
-            return item.type == "shield";
-        });
-
         return sheetData;
     }
 
@@ -65,11 +48,28 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         html.find(".item-delete").click(this._onItemDelete.bind(this));
         html.find('.shock-icons').on("click contextmenu", this._onShockMarkChange.bind(this));
         html.find('.wounds-icons').on("click contextmenu", this._onWoundsMarkChange.bind(this));
+        html.find(".ammo-selector").on("click contextmenu", this._onAmmoSelector.bind(this));
 
         new ContextMenu(html, ".weapon-card", this.itemContextMenu);
         new ContextMenu(html, ".armor-card", this.itemContextMenu);
 
         super.activateListeners(html);
+    }
+
+    _onAmmoSelector(event) {
+        event.preventDefault();
+
+        let element = event.currentTarget;
+        let itemId = element.closest(".weapon-card").dataset.itemId;
+        let item = this.actor.items.get(itemId);
+
+        if (event.type == "click") {
+            console.log(item.acceptedAmmoList);
+        } else {
+            console.log("You right clicked.");
+        }
+
+        return
     }
 
     _onItemCreate(event) {

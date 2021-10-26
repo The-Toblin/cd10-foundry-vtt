@@ -1,14 +1,16 @@
 export default class CD10NamedCharacterSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            template: "systems/CD10/templates/sheets/namedCharacter-sheet.hbs",
+            template: "systems/cd10_dev/templates/sheets/namedCharacter-sheet.hbs",
             classes: ["cd10", "sheet", "namedCharacter"],
         });
     }
 
     get template() {
-        return `systems/cd10/templates/sheets/namedCharacter-sheet.hbs`;
+        return `systems/cd10_dev/templates/sheets/namedCharacter-sheet.hbs`;
     }
+
+
 
     itemContextMenu = [{
             name: game.i18n.localize("cd10.sheet.edit"),
@@ -40,27 +42,21 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         })
 
         /* Create subproperties for item types */
-        sheetData.weapons = sheetData.items.filter(function(item) {
-            return item.type == "weapon";
-        });
-        sheetData.armors = sheetData.items.filter(function(item) {
-            return item.type == "armor";
-        });
-        sheetData.skills = sheetData.items.filter(function(item) {
-            return item.type == "skill";
-        });
-        sheetData.traits = sheetData.items.filter(function(item) {
-            return item.type == "trait";
-        });
-        sheetData.shields = sheetData.items.filter(function(item) {
-            return item.type == "shield";
-        });
+        sheetData.ammunition = this.actor.getAmmo;
+        sheetData.armors = this.actor.getArmors;
+        sheetData.shields = this.actor.getShields;
+        sheetData.meleeWeapons = this.actor.getMeleeWeapons;
+        sheetData.rangedWeapons = this.actor.getRangedWeapons;
+        sheetData.skills = this.actor.getSkills;
+        sheetData.traits = this.actor.getTraits;
+        sheetData.spells = this.actor.getSpells;
 
         return sheetData;
     }
 
     activateListeners(html) {
         html.find(".item-create").click(this._onItemCreate.bind(this));
+        html.find(".log-output").click(this._logOutputTest.bind(this));
         html.find(".inline-edit").change(this._onSkillEdit.bind(this));
         html.find(".item-delete").click(this._onItemDelete.bind(this));
         html.find('.shock-icons').on("click contextmenu", this._onShockMarkChange.bind(this));
@@ -70,6 +66,17 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         new ContextMenu(html, ".armor-card", this.itemContextMenu);
 
         super.activateListeners(html);
+    }
+
+    _logOutputTest(event) {
+        event.preventDefault();
+
+        console.log("Skills: ", this.actor.getSkills);
+        console.log("Traits: ", this.actor.getTraits);
+        console.log("Melee: ", this.actor.getMeleeWeapons);
+        console.log("Ranged: ", this.actor.getRangedWeapons);
+        console.log("Shock: ", this.actor.getShock);
+        console.log("Wounds: ", this.actor.getWounds);
     }
 
     _onItemCreate(event) {
@@ -116,6 +123,9 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         const item = this.actor.items.get(itemId);
         const field = element.dataset.field;
 
+        console.log("Item ID: ", itemId);
+        console.log("Field: ", field);
+
         await item.update({
             [field]: element.value
         });
@@ -123,36 +133,36 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         this._updateTotalTraitValue();
     }
 
-    _onShockMarkChange(event) {
+    async _onShockMarkChange(event) {
         event.preventDefault();
         let currentCount = this.actor.data.data.shock.value;
         let newCount;
 
         if (event.type == "click") {
-            newCount = Math.min(currentCount + 1, 15);
+            newCount = Math.min(currentCount + 1, this.actor.data.data.shock.max);
         } else {
             newCount = Math.max(currentCount - 1, 0);
         }
 
-        this.actor.update({
+        await this.actor.update({
             "data.shock.value": newCount
         });
 
         this._setDebilitation("Shock", newCount);
     }
 
-    _onWoundsMarkChange(event) {
+    async _onWoundsMarkChange(event) {
         event.preventDefault();
         let currentCount = this.actor.data.data.wounds.value;
         let newCount;
 
         if (event.type == "click") {
-            newCount = Math.min(currentCount + 1, 15);
+            newCount = Math.min(currentCount + 1, this.actor.data.data.wounds.max);
         } else {
             newCount = Math.max(currentCount - 1, 0);
         }
 
-        this.actor.update({
+        await this.actor.update({
             "data.wounds.value": newCount
         });
 
@@ -215,8 +225,8 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
 
         if (currentShock == 0 && currentWounds < 2) {
             this.actor.update({
-                "data.modifier": 0,
-                "data.debilitationType": ""
+                "data.modifier.value": 0,
+                "data.debilitationType.value": ""
             })
             return
         }
@@ -224,9 +234,9 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         let newModifier = shockModifier + woundsModifier;
 
         this.actor.update({
-            "data.modifier": newModifier,
-            "data.debilitationType": debilitationType
-        })
+            "data.modifier.value": parseInt(newModifier),
+            "data.debilitationType.value": debilitationType
+        });
     }
 
     _updateTotalTraitValue() {
@@ -237,8 +247,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
 
         totalTraits = totalItems.filter(trait => trait.type === 'trait');
 
-        console.log(totalTraits);
-
         for (let i = 0; i < totalTraits.length; i++) {
             let adder = 0;
             adder = +parseInt(totalTraits[i].data.data.skillLevel);
@@ -247,8 +255,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         }
 
         this.actor.update({
-            "data.totalTraitValue": totalValue
-        })
-
+            "data.totalTraitValue.value": parseInt(totalValue)
+        });
     }
 }

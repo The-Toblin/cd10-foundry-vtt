@@ -1,7 +1,7 @@
 <section class="health-info">
     <div class="stat-element"> 
         <div class="stat-value">
-            {{#if (gte data.modifier 1)}}-{{data.modifier}} {{data.debilitationType}}{{else}}No debilitation{{/if}}
+            {{#if (gte data.modifier.value 1)}}-{{data.modifier.value}} {{data.debilitationType.value}}{{else}}No debilitation{{/if}}
         </div>
     </div>
     <div class="stat-element">

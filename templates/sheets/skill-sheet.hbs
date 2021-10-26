@@ -17,12 +17,13 @@
         />
       </h1>
       <h3>
-          <input
-          name="data.skillType"
-          type="text"
-          value="{{data.skillType}}"
-          placeholder="{{localize "cd10.skill.category"}}"
-        />
+        <select name="data.skillType">
+        {{#select data.skillType}}
+            {{#each config.skills as |name type|}}
+            <option value="{{type}}">{{localize name}}</option>
+            {{/each}}
+        {{/select}}
+        </select>
       </h3>
     </header>
   </div>
@@ -42,7 +43,9 @@
         {{localize "cd10.skill.teachableYes"}}
         <input 
             name="data.teachable"
-            type="checkbox" {{checked data.teachable}} data-dtype="Boolean"/>
+            type="checkbox" {{checked data.teachable}}
+            data-dtype="Boolean"
+        />
         </div>
     </div>
     {{editor

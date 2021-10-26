@@ -1,92 +1,52 @@
 .cd10.sheet.namedCharacter {
-    min-width: 800px;
-    min-height: 1000px;
+  min-width: 200px;
+  min-height: 300px;
+  background-image: url("./assets/backgrounds/sheet-background.jpeg");
 
-    form {
-        display: flex;
-        flex-direction: column;
-
-        /* Headers */
-        h1 {
-            font-size: 2em;
-            margin-right: 5px;
-            border: none;
-        }
-
-        h1,
-        h3 {
-            text-align: center;
-        }
-
-        /* General settings */
-        input {
-            border: none;
-            background: none;
-            text-align: center;
-        }
-
-        .editor {
-            height: 100%;
-            min-height: 100px;
-
-            .editor-content {
-                min-height: 100px;
-            }
-        }
-
-        .actor-image {
-            max-height: 200px;
-        }
-
-        hr {
-            width: 150px;
-        }
+  form {
+    h1 {
+      font-size: 2em;
+      border: none;
+      padding: 3px;
     }
 
-    /* Left major content column */
-    .bio-box {
-        padding: 10px;
-        width: 100%;
+    h1,
+    h3 {
+      text-align: center;
     }
 
-    /* Right major column, AKA sidebar */
-    .sidebar {
-        padding: 10px;
+    input {
+      border: none;
+    }
 
-        .weapon-list,
-        .armor-list {
-            padding: 5px;
-            margin-bottom: 10px;
-        }
+    .sheet-main-content {
+      margin-right: 10px;
+      width: 80%;
+    }
 
-        .money {
-            padding-top: 4px;
-        }
+    .image-box {
+      width: 20%;
+
+      img {
+        min-width: 200px;
+        min-height: 200px;
+      }
+    }
+
+    .sheet-sidebar {
+      padding: 10px;
+
+      input {
+        width: 30px;
+        text-align: center;
         
-        input {
-            width: 30px;
+      }
+
+      .sheet-money {
+        .money {
+          padding-top: 5px;
         }
+      }
     }
-
-    /* Skills and trait */
-    .attribute-box {
-        .fas {
-            padding-top: 5px;
-            margin-left: 5px;
-        }
-        .attribute-card {
-            flex-basis: 45%;
-        }
-
-        .attribute-pair {
-            .attribute-name {
-                text-align: left;
-            }
-            .attribute-value {
-                text-align: right;
-                width: 25px;
-            }
-        }
-
-    }
+  }
 }
