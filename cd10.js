@@ -14,6 +14,12 @@ async function preloadHandlebarsTemplates() {
         "systems/cd10_dev/templates/partials/weapon-card.hbs",
         "systems/cd10_dev/templates/partials/armor-card.hbs",
         "systems/cd10_dev/templates/partials/skill-list.hbs",
+        "systems/cd10_dev/templates/partials/spell-list.hbs",
+        "systems/cd10_dev/templates/partials/combat-tab.hbs",
+        "systems/cd10_dev/templates/partials/inventory-list.hbs",
+        "systems/cd10_dev/templates/partials/generic-item-data.hbs",
+        "systems/cd10_dev/templates/partials/small-weapon-stats.hbs",
+        "systems/cd10_dev/templates/partials/small-armor-stats.hbs"
     ];
 
     return loadTemplates(templatePaths);
@@ -59,4 +65,7 @@ Hooks.once("init", function() {
 
         return result;
     });
+
+    console.log("==== CD10 | Pushing TinyMCE CSS ====");
+    CONFIG.TinyMCE.content_css.push(`systems/cd10_dev/less/cd10_tinymcemods.css`);
 });

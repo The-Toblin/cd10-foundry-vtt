@@ -30,11 +30,11 @@
                             data-dtype="{{data.species.type}}" placeholder="{{localize " cd10.stats.species"}}" />
                     </td>
                     <th>
-                        {{localize "cd10.stats.exp"}}
+                        {{localize "cd10.stats.faith"}}
                     </th>
                     <td>
-                        <input name="data.exp.value" type="text" value="{{data.exp.value}}"
-                            data-dtype="{{data.exp.type}}" placeholder="{{localize " cd10.stats.exp"}}" />
+                        <input name="data.faith.value" type="text" value="{{data.faith.value}}"
+                            data-dtype="{{data.faith.type}}" placeholder="{{localize " cd10.stats.faith"}}" />
                     </td>
                 </tr>
                 <tr>
@@ -86,20 +86,18 @@
                 placeholder="Appearance"
                 }}
             </div>
-            <div>
-                <h3>
-                    {{localize "cd10.stats.personality"}}
-                </h3>
-                <div class="sheet-text">
-                    {{editor
-                    content=data.personality.value
-                    target="data.personality.value"
-                    button=true
-                    owner=owner
-                    editable=editable
-                    placeholder="Personality"
-                    }}
-                </div>
+            <h3>
+                {{localize "cd10.stats.personality"}}
+            </h3>
+            <div class="sheet-text">
+                {{editor
+                content=data.personality.value
+                target="data.personality.value"
+                button=true
+                owner=owner
+                editable=editable
+                placeholder="Personality"
+                }}
             </div>
         </div>
 </section>

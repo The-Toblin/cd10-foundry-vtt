@@ -27,8 +27,8 @@
       </tr>
       <tr>
         <td>
-          <select name="data.attackWith">
-            {{#select data.attackWith}}
+          <select name="data.attackSkill.value">
+            {{#select data.attackSkill.value}}
               {{#each config.combatSkills as |name type|}}
                 <option value="{{type}}">{{localize name}}</option>
               {{/each}}
@@ -37,39 +37,39 @@
         </td>
         <td>
           <input
-            name="data.rangeClose"
+            name="data.range.value.rangeClose"
             type="text"
-            value="{{data.rangeClose}}"
-            data-dtype=" Number"
+            value="{{data.range.value.rangeClose}}"
+            data-dtype="{{data.range.type}}"
           />
         </td>
         <td>
           <input
-            name="data.rangeNormal"
+            name="data.range.value.rangeNormal"
             type="text"
-            value="{{data.rangeNormal}}"
-            data-dtype="Number"
+            value="{{data.range.value.rangeNormal}}"
+            data-dtype="{{data.range.type}}"
           />
         </td>
         <td>
           <input
-            name="data.rangeLong"
+            name="data.range.value.rangeLong"
             type="text"
-            value="{{data.rangeLong}}"
-            data-dtype="Number"
+            value="{{data.range.value.rangeLong}}"
+            data-dtype="{{data.range.type}}"
           />
         </td>
         <td>
           <input
-            name="data.rangeMax"
+            name="data.range.value.rangeMax"
             type="text"
-            value="{{data.rangeMax}}"
-            data-dtype="Number"
+            value="{{data.range.value.rangeMax}}"
+            data-dtype="{{data.range.type}}"
           />
         </td>
         <td>
-            <select name="data.acceptedAmmo">
-                {{#select data.acceptedAmmo}}
+            <select name="data.ammoGroup.value">
+                {{#select data.ammoGroup.value}}
                     {{#each config.ammunitionTypes as |name type|}}
                         <option value="{{type}}">{{localize name}}</option>
                     {{/each}}
@@ -79,8 +79,8 @@
       </tr>
     </table>
     {{editor
-      content=data.description
-      target="data.description"
+      content=data.description.value
+      target="data.description.value"
       button=true
       owner=owner
       editable=editable

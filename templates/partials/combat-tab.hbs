@@ -1,0 +1,12 @@
+<section class="sheet-combat-tab">
+    {{#each allWeapons as |weapon id|}}
+        {{#if weapon.data.isEquipped.value}}
+            {{> "systems/cd10_dev/templates/partials/weapon-card.hbs"}}
+        {{/if}}
+    {{/each}}
+    {{#each allArmors as |armor id|}}
+        {{#if armor.data.isEquipped.value}}
+            {{> "systems/cd10_dev/templates/partials/armor-card.hbs"}}
+        {{/if}}
+    {{/each}}
+</section>

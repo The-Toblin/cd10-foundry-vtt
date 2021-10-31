@@ -1,47 +1,55 @@
+@import "./namedCharacter-sheet.less";
+@import "./skill-card.less";
+@import "./trait-card.less";
 @import "./armor-card.less";
+@import "./weapon-card.less";
+@import "./skill-list.less";
+@import "./inventory-list.less";
 @import "./character-description-box.less";
 @import "./character-stat-block.less";
 @import "./item-sheet.less";
-@import "./namedCharacter-sheet.less";
+@import "./small-stats.less";
 @import "./mookCharacter-sheet.less";
-@import "./skill-card.less";
-@import "./trait-card.less";
-@import "./weapon-card.less";
 
 /* Variables */
 :root {
-    --font-color: rgb(223, 187, 97);
+  --font-color: rgb(223, 187, 97);
+  --accent-color: rgb(107, 108, 101);
 }
 
 /* Containers for content */
 .flex-row {
-    display: flex;
-    flex-direction: row;
-
+  display: flex;
+  flex-direction: row;
 }
 
 .flex-column {
-    display: flex;
-    flex-direction: column;
-
+  display: flex;
+  flex-direction: column;
 }
 
 .flex-start {
-    justify-content: flex-start;
-    align-content: flex-start;
+  justify-content: flex-start;
+  align-content: flex-start;
 }
 
 .flex-even {
-    justify-content: space-evenly;
-    align-content: flex-start;
+  justify-content: space-evenly;
+  align-content: flex-start;
 }
 
 .flex-between {
-    justify-content: space-between;
-    align-content: flex-start;
+  justify-content: space-between;
+  align-content: flex-start;
 }
 
 .flex-center {
-    justify-content: center;
-    align-content: flex-start;
+  justify-content: center;
+  align-content: flex-start;
+}
+
+/* System Wide Changes */
+select {
+  border: none;
+  color: var(--font-color);
 }

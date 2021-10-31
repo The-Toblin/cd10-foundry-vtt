@@ -18,24 +18,30 @@
             <div class="tab sheet-bio sheet-card" data-group="primary" data-tab="biography">
                 {{> "systems/cd10_dev/templates/partials/character-description-block.hbs"}}
             </div>
+
             {{!-- Skills Tab --}}
             <div class="tab sheet-skills" data-group="primary" data-tab="skills">
-                {{> "systems/cd10_dev/templates/partials/skill-list.hbs"}}
+                <div class="sheet-card">
+                    {{localize "cd10.sheet.total"}}: {{data.totalTraitValue.value}}
+                </div>
+                <div>
+                    {{> "systems/cd10_dev/templates/partials/skill-list.hbs"}}
+                </div>
             </div>
 
             {{!-- Combat Tab --}}
-            <div class="tab sheet-combat sheet-card" data-group="primary" data-tab="combat">
-                COMBAT
+            <div class="tab sheet-combat" data-group="primary" data-tab="combat">
+                {{> "systems/cd10_dev/templates/partials/combat-tab.hbs"}}
             </div>
 
             {{!-- Spells Tab --}}
             <div class="tab sheet-spells sheet-card" data-group="primary" data-tab="spells">
-                Spells
+                {{> "systems/cd10_dev/templates/partials/spell-list.hbs"}}
             </div>
 
             {{!-- Inventory Tab --}}
-            <div class="tab sheet-inventory sheet-card" data-group="primary" data-tab="inventory">
-                Inventory
+            <div class="tab sheet-inventory" data-group="primary" data-tab="inventory">
+                {{> "systems/cd10_dev/templates/partials/inventory-list.hbs"}}
             </div>
         </section>
     </div>
@@ -51,6 +57,15 @@
             </h3>
             {{> "systems/cd10_dev/templates/partials/character-stat-block.hbs"}}
         </div>
+        <div class="sheet-card flex-column flex-center">
+            <h3 class="sheet-header">
+                {{localize "cd10.stats.exp"}}
+            </h3>
+            <div class="flex-row flex-center">
+                <input name="data.exp.total" type="text" value="{{data.exp.total}}"
+                    data-dtype="{{data.exp.type}}" placeholder="{{localize "cd10.stats.exp"}}" />
+            </div>
+        </div>
         <div class="sheet-money sheet-card">
             <h3 class="sheet-header">
                 {{localize "cd10.stats.money"}}
@@ -63,6 +78,14 @@
                 <div class="money">
                     {{localize "cd10.stats.currency"}}
                 </div>
+            </div>
+        </div>
+        <div class="sheet-card encumbrance-list flex-column flex-center">
+            <h3 class="sheet-header">
+                {{localize "cd10.stats.encumbrance"}}
+            </h3>
+            <div class="flex-row flex-center">
+                {{data.encumbrance.value}} kg
             </div>
         </div>
     </div>

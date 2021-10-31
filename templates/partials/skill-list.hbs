@@ -1,7 +1,7 @@
 <section class="flex-row flex-between">
     <div class="skill-list sheet-card flex-column flex-start">
         {{#each skills as |skill id|}}
-        <div class="attribute-pair item flex-row flex-evenly" data-item-id="{{skill.data._id}}">
+        <div class="attribute-pair inventory-item item flex-row flex-evenly" data-item-id="{{skill._id}}">
             <div class="attribute-name">
                 {{skill.name}}
             </div>
@@ -16,7 +16,7 @@
     </div>
     <div class="traits-list sheet-card flex-column flex-start">
         {{#each traits as |trait id|}}
-        <div class="attribute-pair item flex-row flex-evenly" data-item-id="{{trait.data._id}}">
+        <div class="attribute-pair inventory-item item flex-row flex-evenly" data-item-id="{{trait._id}}">
             <div class="attribute-name">
                 {{trait.name}}
             </div>

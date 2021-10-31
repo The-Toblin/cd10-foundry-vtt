@@ -95,6 +95,11 @@
                 "label": "Age",
                 "value": 0
             },
+            "faith": {
+                "type": "String",
+                "label": "Faith",
+                "value": ""
+            },
             "sex": {
                 "type": "String",
                 "label": "Sex",
@@ -124,6 +129,11 @@
                 "type": "Number",
                 "label": "Money",
                 "value": 0
+            },
+            "encumbrance": {
+                "type": "Number",
+                "label": "Encumbrance",
+                "value": 0
             }
         },
         "mook": {
@@ -137,6 +147,7 @@
             "ammunition",
             "armor",
             "disease",
+            "genericItem",
             "skill",
             "spell",
             "trait",
@@ -152,14 +163,9 @@
             },
             "commonStats": {
                 "availability": {
+                    "type": "String",
                     "label": "Availability",
-                    "value": [
-                        "common",
-                        "normal",
-                        "rare",
-                        "very rare",
-                        "unique"
-                    ]
+                    "value": ""
                 },
                 "trader": {
                     "type": "String",
@@ -177,9 +183,9 @@
                     "value": 0
                 },
                 "weight": {
-                    "type": "Number",
+                    "type": "Float",
                     "label": "Weight",
-                    "value": 1
+                    "value": 0.0
                 },
                 "quantity": {
                     "type": "Number",
@@ -225,34 +231,46 @@
                 "label": "Coverage",
                 "value": "All"
             },
-            "slashProtection": {
-                "type": "Number",
-                "label": "Slash Protection",
-                "value": 0
-            },
-            "pierceProtection": {
-                "type": "Number",
-                "label": "Pierce Protection",
-                "value": 0
-            },
-            "bluntProtection": {
-                "type": "Number",
-                "label": "Blunt Protection",
-                "value": 0
-            },
-            "energyProtection": {
-                "type": "Number",
-                "label": "Energy Protection",
-                "value": 0
-            },
-            "shockProtection": {
-                "type": "Number",
-                "label": "Shock Protection",
-                "value": 0
+            "protection": {
+                "slash": {
+                    "type": "Number",
+                    "label": "Slash Protection",
+                    "value": 0
+                },
+                "pierce": {
+                    "type": "Number",
+                    "label": "Pierce Protection",
+                    "value": 0
+                },
+                "blunt": {
+                    "type": "Number",
+                    "label": "Blunt Protection",
+                    "value": 0
+                },
+                "energy": {
+                    "type": "Number",
+                    "label": "Energy Protection",
+                    "value": 0
+                },
+                "shock": {
+                    "type": "Number",
+                    "label": "Shock Protection",
+                    "value": 0
+                }
             },
             "isShield": {
                 "type": "Boolean",
                 "label": "Is Shield?",
+                "value": false
+            },
+            "blockValue": {
+                "type": "Number",
+                "label": "Blockvalue",
+                "value": 0
+            },
+            "isEquipped": {
+                "type": "Boolean",
+                "label": "Is it equipped?",
                 "value": false
             }
         },
@@ -298,27 +316,27 @@
                 "value": ""
             },
             "damage": {
-                "slashDamage": {
+                "slash": {
                     "type": "Number",
                     "label": "Slash Damage",
                     "value": 0
                 },
-                "pierceDamage": {
+                "pierce": {
                     "type": "Number",
                     "label": "Pierce Damage",
                     "value": 0
                 },
-                "bluntDamage": {
+                "blunt": {
                     "type": "Number",
                     "label": "Blunt Damage",
                     "value": 0
                 },
-                "energyDamage": {
+                "energy": {
                     "type": "Number",
                     "label": "Energy Damage",
                     "value": 0
                 },
-                "shockDamage": {
+                "shock": {
                     "type": "Number",
                     "label": "Shock Damage",
                     "value": 0
@@ -373,6 +391,11 @@
                     "rangeLong": 0,
                     "rangeMax": 0
                 }
+            },
+            "isEquipped": {
+                "type": "Boolean",
+                "label": "Is it equipped?",
+                "value": false
             }
         },
         "genericItem": {

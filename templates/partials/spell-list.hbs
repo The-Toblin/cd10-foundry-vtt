@@ -1,0 +1,17 @@
+<section class="flex-row flex-between">
+    <div class="skill-list flex-column flex-start">
+        {{#each spells as |spell id|}}
+        <div class="attribute-pair inventory-item item flex-row flex-evenly" data-item-id="{{spell._id}}">
+            <div class="attribute-name">
+                {{spell.name}}
+            </div>
+            <input class="attribute-value inline-edit" data-field="data.skillLevel.value"
+                data-dtype="{{spell.data.skillLevel.type}}" value="{{spell.data.skillLevel.value}}"
+                placeholder="{{localize "cd10.skill.skillLevel"}}" />
+            <a class="item-delete" data-type="text" title={{localize "cd10.sheet.remove" }}>
+                <i class="fas fa-trash"></i>
+            </a>
+        </div>
+        {{/each}}
+    </div>
+</section>

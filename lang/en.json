@@ -21,7 +21,13 @@
             "coverage": "Coverage",
             "total": "Total",
             "inventory": "Inventory",
-            "notes": "Notes"
+            "notes": "Notes",
+            "min": "Minimum",
+            "max": "Maximum",
+            "equip": "Equip or unequp",
+            "weight": "Weight",
+            "removeShort": "Rem.",
+            "equipShort": "Eq."
         },
         "attack": {
             "none": "None",
@@ -66,14 +72,15 @@
             "skillLevel": "Trait level"
         },
         "weapon": {
-            "attackWith": "Skill:",
+            "attackWith": "Skill",
             "slashDamage": "Slash",
             "pierceDamage": "Pierce",
             "bluntDamage": "Blunt",
             "energyDamage": "Energy",
             "shockDamage": "Shock",
             "reach": "Reach",
-            "blockValue": "Block"
+            "blockValue": "Block",
+            "isRanged": "Ranged weapon?"
         },
         "rangedWeapon": {
             "attackWith": "Skill:",
@@ -97,10 +104,21 @@
             "pierceProtection": "Pierce",
             "bluntProtection": "Blunt",
             "energyProtection": "Energy",
-            "shockProtection": "Shock"
+            "shockProtection": "Shock",
+            "blockValue": "Block",
+            "isShield": "Shield?"
         },
-        "effectItem": {},
-        "genericItem": {},
+        "item": {
+            "image": "Image",
+            "name": "Name",
+            "availability": "Availability",
+            "trader": "Trader",
+            "weight": "Weight",
+            "tradeGroup": "Trade Group",
+            "price": "Price",
+            "weightMarker": "kg"
+
+        },
         "reach": {
             "grappling": "Grappling",
             "close": "Close",
@@ -124,6 +142,7 @@
             "playerName": "Player Name",
             "species": "Species",
             "age": "Age",
+            "faith": "Faith",
             "mainHand": "Main Hand",
             "exp": "Experience",
             "sex": "Sex",
@@ -134,7 +153,9 @@
             "traits": "Traits",
             "abilities": "Abilities",
             "money": "Coins",
-            "currency": "Silver"
+            "currency": "Silver",
+            "currencyShort": "m",
+            "encumbrance": "Encumbrance"
         }
     }
 }

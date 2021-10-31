@@ -1,0 +1,134 @@
+<section class="small-weapon-armor-stats flex-row flex-evenly">
+    <div class="vertically-centered">
+        <input type="checkbox" {{checked data.isRanged.value}} name="data.isRanged.value"
+            data-dtype="{{data.isRanged.type}}">
+        <div class="pad right-margin">
+            {{localize "cd10.weapon.isRanged"}}
+        </div>
+    </div>
+    {{#unless this.data.isRanged.value}}
+    <div class="melee-weapon pad">
+        <table>
+            <tr>
+                <th>{{localize "cd10.weapon.attackWith"}}</th>
+                <th>{{localize "cd10.weapon.slashDamage"}}</th>
+                <th>{{localize "cd10.weapon.pierceDamage"}}</th>
+                <th>{{localize "cd10.weapon.bluntDamage"}}</th>
+                <th>{{localize "cd10.weapon.energyDamage"}}</th>
+                <th>{{localize "cd10.weapon.shockDamage"}}</th>
+                <th>{{localize "cd10.weapon.reach"}}</th>
+                <th>{{localize "cd10.weapon.blockValue"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <select name="data.attackSkill.value">
+                        {{#select data.attackSkill.value}}
+                        {{#each config.combatSkills as |name type|}}
+                        <option value="{{type}}">{{localize name}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                </td>
+                <td>
+                    <input name="data.damage.slash.value" type="text" value="{{data.damage.slash.value}}"
+                        data-dtype="{{data.damage.slash.type}}" />
+                </td>
+                <td>
+                    <input name="data.damage.pierce.value" type="text" value="{{data.damage.pierce.value}}"
+                        data-dtype="{{data.damage.pierce.type}}" />
+                </td>
+                <td>
+                    <input name="data.damage.blunt.value" type="text" value="{{data.damage.blunt.value}}"
+                        data-dtype="{{data.damage.blunt.type}}" />
+                </td>
+                <td>
+                    <input name="data.damage.energy.value" type="text" value="{{data.damage.energy.value}}"
+                        data-dtype="{{data.damage.energy.type}}" />
+                </td>
+                <td>
+                    <input name="data.damage.shock.value" type="text" value="{{data.damage.shock.value}}"
+                        data-dtype="{{data.damage.shock.type}}" />
+                </td>
+                <td>
+                    <select name="data.reach.value">
+                        {{#select data.reach.value}}
+                        {{#each config.reach as |name type|}}
+                        <option value="{{type}}">{{localize name}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                </td>
+                <td>
+                    <input name="data.blockValue.value" type="text" value="{{data.blockValue.value}}"
+                        data-dtype="{{data.blockValue.type}}" />
+                </td>
+            </tr>
+        </table>
+    </div>
+    {{else}}
+    <div class="ranged-weapon pad">
+        <table>
+      <tr>
+        <th>{{localize "cd10.rangedWeapon.attackWith"}}</th>
+        <th>{{localize "cd10.rangedWeapon.rangeClose"}}</th>
+        <th>{{localize "cd10.rangedWeapon.rangeNormal"}}</th>
+        <th>{{localize "cd10.rangedWeapon.rangeLong"}}</th>
+        <th>{{localize "cd10.rangedWeapon.rangeMax"}}</th>
+        <th>{{localize "cd10.rangedWeapon.ammunition"}}</th>
+      </tr>
+      <tr>
+        <td>
+          <select name="data.attackSkill.value">
+            {{#select data.attackSkill.value}}
+              {{#each config.combatSkills as |name type|}}
+                <option value="{{type}}">{{localize name}}</option>
+              {{/each}}
+            {{/select}}
+          </select>
+        </td>
+        <td>
+          <input
+            name="data.range.value.rangeClose"
+            type="text"
+            value="{{data.range.value.rangeClose}}"
+            data-dtype="{{data.range.type}}"
+          />
+        </td>
+        <td>
+          <input
+            name="data.range.value.rangeNormal"
+            type="text"
+            value="{{data.range.value.rangeNormal}}"
+            data-dtype="{{data.range.type}}"
+          />
+        </td>
+        <td>
+          <input
+            name="data.range.value.rangeLong"
+            type="text"
+            value="{{data.range.value.rangeLong}}"
+            data-dtype="{{data.range.type}}"
+          />
+        </td>
+        <td>
+          <input
+            name="data.range.value.rangeMax"
+            type="text"
+            value="{{data.range.value.rangeMax}}"
+            data-dtype="{{data.range.type}}"
+          />
+        </td>
+        <td>
+            <select name="data.ammoGroup.value">
+                {{#select data.ammoGroup.value}}
+                    {{#each config.ammunitionTypes as |name type|}}
+                        <option value="{{type}}">{{localize name}}</option>
+                    {{/each}}
+                {{/select}}
+            </select>
+        </td>
+      </tr>
+    </table>
+    </div>
+    {{/unless}}
+</section>

@@ -17,12 +17,57 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
 
 
 
+    equippableItemContextMenu = [{
+            name: game.i18n.localize("cd10.sheet.edit"),
+            icon: '<i class="fas fa-edit"></i>',
+            callback: element => {
+                const itemId = element.data("item-id");
+                const item = this.actor.items.get(itemId);
+
+                item.sheet.render(true);
+            }
+        },
+        {
+
+            name: game.i18n.localize("cd10.sheet.equip"),
+            icon: '<i class="far fa-caret-square-up"></i>',
+
+            callback: element => {
+                const itemId = element.data("item-id");
+                const item = this.actor.items.get(itemId);
+                let boolValue = false
+
+                if (item.data.data.isEquipped.value) {
+                    boolValue = false;
+                } else {
+                    boolValue = true;
+                }
+
+                item.update({
+                    data: {
+                        isEquipped: {
+                            value: boolValue
+                        }
+                    }
+                });
+            }
+        },
+        {
+            name: game.i18n.localize("cd10.sheet.remove"),
+            icon: '<i class="fas fa-trash"></i>',
+            callback: element => {
+                this.actor.deleteEmbeddedDocuments("Item", [element.data("item-id")]);
+            }
+        }
+    ];
+
     itemContextMenu = [{
             name: game.i18n.localize("cd10.sheet.edit"),
             icon: '<i class="fas fa-edit"></i>',
             callback: element => {
                 const itemId = element.data("item-id");
                 const item = this.actor.items.get(itemId);
+
                 item.sheet.render(true);
             }
         },
@@ -35,7 +80,8 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         }
     ];
 
-    getData() {
+
+    async getData() {
         /* Override default getData() function */
         let sheetData = super.getData();
         sheetData.config = CONFIG.cd10;
@@ -48,13 +94,16 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
 
         /* Create subproperties for item types */
         sheetData.ammunition = sheetData.items.filter(p => p.type == "ammunition");
-        sheetData.armors = sheetData.items.filter(p => p.type == "armor");
-        sheetData.shields = sheetData.items.filter(p => p.type == "shield");
+        sheetData.allArmors = sheetData.items.filter(p => p.type == "armor");
+        sheetData.armors = sheetData.items.filter(p => p.type == "armor" && !p.data.isShield.value);
+        sheetData.shields = sheetData.items.filter(p => p.type == "armor" && p.data.isShield.value);
+        sheetData.allWeapons = sheetData.items.filter(p => p.type == "weapon");
         sheetData.meleeWeapons = sheetData.items.filter(p => p.type == "weapon" && !p.data.isRanged.value);
         sheetData.rangedWeapons = sheetData.items.filter(p => p.type == "weapon" && p.data.isRanged.value);
         sheetData.skills = sheetData.items.filter(p => p.type == "skill");
         sheetData.traits = sheetData.items.filter(p => p.type == "trait");
         sheetData.spells = sheetData.items.filter(p => p.type == "spell");
+        sheetData.normalItems = sheetData.items.filter(p => p.type != "spell" && p.type != "skill" && p.type != "trait");
 
         return sheetData;
     }
@@ -63,11 +112,14 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         html.find(".item-create").click(this._onItemCreate.bind(this));
         html.find(".inline-edit").change(this._onSkillEdit.bind(this));
         html.find(".item-delete").click(this._onItemDelete.bind(this));
+        html.find(".item-equip").click(this._onItemEquip.bind(this));
         html.find('.shock-icons').on("click contextmenu", this._onShockMarkChange.bind(this));
         html.find('.wounds-icons').on("click contextmenu", this._onWoundsMarkChange.bind(this));
 
-        new ContextMenu(html, ".weapon-card", this.itemContextMenu);
-        new ContextMenu(html, ".armor-card", this.itemContextMenu);
+        new ContextMenu(html, ".weapon-card", this.equippableItemContextMenu);
+        new ContextMenu(html, ".armor-card", this.equippableItemContextMenu);
+        new ContextMenu(html, ".equippable-inventory-item", this.equippableItemContextMenu);
+        new ContextMenu(html, ".inventory-item", this.itemContextMenu);
 
         super.activateListeners(html);
     }
@@ -92,10 +144,13 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         let item = this.actor.items.get(itemId);
 
         item.sheet.render(true);
+
+        this._updateEncumbrance();
     }
 
     async _onItemDelete(event) {
         event.preventDefault();
+
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemId;
         const item = this.actor.items.get(itemId);
@@ -105,6 +160,33 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             this._updateTotalTraitValue();
         }
 
+        this._updateEncumbrance();
+
+    }
+
+    async _onItemEquip(event) {
+        event.preventDefault();
+
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemId;
+        const item = this.actor.items.get(itemId);
+
+        let boolValue = false
+        if (item.data.data.isEquipped.value) {
+            boolValue = false;
+        } else {
+            boolValue = true;
+        }
+
+        await item.update({
+            data: {
+                isEquipped: {
+                    value: boolValue
+                }
+            }
+        });
+
+        this._updateEncumbrance();
     }
 
     async _onSkillEdit(event) {
@@ -118,12 +200,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         const itemId = element.closest(".item").dataset.itemId;
         const item = this.actor.items.get(itemId);
         const field = element.dataset.field;
-
-        console.log("Item", item);
-        console.log("Item ID: ", itemId);
-        console.log("Field: ", field);
-        console.log("Item Type: ", item.type);
-        console.log("Value: ", element.value);
 
         await item.update({
             [field]: element.value
@@ -240,7 +316,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         });
     }
 
-    _updateTotalTraitValue() {
+    async _updateTotalTraitValue() {
 
         const totalItems = this.actor.items;
         let totalTraits;
@@ -250,13 +326,39 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
 
         for (let i = 0; i < totalTraits.length; i++) {
             let adder = 0;
-            adder = +parseInt(totalTraits[i].data.data.skillLevel);
+            adder = +parseInt(totalTraits[i].data.data.skillLevel.value);
 
             totalValue += adder;
         }
 
-        this.actor.update({
+        await this.actor.update({
             "data.totalTraitValue.value": parseInt(totalValue)
         });
+    }
+
+    async _updateEncumbrance() {
+        let encumbranceValue = 0;
+        let itemList = this.actor.items.filter(p => p.type != "spell" && p.type != "skill" && p.type != "trait");
+
+        for (let i = 0; i < itemList.length; i++) {
+            let adder = 0;
+
+            if (itemList[i].type == "armor" || itemList[i].type == "weapon" && itemList[i].data.data.isEquipped.value == true) {
+                adder = +parseFloat(itemList[i].data.data.weight.value / 2);
+            } else {
+                adder = +parseFloat(itemList[i].data.data.weight.value);
+            }
+            encumbranceValue += adder;
+        }
+
+        await this.actor.update({
+            "data.encumbrance.value": parseFloat(encumbranceValue)
+        });
+    }
+
+    async _onDropItemCreate(itemData) {
+        const rv = await super._onDropItemCreate(itemData);
+        this._updateEncumbrance()
+        return rv;
     }
 }
