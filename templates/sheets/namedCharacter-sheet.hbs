@@ -3,7 +3,7 @@
     <div class="sheet-main-content flex-column flex-start">
         <div class="head-contentbox">
             <h1>
-                <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize " cd10.stats.name"}}" />
+                <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "cd10.stats.name"}}" />
             </h1>
         </div>
         <nav class="sheet-tabs tabs" data-group="primary">
@@ -84,7 +84,7 @@
             <h3 class="sheet-header">
                 {{localize "cd10.stats.encumbrance"}}
             </h3>
-            <div class="flex-row flex-center">
+            <div class="flex-row flex-center {{#if (gte data.encumbrance.value data.encumbranceLimit.value)}}red{{/if}}">
                 {{data.encumbrance.value}} kg
             </div>
         </div>

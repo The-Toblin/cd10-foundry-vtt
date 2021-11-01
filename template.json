@@ -131,10 +131,16 @@
                 "value": 0
             },
             "encumbrance": {
-                "type": "Number",
+                "type": "Float",
                 "label": "Encumbrance",
-                "value": 0
+                "value": 0.0
+            },
+            "encumbranceLimit": {
+                "type": "Float",
+                "label": "Encumbrance limit",
+                "value": 12.0
             }
+
         },
         "mook": {
             "templates": [

@@ -12,10 +12,10 @@
 }
 .cd10.sheet.namedCharacter form .editor {
   height: 100%;
-  min-height: auto;
+  min-height: 100px;
 }
 .cd10.sheet.namedCharacter form .editor .editor-content {
-  min-height: auto;
+  min-height: 100px;
   color: var(--font-color);
 }
 .cd10.sheet.namedCharacter form input {
@@ -62,6 +62,9 @@
 }
 .cd10.sheet.namedCharacter form .sheet-sidebar {
   padding: 10px;
+}
+.cd10.sheet.namedCharacter form .sheet-sidebar .red {
+  color: red;
 }
 .cd10.sheet.namedCharacter form .sheet-sidebar .sheet-card {
   margin-top: 5px;

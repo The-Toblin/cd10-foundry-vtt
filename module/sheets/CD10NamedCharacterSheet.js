@@ -50,6 +50,8 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
                         }
                     }
                 });
+
+                this._updateEncumbrance();
             }
         },
         {
@@ -343,11 +345,12 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         for (let i = 0; i < itemList.length; i++) {
             let adder = 0;
 
-            if (itemList[i].type == "armor" || itemList[i].type == "weapon" && itemList[i].data.data.isEquipped.value == true) {
+            if (itemList[i].type == "armor" && itemList[i].data.data.isEquipped.value == true || itemList[i].type == "weapon" && itemList[i].data.data.isEquipped.value == true) {
                 adder = +parseFloat(itemList[i].data.data.weight.value / 2);
             } else {
                 adder = +parseFloat(itemList[i].data.data.weight.value);
             }
+
             encumbranceValue += adder;
         }
 
