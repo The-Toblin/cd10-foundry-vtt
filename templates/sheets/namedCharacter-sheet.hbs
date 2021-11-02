@@ -21,8 +21,10 @@
 
             {{!-- Skills Tab --}}
             <div class="tab sheet-skills" data-group="primary" data-tab="skills">
-                <div class="sheet-card">
-                    {{localize "cd10.sheet.total"}}: {{data.totalTraitValue.value}}
+                <div class="sheet-card flex-row flex-even">
+                    <div>{{localize "cd10.sheet.positive"}}: {{data.posTraits.value}}</div>
+                    <div>{{localize "cd10.sheet.negative"}}: {{data.negTraits.value}}</div>
+                    <div>{{localize "cd10.sheet.total"}}: {{data.traitsValue.value}}</div>
                 </div>
                 <div>
                     {{> "systems/cd10_dev/templates/partials/skill-list.hbs"}}
@@ -84,8 +86,8 @@
             <h3 class="sheet-header">
                 {{localize "cd10.stats.encumbrance"}}
             </h3>
-            <div class="flex-row flex-center {{#if (gte data.encumbrance.value data.encumbranceLimit.value)}}red{{/if}}">
-                {{data.encumbrance.value}} kg
+            <div class="flex-row flex-center {{#if (gte data.currentEncumbrance.value data.encumbranceLimit.value)}}red{{/if}}">
+                {{data.currentEncumbrance.value}} kg
             </div>
         </div>
     </div>

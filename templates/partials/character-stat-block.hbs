@@ -1,7 +1,12 @@
 <section class="health-info">
-    <div class="stat-element"> 
-        <div class="stat-value">
-            {{#if (gte data.modifier.value 1)}}-{{data.modifier.value}} {{data.debilitationType.value}}{{else}}No debilitation{{/if}}
+    <div class="stat-element">
+        <div class="stat-value {{#if (gte data.wounds.value 15)}}red{{/if}}">
+            {{#if (gte data.wounds.value 15)}}
+            {{data.debilitationType.value}}
+            {{else if (gte data.modifier.value 1)}}
+            -{{data.modifier.value}} {{data.debilitationType.value}}
+            {{else}}No debilitation
+            {{/if}}
         </div>
     </div>
     <div class="stat-element">
@@ -12,9 +17,9 @@
         </label>
         <div class="shock-icons">
             {{#times 15}}
-                <div class="dot-container {{#if (gte ../data.shock.value @index)}}crossed{{/if}}"> 
-                    <i class="fas fa-circle fa-xs"></i>
-                </div>
+            <div class="dot-container {{#if (gte ../data.shock.value 15)}}red{{else if (gte ../data.shock.value @index)}}crossed{{/if}}">
+                <i class="fas fa-circle fa-xs"></i>
+            </div>
             {{/times}}
         </div>
     </div>
@@ -24,9 +29,9 @@
         </label>
         <div class="wounds-icons">
             {{#times 15}}
-                <div class="dot-container {{#if (gte ../data.wounds.value @index)}}crossed{{/if}}"> 
-                    <i class="fas fa-circle fa-xs"></i>
-                </div>
+            <div class="dot-container {{#if (gte ../data.wounds.value 15)}}red{{else if (gte ../data.wounds.value @index)}}crossed{{/if}}">
+                <i class="fas fa-circle fa-xs"></i>
+            </div>
             {{/times}}
         </div>
     </div>

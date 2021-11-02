@@ -42,7 +42,8 @@ cd10.coverage = {
     arms: "cd10.armor.coverage.arms",
     legs: "cd10.armor.coverage.legs"
 }
-cd10.skills = {
+cd10.skillCategories = {
+    category: "cd10.sheet.category",
     communication: "cd10.skill.communication",
     crafts: "cd10.skill.crafts",
     firearms: "cd10.skill.firearms",
@@ -53,7 +54,8 @@ cd10.skills = {
     willpower: "cd10.skill.willpower"
 
 }
-cd10.traits = {
+cd10.traitCategories = {
+    category: "cd10.sheet.category",
     situational: "cd10.trait.situational",
     uncheckable: "cd10.trait.uncheckable",
     value: "cd10.trait.value",

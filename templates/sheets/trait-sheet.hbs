@@ -1,66 +1,34 @@
 <form class="{{cssClass}}" autocomplete="off">
-  <div class="headerbox">
-    <header class="sheet-header">
-      <img
-        src="{{item.img}}"
-        data-edit="img"
-        title="{{item.name}}"
-        height="64"
-        width="64"
-      />
-      <h1>
-        <input
-          name="name"
-          type="text"
-          value="{{item.name}}"
-          placeholder="{{localize "cd10.trait.name"}}"
-        />
-      </h1>
-      <h1>
-        <select name="data.skillType.value">
-          {{#select data.skillType.value}}
-            {{#each config.traits as |name type|}}
-              <option value="{{type}}">
-                {{localize name}}
-              </option>
-            {{/each}}
-          {{/select}}
-        </select>
-      </h1>
-    </header>
-  </div>
-  <div class="sheet-content">
-    <div class="stat-box">
-      <div class="value-box">
-        <div class="stat-name">
-          <label>
-            {{localize "cd10.trait.range"}}
-          </label>
-        </div>
-        <div class="stat-value">
-          <input
-            name="data.skillLevel.min"
-            type="text"
-            value="{{data.skillLevel.min}}"
-            placeholder="{{localize "cd10.sheet.min"}}"
-          />
-        </div>
-        <div class="stat-value">
-          <input
-            name="data.skillLevel.max"
-            type="text"
-            value="{{data.skillLevel.max}}"
-            placeholder="{{localize "cd10.sheet.max"}}"
-          />
-        </div>
-      </div>
+    <div class="item-sheet-header">
+        <h1>
+            <input
+                name="name"
+                type="text"
+                value="{{item.name}}"
+                placeholder="{{localize "cd10.sheet.name"}}"
+            />
+        </h1>
     </div>
-    {{editor
-      content=data.description.value
-      target="data.description.value"
-      button=true
-      owner=owner
-      editable=editable
-    }}
-  </div>
+    <hr>
+    <div class="item-sheet-main-content flex-row flex-evenly">
+        <img
+            src="{{item.img}}"
+            data-edit="img"
+            title="{{item.name}}"
+        />
+        <div class="generic-info-box card">
+            <div class="editor-box">
+                {{editor
+                    content=data.description.value
+                    target="data.description.value"
+                    button=true
+                    owner=owner
+                    editable=editable
+                }}
+            </div>
+        </div>
+    </div>
+    <div class="weapon-and-armor-stats card">
+        {{> "systems/cd10_dev/templates/partials/small-trait-stats.hbs" this}}
+    </div>
 </form>

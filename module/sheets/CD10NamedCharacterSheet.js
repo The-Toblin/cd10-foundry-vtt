@@ -15,8 +15,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         return `systems/cd10_dev/templates/sheets/namedCharacter-sheet.hbs`;
     }
 
-
-
     equippableItemContextMenu = [{
             name: game.i18n.localize("cd10.sheet.edit"),
             icon: '<i class="fas fa-edit"></i>',
@@ -50,8 +48,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
                         }
                     }
                 });
-
-                this._updateEncumbrance();
             }
         },
         {
@@ -146,8 +142,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         let item = this.actor.items.get(itemId);
 
         item.sheet.render(true);
-
-        this._updateEncumbrance();
     }
 
     async _onItemDelete(event) {
@@ -158,12 +152,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         const item = this.actor.items.get(itemId);
 
         await this.actor.deleteEmbeddedDocuments("Item", [itemId]);
-        if (item.type == "trait") {
-            this._updateTotalTraitValue();
-        }
-
-        this._updateEncumbrance();
-
     }
 
     async _onItemEquip(event) {
@@ -187,8 +175,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
                 }
             }
         });
-
-        this._updateEncumbrance();
     }
 
     async _onSkillEdit(event) {
@@ -206,10 +192,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         await item.update({
             [field]: element.value
         });
-
-        if (item.type == "trait") {
-            this._updateTotalTraitValue();
-        }
     }
 
     async _onShockMarkChange(event) {
@@ -226,8 +208,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         await this.actor.update({
             "data.shock.value": newCount
         });
-
-        this._setDebilitation("Shock", newCount);
     }
 
     async _onWoundsMarkChange(event) {
@@ -244,124 +224,5 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         await this.actor.update({
             "data.wounds.value": newCount
         });
-
-        this._setDebilitation("Wounds", newCount);
-    }
-
-    _setDebilitation(type, updateValue) {
-
-        /* This function calculates the proper debilitation for a character */
-        let debilitationType;
-        let currentShock = this.actor.data.data.shock.value;
-        let currentWounds = this.actor.data.data.wounds.value;
-
-        if (type == "Shock") {
-            currentShock = +updateValue;
-        } else {
-            currentWounds = +updateValue;
-        }
-
-        let shockModifier = currentShock;
-        let woundsModifier = 0;
-
-        if (currentWounds == 2) {
-            woundsModifier = 1;
-            debilitationType = "on physical checks";
-        } else if (currentWounds == 3) {
-            woundsModifier = 2;
-            debilitationType = "on physical checks";
-        } else if (currentWounds > 3 && currentWounds < 6) {
-            woundsModifier = 3;
-            debilitationType = "on physical checks";
-        } else if (currentWounds > 5 && currentWounds < 8) {
-            woundsModifier = 4;
-            debilitationType = "on all checks";
-        } else if (currentWounds > 6 && currentWounds < 10) {
-            woundsModifier = 5;
-            debilitationType = "on all checks";
-        } else if (currentWounds == 10) {
-            woundsModifier = 6;
-            debilitationType = "on all checks";
-        } else if (currentWounds == 11) {
-            woundsModifier = 7;
-            debilitationType = "on all checks. DC 3.";
-        } else if (currentWounds == 12) {
-            woundsModifier = 7;
-            debilitationType = "on all checks. DC 6.";
-        } else if (currentWounds == 13) {
-            woundsModifier = 8;
-            debilitationType = "on all checks. DC 9.";
-        } else if (currentWounds == 14) {
-            woundsModifier = 8;
-            debilitationType = "on all checks. DC 12.";
-        } else if (currentWounds == 15) {
-            woundsModifier = 10;
-            debilitationType = "You are dead!";
-        } else {
-            woundsModifier = 0;
-            debilitationType = "on physical checks";
-        }
-
-        if (currentShock == 0 && currentWounds < 2) {
-            this.actor.update({
-                "data.modifier.value": 0,
-                "data.debilitationType.value": ""
-            })
-            return
-        }
-
-        let newModifier = shockModifier + woundsModifier;
-
-        this.actor.update({
-            "data.modifier.value": parseInt(newModifier),
-            "data.debilitationType.value": debilitationType
-        });
-    }
-
-    async _updateTotalTraitValue() {
-
-        const totalItems = this.actor.items;
-        let totalTraits;
-        let totalValue = 0;
-
-        totalTraits = totalItems.filter(trait => trait.type === 'trait');
-
-        for (let i = 0; i < totalTraits.length; i++) {
-            let adder = 0;
-            adder = +parseInt(totalTraits[i].data.data.skillLevel.value);
-
-            totalValue += adder;
-        }
-
-        await this.actor.update({
-            "data.totalTraitValue.value": parseInt(totalValue)
-        });
-    }
-
-    async _updateEncumbrance() {
-        let encumbranceValue = 0;
-        let itemList = this.actor.items.filter(p => p.type != "spell" && p.type != "skill" && p.type != "trait");
-
-        for (let i = 0; i < itemList.length; i++) {
-            let adder = 0;
-
-            if (itemList[i].type == "armor" && itemList[i].data.data.isEquipped.value == true || itemList[i].type == "weapon" && itemList[i].data.data.isEquipped.value == true) {
-                adder = +parseFloat(itemList[i].data.data.weight.value / 2);
-            } else {
-                adder = +parseFloat(itemList[i].data.data.weight.value);
-            }
-
-            encumbranceValue += adder;
-        }
-
-        await this.actor.update({
-            "data.encumbrance.value": parseFloat(encumbranceValue)
-        });
-    }
-
-    async _onDropItemCreate(itemData) {
-        const rv = await super._onDropItemCreate(itemData);
-        this._updateEncumbrance()
-        return rv;
     }
 }

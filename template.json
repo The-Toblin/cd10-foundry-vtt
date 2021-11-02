@@ -25,21 +25,6 @@
                     "max": 15,
                     "min": 0
                 },
-                "modifier": {
-                    "type": "Number",
-                    "label": "Modifier",
-                    "value": 0
-                },
-                "debilitationType": {
-                    "type": "String",
-                    "label": "Debilitation Type",
-                    "value": ""
-                },
-                "totalTraitValue": {
-                    "type": "Number",
-                    "label": "Total Trait Value",
-                    "value": 0
-                },
                 "quote": {
                     "type": "String",
                     "label": "Quote",
@@ -129,11 +114,6 @@
                 "type": "Number",
                 "label": "Money",
                 "value": 0
-            },
-            "encumbrance": {
-                "type": "Float",
-                "label": "Encumbrance",
-                "value": 0.0
             },
             "encumbranceLimit": {
                 "type": "Float",
@@ -294,6 +274,11 @@
                 "type": "Boolean",
                 "label": "Eligable for levelup",
                 "value": false
+            },
+            "teachable": {
+                "type": "Boolean",
+                "label": "Recuires teacher",
+                "value": false
             }
         },
         "trait": {
@@ -303,7 +288,8 @@
             ],
             "skillLevel": {
                 "min": -4,
-                "max": 4
+                "max": 4,
+                "value": 0
             },
             "reversed": {
                 "type": "Boolean",

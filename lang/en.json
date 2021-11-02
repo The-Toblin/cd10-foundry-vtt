@@ -27,7 +27,12 @@
             "equip": "Equip or unequp",
             "weight": "Weight",
             "removeShort": "Rem.",
-            "equipShort": "Eq."
+            "equipShort": "Eq.",
+            "positive": "Positive",
+            "negative": "Negative",
+            "name": "Name",
+            "category": "Category",
+            "to": "to"
         },
         "attack": {
             "none": "None",
@@ -50,8 +55,6 @@
             "teachableYes": "Requires a teacher.",
             "teachableNo": "No teacher required",
             "range": "Range",
-            "category": "Category",
-            "name": "Skill name",
             "skillLevel": "Skill level",
             "communication": "Communication",
             "crafts": "Crafts",
@@ -68,7 +71,6 @@
             "situational": "Situational",
             "uncheckable": "Uncheckable",
             "value": "Value",
-            "name": "Trait name",
             "skillLevel": "Trait level"
         },
         "weapon": {
@@ -110,7 +112,6 @@
         },
         "item": {
             "image": "Image",
-            "name": "Name",
             "availability": "Availability",
             "trader": "Trader",
             "weight": "Weight",

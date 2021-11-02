@@ -19,7 +19,10 @@ async function preloadHandlebarsTemplates() {
         "systems/cd10_dev/templates/partials/inventory-list.hbs",
         "systems/cd10_dev/templates/partials/generic-item-data.hbs",
         "systems/cd10_dev/templates/partials/small-weapon-stats.hbs",
-        "systems/cd10_dev/templates/partials/small-armor-stats.hbs"
+        "systems/cd10_dev/templates/partials/small-armor-stats.hbs",
+        "systems/cd10_dev/templates/partials/small-skill-stats.hbs",
+        "systems/cd10_dev/templates/partials/small-trait-stats.hbs",
+        "systems/cd10_dev/templates/partials/small-spell-stats.hbs"
     ];
 
     return loadTemplates(templatePaths);
