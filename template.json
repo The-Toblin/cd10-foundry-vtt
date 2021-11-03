@@ -7,31 +7,31 @@
         "templates": {
             "commonStats": {
                 "species": {
-                    "type": "String",
+                    "type": "string",
                     "label": "Species",
                     "value": ""
                 },
                 "shock": {
-                    "type": "Number",
+                    "type": "number",
                     "label": "Shock",
                     "value": 0,
                     "max": 15,
                     "min": 0
                 },
                 "wounds": {
-                    "type": "Number",
+                    "type": "number",
                     "label": "Wounds",
                     "value": 0,
                     "max": 15,
                     "min": 0
                 },
                 "quote": {
-                    "type": "String",
+                    "type": "string",
                     "label": "Quote",
                     "value": ""
                 },
                 "downAndOut": {
-                    "type": "Boolean",
+                    "type": "boolean",
                     "label": "Down and out",
                     "value": false
                 }
@@ -42,81 +42,81 @@
                 "commonStats"
             ],
             "playerName": {
-                "type": "String",
+                "type": "string",
                 "label": "Player Name",
                 "value": ""
             },
             "exp": {
-                "type": "Number",
+                "type": "number",
                 "label": "Experience",
                 "total": 0,
                 "spent": 0
             },
             "birthplace": {
-                "type": "String",
+                "type": "string",
                 "label": "Birthplace",
                 "value": ""
             },
             "family": {
                 "mother": {
-                    "type": "String",
+                    "type": "string",
                     "label": "Mother's Name",
                     "value": ""
                 },
                 "father": {
-                    "type": "String",
+                    "type": "string",
                     "label": "Father's Name",
                     "value": ""
                 },
                 "siblings": []
             },
             "title": {
-                "type": "String",
+                "type": "string",
                 "label": "Title",
                 "value": ""
             },
             "age": {
-                "type": "Number",
+                "type": "number",
                 "label": "Age",
                 "value": 0
             },
             "faith": {
-                "type": "String",
+                "type": "string",
                 "label": "Faith",
                 "value": ""
             },
             "sex": {
-                "type": "String",
+                "type": "string",
                 "label": "Sex",
                 "value": ""
             },
             "gender": {
-                "type": "String",
+                "type": "string",
                 "label": "Gender",
                 "value": ""
             },
             "mainHand": {
-                "type": "String",
+                "type": "string",
                 "label": "Main Hand",
                 "value": "Right"
             },
             "goal": {
-                "type": "String",
+                "type": "string",
                 "label": "Goal",
                 "value": ""
             },
             "notes": {
-                "type": "String",
+                "type": "string",
                 "label": "Notes",
                 "value": "Notes"
             },
             "money": {
-                "type": "Number",
+                "type": "number",
                 "label": "Money",
                 "value": 0
             },
             "encumbranceLimit": {
-                "type": "Float",
+                "type": "float",
                 "label": "Encumbrance limit",
                 "value": 12.0
             }
@@ -142,51 +142,51 @@
         "templates": {
             "itemDescription": {
                 "description": {
-                    "type": "String",
+                    "type": "string",
                     "label": "Description",
                     "value": "This is a description."
                 }
             },
             "commonStats": {
                 "availability": {
-                    "type": "String",
+                    "type": "string",
                     "label": "Availability",
                     "value": ""
                 },
                 "trader": {
-                    "type": "String",
+                    "type": "string",
                     "label": "Trader",
                     "value": ""
                 },
                 "tradeGroup": {
-                    "type": "Number",
+                    "type": "number",
                     "label": "Trade Group",
                     "value": 1
                 },
                 "price": {
-                    "type": "Number",
+                    "type": "number",
                     "label": "Price",
                     "value": 0
                 },
                 "weight": {
-                    "type": "Float",
+                    "type": "float",
                     "label": "Weight",
                     "value": 0.0
                 },
                 "quantity": {
-                    "type": "Number",
+                    "type": "number",
                     "label": "Quantity",
                     "value": 1
                 }
             },
             "skillsTraits": {
                 "skillCategory": {
-                    "type": "String",
+                    "type": "string",
                     "label": "Category",
                     "value": ""
                 },
                 "skillLevel": {
-                    "type": "Number",
+                    "type": "number",
                     "label": "Level",
                     "value": 0,
                     "min": 0,
@@ -213,49 +213,49 @@
                 "itemDescription"
             ],
             "coverage": {
-                "type": "String",
+                "type": "string",
                 "label": "Coverage",
                 "value": "All"
             },
             "protection": {
                 "slash": {
-                    "type": "Number",
+                    "type": "number",
                     "label": "Slash Protection",
                     "value": 0
                 },
                 "pierce": {
-                    "type": "Number",
+                    "type": "number",
                     "label": "Pierce Protection",
                     "value": 0
                 },
                 "blunt": {
-                    "type": "Number",
+                    "type": "number",
                     "label": "Blunt Protection",
                     "value": 0
                 },
                 "energy": {
-                    "type": "Number",
+                    "type": "number",
                     "label": "Energy Protection",
                     "value": 0
                 },
                 "shock": {
-                    "type": "Number",
+                    "type": "number",
                     "label": "Shock Protection",
                     "value": 0
                 }
             },
             "isShield": {
-                "type": "Boolean",
+                "type": "boolean",
                 "label": "Is Shield?",
                 "value": false
             },
             "blockValue": {
-                "type": "Number",
+                "type": "number",
                 "label": "Blockvalue",
                 "value": 0
             },
             "isEquipped": {
-                "type": "Boolean",
+                "type": "boolean",
                 "label": "Is it equipped?",
                 "value": false
             }
@@ -266,17 +266,17 @@
                 "itemDescription"
             ],
             "teacher": {
-                "type": "Boolean",
+                "type": "boolean",
                 "label": "Teacher required",
                 "value": false
             },
             "levelUp": {
-                "type": "Boolean",
+                "type": "boolean",
                 "label": "Eligable for levelup",
                 "value": false
             },
             "teachable": {
-                "type": "Boolean",
+                "type": "boolean",
                 "label": "Recuires teacher",
                 "value": false
             }
@@ -292,7 +292,7 @@
                 "value": 0
             },
             "reversed": {
-                "type": "Boolean",
+                "type": "boolean",
                 "label": "Reversed",
                 "value": false
             }
@@ -303,79 +303,79 @@
                 "itemDescription"
             ],
             "attackSkill": {
-                "type": "String",
+                "type": "string",
                 "label": "Skill",
                 "value": ""
             },
             "damage": {
                 "slash": {
-                    "type": "Number",
+                    "type": "number",
                     "label": "Slash Damage",
                     "value": 0
                 },
                 "pierce": {
-                    "type": "Number",
+                    "type": "number",
                     "label": "Pierce Damage",
                     "value": 0
                 },
                 "blunt": {
-                    "type": "Number",
+                    "type": "number",
                     "label": "Blunt Damage",
                     "value": 0
                 },
                 "energy": {
-                    "type": "Number",
+                    "type": "number",
                     "label": "Energy Damage",
                     "value": 0
                 },
                 "shock": {
-                    "type": "Number",
+                    "type": "number",
                     "label": "Shock Damage",
                     "value": 0
                 }
             },
             "reach": {
-                "type": "String",
+                "type": "string",
                 "label": "Reach",
                 "value": "Normal"
             },
             "blockValue": {
-                "type": "Number",
+                "type": "number",
                 "label": "Block",
                 "value": 0
             },
             "isRanged": {
-                "type": "Boolean",
+                "type": "boolean",
                 "label": "Ranged weapon?",
                 "value": false
             },
             "consumesAmmo": {
-                "type": "Boolean",
+                "type": "boolean",
                 "label": "Consumes ammo?",
                 "value": false
             },
             "ammoGroup": {
-                "type": "String",
+                "type": "string",
                 "label": "Ammo Group",
                 "value": ""
             },
             "selectedAmmo": {
-                "type": "String",
+                "type": "string",
                 "label": "Selected Ammo",
                 "value": "No ammo selected"
             },
             "magazine": {
-                "type": "Number",
+                "type": "number",
                 "label": "Magazine size",
                 "value": 0
             },
             "ammoCount": {
-                "type": "Number",
+                "type": "number",
                 "label": "Ammo count",
                 "value": 0
             },
             "range": {
-                "type": "Number",
+                "type": "number",
                 "label": "Range",
                 "value": {
                     "rangeClose": 0,
@@ -385,11 +385,49 @@
                 }
             },
             "isEquipped": {
-                "type": "Boolean",
+                "type": "boolean",
                 "label": "Is it equipped?",
                 "value": false
             }
         },
+        "spell": {
+            "templates": [
+                "skillsTraits",
+                "itemDescription"
+            ],
+            "difficulty": {
+                "type": "number",
+                "label": "Difficulty",
+                "value": 0
+            },
+            "cast": {
+                "type": "string",
+                "label": "Cast",
+                "value": ""
+            },
+            "duration": {
+                "type": "string",
+                "label": "Duration",
+                "value": ""
+            },
+            "range": {
+                "type": "string",
+                "label": "Range",
+                "value": ""
+            },
+            "area": {
+                "type": "string",
+                "label": "Area",
+                "value": ""
+            },
+            "reagents": {
+                "type": "string",
+                "label": "Reagents",
+                "value": ""
+            }
+
+        },
+
         "genericItem": {
             "templates": [
                 "commonStats",

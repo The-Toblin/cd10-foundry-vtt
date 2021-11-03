@@ -60,3 +60,29 @@ cd10.traitCategories = {
     uncheckable: "cd10.trait.uncheckable",
     value: "cd10.trait.value",
 }
+cd10.timeIndicators = {
+    concentration: "cd10.time.concentration",
+    circle: "cd10.time.circle",
+    immediate: "cd10.time.immediate",
+    action: "cd10.time.action",
+    round: "cd10.time.round",
+    minute: "cd10.time.minute",
+    hour: "cd10.time.hour",
+    watch: "cd10.time.watch",
+    fullWatch: "cd10.time.fullWatch",
+    sun: "cd10.time.sun",
+    week: "cd10.time.week",
+    month: "cd10.time.month",
+    year: "cd10.time.year",
+    life: "cd10.time.life"
+}
+cd10.areaIndicators = {
+    circle: "cd10.area.circle",
+    self: "cd10.area.self",
+    person: "cd10.area.person",
+    touch: "cd10.area.touch",
+    close: "cd10.area.close",
+    sight: "cd10.area.sight",
+    duchy: "cd10.area.duchy",
+    kingdom: "cd10.area.kingdom"
+}

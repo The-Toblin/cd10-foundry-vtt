@@ -1,65 +1,72 @@
 .armor-card {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .item-img {
+    display: block;
+    min-width: 150px;
+    margin-right: 10px;
+  }
+
+  .armor-name {
+    text-align: left;
+    font-size: 1.25em;
+    background: url(./assets/backgrounds/card_detail_background.jpg);
+    border-style: solid;
+    border-width: 3px;
+    border-image: radial-gradient(black, var(--accent-color)) 1;
+    box-shadow: inset 2px 2px 10px 5px black;
+    vertical-align: middle;
+    text-align: center;
+    padding: 4px 5px 4px 5px;
     margin-bottom: 10px;
+  }
+
+  .description-box {
+    background: url(./assets/backgrounds/card_detail_background.jpg);
+    border-style: solid;
+    border-width: 3px;
+    border-image: radial-gradient(black, var(--accent-color)) 1;
+    box-shadow: inset 2px 2px 10px 5px black;
+    padding: 8px;
+    width: 100%;
+  }
+
+  .armor-box {
+    background: url(./assets/backgrounds/card_detail_background.jpg);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-  
-    .item-img {
-      display: block;
-      min-width: 150px;
-      margin-right: 10px;
-    }
-  
-    .armor-name {
-      text-align: left;
-      font-size: 1.25em;
-    }
-  
-    .description-box {
-      background: url(./assets/backgrounds/card_detail_background.jpg);
-      border-style: solid;
-      border-width: 3px;
-      border-image: radial-gradient(black, var(--accent-color)) 1;
-      box-shadow: inset 2px 2px 10px 5px black;
-      padding: 8px;
-      width: 100%;
-    }
-  
-    .armor-box {
-      background: url(./assets/backgrounds/card_detail_background.jpg);
+    justify-content: start;
+    border-style: solid;
+    border-width: 3px;
+    border-image: radial-gradient(black, var(--accent-color)) 1;
+    box-shadow: inset 2px 2px 10px 5px black;
+    padding: 8px;
+    margin-right: 10px;
+    min-width: 150px;
+
+    .armor-stats {
       display: flex;
-      flex-direction: column;
-      justify-content: start;
-      border-style: solid;
-      border-width: 3px;
-      border-image: radial-gradient(black, var(--accent-color)) 1;
-      box-shadow: inset 2px 2px 10px 5px black;
-      padding: 8px;
-      margin-right: 10px;
-      min-width: 150px;
-  
-      .armor-stats {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        box-shadow: 2px 2px 2px black;
-  
-  
-        .stat-name,
-        .armor-statvalue {
-          padding: 2px 5px 2px 0px;
-        }
-  
-        .stat-name {
-          text-align: left;
-          text-transform: capitalize;
-        }
-  
-        .armor-statvalue {
-          text-align: right;
-          text-transform: capitalize;
-        }
+      flex-direction: row;
+      justify-content: space-between;
+      box-shadow: 2px 2px 2px black;
+
+      .stat-name,
+      .armor-statvalue {
+        padding: 2px 5px 2px 0px;
+      }
+
+      .stat-name {
+        text-align: left;
+        text-transform: capitalize;
+      }
+
+      .armor-statvalue {
+        text-align: right;
+        text-transform: capitalize;
       }
     }
   }
-  
+}

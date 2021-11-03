@@ -22,4 +22,16 @@
     <div class="weapon-and-armor-stats card">
         {{> "systems/cd10_dev/templates/partials/small-spell-stats.hbs" this }}
     </div>
+    <div>
+        {{localize "cd10.spell.reagents"}}
+        <div class="editor-box card">
+            {{editor
+            content=data.reagents.value
+            target="data.reagents.value"
+            button=true
+            owner=owner
+            editable=editable
+            }}
+        </div>
+    </div>
 </form>

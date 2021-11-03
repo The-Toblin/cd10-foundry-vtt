@@ -1,7 +1,7 @@
 <section class="flex-row flex-between">
-    <div class="skill-list flex-column flex-start">
+    <div class="spell-list flex-column flex-start">
         {{#each spells as |spell id|}}
-        <div class="attribute-pair inventory-item item flex-row flex-evenly" data-item-id="{{spell._id}}">
+        <div class="attribute-pair inventory-item item flex-row" data-item-id="{{spell._id}}">
             <div class="attribute-name">
                 {{spell.name}}
             </div>
@@ -12,6 +12,63 @@
                 <i class="fas fa-trash"></i>
             </a>
         </div>
+        <div class="flex-row flex-start">
+            <div>
+                <table>
+                    <tr>
+                        <th>
+                            {{localize "cd10.spell.difficulty"}}
+                        </th>
+                        <td>
+                            {{data.difficulty.value}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{localize "cd10.spell.cast"}}
+                        </th>
+                        <td>
+                            {{data.cast.value}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{localize "cd10.spell.duration"}}
+                        </th>
+                        <td>
+                            {{data.duration.value}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{localize "cd10.spell.range"}}
+                        </th>
+                        <td>
+                            {{data.range.value}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{localize "cd10.spell.area"}}
+                        </th>
+                        <td>
+                            {{data.area.value}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="spell-description">
+                {{{data.description.value}}}
+            </div>
+        </div>
+        <div>
+            {{#if data.reagents.value}}
+            <div class="spell-reagents">
+                {{{data.reagents.value}}}
+            </div>
+            {{/if}}
+        </div>
+
         {{/each}}
     </div>
 </section>

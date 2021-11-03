@@ -23,6 +23,42 @@
   background: none;
   color: var(--font-color);
 }
+.cd10.sheet.namedCharacter form table {
+  border: none;
+  border-collapse: separate;
+  border-spacing: 5px;
+}
+.cd10.sheet.namedCharacter form table tr {
+  background: unset;
+  background-color: unset;
+}
+.cd10.sheet.namedCharacter form table th,
+.cd10.sheet.namedCharacter form table td {
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 1px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  vertical-align: middle;
+  text-align: center;
+  padding: 4px 5px 4px 5px;
+}
+.cd10.sheet.namedCharacter form .sheet-tabs {
+  margin-bottom: 10px;
+}
+.cd10.sheet.namedCharacter form .sheet-notes table {
+  border: none;
+}
+.cd10.sheet.namedCharacter form .sheet-notes table td {
+  color: var(--font-color);
+}
+.cd10.sheet.namedCharacter form .sheet-notes table tr {
+  background: unset;
+  background-color: unset;
+}
+.cd10.sheet.namedCharacter form .sheet-notes .editor-content {
+  min-height: 521px;
+}
 .cd10.sheet.namedCharacter form .sheet-card {
   background: url(./assets/backgrounds/card_background.jpg);
   border-style: solid;
@@ -30,6 +66,15 @@
   border-image: radial-gradient(black, var(--font-color)) 1;
   padding: 5px;
   box-shadow: 5px 10px 10px #000000;
+  margin-bottom: 10px;
+}
+.cd10.sheet.namedCharacter form .dark-background {
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  padding: 4px;
   margin-bottom: 10px;
 }
 .cd10.sheet.namedCharacter form h1 {
@@ -44,6 +89,7 @@
 .cd10.sheet.namedCharacter form hr {
   border-color: var(--font-color);
   width: 150px;
+  margin-bottom: 20px;
 }
 .cd10.sheet.namedCharacter form .sheet-main-content {
   margin-right: 10px;
@@ -119,6 +165,15 @@
 .armor-card .armor-name {
   text-align: left;
   font-size: 1.25em;
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  vertical-align: middle;
+  text-align: center;
+  padding: 4px 5px 4px 5px;
+  margin-bottom: 10px;
 }
 .armor-card .description-box {
   background: url(./assets/backgrounds/card_detail_background.jpg);
@@ -174,6 +229,15 @@
 .weapon-card .weapon-name {
   text-align: left;
   font-size: 1.25em;
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  vertical-align: middle;
+  text-align: center;
+  padding: 4px 5px 4px 5px;
+  margin-bottom: 10px;
 }
 .weapon-card .description-box {
   background: url(./assets/backgrounds/card_detail_background.jpg);
@@ -219,6 +283,17 @@
 .traits-list {
   width: 49%;
 }
+.skill-list .attribute-pair,
+.traits-list .attribute-pair {
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 1px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  padding: 2px 5px 2px 5px;
+  width: 100%;
+  margin: 0 0 2px 0;
+}
 .skill-list .attribute-pair .attribute-name,
 .traits-list .attribute-pair .attribute-name {
   text-align: left;
@@ -241,6 +316,53 @@
 }
 .skill-list input,
 .traits-list input {
+  width: 20px;
+  text-align: center;
+  vertical-align: middle;
+}
+.spell-list {
+  width: 100%;
+}
+.spell-list .spell-description,
+.spell-list .spell-reagents {
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 1px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  padding: 2px 5px 2px 5px;
+  width: 100%;
+  margin: 12px 0 5px 0;
+}
+.spell-list .attribute-pair {
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 1px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  padding: 2px 5px 2px 5px;
+  width: 100%;
+  margin: 0 0 5px 0;
+}
+.spell-list .attribute-pair .attribute-name {
+  text-align: left;
+  vertical-align: middle;
+  padding: 2px;
+  padding-top: 4px;
+  width: calc(100% - 2px);
+  font-weight: 700;
+}
+.spell-list .attribute-pair .attribute-value {
+  text-align: right;
+  width: 25px;
+  font-weight: 700;
+  margin-right: 10px;
+}
+.spell-list .item-delete {
+  vertical-align: middle;
+  padding-top: 4px;
+}
+.spell-list input {
   width: 20px;
   text-align: center;
   vertical-align: middle;
@@ -280,9 +402,6 @@
 .character-description-box .experiencebox {
   display: inline-flex;
 }
-.character-description-box .tablebox table {
-  border: none;
-}
 .character-description-box .tablebox table tr {
   background-color: unset;
 }
@@ -300,7 +419,14 @@
   text-align: right !important;
 }
 .health-info .stat-element {
-  margin-bottom: 10px;
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 1px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  padding: 2px 5px 2px 5px;
+  width: 100%;
+  margin: 0 0 10px 0;
 }
 .health-info .stat-element .shock-icons,
 .health-info .stat-element .wounds-icons {
@@ -323,8 +449,10 @@
   display: flex;
   flex-direction: column;
   justify-content: start;
-  min-width: 820px;
-  min-height: 470px;
+  min-width: 560px;
+  max-width: 850px;
+  height: fit-content !important;
+  width: fit-content !important;
 }
 .cd10.sheet.item img {
   width: 150px;
@@ -342,17 +470,23 @@
 }
 .cd10.sheet.item table {
   border: none;
+  border-collapse: separate;
+  border-spacing: 5px;
 }
 .cd10.sheet.item table tr {
   background: unset;
   background-color: unset;
 }
+.cd10.sheet.item table th,
 .cd10.sheet.item table td {
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 1px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
   vertical-align: middle;
   text-align: center;
-}
-.cd10.sheet.item table td .pad {
-  padding-top: 4px;
+  padding: 4px 5px 4px 5px;
 }
 .cd10.sheet.item .window-content {
   background: url(./assets/backgrounds/sheet_background.jpg);

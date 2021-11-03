@@ -1,3 +1,8 @@
-body p {
+body p,
+b,
+a,
+ul,
+ol,
+li {
     color: rgb(223, 187, 97);
 }

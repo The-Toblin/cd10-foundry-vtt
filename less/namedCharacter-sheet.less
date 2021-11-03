@@ -27,6 +27,50 @@
       color: var(--font-color);
     }
 
+    table {
+      border: none;
+      border-collapse: separate;
+      border-spacing: 5px;
+
+      tr {
+        background: unset;
+        background-color: unset;
+      }
+
+      th,
+      td {
+        background: url(./assets/backgrounds/card_detail_background.jpg);
+        border-style: solid;
+        border-width: 1px;
+        border-image: radial-gradient(black, var(--accent-color)) 1;
+        box-shadow: inset 2px 2px 10px 5px black;
+        vertical-align: middle;
+        text-align: center;
+        padding: 4px 5px 4px 5px;
+      }
+    }
+
+    .sheet-tabs {
+      margin-bottom: 10px;
+    }
+
+    .sheet-notes {
+      table {
+        border: none;
+
+        td {
+          color: var(--font-color);
+        }
+        tr {
+          background: unset;
+          background-color: unset;
+        }
+      }
+      .editor-content {
+        min-height: 521px;
+      }
+    }
+
     .sheet-card {
       background: url(./assets/backgrounds/card_background.jpg);
       border-style: solid;
@@ -34,6 +78,16 @@
       border-image: radial-gradient(black, var(--font-color)) 1;
       padding: 5px;
       box-shadow: 5px 10px 10px rgb(0, 0, 0, 0.5);
+      margin-bottom: 10px;
+    }
+
+    .dark-background {
+      background: url(./assets/backgrounds/card_detail_background.jpg);
+      border-style: solid;
+      border-width: 3px;
+      border-image: radial-gradient(black, var(--accent-color)) 1;
+      box-shadow: inset 2px 2px 10px 5px black;
+      padding: 4px;
       margin-bottom: 10px;
     }
 
@@ -51,6 +105,7 @@
     hr {
       border-color: var(--font-color);
       width: 150px;
+      margin-bottom: 20px;
     }
 
     .sheet-main-content {
@@ -69,14 +124,14 @@
     }
 
     .encumbrance-list {
-        display: flex;
+      display: flex;
     }
 
     .sheet-sidebar {
       padding: 10px;
 
       .red {
-          color: red;
+        color: red;
       }
 
       .sheet-card {
@@ -90,6 +145,7 @@
       }
 
       .sheet-money {
+          
         .money {
           padding-top: 4px;
         }

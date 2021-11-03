@@ -11,28 +11,31 @@
         },
         "sheet": {
             "add": "Add",
-            "edit": "Edit",
-            "remove": "Remove",
-            "newItem": "Name",
-            "bio": "Biography",
-            "weapons": "Weapons",
             "armor": "Armor",
-            "health": "Health",
-            "coverage": "Coverage",
-            "total": "Total",
-            "inventory": "Inventory",
-            "notes": "Notes",
-            "min": "Minimum",
-            "max": "Maximum",
-            "equip": "Equip or unequp",
-            "weight": "Weight",
-            "removeShort": "Rem.",
-            "equipShort": "Eq.",
-            "positive": "Positive",
-            "negative": "Negative",
-            "name": "Name",
+            "bio": "Biography",
             "category": "Category",
-            "to": "to"
+            "combat": "Combat",
+            "coverage": "Coverage",
+            "edit": "Edit",
+            "equip": "Equip or unequp",
+            "equipShort": "Eq.",
+            "health": "Health",
+            "inventory": "Inventory",
+            "max": "Maximum",
+            "min": "Minimum",
+            "name": "Name",
+            "negative": "Negative",
+            "newItem": "Name",
+            "notes": "Notes",
+            "positive": "Positive",
+            "remove": "Remove",
+            "removeShort": "Rem.",
+            "skills": "Skills",
+            "spells": "Spells",
+            "to": "to",
+            "total": "Total",
+            "weapons": "Weapons",
+            "weight": "Weight"
         },
         "attack": {
             "none": "None",
@@ -72,6 +75,14 @@
             "uncheckable": "Uncheckable",
             "value": "Value",
             "skillLevel": "Trait level"
+        },
+        "spell": {
+            "difficulty": "Difficulty",
+            "cast": "Cast",
+            "duration": "Duration",
+            "range": "Range",
+            "area": "Area",
+            "reagents": "Reagents"
         },
         "weapon": {
             "attackWith": "Skill",
@@ -118,7 +129,6 @@
             "tradeGroup": "Trade Group",
             "price": "Price",
             "weightMarker": "kg"
-
         },
         "reach": {
             "grappling": "Grappling",
@@ -157,6 +167,32 @@
             "currency": "Silver",
             "currencyShort": "m",
             "encumbrance": "Encumbrance"
+        },
+        "time": {
+            "concentration": "Concentration",
+            "circle": "Circle",
+            "immediate": "Immediate",
+            "action": "Action",
+            "round": "Round",
+            "minute": "Minute",
+            "hour": "Hour",
+            "watch": "Watch",
+            "fullWatch": "Full watch",
+            "sun": "Sunrise/Sundown",
+            "week": "Week",
+            "month": "Month",
+            "year": "Year",
+            "life": "Life"
+        },
+        "area": {
+            "circle": "Circle",
+            "self": "Self",
+            "person": "Person",
+            "touch": "Touch",
+            "close": "Close",
+            "sight": "Sight",
+            "duchy": "Duchy",
+            "kingdom": "Kingdom"
         }
     }
 }

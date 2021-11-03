@@ -1,3 +1,91 @@
 <section class="small-weapon-armor-stats flex-row flex-even">
-        Spell
+    <table>
+        <tr>
+            <th>
+                {{localize "cd10.skill.teachableYes"}}
+            </th>
+            <th>
+                {{localize "cd10.sheet.category"}}
+            </th>
+            <th>
+                {{localize "cd10.skill.range"}}
+            </th>
+            <th>
+                {{localize "cd10.spell.difficulty"}}
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <input name="data.teachable.value" type="checkbox" {{checked data.teachable.value}}
+                    data-dtype="{{data.teachable.type}}" />
+            </td>
+            <td>
+                <select name="data.skillType.value">
+                    {{#select data.skillType.value}}
+                    {{#each config.skillCategories as |name type|}}
+                    <option value="{{type}}">{{localize name}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
+            </td>
+            <td>
+                {{data.skillLevel.min}} - {{data.skillLevel.max}}
+            </td>
+            <td>
+                <input name="data.difficulty.value" type="text" value="{{data.difficulty.value}}"/>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                {{localize "cd10.spell.cast"}}
+            </th>
+            <th>
+                {{localize "cd10.spell.duration"}}
+            </th>
+            <th>
+                {{localize "cd10.spell.range"}}
+            </th>
+            <th>
+                {{localize "cd10.spell.area"}}
+            </th>
+        </tr>
+        <tr>
+          <td>
+                <select name="data.cast.value">
+                    {{#select data.cast.value}}
+                    {{#each config.timeIndicators as |name type|}}
+                    <option value="{{type}}">{{localize name}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
+            </td>
+            <td>
+                <select name="data.duration.value">
+                    {{#select data.duration.value}}
+                    {{#each config.timeIndicators as |name type|}}
+                    <option value="{{type}}">{{localize name}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
+            </td>
+            <td>
+                <select name="data.range.value">
+                    {{#select data.range.value}}
+                    {{#each config.areaIndicators as |name type|}}
+                    <option value="{{type}}">{{localize name}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
+            </td>
+            <td>
+                <select name="data.area.value">
+                    {{#select data.area.value}}
+                    {{#each config.areaIndicators as |name type|}}
+                    <option value="{{type}}">{{localize name}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
+            </td>
+        </tr>
+    </table>
 </section>
