@@ -3,8 +3,8 @@
     "title": "Celenia D10 Roleplaying System",
     "description": "A narratively focused, lightweight system focused on tension and rule of cool.",
     "author": "The Toblin",
-    "version": "0.1.2",
-    "minimumCoreVersion": "0.8.7",
+    "version": "0.1.3",
+    "minimumCoreVersion": "0.8.9",
     "compatibleCoreVersion": "0.8.9",
     "esmodules": [
         "cd10.js"
@@ -12,9 +12,7 @@
     "styles": [
         "cd10.css"
     ],
-    "packs": [
-
-    ],
+    "packs": [],
     "languages": [{
         "lang": "en",
         "name": "English",
@@ -24,5 +22,8 @@
     "gridUnits": "m",
     "primaryTokenAttribute": "wounds",
     "secondaryTokenAttribute": "shock",
-    "initiative": ""
+    "initiative": "",
+    "url": "https://github.com/The-Toblin/cd10-foundry-vtt/",
+    "manifest": "https://github.com/The-Toblin/cd10-foundry-vtt/blob/v0.1.3/system.json",
+    "download": "https://github.com/The-Toblin/cd10-foundry-vtt/archive/refs/tags/v0.1.3.zip"
 }
