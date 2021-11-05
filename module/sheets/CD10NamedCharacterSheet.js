@@ -1,7 +1,7 @@
 export default class CD10NamedCharacterSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            template: "systems/cd10_dev/templates/sheets/namedCharacter-sheet.hbs",
+            template: "systems/cd10/templates/sheets/namedCharacter-sheet.hbs",
             classes: ["cd10", "sheet", "namedCharacter"],
             tabs: [{
                 navSelector: ".sheet-tabs",
@@ -12,7 +12,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     }
 
     get template() {
-        return `systems/cd10_dev/templates/sheets/namedCharacter-sheet.hbs`;
+        return `systems/cd10/templates/sheets/namedCharacter-sheet.hbs`;
     }
 
     equippableItemContextMenu = [{

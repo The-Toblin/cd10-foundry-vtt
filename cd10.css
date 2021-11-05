@@ -10,6 +10,16 @@
 .cd10.sheet.namedCharacter form {
   color: var(--font-color);
 }
+.cd10.sheet.namedCharacter form select {
+  border: none;
+  color: var(--font-color);
+  font-family: var(--font-main);
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+}
+.cd10.sheet.namedCharacter form select option {
+  background-color: black;
+  font-family: var(--font-main);
+}
 .cd10.sheet.namedCharacter form .editor {
   height: 100%;
   min-height: 100px;
@@ -67,6 +77,7 @@
   padding: 5px;
   box-shadow: 5px 10px 10px #000000;
   margin-bottom: 10px;
+  color: var(--font-color);
 }
 .cd10.sheet.namedCharacter form .dark-background {
   background: url(./assets/backgrounds/card_detail_background.jpg);
@@ -183,6 +194,8 @@
   box-shadow: inset 2px 2px 10px 5px black;
   padding: 8px;
   width: 100%;
+  max-height: 150px;
+  overflow: auto;
 }
 .armor-card .armor-box {
   background: url(./assets/backgrounds/card_detail_background.jpg);
@@ -247,6 +260,8 @@
   box-shadow: inset 2px 2px 10px 5px black;
   padding: 8px;
   width: 100%;
+  max-height: 150px;
+  overflow: auto;
 }
 .weapon-card .weapon-box {
   background: url(./assets/backgrounds/card_detail_background.jpg);
@@ -282,6 +297,7 @@
 .skill-list,
 .traits-list {
   width: 49%;
+  color: var(--font-color);
 }
 .skill-list .attribute-pair,
 .traits-list .attribute-pair {
@@ -466,6 +482,14 @@
   width: 50%;
 }
 .cd10.sheet.item select {
+  border: none;
+  color: var(--font-color);
+  background-color: black;
+  font-family: var(--font-main);
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+}
+.cd10.sheet.item select option {
+  background-color: black;
   font-family: var(--font-main);
 }
 .cd10.sheet.item table {
@@ -494,6 +518,10 @@
 .cd10.sheet.item .window-content form {
   color: var(--font-color);
 }
+.cd10.sheet.item .window-content form select {
+  border: none;
+  color: var(--font-color);
+}
 .cd10.sheet.item .window-content form h1 {
   border: none;
   text-align: center;
@@ -520,8 +548,8 @@
   margin-left: 10px;
 }
 .cd10.sheet.item .window-content form .editor-box .editor {
-  height: 100%;
-  min-height: auto;
+  max-height: 140px;
+  overflow: auto;
 }
 .cd10.sheet.item .window-content form .editor-box .editor .editor-content {
   min-height: 100px;
@@ -550,16 +578,58 @@
   text-align: center;
   margin-right: 3px;
 }
-.cd10.sheet.mookCharacter {
-  min-height: 700px;
-  max-width: 480px;
+.cd10.sheet.mookCharacter h1,
+.cd10.sheet.mookCharacter h2,
+.cd10.sheet.mookCharacter h3,
+.cd10.sheet.mookCharacter p,
+.cd10.sheet.mookCharacter label,
+.cd10.sheet.mookCharacter .sheet-header,
+.cd10.sheet.mookCharacter input,
+.cd10.sheet.mookCharacter textarea,
+.cd10.sheet.mookCharacter .stat-element,
+.cd10.sheet.mookCharacter .fa,
+.cd10.sheet.mookCharacter .far,
+.cd10.sheet.mookCharacter .fas {
+  color: var(--font-color);
+}
+.cd10.sheet.mookCharacter .window-content {
+  background: url(./assets/backgrounds/sheet_background.jpg);
 }
 .cd10.sheet.mookCharacter form {
   display: flex;
   flex-direction: column;
   /* Headers */
   /* General settings */
-  /* Skills and trait */
+}
+.cd10.sheet.mookCharacter form select {
+  border: none;
+  color: var(--font-color);
+  background-color: black;
+  font-family: var(--font-main);
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+}
+.cd10.sheet.mookCharacter form select option {
+  font-family: var(--font-main);
+}
+.cd10.sheet.mookCharacter form .sheet-card {
+  background: url(./assets/backgrounds/card_background.jpg);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, var(--font-color)) 1;
+  padding: 5px;
+  box-shadow: 5px 10px 10px #000000;
+  margin-bottom: 10px;
+  color: var(--font-color);
+}
+.cd10.sheet.mookCharacter form .dark-background {
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  padding: 4px;
+  margin-bottom: 10px;
+  color: var(--font-color);
 }
 .cd10.sheet.mookCharacter form h1 {
   font-size: 2em;
@@ -580,23 +650,24 @@
   text-align: center;
 }
 .cd10.sheet.mookCharacter form .actor-image {
-  max-height: 200px;
+  max-height: 225px;
 }
 .cd10.sheet.mookCharacter form hr {
   width: 150px;
   margin-top: 5px;
   margin-bottom: 5px;
+  border-color: var(--font-color);
 }
 .cd10.sheet.mookCharacter form .header-box,
 .cd10.sheet.mookCharacter form .title-box,
 .cd10.sheet.mookCharacter form .equipment-list {
   width: 100%;
 }
+.cd10.sheet.mookCharacter form .title-box {
+  margin-right: 0 10px 0 10px ;
+}
 .cd10.sheet.mookCharacter form .body-box {
   padding: 10px;
-}
-.cd10.sheet.mookCharacter form .body-box .equipment-list {
-  justify-content: space-evenly;
 }
 .cd10.sheet.mookCharacter form .quote textarea {
   resize: none;
@@ -608,28 +679,8 @@
   background: none;
   font-family: "Signika", sans-serif;
 }
-.cd10.sheet.mookCharacter form .ability-card {
-  width: 100%;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-.cd10.sheet.mookCharacter form .ability-card .skill-trait-header .fa-plus {
-  padding-top: 3px;
-  margin-left: 5px;
-}
-.cd10.sheet.mookCharacter form .ability-card .skill-list .attribute-pair .fa-trash,
-.cd10.sheet.mookCharacter form .ability-card .trait-list .attribute-pair .fa-trash {
-  padding-top: 6px;
-  margin-left: 5px;
-}
-.cd10.sheet.mookCharacter form .ability-card .skill-list .attribute-pair .attribute-name,
-.cd10.sheet.mookCharacter form .ability-card .trait-list .attribute-pair .attribute-name {
-  text-align: left;
-}
-.cd10.sheet.mookCharacter form .ability-card .skill-list .attribute-pair .attribute-value,
-.cd10.sheet.mookCharacter form .ability-card .trait-list .attribute-pair .attribute-value {
-  text-align: right;
-  width: 25px;
+.cd10.sheet.mookCharacter form .weapon-item {
+  margin-right: 5px;
 }
 /* Variables */
 :root {
@@ -661,9 +712,4 @@
 .flex-center {
   justify-content: center;
   align-content: flex-start;
-}
-/* System Wide Changes */
-select {
-  border: none;
-  color: var(--font-color);
 }

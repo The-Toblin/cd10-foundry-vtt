@@ -21,6 +21,15 @@
   }
 
   select {
+    border: none;
+    color: var(--font-color);
+    background-color: black;
+    font-family: var(--font-main);
+    background: url(./assets/backgrounds/card_detail_background.jpg);
+  }
+
+  select option {
+    background-color: black;
     font-family: var(--font-main);
   }
 
@@ -52,6 +61,11 @@
 
     form {
       color: var(--font-color);
+
+      select {
+        border: none;
+        color: var(--font-color);
+      }
 
       h1 {
         border: none;
@@ -85,8 +99,8 @@
 
       .editor-box {
         .editor {
-          height: 100%;
-          min-height: auto;
+          max-height: 140px;
+          overflow: auto;
 
           .editor-content {
             min-height: 100px;

@@ -11,7 +11,7 @@ export default class CD10Actor extends Actor {
 
         /* Encumbrance */
         templateData.currentEncumbrance = {
-            type: "Number",
+            type: "number",
             label: "Encumbrance",
             value: this._prepareEncumbrance(actorData),
         };
@@ -20,19 +20,19 @@ export default class CD10Actor extends Actor {
         let traits = this._prepareTraits(actorData);
 
         templateData.traitsValue = {
-            type: "Number",
+            type: "number",
             label: "Total traits value",
             value: traits.totalValue,
         };
 
         templateData.posTraits = {
-            type: "Number",
+            type: "number",
             label: "Total positive traits",
             value: traits.pos,
         };
 
         templateData.negTraits = {
-            type: "Number",
+            type: "number",
             label: "Total negative traits",
             value: traits.neg,
         };
@@ -41,13 +41,13 @@ export default class CD10Actor extends Actor {
         let debilitation = this._prepareDebilitation(templateData);
 
         templateData.modifier = {
-            type: "Number",
+            type: "number",
             label: "Modifier",
             value: debilitation.modifier,
         };
 
         templateData.debilitationType = {
-            type: "String",
+            type: "string",
             label: "Debilitation",
             value: debilitation.type,
         };

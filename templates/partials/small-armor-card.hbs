@@ -1,0 +1,106 @@
+<div class="armor-card sheet-card flex-column" data-item-id="{{_id}}">
+    <div class="armor-info armor-name">
+        <p>{{name}}</p>
+    </div>
+    <div class="flex-row flex-start image-stats-box">
+        <div class="armor-box">
+            {{#if data.protection.slash.value}}
+            <div class="armor-stats">
+                <div class="stat-name">
+                    {{localize "cd10.armor.slashProtection"}}
+                </div>
+                <div class="armor-statvalue">
+                    {{data.protection.slash.value}}
+                </div>
+            </div>
+            {{/if}}
+            {{#if data.protection.pierce.value}}
+            <div class="armor-stats">
+                <div class="stat-name">
+                    {{localize "cd10.armor.pierceProtection"}}
+                </div>
+                <div class="armor-statvalue">
+                    {{data.protection.pierce.value}}
+                </div>
+
+            </div>
+            {{/if}}
+            {{#if data.protection.blunt.value}}
+            <div class="armor-stats">
+                <div class="stat-name">
+                    {{localize "cd10.armor.bluntProtection"}}
+                </div>
+                <div class="armor-statvalue">
+                    {{data.protection.blunt.value}}
+                </div>
+            </div>
+            {{/if}}
+            {{#if data.protection.energy.value}}
+            <div class="armor-stats">
+                <div class="stat-name">
+                    {{localize "cd10.armor.energyProtection"}}
+                </div>
+                <div class="armor-statvalue">
+                    {{data.protection.energy.value}}
+                </div>
+
+            </div>
+            {{/if}}
+            {{#if data.protection.shock.value}}
+            <div class="armor-stats">
+                <div class="stat-name">
+                    {{localize "cd10.armor.shockProtection"}}
+                </div>
+                <div class="armor-statvalue">
+                    {{data.protection.shock.value}}
+                </div>
+            </div>
+            {{/if}}
+            {{#if data.blockValue.value}}
+            <div class="armor-stats">
+                <div class="stat-name">
+                    {{localize "cd10.armor.blockValue"}}
+                </div>
+                <div class="armor-statvalue">
+                    {{data.blockValue.value}}
+                </div>
+            </div>
+            {{/if}}
+            {{#unless data.isShield.value}}
+            <div class="armor-stats">
+                <div class="stat-name">
+                    {{localize "cd10.sheet.coverage"}}
+                </div>
+                <div class="armor-statvalue">
+                    {{#if (eq data.coverage.value "head")}}
+                        {{localize "cd10.armor.coverage.head"}}
+                    {{else if (eq data.coverage.value "all")}}
+                        {{localize "cd10.armor.coverage.all"}}
+                    {{else if (eq data.coverage.value "chest")}}
+                        {{localize "cd10.armor.coverage.chest"}}
+                    {{else if (eq data.coverage.value "torso")}}
+                        {{localize "cd10.armor.coverage.torso"}}
+                    {{else if (eq data.coverage.value "torsoArms")}}
+                        {{localize "cd10.armor.coverage.torsoArms"}}
+                    {{else if (eq data.coverage.value "arms")}}
+                        {{localize "cd10.armor.coverage.arms"}}
+                    {{else if (eq data.coverage.value "legs")}}
+                        {{localize "cd10.armor.coverage.legs"}}
+                    {{/if}}
+                </div>
+            </div>
+            {{else}}
+                {{#if data.blockValue.value}}
+                    <div class="armor-stats">
+                        <div class="stat-name">
+                            {{localize "cd10.weapon.blockValue"}}
+                        </div>
+                        <div class="armor-statvalue">
+                            {{data.blockValue.value}}
+                        </div>
+                    </div>
+                {{/if}}
+            {{/unless}}
+        </div>
+    </div>
+</div>

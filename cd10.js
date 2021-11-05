@@ -9,20 +9,22 @@ import CD10MookCharacterSheet from "./module/sheets/CD10MookCharacterSheet.js";
 
 async function preloadHandlebarsTemplates() {
     const templatePaths = [
-        "systems/cd10_dev/templates/partials/character-stat-block.hbs",
-        "systems/cd10_dev/templates/partials/character-description-block.hbs",
-        "systems/cd10_dev/templates/partials/weapon-card.hbs",
-        "systems/cd10_dev/templates/partials/armor-card.hbs",
-        "systems/cd10_dev/templates/partials/skill-list.hbs",
-        "systems/cd10_dev/templates/partials/spell-list.hbs",
-        "systems/cd10_dev/templates/partials/combat-tab.hbs",
-        "systems/cd10_dev/templates/partials/inventory-list.hbs",
-        "systems/cd10_dev/templates/partials/generic-item-data.hbs",
-        "systems/cd10_dev/templates/partials/small-weapon-stats.hbs",
-        "systems/cd10_dev/templates/partials/small-armor-stats.hbs",
-        "systems/cd10_dev/templates/partials/small-skill-stats.hbs",
-        "systems/cd10_dev/templates/partials/small-trait-stats.hbs",
-        "systems/cd10_dev/templates/partials/small-spell-stats.hbs"
+        "systems/cd10/templates/partials/character-stat-block.hbs",
+        "systems/cd10/templates/partials/character-description-block.hbs",
+        "systems/cd10/templates/partials/weapon-card.hbs",
+        "systems/cd10/templates/partials/armor-card.hbs",
+        "systems/cd10/templates/partials/small-weapon-card.hbs",
+        "systems/cd10/templates/partials/small-armor-card.hbs",
+        "systems/cd10/templates/partials/skill-list.hbs",
+        "systems/cd10/templates/partials/spell-list.hbs",
+        "systems/cd10/templates/partials/combat-tab.hbs",
+        "systems/cd10/templates/partials/inventory-list.hbs",
+        "systems/cd10/templates/partials/generic-item-data.hbs",
+        "systems/cd10/templates/partials/small-weapon-stats.hbs",
+        "systems/cd10/templates/partials/small-armor-stats.hbs",
+        "systems/cd10/templates/partials/small-skill-stats.hbs",
+        "systems/cd10/templates/partials/small-trait-stats.hbs",
+        "systems/cd10/templates/partials/small-spell-stats.hbs"
     ];
 
     return loadTemplates(templatePaths);
@@ -70,5 +72,5 @@ Hooks.once("init", function() {
     });
 
     console.log("==== CD10 | Pushing TinyMCE CSS ====");
-    CONFIG.TinyMCE.content_css.push(`systems/cd10_dev/less/cd10_tinymcemods.css`);
+    CONFIG.TinyMCE.content_css.push(`systems/cd10/less/cd10_tinymcemods.css`);
 });

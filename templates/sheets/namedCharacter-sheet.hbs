@@ -17,7 +17,7 @@
         <section id="tabs" class="sheet-body">
             {{!-- Biography Tab --}}
             <div class="tab sheet-bio sheet-card" data-group="primary" data-tab="biography">
-                {{> "systems/cd10_dev/templates/partials/character-description-block.hbs"}}
+                {{> "systems/cd10/templates/partials/character-description-block.hbs"}}
             </div>
 
             {{!-- Skills Tab --}}
@@ -28,23 +28,23 @@
                     <div>{{localize "cd10.sheet.total"}}: {{data.traitsValue.value}}</div>
                 </div>
                 <div>
-                    {{> "systems/cd10_dev/templates/partials/skill-list.hbs"}}
+                    {{> "systems/cd10/templates/partials/skill-list.hbs"}}
                 </div>
             </div>
 
             {{!-- Combat Tab --}}
             <div class="tab sheet-combat" data-group="primary" data-tab="combat">
-                {{> "systems/cd10_dev/templates/partials/combat-tab.hbs"}}
+                {{> "systems/cd10/templates/partials/combat-tab.hbs"}}
             </div>
 
             {{!-- Spells Tab --}}
-            <div class="tab sheet-spells sheet-card" data-group="primary" data-tab="spells">
-                {{> "systems/cd10_dev/templates/partials/spell-list.hbs"}}
+            <div class="tab sheet-spells" data-group="primary" data-tab="spells">
+                {{> "systems/cd10/templates/partials/spell-list.hbs"}}
             </div>
 
             {{!-- Inventory Tab --}}
             <div class="tab sheet-inventory" data-group="primary" data-tab="inventory">
-                {{> "systems/cd10_dev/templates/partials/inventory-list.hbs"}}
+                {{> "systems/cd10/templates/partials/inventory-list.hbs"}}
             </div>
 
             {{!-- Notes Tab --}}
@@ -70,7 +70,7 @@
             <h3>
                 {{localize "cd10.sheet.health"}}
             </h3>
-            {{> "systems/cd10_dev/templates/partials/character-stat-block.hbs"}}
+            {{> "systems/cd10/templates/partials/character-stat-block.hbs"}}
         </div>
         <div class="sheet-card flex-column flex-center">
             <h3 class="sheet-header">

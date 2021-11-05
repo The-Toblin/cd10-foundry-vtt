@@ -10,7 +10,7 @@ export default class CD10ItemSheet extends ItemSheet {
     }
 
     get template() {
-        return `systems/cd10_dev/templates/sheets/${this.item.data.type}-sheet.hbs`;
+        return `systems/cd10/templates/sheets/${this.item.data.type}-sheet.hbs`;
     }
 
     getData() {
