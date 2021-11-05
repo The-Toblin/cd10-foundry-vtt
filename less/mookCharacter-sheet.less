@@ -1,10 +1,60 @@
 .cd10.sheet.mookCharacter {
-  min-height: 700px;
-  max-width: 480px;
+  h1,
+  h2,
+  h3,
+  p,
+  label,
+  .sheet-header,
+  input,
+  textarea,
+  .stat-element,
+  .fa,
+  .far,
+  .fas {
+    color: var(--font-color);
+  }
+
+  .window-content {
+    background: url(./assets/backgrounds/sheet_background.jpg);
+  }
 
   form {
     display: flex;
     flex-direction: column;
+
+    select {
+      border: none;
+      color: var(--font-color);
+      background-color: black;
+      font-family: var(--font-main);
+      background: url(./assets/backgrounds/card_detail_background.jpg);
+    }
+
+    select option {
+      font-family: var(--font-main);
+    }
+
+    .sheet-card {
+      background: url(./assets/backgrounds/card_background.jpg);
+      border-style: solid;
+      border-width: 3px;
+      border-image: radial-gradient(black, var(--font-color)) 1;
+      padding: 5px;
+      box-shadow: 5px 10px 10px rgb(0, 0, 0, 0.5);
+      margin-bottom: 10px;
+      color: var(--font-color);
+    }
+
+    .dark-background {
+      background: url(./assets/backgrounds/card_detail_background.jpg);
+      border-style: solid;
+      border-width: 3px;
+      border-image: radial-gradient(black, var(--accent-color)) 1;
+      box-shadow: inset 2px 2px 10px 5px black;
+      padding: 4px;
+      margin-bottom: 10px;
+      color: var(--font-color);
+    }
 
     /* Headers */
     h1 {
@@ -31,13 +81,14 @@
     }
 
     .actor-image {
-      max-height: 200px;
+      max-height: 225px;
     }
 
     hr {
       width: 150px;
       margin-top: 5px;
       margin-bottom: 5px;
+      border-color: var(--font-color);
     }
 
     .header-box,
@@ -46,12 +97,12 @@
       width: 100%;
     }
 
+    .title-box {
+      margin-right: 0 10px 0 10px ;
+    }
+
     .body-box {
       padding: 10px;
-
-      .equipment-list {
-        justify-content: space-evenly;
-      }
     }
 
     .quote {
@@ -67,35 +118,8 @@
       }
     }
 
-    /* Skills and trait */
-    .ability-card {
-      width: 100%;
-      margin-left: 10px;
-      margin-right: 10px;
-
-      .skill-trait-header {
-        .fa-plus {
-          padding-top: 3px;
-          margin-left: 5px;
-        }
-      }
-
-      .skill-list,
-      .trait-list {
-        .attribute-pair {
-          .fa-trash {
-            padding-top: 6px;
-            margin-left: 5px;
-          }
-          .attribute-name {
-            text-align: left;
-          }
-          .attribute-value {
-            text-align: right;
-            width: 25px;
-          }
-        }
-      }
+    .weapon-item {
+      margin-right: 5px;
     }
   }
 }

@@ -1,0 +1,74 @@
+<section class="flex-row flex-between">
+    <div class="spell-list flex-column flex-start sheet-card">
+        {{#each spells as |spell id|}}
+        <div class="attribute-pair inventory-item item flex-row" data-item-id="{{spell._id}}">
+            <div class="attribute-name">
+                {{spell.name}}
+            </div>
+            <input class="attribute-value inline-edit" data-field="data.skillLevel.value"
+                data-dtype="{{spell.data.skillLevel.type}}" value="{{spell.data.skillLevel.value}}"
+                placeholder="{{localize "cd10.skill.skillLevel"}}" />
+            <a class="item-delete" data-type="text" title={{localize "cd10.sheet.remove" }}>
+                <i class="fas fa-trash"></i>
+            </a>
+        </div>
+        <div class="flex-row flex-start">
+            <div>
+                <table>
+                    <tr>
+                        <th>
+                            {{localize "cd10.spell.difficulty"}}
+                        </th>
+                        <td>
+                            {{data.difficulty.value}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{localize "cd10.spell.cast"}}
+                        </th>
+                        <td>
+                            {{data.cast.value}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{localize "cd10.spell.duration"}}
+                        </th>
+                        <td>
+                            {{data.duration.value}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{localize "cd10.spell.range"}}
+                        </th>
+                        <td>
+                            {{data.range.value}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{localize "cd10.spell.area"}}
+                        </th>
+                        <td>
+                            {{data.area.value}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="spell-description">
+                {{{data.description.value}}}
+            </div>
+        </div>
+        <div>
+            {{#if data.reagents.value}}
+            <div class="spell-reagents">
+                {{{data.reagents.value}}}
+            </div>
+            {{/if}}
+        </div>
+
+        {{/each}}
+    </div>
+</section>

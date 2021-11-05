@@ -1,142 +1,105 @@
 <section>
-  <div class="character-description-box">
-      <h3>
-          {{localize "cd10.sheet.bio"}}
-      </h3>
-    <div class="tablebox">
-      <table>
-        <tr>
-          <th>
-            {{localize "cd10.stats.playername"}}
-          </th>
-          <td>
-            <input
-              name="data.playername"
-              type="text"
-              value="{{data.playername}}"
-              placeholder="{{localize "cd10.stats.playername"}}"
-            />
-          </td>
-          <th>
-            {{localize "cd10.stats.title"}}
-          </th>
-          <td>
-            <input
-              name="data.title"
-              type="text"
-              value="{{data.title}}"
-              placeholder="{{localize "cd10.stats.title"}}"
-            />
-          </td>
-        </tr>
-        <tr>
-          <th>
-            {{localize "cd10.stats.species"}}
-          </th>
-          <td>
-            <input
-              name="data.species"
-              type="text"
-              value="{{data.species}}"
-              data-dtype="String"
-              placeholder="{{localize "cd10.stats.species"}}"
-            />
-          </td>
-          <th>
-            {{localize "cd10.stats.exp"}}
-          </th>
-          <td>
-            <input
-              name="data.exp"
-              type="text"
-              value="{{data.exp}}"
-              data-dtype="Number"
-              placeholder="{{localize "cd10.stats.exp"}}"
-            />
-          </td>
-        </tr>
-        <tr>
-          <th>
-            {{localize "cd10.stats.gender"}}
-          </th>
-          <td>
-            <input
-              name="data.gender"
-              type="text"
-              value="{{data.gender}}"
-              data-dtype="String"
-              placeholder="{{localize "cd10.stats.gender"}}"
-            />
-          </td>
-          <th>
-            {{localize "cd10.stats.sex"}}
-          </th>
-          <td>
-            <input
-              name="data.sex"
-              type="text"
-              value="{{data.sex}}"
-              data-dtype="String"
-              placeholder="{{localize "cd10.stats.sex"}}"
-            />
-          </td>
-        </tr>
-        <tr>
-          <th>
-            {{localize "cd10.stats.mainHand"}}
-          </th>
-          <td>
-            <input
-              name="data.mainHand"
-              type="text"
-              value="{{data.mainHand}}"
-              data-dtype="String"
-              placeholder="{{localize "cd10.stats.mainHand"}}"
-            />
-          </td>
-          <th>
-            {{localize "cd10.stats.age"}}
-          </th>
-          <td>
-            <input
-              name="data.age"
-              type="text"
-              value="{{data.age}}"
-              data-dtype="Number"
-              placeholder="{{localize "cd10.stats.age"}}"
-            />
-          </td>
-        </tr>
-      </table>
-    </div>
-    <div>
+    <div class="character-description-box">
         <h3>
-            {{localize "cd10.stats.appearance"}}
+            {{localize "cd10.sheet.bio"}}
         </h3>
-        <div class="sheet-text">
-            {{editor
-                content=data.appearance
-                target="data.appearance"
+        <div class="tablebox">
+            <table>
+                <tr>
+                    <th>
+                        {{localize "cd10.stats.playerName"}}
+                    </th>
+                    <td>
+                        <input name="data.playerName.value" type="text" value="{{data.playerName.value}}"
+                            placeholder="{{localize "cd10.stats.playerName"}}" />
+                    </td>
+                    <th>
+                        {{localize "cd10.stats.title"}}
+                    </th>
+                    <td>
+                        <input name="data.title.value" type="text" value="{{data.title.value}}"
+                            placeholder="{{localize "cd10.stats.title"}}" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        {{localize "cd10.stats.species"}}
+                    </th>
+                    <td>
+                        <input name="data.species.value" type="text" value="{{data.species.value}}"
+                            data-dtype="{{data.species.type}}" placeholder="{{localize "cd10.stats.species"}}" />
+                    </td>
+                    <th>
+                        {{localize "cd10.stats.faith"}}
+                    </th>
+                    <td>
+                        <input name="data.faith.value" type="text" value="{{data.faith.value}}"
+                            data-dtype="{{data.faith.type}}" placeholder="{{localize "cd10.stats.faith"}}" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        {{localize "cd10.stats.gender"}}
+                    </th>
+                    <td>
+                        <input name="data.gender.value" type="text" value="{{data.gender.value}}"
+                            data-dtype="{{data.gender.type}}" placeholder="{{localize "cd10.stats.gender"}}" />
+                    </td>
+                    <th>
+                        {{localize "cd10.stats.sex"}}
+                    </th>
+                    <td>
+                        <input name="data.sex.value" type="text" value="{{data.sex.value}}"
+                            data-dtype="{{data.sex.type}}" placeholder="{{localize "cd10.stats.sex"}}" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        {{localize "cd10.stats.mainHand"}}
+                    </th>
+                    <td>
+                        <input name="data.mainHand.value" type="text" value="{{data.mainHand.value}}"
+                            data-dtype="{{data.mainHand.type}}" placeholder="{{localize "cd10.stats.mainHand"}}" />
+                    </td>
+                    <th>
+                        {{localize "cd10.stats.age"}}
+                    </th>
+                    <td>
+                        <input name="data.age.value" type="text" value="{{data.age.value}}"
+                            data-dtype="{{data.age.type}}" placeholder="{{localize "cd10.stats.age"}}" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <hr>
+        <div class="dark-background">
+            <h3>
+                {{localize "cd10.stats.appearance"}}
+            </h3>
+            <div class="sheet-text">
+                {{editor
+                content=data.appearance.value
+                target="data.appearance.value"
                 button=true
                 owner=owner
                 editable=editable
                 placeholder="Appearance"
-            }}
+                }}
+            </div>
         </div>
-    <div>
-        <h3>
-        {{localize "cd10.stats.personality"}}
-        </h3>
-        <div class="sheet-text" >
-            {{editor
-                content=data.personality
-                target="data.personality"
+        <div class="dark-background">
+            <h3>
+                {{localize "cd10.stats.personality"}}
+            </h3>
+            <div class="sheet-text">
+                {{editor
+                content=data.personality.value
+                target="data.personality.value"
                 button=true
                 owner=owner
                 editable=editable
                 placeholder="Personality"
-            }}
+                }}
+            </div>
         </div>
-    </div>
-  </div>
 </section>

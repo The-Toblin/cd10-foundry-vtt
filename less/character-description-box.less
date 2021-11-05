@@ -1,27 +1,33 @@
 .character-description-box {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    margin: 5px;
-    
-    .experiencebox {
-        display: inline-flex;
-    }
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
 
-    .tablebox {
-        th {
-            text-align: left;
-            padding-left: 5px;
-            padding-right: 5px;
-        }
-        td {
-            border: none;
-            padding-left: 5px;
-            padding-right: 5px;
+  .experiencebox {
+    display: inline-flex;
+  }
 
-            input {
-                text-align: right !important;
-            }
+  .tablebox {
+    table {
+      tr {
+        background-color: unset;
+      }
+
+      th {
+        text-align: left;
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+      td {
+        border: none;
+        padding-left: 5px;
+        padding-right: 5px;
+
+        input {
+          text-align: right !important;
         }
+      }
     }
+  }
 }

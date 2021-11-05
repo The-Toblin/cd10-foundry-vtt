@@ -1,8 +1,13 @@
-export default class CD10NamedCharacterSheet extends ActorSheet {
+export default class CD10MookCharacterSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            template: "systems/CD10/templates/sheets/mookCharacter-sheet.hbs",
+            template: "systems/cd10/templates/sheets/mookCharacter-sheet.hbs",
             classes: ["cd10", "sheet", "mookCharacter"],
+            tabs: [{
+                navSelector: ".sheet-tabs",
+                contentSelector: ".sheet-body",
+                initial: "biography"
+            }]
         });
     }
 
@@ -10,12 +15,57 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         return `systems/cd10/templates/sheets/mookCharacter-sheet.hbs`;
     }
 
+    equippableItemContextMenu = [{
+            name: game.i18n.localize("cd10.sheet.edit"),
+            icon: '<i class="fas fa-edit"></i>',
+            callback: element => {
+                const itemId = element.data("item-id");
+                const item = this.actor.items.get(itemId);
+
+                item.sheet.render(true);
+            }
+        },
+        {
+
+            name: game.i18n.localize("cd10.sheet.equip"),
+            icon: '<i class="far fa-caret-square-up"></i>',
+
+            callback: element => {
+                const itemId = element.data("item-id");
+                const item = this.actor.items.get(itemId);
+                let boolValue = false
+
+                if (item.data.data.isEquipped.value) {
+                    boolValue = false;
+                } else {
+                    boolValue = true;
+                }
+
+                item.update({
+                    data: {
+                        isEquipped: {
+                            value: boolValue
+                        }
+                    }
+                });
+            }
+        },
+        {
+            name: game.i18n.localize("cd10.sheet.remove"),
+            icon: '<i class="fas fa-trash"></i>',
+            callback: element => {
+                this.actor.deleteEmbeddedDocuments("Item", [element.data("item-id")]);
+            }
+        }
+    ];
+
     itemContextMenu = [{
             name: game.i18n.localize("cd10.sheet.edit"),
             icon: '<i class="fas fa-edit"></i>',
             callback: element => {
                 const itemId = element.data("item-id");
                 const item = this.actor.items.get(itemId);
+
                 item.sheet.render(true);
             }
         },
@@ -28,7 +78,8 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         }
     ];
 
-    getData() {
+
+    async getData() {
         /* Override default getData() function */
         let sheetData = super.getData();
         sheetData.config = CONFIG.cd10;
@@ -40,21 +91,17 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         })
 
         /* Create subproperties for item types */
-        sheetData.weapons = sheetData.items.filter(function(item) {
-            return item.type == "weapon";
-        });
-        sheetData.armors = sheetData.items.filter(function(item) {
-            return item.type == "armor";
-        });
-        sheetData.skills = sheetData.items.filter(function(item) {
-            return item.type == "skill";
-        });
-        sheetData.traits = sheetData.items.filter(function(item) {
-            return item.type == "trait";
-        });
-        sheetData.shields = sheetData.items.filter(function(item) {
-            return item.type == "shield";
-        });
+        sheetData.ammunition = sheetData.items.filter(p => p.type == "ammunition");
+        sheetData.allArmors = sheetData.items.filter(p => p.type == "armor");
+        sheetData.armors = sheetData.items.filter(p => p.type == "armor" && !p.data.isShield.value);
+        sheetData.shields = sheetData.items.filter(p => p.type == "armor" && p.data.isShield.value);
+        sheetData.allWeapons = sheetData.items.filter(p => p.type == "weapon");
+        sheetData.meleeWeapons = sheetData.items.filter(p => p.type == "weapon" && !p.data.isRanged.value);
+        sheetData.rangedWeapons = sheetData.items.filter(p => p.type == "weapon" && p.data.isRanged.value);
+        sheetData.skills = sheetData.items.filter(p => p.type == "skill");
+        sheetData.traits = sheetData.items.filter(p => p.type == "trait");
+        sheetData.spells = sheetData.items.filter(p => p.type == "spell");
+        sheetData.normalItems = sheetData.items.filter(p => p.type != "spell" && p.type != "skill" && p.type != "trait");
 
         return sheetData;
     }
@@ -63,11 +110,14 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         html.find(".item-create").click(this._onItemCreate.bind(this));
         html.find(".inline-edit").change(this._onSkillEdit.bind(this));
         html.find(".item-delete").click(this._onItemDelete.bind(this));
+        html.find(".item-equip").click(this._onItemEquip.bind(this));
         html.find('.shock-icons').on("click contextmenu", this._onShockMarkChange.bind(this));
         html.find('.wounds-icons').on("click contextmenu", this._onWoundsMarkChange.bind(this));
 
-        new ContextMenu(html, ".weapon-card", this.itemContextMenu);
-        new ContextMenu(html, ".armor-card", this.itemContextMenu);
+        new ContextMenu(html, ".weapon-card", this.equippableItemContextMenu);
+        new ContextMenu(html, ".armor-card", this.equippableItemContextMenu);
+        new ContextMenu(html, ".equippable-inventory-item", this.equippableItemContextMenu);
+        new ContextMenu(html, ".inventory-item", this.itemContextMenu);
 
         super.activateListeners(html);
     }
@@ -96,12 +146,35 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
 
     async _onItemDelete(event) {
         event.preventDefault();
+
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemId;
+        const item = this.actor.items.get(itemId);
 
         await this.actor.deleteEmbeddedDocuments("Item", [itemId]);
-        this._updateTotalTraitValue();
+    }
 
+    async _onItemEquip(event) {
+        event.preventDefault();
+
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemId;
+        const item = this.actor.items.get(itemId);
+
+        let boolValue = false
+        if (item.data.data.isEquipped.value) {
+            boolValue = false;
+        } else {
+            boolValue = true;
+        }
+
+        await item.update({
+            data: {
+                isEquipped: {
+                    value: boolValue
+                }
+            }
+        });
     }
 
     async _onSkillEdit(event) {
@@ -119,136 +192,37 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         await item.update({
             [field]: element.value
         });
-
-        this._updateTotalTraitValue();
     }
 
-    _onShockMarkChange(event) {
+    async _onShockMarkChange(event) {
         event.preventDefault();
         let currentCount = this.actor.data.data.shock.value;
         let newCount;
 
         if (event.type == "click") {
-            newCount = Math.min(currentCount + 1, 15);
+            newCount = Math.min(currentCount + 1, this.actor.data.data.shock.max);
         } else {
             newCount = Math.max(currentCount - 1, 0);
         }
 
-        this.actor.update({
+        await this.actor.update({
             "data.shock.value": newCount
         });
-
-        this._setDebilitation("Shock", newCount);
     }
 
-    _onWoundsMarkChange(event) {
+    async _onWoundsMarkChange(event) {
         event.preventDefault();
         let currentCount = this.actor.data.data.wounds.value;
         let newCount;
 
         if (event.type == "click") {
-            newCount = Math.min(currentCount + 1, 15);
+            newCount = Math.min(currentCount + 1, this.actor.data.data.wounds.max);
         } else {
             newCount = Math.max(currentCount - 1, 0);
         }
 
-        this.actor.update({
+        await this.actor.update({
             "data.wounds.value": newCount
         });
-
-        this._setDebilitation("Wounds", newCount);
-    }
-
-    _setDebilitation(type, updateValue) {
-
-        /* This function calculates the proper debilitation for a character */
-        let debilitationType;
-        let currentShock = this.actor.data.data.shock.value;
-        let currentWounds = this.actor.data.data.wounds.value;
-
-        if (type == "Shock") {
-            currentShock = +updateValue;
-        } else {
-            currentWounds = +updateValue;
-        }
-
-        let shockModifier = currentShock;
-        let woundsModifier = 0;
-
-        if (currentWounds == 2) {
-            woundsModifier = 1;
-            debilitationType = "on physical checks";
-        } else if (currentWounds == 3) {
-            woundsModifier = 2;
-            debilitationType = "on physical checks";
-        } else if (currentWounds > 3 && currentWounds < 6) {
-            woundsModifier = 3;
-            debilitationType = "on physical checks";
-        } else if (currentWounds > 5 && currentWounds < 8) {
-            woundsModifier = 4;
-            debilitationType = "on all checks";
-        } else if (currentWounds > 6 && currentWounds < 10) {
-            woundsModifier = 5;
-            debilitationType = "on all checks";
-        } else if (currentWounds == 10) {
-            woundsModifier = 6;
-            debilitationType = "on all checks";
-        } else if (currentWounds == 11) {
-            woundsModifier = 7;
-            debilitationType = "on all checks. DC 3.";
-        } else if (currentWounds == 12) {
-            woundsModifier = 7;
-            debilitationType = "on all checks. DC 6.";
-        } else if (currentWounds == 13) {
-            woundsModifier = 8;
-            debilitationType = "on all checks. DC 9.";
-        } else if (currentWounds == 14) {
-            woundsModifier = 8;
-            debilitationType = "on all checks. DC 12.";
-        } else if (currentWounds == 15) {
-            woundsModifier = 10;
-            debilitationType = "You are dead!";
-        } else {
-            woundsModifier = 0;
-            debilitationType = "on physical checks";
-        }
-
-        if (currentShock == 0 && currentWounds < 2) {
-            this.actor.update({
-                "data.modifier": 0,
-                "data.debilitationType": ""
-            })
-            return
-        }
-
-        let newModifier = shockModifier + woundsModifier;
-
-        this.actor.update({
-            "data.modifier": newModifier,
-            "data.debilitationType": debilitationType
-        })
-    }
-
-    _updateTotalTraitValue() {
-
-        const totalItems = this.actor.items;
-        let totalTraits;
-        let totalValue = 0;
-
-        totalTraits = totalItems.filter(trait => trait.type === 'trait');
-
-        console.log(totalTraits);
-
-        for (let i = 0; i < totalTraits.length; i++) {
-            let adder = 0;
-            adder = +parseInt(totalTraits[i].data.data.skillLevel);
-
-            totalValue += adder;
-        }
-
-        this.actor.update({
-            "data.totalTraitValue": totalValue
-        })
-
     }
 }

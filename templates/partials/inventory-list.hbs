@@ -1,0 +1,201 @@
+<section class="inventory-list sheet-card flex-column flex-start">
+    <div class="armor-list flex-column">
+        <h3>Armors</h3>
+        <hr>
+        <div class="item-table-data" data-item-id="{{item._id}}">
+            <table>
+                <colgroup>
+                    <col class="five">
+                    <col class="fourty">
+                    <col class="ten">
+                    <col class="ten">
+                    <col class="ten">
+                    <col class="ten">
+                    <col class="ten">
+                </colgroup>
+                <tr>
+                    <th></th>
+                    <th>
+                        {{localize "cd10.sheet.name"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.item.weight"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.item.tradeGroup"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.item.price"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.sheet.equipShort"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.sheet.removeShort"}}
+                    </th>
+                </tr>
+                {{#each allArmors as |item id|}}
+                <tr class="equippable-inventory-item item" data-item-id="{{_id}}">
+                    <td>
+                        <img class="item-img" src="{{item.img}}" title="{{item.name}}" height="15" width="15" />
+                    </td>
+                    <td style="text-align: left;">
+                        {{name}}
+                    </td>
+                    <td>
+                        {{item.data.weight.value}} {{localize "cd10.item.weightMarker"}}
+                    </td>
+                    <td>
+                        G{{item.data.tradeGroup.value}}
+                    </td>
+                    <td>
+                        {{item.data.price.value}} {{localize "cd10.stats.currencyShort"}}
+                    </td>
+                    <td>
+                        <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
+                            <i class="far fa-{{#if item.data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a class="item-delete" data-type="text" title={{localize "cd10.sheet.remove" }}>
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {{/each}}
+            </table>
+        </div>
+    </div>
+    <div class="weapon-list flex-column">
+        <h3>Weapons</h3>
+        <hr>
+        <div class="item-table-data" data-item-id="{{item._id}}">
+            <table>
+                <colgroup>
+                    <col class="five">
+                    <col class="fourty">
+                    <col class="ten">
+                    <col class="ten">
+                    <col class="ten">
+                    <col class="ten">
+                    <col class="ten">
+                </colgroup>
+                <tr>
+                    <th></th>
+                    <th>
+                        {{localize "cd10.sheet.name"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.item.weight"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.item.tradeGroup"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.item.price"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.sheet.equipShort"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.sheet.removeShort"}}
+                    </th>
+                </tr>
+                {{#each allWeapons as |item id|}}
+                <tr class="equippable-inventory-item item" data-item-id="{{_id}}">
+                    <td>
+                        <img class="item-img" src="{{item.img}}" title="{{item.name}}" height="15" width="15" />
+                    </td>
+                    <td style="text-align: left;">
+                        {{name}}
+                    </td>
+                    <td>
+                        {{item.data.weight.value}} {{localize "cd10.item.weightMarker"}}
+                    </td>
+                    <td>
+                        G{{item.data.tradeGroup.value}}
+                    </td>
+                    <td>
+                        {{item.data.price.value}} {{localize "cd10.stats.currencyShort"}}
+                    </td>
+                    <td>
+                        <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
+                            <i class="far fa-{{#if item.data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a class="item-delete" data-type="text" title={{localize "cd10.sheet.remove" }}>
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {{/each}}
+            </table>
+        </div>
+    </div>
+    <div class="otherItems-list flex-column">
+        <h3>Other</h3>
+        <hr>
+        <div class="item-table-data" data-item-id="{{item._id}}">
+            <table>
+                <colgroup>
+                    <col class="five">
+                    <col class="fourty">
+                    <col class="ten">
+                    <col class="ten">
+                    <col class="ten">
+                    <col class="ten">
+                    <col class="ten">
+                </colgroup>
+                <tr>
+                    <th></th>
+                    <th>
+                        {{localize "cd10.sheet.name"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.item.weight"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.item.tradeGroup"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.item.price"}}
+                    </th>
+                    <th></th>
+                    <th>
+                        {{localize "cd10.sheet.removeShort"}}
+                    </th>
+                </tr>
+                {{#each normalItems as |item id|}}
+                {{#unless (eq item.type "weapon")}}
+                {{#unless (eq item.type "armor")}}
+                <tr class="inventory-item item" data-item-id="{{_id}}">
+                    <td>
+                        <img class="item-img" src="{{item.img}}" title="{{item.name}}" height="15" width="15" />
+                    </td>
+                    <td style="text-align: left;">
+                        {{name}}
+                    </td>
+                    <td>
+                        {{item.data.weight.value}} {{localize "cd10.item.weightMarker"}}
+                    </td>
+                    <td>
+                        G{{item.data.tradeGroup.value}}
+                    </td>
+                    <td>
+                        {{item.data.price.value}} {{localize "cd10.stats.currencyShort"}}
+                    </td>
+                    <td></td>
+                    <td>
+                        <a class="item-delete" data-type="text" title={{localize "cd10.sheet.remove" }}>
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {{/unless}}
+                {{/unless}}
+                {{/each}}
+            </table>
+        </div>
+    </div>
+</section>

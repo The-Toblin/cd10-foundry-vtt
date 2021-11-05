@@ -1,168 +1,24 @@
-.armor-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.armor-card .item-img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-  width: 50px;
-}
-.armor-card .armor-name {
-  text-transform: uppercase;
-  text-align: center;
-}
-.armor-card .armor-coverage {
-  justify-content: center;
-}
-.armor-card .armor-stats {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-.armor-card .armor-stats .stat-name,
-.armor-card .armor-stats .armor-statvalue {
-  padding: 2px 5px 2px 0px;
-}
-.armor-card .armor-stats .stat-name {
-  text-align: left;
-  text-transform: capitalize;
-}
-.armor-card .armor-stats .armor-statvalue {
-  text-align: center;
-  text-transform: capitalize;
-}
-.character-description-box {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  margin: 5px;
-}
-.character-description-box .experiencebox {
-  display: inline-flex;
-}
-.character-description-box .tablebox th {
-  text-align: left;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-.character-description-box .tablebox td {
-  border: none;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-.character-description-box .tablebox td input {
-  text-align: right !important;
-}
-.health-info .stat-element {
-  margin-bottom: 10px;
-}
-.health-info .stat-element .shock-icons,
-.health-info .stat-element .wounds-icons {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-.health-info .stat-element .shock-icons .dot-container,
-.health-info .stat-element .wounds-icons .dot-container {
-  color: white;
-}
-.health-info .stat-element .shock-icons .crossed,
-.health-info .stat-element .wounds-icons .crossed {
-  filter: invert();
-}
-.stat-value {
-  text-align: center;
-}
-.cd10.sheet.item form {
-  display: flex;
-  flex-direction: column;
-}
-.cd10.sheet.item form .headerbox {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-}
-.cd10.sheet.item form .headerbox .sheet-header h1 {
-  margin-right: 10px;
-}
-.cd10.sheet.item form .headerbox .sheet-header h1 input {
-  width: auto;
-}
-.cd10.sheet.item form .sheet-content {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-.cd10.sheet.item form .sheet-content .editor {
-  height: 100%;
-}
-.cd10.sheet.item form .sheet-content select {
-  margin-right: 2px;
-}
-.cd10.sheet.item form .sheet-content .stat-box {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-.cd10.sheet.item form .sheet-content .stat-box .value-box {
-  display: flex;
-  flex-direction: row;
-  justify-content: start;
-}
-.cd10.sheet.item form .sheet-content .stat-box .value-box .stat-name label {
-  padding: 2px;
-  text-align: left;
-}
-.cd10.sheet.item form .sheet-content .stat-box .value-box .stat-value {
-  padding-left: 2px;
-  padding-right: 2px;
-  width: 50%;
-}
-.cd10.sheet.item form .sheet-content .stat-box .value-box .stat-value input {
-  border: none;
-  /*width: 25%;*/
-  text-align: center;
-}
-.cd10.sheet.item form .sheet-content .stat-box .teachable-box {
-  display: flex;
-  flex-direction: row;
-}
-.cd10.sheet.item .headerbox {
-  margin-bottom: 10px;
-}
-.cd10.sheet.item hr {
-  border-bottom: 2px solid black;
-}
 .cd10.sheet.namedCharacter {
-  min-width: 800px;
-  min-height: 1000px;
-  /* Left major content column */
-  /* Right major column, AKA sidebar */
-  /* Skills and trait */
+  min-width: 750px;
+  min-height: 700px;
+  max-width: 1000px;
+  max-height: 1920px;
+}
+.cd10.sheet.namedCharacter .window-content {
+  background: url(./assets/backgrounds/sheet_background.jpg);
 }
 .cd10.sheet.namedCharacter form {
-  display: flex;
-  flex-direction: column;
-  /* Headers */
-  /* General settings */
+  color: var(--font-color);
 }
-.cd10.sheet.namedCharacter form h1 {
-  font-size: 2em;
-  margin-right: 5px;
+.cd10.sheet.namedCharacter form select {
   border: none;
+  color: var(--font-color);
+  font-family: var(--font-main);
+  background: url(./assets/backgrounds/card_detail_background.jpg);
 }
-.cd10.sheet.namedCharacter form h1,
-.cd10.sheet.namedCharacter form h3 {
-  text-align: center;
-}
-.cd10.sheet.namedCharacter form input {
-  border: none;
-  background: none;
-  text-align: center;
+.cd10.sheet.namedCharacter form select option {
+  background-color: black;
+  font-family: var(--font-main);
 }
 .cd10.sheet.namedCharacter form .editor {
   height: 100%;
@@ -170,125 +26,113 @@
 }
 .cd10.sheet.namedCharacter form .editor .editor-content {
   min-height: 100px;
+  color: var(--font-color);
 }
-.cd10.sheet.namedCharacter form .actor-image {
-  max-height: 200px;
-}
-.cd10.sheet.namedCharacter form hr {
-  width: 150px;
-}
-.cd10.sheet.namedCharacter .bio-box {
-  padding: 10px;
-  width: 100%;
-}
-.cd10.sheet.namedCharacter .sidebar {
-  padding: 10px;
-}
-.cd10.sheet.namedCharacter .sidebar .weapon-list,
-.cd10.sheet.namedCharacter .sidebar .armor-list {
-  padding: 5px;
-  margin-bottom: 10px;
-}
-.cd10.sheet.namedCharacter .sidebar .money {
-  padding-top: 4px;
-}
-.cd10.sheet.namedCharacter .sidebar input {
-  width: 30px;
-}
-.cd10.sheet.namedCharacter .attribute-box .fas {
-  padding-top: 5px;
-  margin-left: 5px;
-}
-.cd10.sheet.namedCharacter .attribute-box .attribute-card {
-  flex-basis: 45%;
-}
-.cd10.sheet.namedCharacter .attribute-box .attribute-pair .attribute-name {
-  text-align: left;
-}
-.cd10.sheet.namedCharacter .attribute-box .attribute-pair .attribute-value {
-  text-align: right;
-  width: 25px;
-}
-.cd10.sheet.mookCharacter {
-  min-height: 700px;
-  max-width: 480px;
-}
-.cd10.sheet.mookCharacter form {
-  display: flex;
-  flex-direction: column;
-  /* Headers */
-  /* General settings */
-  /* Skills and trait */
-}
-.cd10.sheet.mookCharacter form h1 {
-  font-size: 2em;
-  margin-right: 5px;
-  border: none;
-}
-.cd10.sheet.mookCharacter form h1 input {
-  height: auto;
-  padding: 5px;
-}
-.cd10.sheet.mookCharacter form h1,
-.cd10.sheet.mookCharacter form h3 {
-  text-align: center;
-}
-.cd10.sheet.mookCharacter form input {
+.cd10.sheet.namedCharacter form input {
   border: none;
   background: none;
+  color: var(--font-color);
+}
+.cd10.sheet.namedCharacter form table {
+  border: none;
+  border-collapse: separate;
+  border-spacing: 5px;
+}
+.cd10.sheet.namedCharacter form table tr {
+  background: unset;
+  background-color: unset;
+}
+.cd10.sheet.namedCharacter form table th,
+.cd10.sheet.namedCharacter form table td {
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 1px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  vertical-align: middle;
+  text-align: center;
+  padding: 4px 5px 4px 5px;
+}
+.cd10.sheet.namedCharacter form .sheet-tabs {
+  margin-bottom: 10px;
+}
+.cd10.sheet.namedCharacter form .sheet-notes table {
+  border: none;
+}
+.cd10.sheet.namedCharacter form .sheet-notes table td {
+  color: var(--font-color);
+}
+.cd10.sheet.namedCharacter form .sheet-notes table tr {
+  background: unset;
+  background-color: unset;
+}
+.cd10.sheet.namedCharacter form .sheet-notes .editor-content {
+  min-height: 521px;
+}
+.cd10.sheet.namedCharacter form .sheet-card {
+  background: url(./assets/backgrounds/card_background.jpg);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, var(--font-color)) 1;
+  padding: 5px;
+  box-shadow: 5px 10px 10px #000000;
+  margin-bottom: 10px;
+  color: var(--font-color);
+}
+.cd10.sheet.namedCharacter form .dark-background {
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  padding: 4px;
+  margin-bottom: 10px;
+}
+.cd10.sheet.namedCharacter form h1 {
+  font-size: 2em;
+  border: none;
+  padding: 3px;
+}
+.cd10.sheet.namedCharacter form h1,
+.cd10.sheet.namedCharacter form h3 {
   text-align: center;
 }
-.cd10.sheet.mookCharacter form .actor-image {
-  max-height: 200px;
-}
-.cd10.sheet.mookCharacter form hr {
+.cd10.sheet.namedCharacter form hr {
+  border-color: var(--font-color);
   width: 150px;
+  margin-bottom: 20px;
+}
+.cd10.sheet.namedCharacter form .sheet-main-content {
+  margin-right: 10px;
+  width: 80%;
+}
+.cd10.sheet.namedCharacter form .image-box {
+  width: 20%;
+}
+.cd10.sheet.namedCharacter form .image-box img {
+  min-width: 200px;
+  min-height: 200px;
+  box-shadow: 5px 10px 10px #000000;
+}
+.cd10.sheet.namedCharacter form .encumbrance-list {
+  display: flex;
+}
+.cd10.sheet.namedCharacter form .sheet-sidebar {
+  padding: 10px;
+}
+.cd10.sheet.namedCharacter form .sheet-sidebar .red {
+  color: red;
+}
+.cd10.sheet.namedCharacter form .sheet-sidebar .sheet-card {
   margin-top: 5px;
   margin-bottom: 5px;
 }
-.cd10.sheet.mookCharacter form .header-box,
-.cd10.sheet.mookCharacter form .title-box,
-.cd10.sheet.mookCharacter form .equipment-list {
-  width: 100%;
-}
-.cd10.sheet.mookCharacter form .body-box {
-  padding: 10px;
-}
-.cd10.sheet.mookCharacter form .body-box .equipment-list {
-  justify-content: space-evenly;
-}
-.cd10.sheet.mookCharacter form .quote textarea {
-  resize: none;
-  min-height: unset;
-  max-height: 27px;
+.cd10.sheet.namedCharacter form .sheet-sidebar input {
+  width: 30px;
   text-align: center;
-  font-style: italic;
-  border: none;
-  background: none;
-  font-family: "Signika", sans-serif;
 }
-.cd10.sheet.mookCharacter form .ability-card {
-  width: 100%;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-.cd10.sheet.mookCharacter form .ability-card .skill-trait-header .fa-plus {
-  padding-top: 3px;
-  margin-left: 5px;
-}
-.cd10.sheet.mookCharacter form .ability-card .skill-list .attribute-pair .fa-trash,
-.cd10.sheet.mookCharacter form .ability-card .trait-list .attribute-pair .fa-trash {
-  padding-top: 6px;
-  margin-left: 5px;
-}
-.cd10.sheet.mookCharacter form .ability-card .skill-list .attribute-pair .attribute-name,
-.cd10.sheet.mookCharacter form .ability-card .trait-list .attribute-pair .attribute-name {
-  text-align: left;
-}
-.cd10.sheet.mookCharacter form .ability-card .skill-list .attribute-pair .attribute-value,
-.cd10.sheet.mookCharacter form .ability-card .trait-list .attribute-pair .attribute-value {
-  text-align: right;
-  width: 25px;
+.cd10.sheet.namedCharacter form .sheet-sidebar .sheet-money .money {
+  padding-top: 4px;
 }
 .skill-card .skill-box {
   display: flex;
@@ -318,38 +162,531 @@
   text-align: center;
   width: 25%;
 }
+.armor-card {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.armor-card .item-img {
+  display: block;
+  min-width: 150px;
+  margin-right: 10px;
+}
+.armor-card .armor-name {
+  text-align: left;
+  font-size: 1.25em;
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  vertical-align: middle;
+  text-align: center;
+  padding: 4px 5px 4px 5px;
+  margin-bottom: 10px;
+}
+.armor-card .description-box {
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  padding: 8px;
+  width: 100%;
+  max-height: 150px;
+  overflow: auto;
+}
+.armor-card .armor-box {
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  padding: 8px;
+  margin-right: 10px;
+  min-width: 150px;
+}
+.armor-card .armor-box .armor-stats {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  box-shadow: 2px 2px 2px black;
+}
+.armor-card .armor-box .armor-stats .stat-name,
+.armor-card .armor-box .armor-stats .armor-statvalue {
+  padding: 2px 5px 2px 0px;
+}
+.armor-card .armor-box .armor-stats .stat-name {
+  text-align: left;
+  text-transform: capitalize;
+}
+.armor-card .armor-box .armor-stats .armor-statvalue {
+  text-align: right;
+  text-transform: capitalize;
+}
 .weapon-card {
+  margin-bottom: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 .weapon-card .item-img {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-  width: 50px;
+  min-width: 150px;
+  margin-right: 10px;
 }
 .weapon-card .weapon-name {
-  text-transform: uppercase;
+  text-align: left;
+  font-size: 1.25em;
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  vertical-align: middle;
   text-align: center;
+  padding: 4px 5px 4px 5px;
+  margin-bottom: 10px;
 }
-.weapon-card .weapon-stats {
+.weapon-card .description-box {
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  padding: 8px;
+  width: 100%;
+  max-height: 150px;
+  overflow: auto;
+}
+.weapon-card .weapon-box {
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  padding: 8px;
+  margin-right: 10px;
+  min-width: 150px;
+}
+.weapon-card .weapon-box .weapon-stats {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  box-shadow: 2px 2px 2px black;
 }
-.weapon-card .weapon-stats .stat-name,
-.weapon-card .weapon-stats .weapon-statvalue {
+.weapon-card .weapon-box .weapon-stats .stat-name,
+.weapon-card .weapon-box .weapon-stats .weapon-statvalue {
   padding: 2px 5px 2px 0px;
 }
-.weapon-card .weapon-stats .stat-name {
+.weapon-card .weapon-box .weapon-stats .stat-name {
   text-align: left;
   text-transform: capitalize;
 }
-.weapon-card .weapon-stats .weapon-statvalue {
-  text-align: center;
+.weapon-card .weapon-box .weapon-stats .weapon-statvalue {
+  text-align: right;
   text-transform: capitalize;
+}
+.skill-list,
+.traits-list {
+  width: 49%;
+  color: var(--font-color);
+}
+.skill-list .attribute-pair,
+.traits-list .attribute-pair {
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 1px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  padding: 2px 5px 2px 5px;
+  width: 100%;
+  margin: 0 0 2px 0;
+}
+.skill-list .attribute-pair .attribute-name,
+.traits-list .attribute-pair .attribute-name {
+  text-align: left;
+  vertical-align: middle;
+  padding: 2px;
+  padding-top: 4px;
+  width: calc(100% - 2px);
+}
+.skill-list .attribute-pair .attribute-value,
+.traits-list .attribute-pair .attribute-value {
+  text-align: right;
+  width: 25px;
+  font-weight: 700;
+  margin-right: 10px;
+}
+.skill-list .item-delete,
+.traits-list .item-delete {
+  vertical-align: middle;
+  padding-top: 4px;
+}
+.skill-list input,
+.traits-list input {
+  width: 20px;
+  text-align: center;
+  vertical-align: middle;
+}
+.spell-list {
+  width: 100%;
+}
+.spell-list .spell-description,
+.spell-list .spell-reagents {
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 1px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  padding: 2px 5px 2px 5px;
+  width: 100%;
+  margin: 12px 0 5px 0;
+}
+.spell-list .attribute-pair {
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 1px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  padding: 2px 5px 2px 5px;
+  width: 100%;
+  margin: 0 0 5px 0;
+}
+.spell-list .attribute-pair .attribute-name {
+  text-align: left;
+  vertical-align: middle;
+  padding: 2px;
+  padding-top: 4px;
+  width: calc(100% - 2px);
+  font-weight: 700;
+}
+.spell-list .attribute-pair .attribute-value {
+  text-align: right;
+  width: 25px;
+  font-weight: 700;
+  margin-right: 10px;
+}
+.spell-list .item-delete {
+  vertical-align: middle;
+  padding-top: 4px;
+}
+.spell-list input {
+  width: 20px;
+  text-align: center;
+  vertical-align: middle;
+}
+.inventory-list {
+  display: flex;
+}
+.inventory-list table {
+  border: none;
+}
+.inventory-list table tr {
+  background: unset;
+  background-color: unset;
+}
+.inventory-list table td {
+  vertical-align: middle;
+  text-align: center;
+}
+.inventory-list table td .table-item.name {
+  text-align: left !important;
+}
+.inventory-list .five {
+  width: 5%;
+}
+.inventory-list .ten {
+  width: 10%;
+}
+.inventory-list .fourty {
+  width: 40%;
+}
+.character-description-box {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+}
+.character-description-box .experiencebox {
+  display: inline-flex;
+}
+.character-description-box .tablebox table tr {
+  background-color: unset;
+}
+.character-description-box .tablebox table th {
+  text-align: left;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.character-description-box .tablebox table td {
+  border: none;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.character-description-box .tablebox table td input {
+  text-align: right !important;
+}
+.health-info .stat-element {
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 1px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  padding: 2px 5px 2px 5px;
+  width: 100%;
+  margin: 0 0 10px 0;
+}
+.health-info .stat-element .shock-icons,
+.health-info .stat-element .wounds-icons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.health-info .stat-element .shock-icons z .dot-container,
+.health-info .stat-element .wounds-icons z .dot-container {
+  color: var(--font-color);
+}
+.health-info .stat-element .shock-icons .crossed,
+.health-info .stat-element .wounds-icons .crossed {
+  filter: invert();
+}
+.stat-value {
+  text-align: center;
+}
+.cd10.sheet.item {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  min-width: 560px;
+  max-width: 850px;
+  height: fit-content !important;
+  width: fit-content !important;
+}
+.cd10.sheet.item img {
+  width: 150px;
+  height: 150px;
+  box-shadow: 5px 10px 10px #000000;
+}
+.cd10.sheet.item input {
+  border: none;
+  background: none;
+  color: var(--font-color);
+  width: 50%;
+}
+.cd10.sheet.item select {
+  border: none;
+  color: var(--font-color);
+  background-color: black;
+  font-family: var(--font-main);
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+}
+.cd10.sheet.item select option {
+  background-color: black;
+  font-family: var(--font-main);
+}
+.cd10.sheet.item table {
+  border: none;
+  border-collapse: separate;
+  border-spacing: 5px;
+}
+.cd10.sheet.item table tr {
+  background: unset;
+  background-color: unset;
+}
+.cd10.sheet.item table th,
+.cd10.sheet.item table td {
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 1px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  vertical-align: middle;
+  text-align: center;
+  padding: 4px 5px 4px 5px;
+}
+.cd10.sheet.item .window-content {
+  background: url(./assets/backgrounds/sheet_background.jpg);
+}
+.cd10.sheet.item .window-content form {
+  color: var(--font-color);
+}
+.cd10.sheet.item .window-content form select {
+  border: none;
+  color: var(--font-color);
+}
+.cd10.sheet.item .window-content form h1 {
+  border: none;
+  text-align: center;
+}
+.cd10.sheet.item .window-content form h1 input {
+  height: fit-content;
+}
+.cd10.sheet.item .window-content form hr {
+  border-color: var(--font-color);
+  width: 150px;
+}
+.cd10.sheet.item .window-content form .card {
+  background: url(./assets/backgrounds/card_background.jpg);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, var(--font-color)) 1;
+  padding: 5px;
+  box-shadow: 5px 10px 10px #000000;
+  margin: 0 10px 10px 0;
+}
+.cd10.sheet.item .window-content form .generic-info-box {
+  width: 100%;
+  height: 150px;
+  margin-left: 10px;
+}
+.cd10.sheet.item .window-content form .editor-box .editor {
+  max-height: 140px;
+  overflow: auto;
+}
+.cd10.sheet.item .window-content form .editor-box .editor .editor-content {
+  min-height: 100px;
+}
+.small-weapon-armor-stats {
+  margin-left: 0px;
+}
+.small-weapon-armor-stats .teachable-box input {
+  width: auto;
+}
+.small-weapon-armor-stats .teachable-box .teachable-label {
+  width: 100%;
+}
+.small-weapon-armor-stats .vertically-centered {
+  align-items: center;
+  vertical-align: middle;
+}
+.small-weapon-armor-stats .right-margin {
+  margin-right: 10px;
+}
+.small-weapon-armor-stats .pad {
+  padding-top: 4px;
+}
+.small-weapon-armor-stats table input {
+  width: 25px !important;
+  text-align: center;
+  margin-right: 3px;
+}
+.cd10.sheet.mookCharacter h1,
+.cd10.sheet.mookCharacter h2,
+.cd10.sheet.mookCharacter h3,
+.cd10.sheet.mookCharacter p,
+.cd10.sheet.mookCharacter label,
+.cd10.sheet.mookCharacter .sheet-header,
+.cd10.sheet.mookCharacter input,
+.cd10.sheet.mookCharacter textarea,
+.cd10.sheet.mookCharacter .stat-element,
+.cd10.sheet.mookCharacter .fa,
+.cd10.sheet.mookCharacter .far,
+.cd10.sheet.mookCharacter .fas {
+  color: var(--font-color);
+}
+.cd10.sheet.mookCharacter .window-content {
+  background: url(./assets/backgrounds/sheet_background.jpg);
+}
+.cd10.sheet.mookCharacter form {
+  display: flex;
+  flex-direction: column;
+  /* Headers */
+  /* General settings */
+}
+.cd10.sheet.mookCharacter form select {
+  border: none;
+  color: var(--font-color);
+  background-color: black;
+  font-family: var(--font-main);
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+}
+.cd10.sheet.mookCharacter form select option {
+  font-family: var(--font-main);
+}
+.cd10.sheet.mookCharacter form .sheet-card {
+  background: url(./assets/backgrounds/card_background.jpg);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, var(--font-color)) 1;
+  padding: 5px;
+  box-shadow: 5px 10px 10px #000000;
+  margin-bottom: 10px;
+  color: var(--font-color);
+}
+.cd10.sheet.mookCharacter form .dark-background {
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  padding: 4px;
+  margin-bottom: 10px;
+  color: var(--font-color);
+}
+.cd10.sheet.mookCharacter form h1 {
+  font-size: 2em;
+  margin-right: 5px;
+  border: none;
+}
+.cd10.sheet.mookCharacter form h1 input {
+  height: auto;
+  padding: 5px;
+}
+.cd10.sheet.mookCharacter form h1,
+.cd10.sheet.mookCharacter form h3 {
+  text-align: center;
+}
+.cd10.sheet.mookCharacter form input {
+  border: none;
+  background: none;
+  text-align: center;
+}
+.cd10.sheet.mookCharacter form .actor-image {
+  max-height: 225px;
+}
+.cd10.sheet.mookCharacter form hr {
+  width: 150px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-color: var(--font-color);
+}
+.cd10.sheet.mookCharacter form .header-box,
+.cd10.sheet.mookCharacter form .title-box,
+.cd10.sheet.mookCharacter form .equipment-list {
+  width: 100%;
+}
+.cd10.sheet.mookCharacter form .title-box {
+  margin-right: 0 10px 0 10px ;
+}
+.cd10.sheet.mookCharacter form .body-box {
+  padding: 10px;
+}
+.cd10.sheet.mookCharacter form .quote textarea {
+  resize: none;
+  min-height: unset;
+  max-height: 27px;
+  text-align: center;
+  font-style: italic;
+  border: none;
+  background: none;
+  font-family: "Signika", sans-serif;
+}
+.cd10.sheet.mookCharacter form .weapon-item {
+  margin-right: 5px;
+}
+/* Variables */
+:root {
+  --font-color: #dfbb61;
+  --accent-color: #6b6c65;
+  --font-main: "Signika", sans-serif;
 }
 /* Containers for content */
 .flex-row {

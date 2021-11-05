@@ -1,18 +1,41 @@
 {
     "cd10": {
+        "ammunition": {
+            "type": "Type",
+            "arrows": "Arrows",
+            "bolts": "Bolts",
+            "bullets": "Bullets",
+            "rockets": "Rockets",
+            "shells": "Shells",
+            "rocks": "Rocks"
+        },
         "sheet": {
             "add": "Add",
-            "edit": "Edit",
-            "remove": "Remove",
-            "newItem": "Name",
-            "bio": "Biography",
-            "weapons": "Weapons",
             "armor": "Armor",
-            "health": "Health",
+            "bio": "Biography",
+            "category": "Category",
+            "combat": "Combat",
             "coverage": "Coverage",
-            "total": "Total",
+            "edit": "Edit",
+            "equip": "Equip or unequp",
+            "equipShort": "Eq.",
+            "health": "Health",
             "inventory": "Inventory",
-            "notes": "Notes"
+            "max": "Maximum",
+            "min": "Minimum",
+            "name": "Name",
+            "negative": "Negative",
+            "newItem": "Name",
+            "notes": "Notes",
+            "positive": "Positive",
+            "remove": "Remove",
+            "removeShort": "Rem.",
+            "skills": "Skills",
+            "spells": "Spells",
+            "to": "to",
+            "total": "Total",
+            "weapons": "Weapons",
+            "weight": "Weight"
         },
         "attack": {
             "none": "None",
@@ -35,9 +58,15 @@
             "teachableYes": "Requires a teacher.",
             "teachableNo": "No teacher required",
             "range": "Range",
-            "category": "Category",
-            "name": "Skill name",
-            "skillLevel": "Skill level"
+            "skillLevel": "Skill level",
+            "communication": "Communication",
+            "crafts": "Crafts",
+            "firearms": "Firearms",
+            "knowledge": "Knowledge",
+            "maneuvers": "Maneuvers",
+            "technology": "Technology",
+            "occultism": "Occultism",
+            "willpower": "Willpower"
         },
         "trait": {
             "range": "Range",
@@ -45,18 +74,34 @@
             "situational": "Situational",
             "uncheckable": "Uncheckable",
             "value": "Value",
-            "name": "Trait name",
             "skillLevel": "Trait level"
         },
+        "spell": {
+            "difficulty": "Difficulty",
+            "cast": "Cast",
+            "duration": "Duration",
+            "range": "Range",
+            "area": "Area",
+            "reagents": "Reagents"
+        },
         "weapon": {
-            "attackWith": "Skill:",
+            "attackWith": "Skill",
             "slashDamage": "Slash",
             "pierceDamage": "Pierce",
             "bluntDamage": "Blunt",
             "energyDamage": "Energy",
             "shockDamage": "Shock",
             "reach": "Reach",
-            "blockValue": "Block"
+            "blockValue": "Block",
+            "isRanged": "Ranged weapon?"
+        },
+        "rangedWeapon": {
+            "attackWith": "Skill:",
+            "rangeClose": "Close",
+            "rangeNormal": "Normal",
+            "rangeLong": "Long",
+            "rangeMax": "Max",
+            "ammunition": "Ammo"
         },
         "armor": {
             "coverage": {
@@ -72,10 +117,19 @@
             "pierceProtection": "Pierce",
             "bluntProtection": "Blunt",
             "energyProtection": "Energy",
-            "shockProtection": "Shock"
+            "shockProtection": "Shock",
+            "blockValue": "Block",
+            "isShield": "Shield?"
         },
-        "effectItem": {},
-        "genericItem": {},
+        "item": {
+            "image": "Image",
+            "availability": "Availability",
+            "trader": "Trader",
+            "weight": "Weight",
+            "tradeGroup": "Trade Group",
+            "price": "Price",
+            "weightMarker": "kg"
+        },
         "reach": {
             "grappling": "Grappling",
             "close": "Close",
@@ -96,9 +150,10 @@
         "stats": {
             "name": "Name",
             "title": "Title",
-            "playername": "Player Name",
+            "playerName": "Player Name",
             "species": "Species",
             "age": "Age",
+            "faith": "Faith",
             "mainHand": "Main Hand",
             "exp": "Experience",
             "sex": "Sex",
@@ -109,7 +164,35 @@
             "traits": "Traits",
             "abilities": "Abilities",
             "money": "Coins",
-            "currency": "Silver"
+            "currency": "Silver",
+            "currencyShort": "m",
+            "encumbrance": "Encumbrance"
+        },
+        "time": {
+            "concentration": "Concentration",
+            "circle": "Circle",
+            "immediate": "Immediate",
+            "action": "Action",
+            "round": "Round",
+            "minute": "Minute",
+            "hour": "Hour",
+            "watch": "Watch",
+            "fullWatch": "Full watch",
+            "sun": "Sunrise/Sundown",
+            "week": "Week",
+            "month": "Month",
+            "year": "Year",
+            "life": "Life"
+        },
+        "area": {
+            "circle": "Circle",
+            "self": "Self",
+            "person": "Person",
+            "touch": "Touch",
+            "close": "Close",
+            "sight": "Sight",
+            "duchy": "Duchy",
+            "kingdom": "Kingdom"
         }
     }
 }

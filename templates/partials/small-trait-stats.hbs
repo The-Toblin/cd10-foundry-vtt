@@ -1,0 +1,30 @@
+<section class="small-weapon-armor-stats flex-row flex-even">
+    <table>
+        <tr>
+            <th>
+                {{localize "cd10.sheet.category"}}
+            </th>
+            <th>
+                {{localize "cd10.trait.range"}}
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <select name="data.skillType.value">
+                    {{#select data.skillType.value}}
+                    {{#each config.traitCategories as |name type|}}
+                    <option value="{{type}}">{{localize name}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
+            </td>
+            <td>
+                <input name="data.skillLevel.min" type="text" value="{{data.skillLevel.min}}" placeholder="{{localize "
+                    cd10.sheet.min"}}" />
+                {{localize "cd10.sheet.to"}}
+                <input name="data.skillLevel.max" type="text" value="{{data.skillLevel.max}}" placeholder="{{localize "
+                    cd10.sheet.max"}}" />
+            </td>
+        </tr>
+    </table>
+</section>

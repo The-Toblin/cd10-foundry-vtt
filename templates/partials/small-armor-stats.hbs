@@ -1,0 +1,91 @@
+<section class="small-weapon-armor-stats flex-row flex-even">
+    {{#unless this.data.isShield.value}}
+    <div class="armor pad">
+        <table>
+            <tr>
+                <th>{{localize "cd10.armor.isShield"}}</th>
+                <th>{{localize "cd10.sheet.coverage"}}</th>
+                <th>{{localize "cd10.armor.slashProtection"}}</th>
+                <th>{{localize "cd10.armor.pierceProtection"}}</th>
+                <th>{{localize "cd10.armor.bluntProtection"}}</th>
+                <th>{{localize "cd10.armor.energyProtection"}}</th>
+                <th>{{localize "cd10.armor.shockProtection"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" {{checked data.isShield.value}} name="data.isShield.value"
+            data-dtype="{{data.isShield.type}}">
+                </td>
+                <td>
+                    <select name="data.coverage.value">
+                        {{#select data.coverage.value}}
+                        {{#each config.coverage as |name type|}}
+                        <option value="{{type}}">{{localize name}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                </td>
+                <td>
+                    <input name="data.protection.slash.value" type="text" value="{{data.protection.slash.value}}"
+                        data-dtype="{{data.protection.slash.type}}" />
+                </td>
+                <td>
+                    <input name="data.protection.pierce.value" type="text" value="{{data.protection.pierce.value}}"
+                        data-dtype="{{data.protection.pierce.type}}" />
+                </td>
+                <td>
+                    <input name="data.protection.blunt.value" type="text" value="{{data.protection.blunt.value}}"
+                        data-dtype="{{data.protection.blunt.type}}" />
+                </td>
+                <td>
+                    <input name="data.protection.energy.value" type="text" value="{{data.protection.energy.value}}"
+                        data-dtype="{{data.protection.energy.type}}" />
+                </td>
+                <td>
+                    <input name="data.protection.shock.value" type="text" value="{{data.protection.shock.value}}"
+                        data-dtype="{{data.protection.shock.type}}" />
+                </td>
+            </tr>
+        </table>
+    </div>
+    {{else}}
+    <div class="shield pad">
+        <table>
+            <tr>
+                <th>{{localize "cd10.armor.blockValue"}}</th>
+                <th>{{localize "cd10.armor.slashProtection"}}</th>
+                <th>{{localize "cd10.armor.pierceProtection"}}</th>
+                <th>{{localize "cd10.armor.bluntProtection"}}</th>
+                <th>{{localize "cd10.armor.energyProtection"}}</th>
+                <th>{{localize "cd10.armor.shockProtection"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <input name="data.blockvalue.value" type="text" value="{{data.blockvalue.value}}"
+                        data-dtype="{{data.blockvalue.type}}" />
+                </td>
+                <td>
+                    <input name="data.protection.slash.value" type="text" value="{{data.protection.slash.value}}"
+                        data-dtype="{{data.protection.slash.type}}" />
+                </td>
+                <td>
+                    <input name="data.protection.pierce.value" type="text" value="{{data.protection.pierce.value}}"
+                        data-dtype="{{data.protection.pierce.type}}" />
+                </td>
+                <td>
+                    <input name="data.protection.blunt.value" type="text" value="{{data.protection.blunt.value}}"
+                        data-dtype="{{data.protection.blunt.type}}" />
+                </td>
+                <td>
+                    <input name="data.protection.energy.value" type="text" value="{{data.protection.energy.value}}"
+                        data-dtype="{{data.protection.energy.type}}" />
+                </td>
+                <td>
+                    <input name="data.protection.shock.value" type="text" value="{{data.protection.shock.value}}"
+                        data-dtype="{{data.protection.shock.type}}" />
+                </td>
+            </tr>
+        </table>
+    </div>
+    {{/unless}}
+</section>

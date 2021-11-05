@@ -3,9 +3,6 @@
         <p>{{name}}</p>
     </div>
     <div class="flex-row flex-start image-stats-box">
-        <div class="item-img">
-            <img class="item-img" src="{{img}}" title="{{name}}" />
-        </div>
         <div class="weapon-box">
             {{#unless data.isRanged.value}}
             {{#if data.damage.slash.value}}
@@ -140,9 +137,6 @@
             {{log "Selected Ammo: " data.selectedAmmo.value}}
             {{/unless}}
         {{/unless}}
-        </div>
-        <div class="description-box">
-            {{{data.description.value}}}
         </div>
     </div>
 </div>
