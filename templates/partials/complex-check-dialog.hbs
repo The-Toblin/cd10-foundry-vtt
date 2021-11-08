@@ -1,0 +1,32 @@
+<form class="complex-check-dialog">
+    <div class="flex-column">
+        <label>Select Skill</label>
+        <select id="skill-selected" name="skill-selected">
+            {{#select skills}}
+            {{#each skills as |skill index|}}
+            <option value="{{index}}">{{skill.name}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+    </div>
+    <div class="flex-column">
+        <label>Select trait</label>
+        <select id="trait-selected" name="trait-selected">
+            {{#select traits}}
+            {{#each traits as |trait index|}}
+            <option value="{{index}}">{{trait.name}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+    </div>
+    <div class="flex-row flex-even">
+        <div class="flex-column">
+            <label>Use hero point?</label>
+            <input id="heroPoint" name="heroPoint" type="checkbox" value="off" />
+        </div>
+        <div class="flex-column">
+            <label>Reverse trait?</label>
+            <input id="reverseTrait" name="reverseTrait" type="checkbox" value="off" />
+        </div>
+    </div>
+</form>

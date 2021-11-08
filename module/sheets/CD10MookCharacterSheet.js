@@ -1,3 +1,5 @@
+import * as Dice from "../dice.js";
+
 export default class CD10MookCharacterSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
@@ -107,6 +109,13 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     }
 
     activateListeners(html) {
+        if (this.actor.isOwner) {
+            /*html.find(".item-roll").click(this._onItemRoll.bind(this));*/
+            html.find(".task-check").click(this._onTaskCheck.bind(this));
+            html.find(".reveal-rollable").on("mouseover mouseout", this._onToggleRollable.bind(this));
+        }
+
+        /* General listeners */
         html.find(".item-create").click(this._onItemCreate.bind(this));
         html.find(".inline-edit").change(this._onSkillEdit.bind(this));
         html.find(".item-delete").click(this._onItemDelete.bind(this));
@@ -120,6 +129,32 @@ export default class CD10MookCharacterSheet extends ActorSheet {
         new ContextMenu(html, ".inventory-item", this.itemContextMenu);
 
         super.activateListeners(html);
+    }
+
+    _onToggleRollable(event) {
+        event.preventDefault();
+
+        const rollables = event.currentTarget.getElementsByClassName("rollable");
+        $.each(rollables, function(index, value) {
+            $(value).toggleClass("hidden");
+        });
+    }
+
+    _onItemRoll(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemId;
+        let item = this.actor.items.get(itemId);
+
+        item.roll();
+    }
+
+    _onTaskCheck(event) {
+
+        Dice.TaskCheck({
+            actionValue: event.currentTarget.dataset.actionValue,
+            modifier: this.actor.data.data.modifier.value,
+        });
     }
 
     _onItemCreate(event) {

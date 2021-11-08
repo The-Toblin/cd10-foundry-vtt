@@ -3,7 +3,7 @@
     <div class="sheet-main-content flex-column flex-start">
         <div class="head-contentbox">
             <h1>
-                <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "cd10.stats.name"}}" />
+                <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize " cd10.stats.name"}}" />
             </h1>
         </div>
         <nav class="sheet-tabs tabs" data-group="primary">
@@ -50,7 +50,7 @@
             {{!-- Notes Tab --}}
             <div class="tab sheet-notes" data-group="primary" data-tab="notes">
                 <div class="sheet-card">
-                {{editor
+                    {{editor
                     content=data.notes.value
                     target="data.notes.value"
                     button=true
@@ -77,8 +77,8 @@
                 {{localize "cd10.stats.exp"}}
             </h3>
             <div class="flex-row flex-center">
-                <input name="data.exp.total" type="text" value="{{data.exp.total}}"
-                    data-dtype="{{data.exp.type}}" placeholder="{{localize "cd10.stats.exp"}}" />
+                <input name="data.exp.total" type="text" value="{{data.exp.total}}" data-dtype="{{data.exp.type}}"
+                    placeholder="{{localize "cd10.stats.exp"}}" />
             </div>
         </div>
         <div class="sheet-money sheet-card">
@@ -99,9 +99,18 @@
             <h3 class="sheet-header">
                 {{localize "cd10.stats.encumbrance"}}
             </h3>
-            <div class="flex-row flex-center {{#if (gte data.currentEncumbrance.value data.encumbranceLimit.value)}}red{{/if}}">
+            <div
+                class="flex-row flex-center {{#if (gte data.currentEncumbrance.value data.encumbranceLimit.value)}}red{{/if}}">
                 {{data.currentEncumbrance.value}} kg
             </div>
+        </div>
+        <div class="sheet-card flex-column flex-center">
+            <a class="complex-check" data-type="text"
+                data-action-value="{{skill.data.skillLevel.value}}" title={{localize "cd10.sheet.roll" }}>
+                <h3 class="sheet-header">
+                    Complex check
+                </h3>
+            </a>
         </div>
     </div>
 </form>

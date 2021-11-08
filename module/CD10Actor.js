@@ -107,6 +107,10 @@ export default class CD10Actor extends Actor {
         return this.data.data.modifier.value;
     }
 
+    get getExp() {
+        return parseInt(this.data.data.exp.total);
+    }
+
     /**************************
      *                        *
      * Custom prepare methods *
