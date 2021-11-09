@@ -3,7 +3,7 @@ export function TaskCheck({
     traitValue = null,
     heroPoint = false,
     reverseTrait = false,
-    modifier = null,
+    modifier = null
 } = {}) {
     let baseDice = heroPoint === true ? "2d10x9" : "1d10x9";
     let rollFormula = `${baseDice} + @actionValue + @traitValue - @modifier`;
@@ -14,26 +14,28 @@ export function TaskCheck({
         rollData = {
             actionValue: actionValue,
             traitValue: -traitValue,
-            modifier: modifier,
+            modifier: modifier
         };
     } else {
         rollData = {
             actionValue: actionValue,
             traitValue: traitValue,
-            modifier: modifier,
+            modifier: modifier
         };
     }
 
     let messageData = {
-        speaker: ChatMessage.getSpeaker(),
+        speaker: ChatMessage.getSpeaker()
     };
 
     let rollD10 = new Roll(rollFormula, rollData).roll();
 
     /* Catch the dreaded 0 */
-    if (rollD10.terms[0].results[0].result === 10) {
-        rollD10._total -= 10;
-    }
+    for (let i = 0; i < rollD10.terms[0].results.length; i++) {
 
+        if (rollD10.terms[0].results[i].result === 10) {
+            rollD10._total -= 10;
+        }
+    }
     rollD10.toMessage(messageData);
 }
