@@ -2,9 +2,7 @@
     "Actor": {
         "types": [
             "named",
-            "mook",
-            "nemesis",
-            "hero"
+            "mook"
         ],
         "templates": {
             "commonStats": {
@@ -139,9 +137,7 @@
             "skill",
             "spell",
             "trait",
-            "weapon",
-            "rangedWeapon",
-            "shield"
+            "weapon"
         ],
         "templates": {
             "itemDescription": {

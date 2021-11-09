@@ -1,3 +1,9 @@
+.cd10.sheet {
+  .hidden {
+    display: none;
+  }
+}
+
 .cd10.sheet.namedCharacter {
   min-width: 750px;
   min-height: 700px;
@@ -9,6 +15,17 @@
   }
 
   form {
+    color: var(--font-color);
+
+    .item-roll {
+      img {
+        max-width: 15px;
+        margin-top: 5px;
+        margin-right: 5px;
+        border: none;
+      }
+    }
+
     select {
       border: none;
       color: var(--font-color);
@@ -20,8 +37,6 @@
       background-color: black;
       font-family: var(--font-main);
     }
-
-    color: var(--font-color);
 
     .editor {
       height: 100%;
@@ -145,6 +160,7 @@
 
       .red {
         color: red;
+        font-weight: 700;
       }
 
       .sheet-card {
