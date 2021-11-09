@@ -28,7 +28,9 @@ export function TaskCheck({
         speaker: ChatMessage.getSpeaker()
     };
 
-    let rollD10 = new Roll(rollFormula, rollData).roll();
+    let rollD10 = new Roll(rollFormula, rollData).roll({
+        async: false
+    });
 
     /* Catch the dreaded 0 */
     for (let i = 0; i < rollD10.terms[0].results.length; i++) {
