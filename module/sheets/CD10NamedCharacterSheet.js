@@ -19,7 +19,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         return `systems/cd10/templates/sheets/namedCharacter-sheet.hbs`;
     }
 
-    /* Define ContextMenues */
+    /* Define ContextMenus */
     equippableItemContextMenu = [{
         name: game.i18n.localize("cd10.sheet.edit"),
         icon: '<i class="fas fa-edit"></i>',
@@ -165,7 +165,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     }
 
     async _onPhysicalSave(event) {
-        /* Perform a physical save, directly from worn armor */
+        /* Perform a physical save, directly from equipped armor */
         event.preventDefault();
 
         let damageType = event.currentTarget.dataset.damageType;
