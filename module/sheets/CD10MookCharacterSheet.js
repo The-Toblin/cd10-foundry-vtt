@@ -169,7 +169,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     }
 
     async _onPhysicalSave(event) {
-        /* Perform a physical save, directly from worn armor */
+        /* Perform a physical save, directly from equipped armor */
         event.preventDefault();
 
         let damageType = event.currentTarget.dataset.damageType;
