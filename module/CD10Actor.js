@@ -96,11 +96,11 @@ export default class CD10Actor extends Actor {
     }
 
     get getShock() {
-        return this.data.data.shock.value;
+        return parseInt(this.data.data.shock.value);
     }
 
     get getWounds() {
-        return this.data.data.wounds.value;
+        return parseInt(this.data.data.wounds.value);
     }
 
     get getModifier() {

@@ -1,0 +1,124 @@
+<div class="task-check physical-save-card save flex-column flex-start">
+    <div>
+        <h3>{{localize "cd10.chat.defense.title" armor=armor.name}}</h3>
+        {{{roll}}}
+    </div>
+    <div class="centered">
+        <h3>{{localize "cd10.chat.outcomes.outcome"}} {{saveOutcome}}</h3>
+    </div>
+    <div>
+        {{#if (eq saveOutcome "Fumble")}}
+        <div class="centered">
+            <h3>
+                {{localize "cd10.injuries.finjury"}}
+            </h3>
+        </div>
+        <div class="flex-row flex-between">
+            <div class="stat-box pad-4">
+                {{localize "cd10.injuries.shock"}}
+            </div>
+            <div class="value-box pad-4">
+                {{shockResult}}
+            </div>
+        </div>
+        <div class="flex-row flex-between">
+            <div class="stat-box pad-4">
+                {{localize "cd10.injuries.wounds"}}
+            </div>
+            <div class="value-box pad-4">
+                6
+            </div>
+        </div>
+        <div class="centered">
+            <h3>
+                {{localize "cd10.injuries.dao"}}!
+            </h3>
+        </div>
+        {{else if (eq saveOutcome "Failure")}}
+        <div class="centered">
+            <h3>
+                {{localize "cd10.injuries.sinjury"}}
+            </h3>
+        </div>
+        <div class="flex-row flex-between">
+            <div class="stat-box pad-4">
+                {{localize "cd10.injuries.shock"}}
+            </div>
+            <div class="value-box pad-4">
+                {{shockResult}}
+            </div>
+        </div>
+        <div class="flex-row flex-between">
+            <div class="stat-box pad-4">
+                {{localize "cd10.injuries.wounds"}}
+            </div>
+            <div class="value-box pad-4">
+                2
+            </div>
+        </div>
+        <div class="centered">
+            <h3>
+                {{localize "cd10.injuries.dao"}}!
+            </h3>
+        </div>
+        {{else if (eq saveOutcome "StatusQuo")}}
+        <div class="centered">
+            <h3>
+                {{localize "cd10.injuries.sinjury"}}
+            </h3>
+        </div>
+        <div class="flex-row flex-between">
+            <div class="stat-box pad-4">
+                {{localize "cd10.injuries.shock"}}
+            </div>
+            <div class="value-box pad-4">
+                {{shockResult}}
+            </div>
+        </div>
+        <div class="flex-row flex-between">
+            <div class="stat-box pad-4">
+                {{localize "cd10.injuries.wounds"}}
+            </div>
+            <div class="value-box pad-4">
+                2
+            </div>
+        </div>
+        {{else if (eq saveOutcome "Success")}}
+        <div class="centered">
+            <h3>
+                {{localize "cd10.injuries.linjury"}}
+            </h3>
+        </div>
+        <div class="flex-row flex-between">
+            <div class="stat-box pad-4">
+                {{localize "cd10.injuries.shock"}}
+            </div>
+            <div class="value-box pad-4">
+                {{shockResult}}
+            </div>
+        </div>
+        <div class="flex-row flex-between">
+            <div class="stat-box pad-4">
+                {{localize "cd10.injuries.wounds"}}
+            </div>
+            <div class="value-box pad-4">
+                1
+            </div>
+        </div>
+        {{else if (eq saveOutcome "Perfection")}}
+        <div class="centered">
+            <h3>
+                {{localize "cd10.injuries.scratch"}}
+            </h3>
+        </div>
+        <div class="flex-row flex-between">
+            <div class="stat-box pad-4">
+                {{localize "cd10.injuries.shock"}}
+            </div>
+            <div class="value-box pad-4">
+                {{shockResult}}
+            </div>
+        </div>
+        {{/if}}
+    </div>
+</div>

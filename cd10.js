@@ -24,7 +24,9 @@ async function preloadHandlebarsTemplates() {
         "systems/cd10/templates/partials/small-armor-stats.hbs",
         "systems/cd10/templates/partials/small-skill-stats.hbs",
         "systems/cd10/templates/partials/small-trait-stats.hbs",
-        "systems/cd10/templates/partials/small-spell-stats.hbs"
+        "systems/cd10/templates/partials/small-spell-stats.hbs",
+        "systems/cd10/templates/partials/attack-roll.hbs",
+        "systems/cd10/templates/partials/physical-save.hbs",
     ];
 
     return loadTemplates(templatePaths);

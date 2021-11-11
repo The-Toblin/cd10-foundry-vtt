@@ -11,6 +11,7 @@
     width: 150px;
     height: 150px;
     box-shadow: 5px 10px 10px rgb(0, 0, 0, 0.5);
+    background: url(./assets/backgrounds/card_detail_background.jpg);
   }
 
   input {
@@ -57,11 +58,14 @@
   }
 
   .window-content {
-    background: url(./assets/backgrounds/sheet_background.jpg);
+    background: url(./assets/backgrounds/card_background.jpg);
+    border-style: solid;
+    border-width: 3px;
+    border-image: radial-gradient(black, var(--font-color)) 1;
+    padding: 5px;
+    color: var(--font-color);
 
     form {
-      color: var(--font-color);
-
       select {
         border: none;
         color: var(--font-color);
@@ -81,13 +85,9 @@
         width: 150px;
       }
 
-      .card {
-        background: url(./assets/backgrounds/card_background.jpg);
-        border-style: solid;
-        border-width: 3px;
-        border-image: radial-gradient(black, var(--font-color)) 1;
-        padding: 5px;
-        box-shadow: 5px 10px 10px rgb(0, 0, 0, 0.5);
+      .generic-info-box,
+      .weapon-and-armor-stats,
+      .editor-box {
         margin: 0 10px 10px 0;
       }
 
