@@ -1,12 +1,12 @@
-<div class="weapon-card sheet-card flex-column" data-item-id="{{_id}}">
-    <div class="weapon-info weapon-name">
+<div class="weapon-card sheet-card flex-column item" data-item-id="{{_id}}">
+    <div class="weapon-info weapon-name dark-background pad-8">
         <p>{{name}}</p>
     </div>
     <div class="flex-row flex-start image-stats-box">
-        <div class="weapon-box">
+        <div class="weapon-box dark-background pad-8">
             {{#unless data.isRanged.value}}
             {{#if data.damage.slash.value}}
-            <div class="weapon-stats">
+            <div class="weapon-stats attack-check" data-damage-type="slash">
                 <div class="stat-name">
                     {{localize "cd10.weapon.slashDamage"}}
                 </div>
@@ -16,7 +16,7 @@
             </div>
             {{/if}}
             {{#if data.damage.pierce.value}}
-            <div class="weapon-stats">
+            <div class="weapon-stats attack-check" data-damage-type="pierce">
                 <div class="stat-name">
                     {{localize "cd10.weapon.pierceDamage"}}
                 </div>
@@ -27,7 +27,7 @@
             </div>
             {{/if}}
             {{#if data.damage.blunt.value}}
-            <div class="weapon-stats">
+            <div class="weapon-stats attack-check" data-damage-type="blunt">
                 <div class="stat-name">
                     {{localize "cd10.weapon.bluntDamage"}}
                 </div>
@@ -37,7 +37,7 @@
             </div>
             {{/if}}
             {{#if data.damage.energy.value}}
-            <div class="weapon-stats">
+            <div class="weapon-stats attack-check" data-damage-type="energy">
                 <div class="stat-name">
                     {{localize "cd10.weapon.energyDamage"}}
                 </div>

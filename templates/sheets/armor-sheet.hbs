@@ -16,14 +16,14 @@
             data-edit="img"
             title="{{item.name}}"
         />
-        <div class="generic-info-box card">
+        <div class="generic-info-box dark-background">
             {{> "systems/cd10/templates/partials/generic-item-data.hbs" this }}
         </div>
     </div>
-    <div class="weapon-and-armor-stats card">
+    <div class="weapon-and-armor-stats dark-background">
         {{> "systems/cd10/templates/partials/small-armor-stats.hbs" this }}
     </div>
-    <div class="editor-box card">
+    <div class="editor-box dark-background pad-8">
         {{editor
             content=data.description.value
             target="data.description.value"

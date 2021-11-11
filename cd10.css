@@ -1,11 +1,27 @@
+/* Hidden class for mouse-over elements */
 .cd10.sheet .hidden {
   display: none;
 }
+/* Main sheet definitions */
 .cd10.sheet.namedCharacter {
   min-width: 750px;
-  min-height: 700px;
+  min-height: 765px;
   max-width: 1000px;
   max-height: 1920px;
+}
+.cd10.sheet.namedCharacter h1,
+.cd10.sheet.namedCharacter h2,
+.cd10.sheet.namedCharacter h3,
+.cd10.sheet.namedCharacter p,
+.cd10.sheet.namedCharacter label,
+.cd10.sheet.namedCharacter .sheet-header,
+.cd10.sheet.namedCharacter input,
+.cd10.sheet.namedCharacter textarea,
+.cd10.sheet.namedCharacter .stat-element,
+.cd10.sheet.namedCharacter .fa,
+.cd10.sheet.namedCharacter .far,
+.cd10.sheet.namedCharacter .fas {
+  color: var(--font-color);
 }
 .cd10.sheet.namedCharacter .window-content {
   background: url(./assets/backgrounds/sheet_background.jpg);
@@ -13,15 +29,9 @@
 .cd10.sheet.namedCharacter form {
   color: var(--font-color);
 }
-.cd10.sheet.namedCharacter form .item-roll img {
-  max-width: 15px;
-  margin-top: 5px;
-  margin-right: 5px;
-  border: none;
-}
 .cd10.sheet.namedCharacter form select {
   border: none;
-  color: var(--font-color);
+  color: inherit;
   font-family: var(--font-main);
   background: url(./assets/backgrounds/card_detail_background.jpg);
 }
@@ -35,12 +45,12 @@
 }
 .cd10.sheet.namedCharacter form .editor .editor-content {
   min-height: 100px;
-  color: var(--font-color);
+  color: inherit;
 }
 .cd10.sheet.namedCharacter form input {
   border: none;
   background: none;
-  color: var(--font-color);
+  color: inherit;
 }
 .cd10.sheet.namedCharacter form table {
   border: none;
@@ -61,40 +71,9 @@
   vertical-align: middle;
   text-align: center;
   padding: 4px 5px 4px 5px;
+  color: inherit;
 }
 .cd10.sheet.namedCharacter form .sheet-tabs {
-  margin-bottom: 10px;
-}
-.cd10.sheet.namedCharacter form .sheet-notes table {
-  border: none;
-}
-.cd10.sheet.namedCharacter form .sheet-notes table td {
-  color: var(--font-color);
-}
-.cd10.sheet.namedCharacter form .sheet-notes table tr {
-  background: unset;
-  background-color: unset;
-}
-.cd10.sheet.namedCharacter form .sheet-notes .editor-content {
-  min-height: 521px;
-}
-.cd10.sheet.namedCharacter form .sheet-card {
-  background: url(./assets/backgrounds/card_background.jpg);
-  border-style: solid;
-  border-width: 3px;
-  border-image: radial-gradient(black, var(--font-color)) 1;
-  padding: 5px;
-  box-shadow: 5px 10px 10px #000000;
-  margin-bottom: 10px;
-  color: var(--font-color);
-}
-.cd10.sheet.namedCharacter form .dark-background {
-  background: url(./assets/backgrounds/card_detail_background.jpg);
-  border-style: solid;
-  border-width: 3px;
-  border-image: radial-gradient(black, var(--accent-color)) 1;
-  box-shadow: inset 2px 2px 10px 5px black;
-  padding: 4px;
   margin-bottom: 10px;
 }
 .cd10.sheet.namedCharacter form h1 {
@@ -133,10 +112,6 @@
   color: red;
   font-weight: 700;
 }
-.cd10.sheet.namedCharacter form .sheet-sidebar .sheet-card {
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
 .cd10.sheet.namedCharacter form .sheet-sidebar input {
   width: 30px;
   text-align: center;
@@ -145,12 +120,6 @@
   padding-top: 4px;
 }
 .skill-card {
-  background: url(./assets/backgrounds/card_background.jpg);
-  border-style: solid;
-  border-width: 3px;
-  border-image: radial-gradient(black, var(--font-color)) 1;
-  padding: 5px;
-  box-shadow: 5px 10px 10px #000000;
   margin-bottom: 10px;
   color: var(--font-color);
   display: flex;
@@ -166,16 +135,6 @@
   padding: 2px 2px 0 2px;
   text-align: center;
   width: 25%;
-}
-.skill-card .dark-background {
-  background: url(./assets/backgrounds/card_detail_background.jpg);
-  border-style: solid;
-  border-width: 3px;
-  border-image: radial-gradient(black, var(--accent-color)) 1;
-  box-shadow: inset 2px 2px 10px 5px black;
-  padding: 4px;
-  margin-bottom: 10px;
-  color: var(--font-color);
 }
 .trait-card .trait-box {
   display: flex;
@@ -205,36 +164,20 @@
 .armor-card .armor-name {
   text-align: left;
   font-size: 1.25em;
-  background: url(./assets/backgrounds/card_detail_background.jpg);
-  border-style: solid;
-  border-width: 3px;
-  border-image: radial-gradient(black, var(--accent-color)) 1;
-  box-shadow: inset 2px 2px 10px 5px black;
   vertical-align: middle;
   text-align: center;
-  padding: 4px 5px 4px 5px;
   margin-bottom: 10px;
 }
 .armor-card .description-box {
-  background: url(./assets/backgrounds/card_detail_background.jpg);
-  border-style: solid;
-  border-width: 3px;
-  border-image: radial-gradient(black, var(--accent-color)) 1;
-  box-shadow: inset 2px 2px 10px 5px black;
   padding: 8px;
   width: 100%;
   max-height: 150px;
   overflow: auto;
 }
 .armor-card .armor-box {
-  background: url(./assets/backgrounds/card_detail_background.jpg);
   display: flex;
   flex-direction: column;
   justify-content: start;
-  border-style: solid;
-  border-width: 3px;
-  border-image: radial-gradient(black, var(--accent-color)) 1;
-  box-shadow: inset 2px 2px 10px 5px black;
   padding: 8px;
   margin-right: 10px;
   min-width: 150px;
@@ -271,37 +214,19 @@
 .weapon-card .weapon-name {
   text-align: left;
   font-size: 1.25em;
-  background: url(./assets/backgrounds/card_detail_background.jpg);
-  border-style: solid;
-  border-width: 3px;
-  border-image: radial-gradient(black, var(--accent-color)) 1;
-  box-shadow: inset 2px 2px 10px 5px black;
   vertical-align: middle;
   text-align: center;
-  padding: 4px 5px 4px 5px;
   margin-bottom: 10px;
 }
 .weapon-card .description-box {
-  background: url(./assets/backgrounds/card_detail_background.jpg);
-  border-style: solid;
-  border-width: 3px;
-  border-image: radial-gradient(black, var(--accent-color)) 1;
-  box-shadow: inset 2px 2px 10px 5px black;
-  padding: 8px;
   width: 100%;
   max-height: 150px;
   overflow: auto;
 }
 .weapon-card .weapon-box {
-  background: url(./assets/backgrounds/card_detail_background.jpg);
   display: flex;
   flex-direction: column;
   justify-content: start;
-  border-style: solid;
-  border-width: 3px;
-  border-image: radial-gradient(black, var(--accent-color)) 1;
-  box-shadow: inset 2px 2px 10px 5px black;
-  padding: 8px;
   margin-right: 10px;
   min-width: 150px;
 }
@@ -503,6 +428,7 @@
   width: 150px;
   height: 150px;
   box-shadow: 5px 10px 10px #000000;
+  background: url(./assets/backgrounds/card_detail_background.jpg);
 }
 .cd10.sheet.item input {
   border: none;
@@ -542,9 +468,11 @@
   padding: 4px 5px 4px 5px;
 }
 .cd10.sheet.item .window-content {
-  background: url(./assets/backgrounds/sheet_background.jpg);
-}
-.cd10.sheet.item .window-content form {
+  background: url(./assets/backgrounds/card_background.jpg);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, var(--font-color)) 1;
+  padding: 5px;
   color: var(--font-color);
 }
 .cd10.sheet.item .window-content form select {
@@ -562,13 +490,9 @@
   border-color: var(--font-color);
   width: 150px;
 }
-.cd10.sheet.item .window-content form .card {
-  background: url(./assets/backgrounds/card_background.jpg);
-  border-style: solid;
-  border-width: 3px;
-  border-image: radial-gradient(black, var(--font-color)) 1;
-  padding: 5px;
-  box-shadow: 5px 10px 10px #000000;
+.cd10.sheet.item .window-content form .generic-info-box,
+.cd10.sheet.item .window-content form .weapon-and-armor-stats,
+.cd10.sheet.item .window-content form .editor-box {
   margin: 0 10px 10px 0;
 }
 .cd10.sheet.item .window-content form .generic-info-box {
@@ -640,32 +564,6 @@
 .cd10.sheet.mookCharacter form select option {
   font-family: var(--font-main);
 }
-.cd10.sheet.mookCharacter form .item-roll img {
-  max-width: 15px;
-  margin-top: 5px;
-  margin-right: 5px;
-  border: none;
-}
-.cd10.sheet.mookCharacter form .sheet-card {
-  background: url(./assets/backgrounds/card_background.jpg);
-  border-style: solid;
-  border-width: 3px;
-  border-image: radial-gradient(black, var(--font-color)) 1;
-  padding: 5px;
-  box-shadow: 5px 10px 10px #000000;
-  margin-bottom: 10px;
-  color: var(--font-color);
-}
-.cd10.sheet.mookCharacter form .dark-background {
-  background: url(./assets/backgrounds/card_detail_background.jpg);
-  border-style: solid;
-  border-width: 3px;
-  border-image: radial-gradient(black, var(--accent-color)) 1;
-  box-shadow: inset 2px 2px 10px 5px black;
-  padding: 4px;
-  margin-bottom: 10px;
-  color: var(--font-color);
-}
 .cd10.sheet.mookCharacter form h1 {
   font-size: 2em;
   margin-right: 5px;
@@ -712,7 +610,7 @@
   font-style: italic;
   border: none;
   background: none;
-  font-family: "Signika", sans-serif;
+  font-family: var(--font-main);
 }
 .cd10.sheet.mookCharacter form .weapon-item {
   margin-right: 5px;
@@ -734,7 +632,8 @@
   font-family: var(--font-main);
   background: url(./assets/backgrounds/card_background.jpg);
 }
-.cd10-dialog .window-content select {
+.cd10-dialog .window-content select,
+.cd10-dialog .window-content input {
   border: none;
   color: var(--font-color);
   font-family: var(--font-main);
@@ -743,6 +642,53 @@
 .cd10-dialog .window-content select option {
   background-color: black;
   font-family: var(--font-main);
+}
+.physical-save-card .centered,
+.physical-save-card .value-box {
+  text-align: center;
+}
+.physical-save-card .value-box {
+  width: 15%;
+}
+.physical-save-card .value-box,
+.physical-save-card .stat-box {
+  margin: 0;
+  line-height: 24px;
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid #999;
+  border-radius: 3px;
+  box-shadow: 0 0 2px #fff inset;
+  word-break: break-all;
+  margin-bottom: 5px;
+}
+.physical-save-card .stat-box {
+  text-align: left;
+  width: 80%;
+}
+.attack-roll-card .centered,
+.attack-roll-card .value-box {
+  text-align: center;
+}
+.attack-roll-card .value-box {
+  width: 25%;
+}
+.attack-roll-card .value-box,
+.attack-roll-card .stat-box {
+  margin: 0;
+  line-height: 24px;
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid #999;
+  border-radius: 3px;
+  box-shadow: 0 0 2px #fff inset;
+  word-break: break-all;
+  margin-bottom: 5px;
+}
+.attack-roll-card .stat-box {
+  text-align: left;
+  width: 70%;
+}
+.attack-roll-card .spacer {
+  margin-top: 5px;
 }
 /* Variables */
 :root {
@@ -774,4 +720,43 @@
 .flex-center {
   justify-content: center;
   align-content: flex-start;
+}
+/* Overall styling classes */
+.sheet-background {
+  background: url(./assets/backgrounds/sheet_background.jpg);
+  color: var(--font-color);
+}
+.sheet-card {
+  background: url(./assets/backgrounds/card_background.jpg);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, var(--font-color)) 1;
+  padding: 5px;
+  box-shadow: 5px 10px 10px #000000;
+  margin: 0 5px 10px 5px;
+  color: var(--font-color);
+}
+.dark-background {
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  padding: 4px;
+  margin: 0 5px 10px 5px;
+}
+.item-roll img {
+  max-width: 15px;
+  margin-top: 5px;
+  margin-right: 5px;
+  border: none;
+}
+.pad-8 {
+  padding: 8px;
+}
+.pad-4 {
+  padding: 4px;
+}
+.pad-2 {
+  padding: 2px;
 }

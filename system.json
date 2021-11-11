@@ -6,7 +6,7 @@
     "authors": [],
     "url": "https://github.com/The-Toblin/cd10-foundry-vtt/",
     "flags": {},
-    "version": "0.1.4",
+    "version": "0.1.5",
     "minimumCoreVersion": "0.8.9",
     "compatibleCoreVersion": "0.8.9",
     "scripts": [],
@@ -20,6 +20,10 @@
         "lang": "en",
         "name": "English",
         "path": "lang/en.json"
+    }],
+    "media": [{
+        "type": "cover",
+        "url": "https://www.worldanvil.com/uploads/images/fbacbcf8f76cbcfe7673ed8b7f4a826a.png"
     }],
     "packs": [],
     "system": [],
