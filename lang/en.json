@@ -9,6 +9,36 @@
             "shells": "Shells",
             "rocks": "Rocks"
         },
+        "chat": {
+            "attack": {
+                "attack": "Attack",
+                "title": "Attack ({weapon})",
+                "lethality": "Lethality",
+                "shock": "Shock",
+                "weapon": "Weapon",
+                "excess": "Excess",
+                "total": "Total",
+                "miss": "Whiff"
+            },
+            "defense": {
+                "title": "Defense ({armor})",
+                "protection": "Protection",
+                "shock": "Shock",
+                "armor": "Armor",
+                "excess": "Excess",
+                "total": "Total",
+                "wounds": "Wounds",
+                "injury": "Injury"
+            },
+            "outcomes": {
+                "outcome": "Outcome",
+                "fumble": "Fumble",
+                "failure": "Failure",
+                "statusQuo": "Status Quo",
+                "success": "Success",
+                "perfection": "Perfection"
+            }
+        },
         "sheet": {
             "add": "Add",
             "armor": "Armor",
@@ -30,6 +60,7 @@
             "positive": "Positive",
             "remove": "Remove",
             "removeShort": "Rem.",
+            "roll": "Roll",
             "skills": "Skills",
             "spells": "Spells",
             "to": "to",
@@ -52,7 +83,12 @@
             "rifles": "Rifles",
             "sling": "Sling",
             "throwing": "Throwing",
-            "twoHandedWeapons": "Two-handed weapons"
+            "twoHandedWeapons": "Two-handed weapons",
+            "slash": "Slash",
+            "pierce": "Pierce",
+            "blunt": "Blunt",
+            "energy": "Energy",
+            "shock": "Shock"
         },
         "skill": {
             "teachableYes": "Requires a teacher.",
@@ -140,6 +176,7 @@
         "injuries": {
             "shock": "Shock",
             "wounds": "Wounds",
+            "scratch": "Scratch",
             "linjury": "Light Injury",
             "sinjury": "Serious Injury",
             "finjury": "Fatal Injury",

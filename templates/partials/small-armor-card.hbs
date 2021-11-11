@@ -3,9 +3,6 @@
         <p>{{name}}</p>
     </div>
     <div class="flex-row flex-start image-stats-box">
-        <div class="item-img">
-            <img class="item-img" src="{{img}}" title="{{name}}" />
-        </div>
         <div class="armor-box dark-background pad-8">
             {{#if data.protection.slash.value}}
             <div class="armor-stats physical-save" data-damage-type="slash">
@@ -25,6 +22,7 @@
                 <div class="armor-statvalue">
                     {{data.protection.pierce.value}}
                 </div>
+
             </div>
             {{/if}}
             {{#if data.protection.blunt.value}}
@@ -45,6 +43,7 @@
                 <div class="armor-statvalue">
                     {{data.protection.energy.value}}
                 </div>
+
             </div>
             {{/if}}
             {{#if data.protection.shock.value}}
@@ -102,9 +101,6 @@
                     </div>
                 {{/if}}
             {{/unless}}
-        </div>
-        <div class="description-box dark-background">
-            {{{data.description.value}}}
         </div>
     </div>
 </div>

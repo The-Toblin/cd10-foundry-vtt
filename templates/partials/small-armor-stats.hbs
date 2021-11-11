@@ -1,15 +1,9 @@
 <section class="small-weapon-armor-stats flex-row flex-even">
-    <div class="vertically-centered">
-        <input type="checkbox" {{checked data.isShield.value}} name="data.isShield.value"
-            data-dtype="{{data.isShield.type}}">
-        <div class="pad right-margin">
-            {{localize "cd10.armor.isShield"}}
-        </div>
-    </div>
     {{#unless this.data.isShield.value}}
     <div class="armor pad">
         <table>
             <tr>
+                <th>{{localize "cd10.armor.isShield"}}</th>
                 <th>{{localize "cd10.sheet.coverage"}}</th>
                 <th>{{localize "cd10.armor.slashProtection"}}</th>
                 <th>{{localize "cd10.armor.pierceProtection"}}</th>
@@ -18,6 +12,10 @@
                 <th>{{localize "cd10.armor.shockProtection"}}</th>
             </tr>
             <tr>
+                <td>
+                    <input type="checkbox" {{checked data.isShield.value}} name="data.isShield.value"
+            data-dtype="{{data.isShield.type}}">
+                </td>
                 <td>
                     <select name="data.coverage.value">
                         {{#select data.coverage.value}}

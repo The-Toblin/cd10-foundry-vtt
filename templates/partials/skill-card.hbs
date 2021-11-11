@@ -1,17 +1,10 @@
-<section class="skill-card">
-  <div class="skill-box">
-    <div class="skill-name">
+<section class="skill-card sheet-card">
+    <div class="skill-name dark-background">
       <label>
         {{name}}
       </label>
     </div>
-    <div class="skill-value" data-item-id="{{skill._id}}">
-      <input class="item-create"
-        type="text"
-        value="{{skill.data.value}}"
-        placeholder="0"
-        data-dtype="Number"
-      />
+    <div class="skill-value dark-background">
+      {{data.skillLevel.value}}
     </div>
-  </div>
 </section>

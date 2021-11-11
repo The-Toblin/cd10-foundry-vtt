@@ -1,0 +1,63 @@
+<div class="task-check attack attack-roll-card flex-column flex-start">
+    <div>
+        <h3>{{localize "cd10.chat.attack.title" weapon=weapon.name}}</h3>
+    </div>
+    <div class="flex-row flex-between">
+        <div class="stat-box">
+            {{localize "cd10.chat.attack.weapon"}} {{localize "cd10.chat.attack.lethality"}}
+        </div>
+        <div class="value-box">
+            {{#if (eq type "slash")}}
+            {{weapon.data.data.damage.slash.value}} {{localize "cd10.attack.slash"}}
+            {{else if (eq type "pierce")}}
+            {{weapon.data.data.damage.pierce.value}} {{localize "cd10.attack.pierce"}}
+            {{else if (eq type "blunt")}}
+            {{weapon.data.data.damage.blunt.value}} {{localize "cd10.attack.blunt"}}
+            {{else if (eq type "energy")}}
+            {{weapon.data.data.damage.energy.value}} {{localize "cd10.attack.energy"}}
+            {{/if}}
+        </div>
+    </div>
+    {{{roll}}}
+    <div class="spacer"></div>
+    {{#if (gte excess 1)}}
+    <div class="flex-row flex-between">
+        <div class="stat-box">
+            {{localize "cd10.chat.attack.excess"}}
+        </div>
+        <div class="value-box">
+            {{excess}}
+        </div>
+    </div>
+    <div class="flex-row flex-between">
+        <div class="stat-box">
+            {{localize "cd10.chat.attack.lethality"}} (
+            {{#if (eq type "slash")}}
+            {{localize "cd10.attack.slash"}}
+            {{else if (eq type "pierce")}}
+            {{localize "cd10.attack.pierce"}}
+            {{else if (eq type "blunt")}}
+            {{localize "cd10.attack.blunt"}}
+            {{else if (eq type "energy")}}
+            {{localize "cd10.attack.energy"}}
+            {{/if}})
+        </div>
+        <div class="value-box">
+            {{lethality}}
+        </div>
+    </div>
+    <div class="flex-row flex-between">
+
+        <div class="stat-box">{{localize "cd10.chat.attack.shock"}}</div>
+        <div class="value-box">
+            {{weapon.data.data.damage.shock.value}}
+        </div>
+    </div>
+    {{else}}
+    <div class="flex-row flex-center">
+        <h2>
+            {{localize "cd10.chat.attack.miss"}}!
+        </h2>
+    </div>
+    {{/if}}
+</div>

@@ -1,10 +1,38 @@
 .cd10.sheet.mookCharacter {
-  min-height: 700px;
-  max-width: 480px;
+  h1,
+  h2,
+  h3,
+  p,
+  label,
+  .sheet-header,
+  input,
+  textarea,
+  .stat-element,
+  .fa,
+  .far,
+  .fas {
+    color: var(--font-color);
+  }
+
+  .window-content {
+    background: url(./assets/backgrounds/sheet_background.jpg);
+  }
 
   form {
     display: flex;
     flex-direction: column;
+
+    select {
+      border: none;
+      color: var(--font-color);
+      background-color: black;
+      font-family: var(--font-main);
+      background: url(./assets/backgrounds/card_detail_background.jpg);
+    }
+
+    select option {
+      font-family: var(--font-main);
+    }
 
     /* Headers */
     h1 {
@@ -31,13 +59,14 @@
     }
 
     .actor-image {
-      max-height: 200px;
+      max-height: 225px;
     }
 
     hr {
       width: 150px;
       margin-top: 5px;
       margin-bottom: 5px;
+      border-color: var(--font-color);
     }
 
     .header-box,
@@ -46,12 +75,12 @@
       width: 100%;
     }
 
+    .title-box {
+      margin-right: 0 10px 0 10px;
+    }
+
     .body-box {
       padding: 10px;
-
-      .equipment-list {
-        justify-content: space-evenly;
-      }
     }
 
     .quote {
@@ -63,39 +92,12 @@
         font-style: italic;
         border: none;
         background: none;
-        font-family: "Signika", sans-serif;
+        font-family: var(--font-main);
       }
     }
 
-    /* Skills and trait */
-    .ability-card {
-      width: 100%;
-      margin-left: 10px;
-      margin-right: 10px;
-
-      .skill-trait-header {
-        .fa-plus {
-          padding-top: 3px;
-          margin-left: 5px;
-        }
-      }
-
-      .skill-list,
-      .trait-list {
-        .attribute-pair {
-          .fa-trash {
-            padding-top: 6px;
-            margin-left: 5px;
-          }
-          .attribute-name {
-            text-align: left;
-          }
-          .attribute-value {
-            text-align: right;
-            width: 25px;
-          }
-        }
-      }
+    .weapon-item {
+      margin-right: 5px;
     }
   }
 }

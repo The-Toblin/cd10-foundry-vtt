@@ -11,7 +11,7 @@ export default class CD10Actor extends Actor {
 
         /* Encumbrance */
         templateData.currentEncumbrance = {
-            type: "Number",
+            type: "number",
             label: "Encumbrance",
             value: this._prepareEncumbrance(actorData),
         };
@@ -20,19 +20,19 @@ export default class CD10Actor extends Actor {
         let traits = this._prepareTraits(actorData);
 
         templateData.traitsValue = {
-            type: "Number",
+            type: "number",
             label: "Total traits value",
             value: traits.totalValue,
         };
 
         templateData.posTraits = {
-            type: "Number",
+            type: "number",
             label: "Total positive traits",
             value: traits.pos,
         };
 
         templateData.negTraits = {
-            type: "Number",
+            type: "number",
             label: "Total negative traits",
             value: traits.neg,
         };
@@ -41,13 +41,13 @@ export default class CD10Actor extends Actor {
         let debilitation = this._prepareDebilitation(templateData);
 
         templateData.modifier = {
-            type: "Number",
+            type: "number",
             label: "Modifier",
             value: debilitation.modifier,
         };
 
         templateData.debilitationType = {
-            type: "String",
+            type: "string",
             label: "Debilitation",
             value: debilitation.type,
         };
@@ -96,15 +96,19 @@ export default class CD10Actor extends Actor {
     }
 
     get getShock() {
-        return this.data.data.shock.value;
+        return parseInt(this.data.data.shock.value);
     }
 
     get getWounds() {
-        return this.data.data.wounds.value;
+        return parseInt(this.data.data.wounds.value);
     }
 
     get getModifier() {
-        return this.data.data.modifier.value;
+        return parseInt(this.data.data.modifier.value);
+    }
+
+    get getExp() {
+        return parseInt(this.data.data.exp.total);
     }
 
     /**************************

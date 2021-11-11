@@ -1,8 +1,31 @@
+/* Hidden class for mouse-over elements */
+.cd10.sheet {
+  .hidden {
+    display: none;
+  }
+}
+
+/* Main sheet definitions */
 .cd10.sheet.namedCharacter {
   min-width: 750px;
-  min-height: 700px;
+  min-height: 765px;
   max-width: 1000px;
   max-height: 1920px;
+
+  h1,
+  h2,
+  h3,
+  p,
+  label,
+  .sheet-header,
+  input,
+  textarea,
+  .stat-element,
+  .fa,
+  .far,
+  .fas {
+    color: var(--font-color);
+  }
 
   .window-content {
     background: url(./assets/backgrounds/sheet_background.jpg);
@@ -11,20 +34,32 @@
   form {
     color: var(--font-color);
 
+    select {
+      border: none;
+      color: inherit;
+      font-family: var(--font-main);
+      background: url(./assets/backgrounds/card_detail_background.jpg);
+    }
+
+    select option {
+      background-color: black;
+      font-family: var(--font-main);
+    }
+
     .editor {
       height: 100%;
       min-height: 100px;
 
       .editor-content {
         min-height: 100px;
-        color: var(--font-color);
+        color: inherit;
       }
     }
 
     input {
       border: none;
       background: none;
-      color: var(--font-color);
+      color: inherit;
     }
 
     table {
@@ -47,47 +82,11 @@
         vertical-align: middle;
         text-align: center;
         padding: 4px 5px 4px 5px;
+        color: inherit;
       }
     }
 
     .sheet-tabs {
-      margin-bottom: 10px;
-    }
-
-    .sheet-notes {
-      table {
-        border: none;
-
-        td {
-          color: var(--font-color);
-        }
-        tr {
-          background: unset;
-          background-color: unset;
-        }
-      }
-      .editor-content {
-        min-height: 521px;
-      }
-    }
-
-    .sheet-card {
-      background: url(./assets/backgrounds/card_background.jpg);
-      border-style: solid;
-      border-width: 3px;
-      border-image: radial-gradient(black, var(--font-color)) 1;
-      padding: 5px;
-      box-shadow: 5px 10px 10px rgb(0, 0, 0, 0.5);
-      margin-bottom: 10px;
-    }
-
-    .dark-background {
-      background: url(./assets/backgrounds/card_detail_background.jpg);
-      border-style: solid;
-      border-width: 3px;
-      border-image: radial-gradient(black, var(--accent-color)) 1;
-      box-shadow: inset 2px 2px 10px 5px black;
-      padding: 4px;
       margin-bottom: 10px;
     }
 
@@ -132,11 +131,7 @@
 
       .red {
         color: red;
-      }
-
-      .sheet-card {
-        margin-top: 5px;
-        margin-bottom: 5px;
+        font-weight: 700;
       }
 
       input {
@@ -145,7 +140,6 @@
       }
 
       .sheet-money {
-          
         .money {
           padding-top: 4px;
         }

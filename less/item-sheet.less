@@ -11,6 +11,7 @@
     width: 150px;
     height: 150px;
     box-shadow: 5px 10px 10px rgb(0, 0, 0, 0.5);
+    background: url(./assets/backgrounds/card_detail_background.jpg);
   }
 
   input {
@@ -21,6 +22,15 @@
   }
 
   select {
+    border: none;
+    color: var(--font-color);
+    background-color: black;
+    font-family: var(--font-main);
+    background: url(./assets/backgrounds/card_detail_background.jpg);
+  }
+
+  select option {
+    background-color: black;
     font-family: var(--font-main);
   }
 
@@ -48,10 +58,18 @@
   }
 
   .window-content {
-    background: url(./assets/backgrounds/sheet_background.jpg);
+    background: url(./assets/backgrounds/card_background.jpg);
+    border-style: solid;
+    border-width: 3px;
+    border-image: radial-gradient(black, var(--font-color)) 1;
+    padding: 5px;
+    color: var(--font-color);
 
     form {
-      color: var(--font-color);
+      select {
+        border: none;
+        color: var(--font-color);
+      }
 
       h1 {
         border: none;
@@ -67,13 +85,9 @@
         width: 150px;
       }
 
-      .card {
-        background: url(./assets/backgrounds/card_background.jpg);
-        border-style: solid;
-        border-width: 3px;
-        border-image: radial-gradient(black, var(--font-color)) 1;
-        padding: 5px;
-        box-shadow: 5px 10px 10px rgb(0, 0, 0, 0.5);
+      .generic-info-box,
+      .weapon-and-armor-stats,
+      .editor-box {
         margin: 0 10px 10px 0;
       }
 
@@ -85,8 +99,8 @@
 
       .editor-box {
         .editor {
-          height: 100%;
-          min-height: auto;
+          max-height: 140px;
+          overflow: auto;
 
           .editor-content {
             min-height: 100px;

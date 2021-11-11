@@ -3,7 +3,7 @@
     <div class="sheet-main-content flex-column flex-start">
         <div class="head-contentbox">
             <h1>
-                <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "cd10.stats.name"}}" />
+                <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize " cd10.stats.name"}}" />
             </h1>
         </div>
         <nav class="sheet-tabs tabs" data-group="primary">
@@ -17,7 +17,7 @@
         <section id="tabs" class="sheet-body">
             {{!-- Biography Tab --}}
             <div class="tab sheet-bio sheet-card" data-group="primary" data-tab="biography">
-                {{> "systems/cd10_dev/templates/partials/character-description-block.hbs"}}
+                {{> "systems/cd10/templates/partials/character-description-block.hbs"}}
             </div>
 
             {{!-- Skills Tab --}}
@@ -28,29 +28,29 @@
                     <div>{{localize "cd10.sheet.total"}}: {{data.traitsValue.value}}</div>
                 </div>
                 <div>
-                    {{> "systems/cd10_dev/templates/partials/skill-list.hbs"}}
+                    {{> "systems/cd10/templates/partials/skill-list.hbs"}}
                 </div>
             </div>
 
             {{!-- Combat Tab --}}
             <div class="tab sheet-combat" data-group="primary" data-tab="combat">
-                {{> "systems/cd10_dev/templates/partials/combat-tab.hbs"}}
+                {{> "systems/cd10/templates/partials/combat-tab.hbs"}}
             </div>
 
             {{!-- Spells Tab --}}
-            <div class="tab sheet-spells sheet-card" data-group="primary" data-tab="spells">
-                {{> "systems/cd10_dev/templates/partials/spell-list.hbs"}}
+            <div class="tab sheet-spells" data-group="primary" data-tab="spells">
+                {{> "systems/cd10/templates/partials/spell-list.hbs"}}
             </div>
 
             {{!-- Inventory Tab --}}
             <div class="tab sheet-inventory" data-group="primary" data-tab="inventory">
-                {{> "systems/cd10_dev/templates/partials/inventory-list.hbs"}}
+                {{> "systems/cd10/templates/partials/inventory-list.hbs"}}
             </div>
 
             {{!-- Notes Tab --}}
             <div class="tab sheet-notes" data-group="primary" data-tab="notes">
                 <div class="sheet-card">
-                {{editor
+                    {{editor
                     content=data.notes.value
                     target="data.notes.value"
                     button=true
@@ -70,15 +70,15 @@
             <h3>
                 {{localize "cd10.sheet.health"}}
             </h3>
-            {{> "systems/cd10_dev/templates/partials/character-stat-block.hbs"}}
+            {{> "systems/cd10/templates/partials/character-stat-block.hbs"}}
         </div>
         <div class="sheet-card flex-column flex-center">
             <h3 class="sheet-header">
                 {{localize "cd10.stats.exp"}}
             </h3>
             <div class="flex-row flex-center">
-                <input name="data.exp.total" type="text" value="{{data.exp.total}}"
-                    data-dtype="{{data.exp.type}}" placeholder="{{localize "cd10.stats.exp"}}" />
+                <input name="data.exp.total" type="text" value="{{data.exp.total}}" data-dtype="{{data.exp.type}}"
+                    placeholder="{{localize "cd10.stats.exp"}}" />
             </div>
         </div>
         <div class="sheet-money sheet-card">
@@ -99,9 +99,18 @@
             <h3 class="sheet-header">
                 {{localize "cd10.stats.encumbrance"}}
             </h3>
-            <div class="flex-row flex-center {{#if (gte data.currentEncumbrance.value data.encumbranceLimit.value)}}red{{/if}}">
+            <div
+                class="flex-row flex-center {{#if (gte data.currentEncumbrance.value data.encumbranceLimit.value)}}red{{/if}}">
                 {{data.currentEncumbrance.value}} kg
             </div>
+        </div>
+        <div class="sheet-card flex-column flex-center">
+            <a class="complex-check" data-type="text"
+                data-action-value="{{skill.data.skillLevel.value}}" title={{localize "cd10.sheet.roll" }}>
+                <h3 class="sheet-header">
+                    Complex check
+                </h3>
+            </a>
         </div>
     </div>
 </form>
