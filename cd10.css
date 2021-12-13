@@ -17,10 +17,7 @@
 .cd10.sheet.namedCharacter .sheet-header,
 .cd10.sheet.namedCharacter input,
 .cd10.sheet.namedCharacter textarea,
-.cd10.sheet.namedCharacter .stat-element,
-.cd10.sheet.namedCharacter .fa,
-.cd10.sheet.namedCharacter .far,
-.cd10.sheet.namedCharacter .fas {
+.cd10.sheet.namedCharacter .stat-element {
   color: var(--font-color);
 }
 .cd10.sheet.namedCharacter .window-content {
@@ -38,6 +35,19 @@
 .cd10.sheet.namedCharacter form select option {
   background-color: black;
   font-family: var(--font-main);
+}
+.cd10.sheet.namedCharacter form .button {
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 3px;
+  border-color: var(--accent-color);
+  border-radius: 10px;
+  padding: 4px;
+  margin: 0 5px 10px 5px;
+  box-shadow: 5px 10px 10px #000000;
+}
+.cd10.sheet.namedCharacter form .button:hover {
+  box-shadow: inset 2px 2px 10px 5px black;
 }
 .cd10.sheet.namedCharacter form .editor {
   height: 100%;
@@ -91,7 +101,6 @@
   margin-bottom: 20px;
 }
 .cd10.sheet.namedCharacter form .sheet-main-content {
-  margin-right: 10px;
   width: 80%;
 }
 .cd10.sheet.namedCharacter form .image-box {
@@ -107,13 +116,23 @@
 }
 .cd10.sheet.namedCharacter form .sheet-sidebar {
   padding: 10px;
+  min-width: 225px;
+}
+.cd10.sheet.namedCharacter form .sheet-sidebar .pad-top {
+  padding-top: 4px;
+}
+.cd10.sheet.namedCharacter form .sheet-sidebar .d10-roll-icon img {
+  padding-top: 4px;
+  margin-left: 5px;
+  width: 25px;
+  border: none;
 }
 .cd10.sheet.namedCharacter form .sheet-sidebar .red {
-  color: red;
-  font-weight: 700;
+  color: red !important;
+  font-weight: 700 !important;
 }
 .cd10.sheet.namedCharacter form .sheet-sidebar input {
-  width: 30px;
+  width: 45px;
   text-align: center;
 }
 .cd10.sheet.namedCharacter form .sheet-sidebar .sheet-money .money {
@@ -159,7 +178,13 @@
 .armor-card .item-img {
   display: block;
   min-width: 150px;
-  margin-right: 10px;
+  min-height: 150px;
+  margin: 0 10px 0 3px;
+}
+.armor-card .d10-roll-icon {
+  height: 10px;
+  margin-right: 0px;
+  margin-left: 2px;
 }
 .armor-card .armor-name {
   text-align: left;
@@ -208,8 +233,14 @@
 }
 .weapon-card .item-img {
   display: block;
+  margin: 0 10px 0 3px;
   min-width: 150px;
-  margin-right: 10px;
+  min-height: 150px;
+}
+.weapon-card .d10-roll-icon {
+  height: 10px;
+  margin-right: 0px;
+  margin-left: 2px;
 }
 .weapon-card .weapon-name {
   text-align: left;
@@ -398,22 +429,22 @@
   width: 100%;
   margin: 0 0 10px 0;
 }
+.health-info .stat-element .stat-value {
+  text-align: center;
+}
 .health-info .stat-element .shock-icons,
 .health-info .stat-element .wounds-icons {
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
-.health-info .stat-element .shock-icons z .dot-container,
-.health-info .stat-element .wounds-icons z .dot-container {
+.health-info .stat-element .shock-icons .dot-container,
+.health-info .stat-element .wounds-icons .dot-container {
   color: var(--font-color);
 }
 .health-info .stat-element .shock-icons .crossed,
 .health-info .stat-element .wounds-icons .crossed {
   filter: invert();
-}
-.stat-value {
-  text-align: center;
 }
 .cd10.sheet.item {
   display: flex;
@@ -665,6 +696,10 @@
   text-align: left;
   width: 80%;
 }
+.physical-save-card img {
+  width: 100%;
+  height: auto;
+}
 .attack-roll-card .centered,
 .attack-roll-card .value-box {
   text-align: center;
@@ -682,6 +717,7 @@
   box-shadow: 0 0 2px #fff inset;
   word-break: break-all;
   margin-bottom: 5px;
+  padding: 4px;
 }
 .attack-roll-card .stat-box {
   text-align: left;
@@ -689,6 +725,13 @@
 }
 .attack-roll-card .spacer {
   margin-top: 5px;
+}
+.attack-roll-card .bold {
+  font-weight: 700;
+}
+.attack-roll-card img {
+  width: 100%;
+  height: auto;
 }
 /* Variables */
 :root {

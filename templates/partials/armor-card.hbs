@@ -8,42 +8,54 @@
         </div>
         <div class="armor-box dark-background pad-8">
             {{#if data.protection.slash.value}}
-            <div class="armor-stats physical-save" data-damage-type="slash">
+            <div class="armor-stats reveal-rollable">
                 <div class="stat-name">
                     {{localize "cd10.armor.slashProtection"}}
                 </div>
                 <div class="armor-statvalue">
                     {{data.protection.slash.value}}
+                    <a class="physical-save item-roll hidden rollable" data-damage-type="slash" title={{localize "cd10.sheet.roll"}}>
+                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png"/>
+                    </a>
                 </div>
             </div>
             {{/if}}
             {{#if data.protection.pierce.value}}
-            <div class="armor-stats physical-save" data-damage-type="pierce">
+            <div class="armor-stats reveal-rollable">
                 <div class="stat-name">
                     {{localize "cd10.armor.pierceProtection"}}
                 </div>
                 <div class="armor-statvalue">
                     {{data.protection.pierce.value}}
+                    <a class="physical-save item-roll hidden rollable" data-damage-type="pierce" title={{localize "cd10.sheet.roll"}}>
+                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png"/>
+                    </a>
                 </div>
             </div>
             {{/if}}
             {{#if data.protection.blunt.value}}
-            <div class="armor-stats physical-save" data-damage-type="blunt">
+            <div class="armor-stats reveal-rollable">
                 <div class="stat-name">
                     {{localize "cd10.armor.bluntProtection"}}
                 </div>
                 <div class="armor-statvalue">
                     {{data.protection.blunt.value}}
+                    <a class="physical-save item-roll hidden rollable" data-damage-type="blunt" title={{localize "cd10.sheet.roll"}}>
+                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png"/>
+                    </a>
                 </div>
             </div>
             {{/if}}
             {{#if data.protection.energy.value}}
-            <div class="armor-stats physical-save" data-damage-type="energy">
+            <div class="armor-stats reveal-rollable">
                 <div class="stat-name">
                     {{localize "cd10.armor.energyProtection"}}
                 </div>
                 <div class="armor-statvalue">
                     {{data.protection.energy.value}}
+                    <a class="physical-save item-roll hidden rollable" data-damage-type="energy" title={{localize "cd10.sheet.roll"}}>
+                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png"/>
+                    </a>
                 </div>
             </div>
             {{/if}}
@@ -90,17 +102,6 @@
                     {{/if}}
                 </div>
             </div>
-            {{else}}
-                {{#if data.blockValue.value}}
-                    <div class="armor-stats">
-                        <div class="stat-name">
-                            {{localize "cd10.weapon.blockValue"}}
-                        </div>
-                        <div class="armor-statvalue">
-                            {{data.blockValue.value}}
-                        </div>
-                    </div>
-                {{/if}}
             {{/unless}}
         </div>
         <div class="description-box dark-background">

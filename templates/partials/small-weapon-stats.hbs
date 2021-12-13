@@ -5,6 +5,7 @@
             <tr>
                 <th>{{localize "cd10.weapon.isRanged"}}</th>
                 <th>{{localize "cd10.weapon.attackWith"}}</th>
+                <th>{{localize "cd10.weapon.usedWithShield"}}</th>
                 <th>{{localize "cd10.weapon.slashDamage"}}</th>
                 <th>{{localize "cd10.weapon.pierceDamage"}}</th>
                 <th>{{localize "cd10.weapon.bluntDamage"}}</th>
@@ -20,7 +21,18 @@
                 </td>
                 <td>
                     <select name="data.attackSkill.value">
+                        <option value="None">{{localize "cd10.sheet.none"}}</option>
                         {{#select data.attackSkill.value}}
+                        {{#each config.combatSkills as |name type|}}
+                            <option value="{{type}}">{{localize name}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                </td>
+                <td>
+                     <select name="data.shieldSkill.value">
+                        <option value="None">{{localize "cd10.sheet.none"}}</option>
+                        {{#select data.shieldSkill.value}}
                         {{#each config.combatSkills as |name type|}}
                         <option value="{{type}}">{{localize name}}</option>
                         {{/each}}

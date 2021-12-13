@@ -2,6 +2,9 @@
     <div>
         <h3>{{localize "cd10.chat.attack.title" weapon=weapon.name}}</h3>
     </div>
+    <div>
+        <img class="item-img" src="{{weapon.img}}" title="{{weapon.name}}" />
+    </div>
     <div class="flex-row flex-between">
         <div class="stat-box">
             {{localize "cd10.chat.attack.weapon"}} {{localize "cd10.chat.attack.lethality"}}
@@ -18,9 +21,19 @@
             {{/if}}
         </div>
     </div>
-    {{{roll}}}
+    <div class="flex-row flex-between">
+        <div class="stat-box">
+            {{skillName}}
+        </div>
+        <div class="value-box">
+            {{actionValue}}
+        </div>
+     </div>
+    <div>
+        {{{roll}}}
+    </div>
     <div class="spacer"></div>
-    {{#if (gte excess 1)}}
+    {{#if (gte excess 0)}}
     <div class="flex-row flex-between">
         <div class="stat-box">
             {{localize "cd10.chat.attack.excess"}}
@@ -29,6 +42,7 @@
             {{excess}}
         </div>
     </div>
+    {{/if}}
     <div class="flex-row flex-between">
         <div class="stat-box">
             {{localize "cd10.chat.attack.lethality"}} (
@@ -42,22 +56,16 @@
             {{localize "cd10.attack.energy"}}
             {{/if}})
         </div>
-        <div class="value-box">
+        <div class="value-box bold">
             {{lethality}}
         </div>
     </div>
     <div class="flex-row flex-between">
-
-        <div class="stat-box">{{localize "cd10.chat.attack.shock"}}</div>
-        <div class="value-box">
+        <div class="stat-box">
+            {{localize "cd10.chat.attack.shock"}}
+        </div>
+        <div class="value-box bold">
             {{weapon.data.data.damage.shock.value}}
         </div>
     </div>
-    {{else}}
-    <div class="flex-row flex-center">
-        <h2>
-            {{localize "cd10.chat.attack.miss"}}!
-        </h2>
-    </div>
-    {{/if}}
 </div>

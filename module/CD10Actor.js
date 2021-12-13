@@ -40,10 +40,15 @@ export default class CD10Actor extends Actor {
         /* Set debilitationtype and value */
         let debilitation = this._prepareDebilitation(templateData);
 
+        /* Check stress and apply to modifier */
+        if (templateData.stressing.value) {
+            debilitation.modifier += 3;
+        }
+
         templateData.modifier = {
             type: "number",
             label: "Modifier",
-            value: debilitation.modifier,
+            value: debilitation.modifier
         };
 
         templateData.debilitationType = {

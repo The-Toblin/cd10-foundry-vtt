@@ -1,12 +1,31 @@
 <section class="sheet-combat-tab">
-    {{#each allWeapons as |weapon id|}}
+    <div class="stressBoxContainer flex-center flex-row">
+        <div class="stressBoxSelect">
+            <label>{{localize "cd10.sheet.stress"}}?</label>
+            <a class="stressBox" data-type="text">
+                    <i class="far fa-{{#if this.actor.data.data.stressing.value}}check-{{/if}}square"></i>
+            </a>
+        </div>
+    </div>
+    {{#each meleeWeapons as |weapon id|}}
         {{#if weapon.data.isEquipped.value}}
             {{> "systems/cd10/templates/partials/weapon-card.hbs"}}
         {{/if}}
     {{/each}}
-    {{#each allArmors as |armor id|}}
+    {{#each rangedWeapons as |weapon id|}}
+        {{#if weapon.data.isEquipped.value}}
+            {{> "systems/cd10/templates/partials/weapon-card.hbs"}}
+        {{/if}}
+    {{/each}}
+    {{#each shields as |shield id|}}
+        {{#if shield.data.isEquipped.value}}
+            {{> "systems/cd10/templates/partials/armor-card.hbs"}}
+        {{/if}}
+    {{/each}}
+    {{#each armors as |armor id|}}
         {{#if armor.data.isEquipped.value}}
             {{> "systems/cd10/templates/partials/armor-card.hbs"}}
         {{/if}}
     {{/each}}
 </section>
+

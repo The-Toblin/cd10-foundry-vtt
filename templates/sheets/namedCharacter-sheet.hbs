@@ -85,8 +85,8 @@
             <h3 class="sheet-header">
                 {{localize "cd10.stats.money"}}
             </h3>
-            <div class="sheet-money-input flex-row flex-center">
-                <div>
+            <div class="flex-row flex-center">
+                <div class="sheet-money-input">
                     <input name="data.money.value" type="text" value="{{data.money.value}}"
                         data-dtype="{{data.money.type}}" placeholder=0 />
                 </div>
@@ -101,15 +101,19 @@
             </h3>
             <div
                 class="flex-row flex-center {{#if (gte data.currentEncumbrance.value data.encumbranceLimit.value)}}red{{/if}}">
-                {{data.currentEncumbrance.value}} kg
+                {{data.currentEncumbrance.value}} {{localize "cd10.sheet.encumbranceUnit"}}
             </div>
         </div>
-        <div class="sheet-card flex-column flex-center">
-            <a class="complex-check" data-type="text"
-                data-action-value="{{skill.data.skillLevel.value}}" title={{localize "cd10.sheet.roll" }}>
-                <h3 class="sheet-header">
-                    Complex check
-                </h3>
+        <div class="button">
+            <a class="complex-check flex-row flex-even pad-top" data-type="text" data-action-value="{{skill.data.skillLevel.value}}" title={{localize "cd10.sheet.roll" }}>
+                <div class="d10-roll-icon">
+                    <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png"/>
+                </div>
+                <div>
+                    <h3 class="sheet-header">
+                        {{localize "cd10.sheet.complexCheck"}}
+                    </h3>
+                </div>
             </a>
         </div>
     </div>
