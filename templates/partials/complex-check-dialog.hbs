@@ -1,7 +1,8 @@
 <form class="complex-check-dialog">
     <div class="flex-column">
-        <label>Select Skill</label>
+        <label>{{localize "cd10.sheet.select"}} {{localize "cd10.sheet.skill"}}</label>
         <select id="skill-selected" name="skill-selected">
+            <option value="None">{{localize "cd10.sheet.none"}}</option>
             {{#select skills}}
             {{#each skills as |skill index|}}
             <option value="{{index}}">{{skill.name}}</option>
@@ -10,8 +11,9 @@
         </select>
     </div>
     <div class="flex-column">
-        <label>Select trait</label>
+        <label>{{localize "cd10.sheet.select"}} {{localize "cd10.sheet.trait"}}</label>
         <select id="trait-selected" name="trait-selected">
+            <option value="None">None</option>
             {{#select traits}}
             {{#each traits as |trait index|}}
             <option value="{{index}}">{{trait.name}}</option>
@@ -21,11 +23,11 @@
     </div>
     <div class="flex-row flex-even">
         <div class="flex-column">
-            <label>Use hero point?</label>
+            <label>{{localize "cd10.sheet.heroPoint"}}?</label>
             <input id="heroPoint" name="heroPoint" type="checkbox" value="off" />
         </div>
         <div class="flex-column">
-            <label>Reverse trait?</label>
+            <label>{{localize "cd10.sheet.reverse"}} {{localize "cd10.sheet.trait"}}?</label>
             <input id="reverseTrait" name="reverseTrait" type="checkbox" value="off" />
         </div>
     </div>

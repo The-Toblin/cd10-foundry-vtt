@@ -1,5 +1,4 @@
 .health-info {
-  
   .stat-element {
     background: url(./assets/backgrounds/card_detail_background.jpg);
     border-style: solid;
@@ -10,12 +9,17 @@
     width: 100%;
     margin: 0 0 10px 0;
 
+    .stat-value {
+        text-align: center;
+      }
+
     .shock-icons,
     .wounds-icons {
       display: flex;
       flex-direction: row;
       justify-content: center;
-      z .dot-container {
+
+      .dot-container {
         color: var(--font-color);
       }
 
@@ -24,8 +28,4 @@
       }
     }
   }
-}
-
-.stat-value {
-  text-align: center;
 }

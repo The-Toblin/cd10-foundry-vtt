@@ -20,10 +20,7 @@
   .sheet-header,
   input,
   textarea,
-  .stat-element,
-  .fa,
-  .far,
-  .fas {
+  .stat-element {
     color: var(--font-color);
   }
 
@@ -44,6 +41,21 @@
     select option {
       background-color: black;
       font-family: var(--font-main);
+    }
+
+    .button {
+      background: url(./assets/backgrounds/card_detail_background.jpg);
+      border-style: solid;
+      border-width: 3px;
+      border-color: var(--accent-color);
+      border-radius: 10px;
+      padding: 4px;
+      margin: 0 5px 10px 5px;
+      box-shadow: 5px 10px 10px rgb(0, 0, 0, 0.5);
+    }
+
+    .button:hover {
+      box-shadow: inset 2px 2px 10px 5px black;
     }
 
     .editor {
@@ -108,7 +120,6 @@
     }
 
     .sheet-main-content {
-      margin-right: 10px;
       width: 80%;
     }
 
@@ -128,14 +139,28 @@
 
     .sheet-sidebar {
       padding: 10px;
+      min-width: 225px;
+
+      .pad-top {
+        padding-top: 4px;
+      }
+
+      .d10-roll-icon {
+        img {
+          padding-top: 4px;
+          margin-left: 5px;
+          width: 25px;
+          border: none;
+        }
+      }
 
       .red {
-        color: red;
-        font-weight: 700;
+        color: red !important;
+        font-weight: 700 !important;
       }
 
       input {
-        width: 30px;
+        width: 45px;
         text-align: center;
       }
 

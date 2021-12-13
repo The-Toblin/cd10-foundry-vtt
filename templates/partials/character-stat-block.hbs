@@ -1,11 +1,20 @@
 <section class="health-info">
     <div class="stat-element">
+        <label>
+            <h3 class="stattitle">
+                {{localize "cd10.sheet.modifier"}}
+            </h3>
+        </label>
         <div class="stat-value {{#if (gte data.wounds.value 15)}}red{{/if}}">
             {{#if (gte data.wounds.value 15)}}
             {{data.debilitationType.value}}
-            {{else if (gte data.modifier.value 1)}}
+            {{else if (eq data.modifier.value 0)}}
+            0
+            {{else}}
             -{{data.modifier.value}} {{data.debilitationType.value}}
-            {{else}}No debilitation
+            {{/if}}
+            {{#if this.actor.data.data.stressing.value}}
+             ({{localize "cd10.sheet.stressing"}})
             {{/if}}
         </div>
     </div>

@@ -34,6 +34,11 @@
                     "type": "boolean",
                     "label": "Down and out",
                     "value": false
+                },
+                "stressing": {
+                    "type": "boolean",
+                    "label": "Stressing",
+                    "value": false
                 }
             }
         },
@@ -279,6 +284,11 @@
                 "type": "boolean",
                 "label": "Recuires teacher",
                 "value": false
+            },
+            "mustBeUsedWithShield": {
+                "type": "boolean",
+                "label": "Must be used with shield",
+                "value": false
             }
         },
         "trait": {
@@ -303,6 +313,11 @@
                 "itemDescription"
             ],
             "attackSkill": {
+                "type": "string",
+                "label": "Skill",
+                "value": ""
+            },
+            "shieldSkill": {
                 "type": "string",
                 "label": "Skill",
                 "value": ""

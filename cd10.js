@@ -27,6 +27,7 @@ async function preloadHandlebarsTemplates() {
         "systems/cd10/templates/partials/small-spell-stats.hbs",
         "systems/cd10/templates/partials/attack-roll.hbs",
         "systems/cd10/templates/partials/physical-save.hbs",
+        "systems/cd10/templates/partials/spell-card.hbs"
     ];
 
     return loadTemplates(templatePaths);

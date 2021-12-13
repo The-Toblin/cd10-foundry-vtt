@@ -13,8 +13,7 @@
             </tr>
             <tr>
                 <td>
-                    <input type="checkbox" {{checked data.isShield.value}} name="data.isShield.value"
-            data-dtype="{{data.isShield.type}}">
+                    <input type="checkbox" {{checked data.isShield.value}} name="data.isShield.value" data-dtype="{{data.isShield.type}}">
                 </td>
                 <td>
                     <select name="data.coverage.value">
@@ -52,6 +51,7 @@
     <div class="shield pad">
         <table>
             <tr>
+                <th>{{localize "cd10.armor.isShield"}}</th>
                 <th>{{localize "cd10.armor.blockValue"}}</th>
                 <th>{{localize "cd10.armor.slashProtection"}}</th>
                 <th>{{localize "cd10.armor.pierceProtection"}}</th>
@@ -61,8 +61,11 @@
             </tr>
             <tr>
                 <td>
-                    <input name="data.blockvalue.value" type="text" value="{{data.blockvalue.value}}"
-                        data-dtype="{{data.blockvalue.type}}" />
+                    <input type="checkbox" {{checked data.isShield.value}} name="data.isShield.value" data-dtype="{{data.isShield.type}}">
+                </td>
+                <td>
+                    <input name="data.blockValue.value" type="text" value="{{data.blockValue.value}}"
+                        data-dtype="{{data.blockValue.type}}" />
                 </td>
                 <td>
                     <input name="data.protection.slash.value" type="text" value="{{data.protection.slash.value}}"
