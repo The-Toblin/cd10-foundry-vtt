@@ -8,7 +8,7 @@
     "flags": {},
     "version": "0.3.0",
     "minimumCoreVersion": "0.8.9",
-    "compatibleCoreVersion": "0.8.9",
+    "compatibleCoreVersion": "9.238",
     "scripts": [],
     "esmodules": [
         "cd10.js"
