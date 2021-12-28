@@ -803,3 +803,10 @@
 .pad-2 {
   padding: 2px;
 }
+.sheet-body .tab .editor {
+  height: 100%;
+}
+.sheet-body,
+.sheet-body .tab {
+  height: 100%;
+}
