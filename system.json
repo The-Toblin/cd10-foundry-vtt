@@ -30,7 +30,7 @@
     "dependencies": [],
     "socket": false,
     "manifest": "https://raw.githubusercontent.com/The-Toblin/cd10-foundry-vtt/main/system.json",
-    "download": "https://github.com/The-Toblin/cd10-foundry-vtt/archive/refs/tags/v0.2.0.zip",
+    "download": "https://github.com/The-Toblin/cd10-foundry-vtt/archive/refs/tags/v0.2.5.zip",
     "protected": false,
     "gridDistance": 1,
     "gridUnits": "m",
