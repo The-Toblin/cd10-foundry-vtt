@@ -47,6 +47,7 @@
         "sheet": {
             "add": "Add",
             "armor": "Armor",
+            "attack": "Attack check",
             "bio": "Biography",
             "category": "Category",
             "combat": "Combat",
@@ -72,6 +73,7 @@
             "removeShort": "Rem.",
             "reverse": "Reverse",
             "roll": "Roll",
+            "save": "Physical save",
             "select": "Select",
             "skill": "Skill",
             "skills": "Skills",
@@ -81,6 +83,7 @@
             "to": "to",
             "total": "Total",
             "trait": "Trait",
+            "traitCheck": "Skillcheck with trait",
             "traits": "Traits",
             "weapons": "Weapons",
             "weight": "Weight"

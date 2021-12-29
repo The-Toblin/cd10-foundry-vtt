@@ -649,14 +649,16 @@
 .cd10-dialog {
   width: fit-content !important;
   height: fit-content !important;
-  background: url(./assets/backgrounds/card_background.jpg);
+  padding: 10px;
+  background: url(./assets/backgrounds/card_detail_background.jpg);
   border-style: solid;
   border-width: 3px;
-  border-image: radial-gradient(black, var(--font-color)) 1;
-  padding: 5px;
-  box-shadow: 5px 10px 10px #000000;
-  margin-bottom: 10px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
   color: var(--font-color);
+}
+.cd10-dialog h3 {
+  text-align: center;
 }
 .cd10-dialog .window-content {
   color: var(--font-color) !important;

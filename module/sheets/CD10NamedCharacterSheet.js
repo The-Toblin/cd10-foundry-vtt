@@ -97,6 +97,16 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         sheetData.rangedWeapons = sheetData.items.filter((p) => p.type == "weapon" && p.data.isRanged.value);
         sheetData.skills = sheetData.items.filter((p) => p.type == "skill");
         sheetData.traits = sheetData.items.filter((p) => p.type == "trait");
+        sheetData.posTraits = sheetData.traits.filter((p) => {
+            if (p.data.skillLevel.value > 0) {
+                return p
+            }
+        });
+        sheetData.negTraits = sheetData.traits.filter((p) => {
+            if (p.data.skillLevel.value < 0) {
+                return p
+            }
+        });
         sheetData.spells = sheetData.items.filter((p) => p.type == "spell");
         sheetData.normalItems = sheetData.items.filter((p) => p.type != "spell" && p.type != "skill" && p.type != "trait");
 
@@ -209,12 +219,17 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         actor updates for wounds and shock. */
 
 
-        /* First, we check if a trait was selected in the dialog or not. */
+        /* First, we check if traits were selected in the dialog or not. */
         let rollTraitLevel,
             outcome;
-
-        if (html.find("select#trait-selected").val() != "None") {
-            rollTraitLevel = this.getData().traits[html.find("select#trait-selected").val()].data.skillLevel.value;
+        if (html.find("select#pos-trait-selected").val() != "None" && html.find("select#neg-trait-selected").val() != "None") {
+            let posTraitLevel = this.getData().traits[html.find("select#pos-trait-selected").val()].data.skillLevel.value;
+            let negTraitLevel = this.getData().traits[html.find("select#neg-trait-selected").val()].data.skillLevel.value;
+            rollTraitLevel = posTraitLevel - negTraitLevel;
+        } else if (html.find("select#pos-trait-selected").val() != "None") {
+            rollTraitLevel = this.getData().traits[html.find("select#pos-trait-selected").val()].data.skillLevel.value;
+        } else if (html.find("select#neg-trait-selected").val() != "None") {
+            rollTraitLevel = this.getData().traits[html.find("select#neg-trait-selected").val()].data.skillLevel.value;
         } else {
             rollTraitLevel = null
         }
@@ -272,7 +287,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             newWounds;
 
         if (typeof currentShock != "number") {
-            console.log("Uh oh");
+            console.log("Uh oh, shock was messed up.");
             this.actor.update({
                 data: {
                     shock: {
@@ -445,7 +460,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             left: 400
         };
         new Dialog({
-            title: "Complex Skill Check",
+            title: "Complex Check Dialog",
             content: await renderTemplate("systems/cd10/templates/partials/complex-check-dialog.hbs", this.getData()),
             buttons: {
                 roll: {
@@ -460,89 +475,72 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         /* Perform a complex skill check, called from the Complex dialog */
         /* Set up variables for the method */
 
-        let rollSkillLevel,
-            rollTraitLevel,
-            skillName,
-            traitName,
-            heroPointChecked,
-            reverseTraitChecked;
+        let heroPointChecked = html.find("input#heroPoint")[0].checked,
+            reverseTraitChecked = html.find("input#reverseTrait")[0].checked,
+            skillObj = null,
+            posTraitObj = null,
+            negTraitObj = null;
+
+        /* Fetch the objects for skills and traits involved*/
+        if (html.find("select#skill-selected").val() != "None") {
+            skillObj = this.actor.items.get(this.getData().skills[html.find("select#skill-selected").val()]._id);
+        }
+        if (html.find("select#pos-trait-selected").val() != "None") {
+            posTraitObj = this.actor.items.get(this.getData().posTraits[html.find("select#pos-trait-selected").val()]._id);
+        }
+        if (html.find("select#neg-trait-selected").val() != "None") {
+            negTraitObj = this.actor.items.get(this.getData().negTraits[html.find("select#neg-trait-selected").val()]._id);
+        }
 
         /* Check if at least one of the selections were done, else show an error message. */
-        if (html.find("select#skill-selected").val() === "None" && html.find("select#trait-selected").val() === "None") {
+        if (skillObj === null && posTraitObj === null && negTraitObj === null) {
             ui.notifications.error(`Please select at least one skill or trait!`);
 
             return
-
-        } else if (html.find("select#trait-selected").val() === "None") {
-            /* If only the traitbox is empty, perform a normal skill check */
-            rollSkillLevel = this.getData().skills[html.find("select#skill-selected").val()].data.skillLevel.value;
-            skillName = this.getData().skills[html.find("select#skill-selected").val()].name;
-            heroPointChecked = html.find("input#heroPoint")[0].checked;
-
-            this._onItemRoll(this.getData().skills[html.find("select#skill-selected").val()]._id);
-
-        } else if (html.find("select#skill-selected").val() === "None") {
-            /* If only the skillbox is empty, perform a blank trait check */
-            rollTraitLevel = this.getData().traits[html.find("select#trait-selected").val()].data.skillLevel.value;
-            traitName = this.getData().traits[html.find("select#trait-selected").val()].name;
-            heroPointChecked = html.find("input#heroPoint")[0].checked;
-            reverseTraitChecked = html.find("input#reverseTrait")[0].checked;
-
-            this._onItemRoll(this.getData().traits[html.find("select#trait-selected").val()]._id);
-
-        } else {
-            rollTraitLevel = this.getData().traits[html.find("select#trait-selected").val()].data.skillLevel.value;
-            rollSkillLevel = this.getData().skills[html.find("select#skill-selected").val()].data.skillLevel.value;
-            skillName = this.getData().skills[html.find("select#skill-selected").val()].name;
-            traitName = this.getData().traits[html.find("select#trait-selected").val()].name;
-            heroPointChecked = html.find("input#heroPoint")[0].checked;
-            reverseTraitChecked = html.find("input#reverseTrait")[0].checked;
-
-            this._onItemRoll(this.getData().skills[html.find("select#skill-selected").val()]._id);
-            this._onItemRoll(this.getData().traits[html.find("select#trait-selected").val()]._id);
         }
 
-        if (heroPointChecked && this.actor.getExp > 0) {
-            let expValue = this.actor.getExp - 1;
-            await this.actor.update({
-                data: {
-                    exp: {
-                        total: expValue
+        if (heroPointChecked) {
+            /* If the Hero Point checkbox is ticked, deduct XP as required, or display an error. */
+            if (this.actor.getExp > 0) {
+                let expValue = this.actor.getExp - 1;
+                await this.actor.update({
+                    data: {
+                        exp: {
+                            total: expValue
+                        }
                     }
-                }
-            });
-            Dice.TaskCheck({
-                actionValue: rollSkillLevel,
-                traitValue: rollTraitLevel,
-                modifier: this.actor.getModifier,
-                heroPoint: heroPointChecked,
-                reverseTrait: reverseTraitChecked,
-                skillName: skillName,
-                traitName: traitName
-
-            });
-        } else if (!heroPointChecked) {
-            Dice.TaskCheck({
-                actionValue: rollSkillLevel,
-                traitValue: rollTraitLevel,
-                modifier: this.actor.getModifier,
-                heroPoint: heroPointChecked,
-                reverseTrait: reverseTraitChecked,
-                skillName: skillName,
-                traitName: traitName
-            });
-        } else {
-            ui.notifications.error(`${
+                });
+            } else {
+                ui.notifications.error(`${
                 this.actor.name
             } does not have enough experience.`)
-            return
+                return
+            }
+        };
+
+        if (skillObj != null) {
+            skillObj.roll();
         }
+        if (posTraitObj != null) {
+            posTraitObj.roll();
+        }
+        if (negTraitObj != null) {
+            negTraitObj.roll();
+        }
+
+        Dice.TaskCheck({
+            skillObj: skillObj,
+            posTraitObj: posTraitObj,
+            negTraitObj: negTraitObj,
+            modifier: this.actor.getModifier,
+            heroPoint: heroPointChecked,
+            reverseTrait: reverseTraitChecked
+
+        });
     }
 
-    _onItemRoll(ID) {
+    _onItemRoll(item) {
         /* Method to dump an item to chat */
-        let item = this.actor.items.get(ID);
-
         item.roll();
     }
 

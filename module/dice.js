@@ -1,44 +1,80 @@
 /* Standard skill check. Used by both the roll icon and the complex check dialog */
 export async function TaskCheck({
-    actionValue = null,
-    traitValue = null,
+    skillObj = null,
+    posTraitObj = null,
+    negTraitObj = null,
     heroPoint = false,
     reverseTrait = false,
-    modifier = null,
-    skillName = null,
-    traitName = null
+    modifier = modifier
 } = {}) {
-    /* Set up base dice formula based on if it's a hero point check or not. */
-    let baseDice = heroPoint === true ? "2d10x9" : "1d10x9";
-    let rollFormula;
+
+    /* Set up base dice formula based on if it's a hero point check or not. 
+    Also set up required variables. */
+
+    let baseDice = heroPoint === true ? "2d10x9" : "1d10x9",
+        rollFormula,
+        rollData,
+        skillName = null,
+        traitName = null,
+        actionValue = null,
+        traitValue = null;
+
     const messageTemplate = "systems/cd10/templates/partials/skill-roll.hbs";
 
-    if (traitValue === null && modifier === 0) {
+    /* Fetch skill level */
+    if (skillObj != null) {
+        actionValue = parseInt(skillObj.data.data.skillLevel.value);
+        skillName = skillObj.name;
+    } else {
+        skillName = null
+    }
+
+    /* Set up traitvalue for the roll */
+    if (posTraitObj != null && negTraitObj != null) {
+        /* If both traits are provided, use the sum of them. */
+        traitValue = parseInt(posTraitObj.data.data.skillLevel.value) + parseInt(negTraitObj.data.data.skillLevel.value);
+
+        /* Set up the traitName variable for the roll message */
+        let posName = posTraitObj.name,
+            negName = negTraitObj.name,
+            andName = " and ";
+
+        traitName = posName.concat(andName, negName);
+
+    } else if (posTraitObj != null && negTraitObj === null) {
+        /* If only a positive trait is provided set traitvalue. */
+        traitValue = parseInt(posTraitObj.data.data.skillLevel.value);
+        traitName = posTraitObj.name;
+    } else if (posTraitObj === null && negTraitObj != null) {
+        traitValue = parseInt(negTraitObj.data.data.skillLevel.value);
+        traitName = negTraitObj.name;
+    }
+
+    /* If a traitvalue is set, check if traits were reversed */
+    if (reverseTrait && traitValue != null) {
+        traitValue = -Math.abs(traitValue);
+    }
+
+    /* Set up the rollformula */
+    if (traitValue === null && modifier === 0 && actionValue != null) {
         rollFormula = `${baseDice} + @actionValue`;
-    } else if (traitValue === null && modifier != 0) {
+    } else if (traitValue === null && modifier != 0 && actionValue != null) {
         rollFormula = `${baseDice} + @actionValue - @modifier`;
-    } else if (traitValue != null && modifier === 0) {
+    } else if (traitValue != null && modifier === 0 && actionValue != null) {
         rollFormula = `${baseDice} + @actionValue + @traitValue`;
+    } else if (actionValue === null && modifier === 0 && traitValue != null) {
+        rollFormula = `${baseDice} + @traitValue`;
+    } else if (actionValue === null && modifier != 0 && traitValue != null) {
+        rollFormula = `${baseDice} + @traitValue - @modifier`;
     } else {
         rollFormula = `${baseDice} + @actionValue + @traitValue - @modifier`;
     }
 
-    let rollData;
-
-    /* Check if the Reverse Trait box is checked, if so, reverse trait value. */
-    if (reverseTrait) {
-        rollData = {
-            actionValue: actionValue,
-            traitValue: -traitValue,
-            modifier: modifier
-        };
-    } else {
-        rollData = {
-            actionValue: actionValue,
-            traitValue: traitValue,
-            modifier: modifier
-        };
-    }
+    rollData = {
+        actionValue: actionValue,
+        traitValue: traitValue,
+        modifier: modifier
+    };
 
     /* Roll the dice. Save as variable for manipulation. */
     let rollD10 = new Roll(rollFormula, rollData).roll({
