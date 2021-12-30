@@ -1,73 +1,101 @@
-/* Standard skill check. Used by both the roll icon and the complex check dialog */
+/* Core dice roll functions for making skillchecks, attacks and saves. The variable checkType determines
+how this class functions. */
 export async function TaskCheck({
+    checkType = null,
     skillObj = null,
+    shieldSkillObj = null,
+    usingShield = false,
     posTraitObj = null,
     negTraitObj = null,
+    weaponObj = null,
+    armorObj = null,
+    lethality = null,
+    shock = null,
+    damageType = null,
     heroPoint = false,
     reverseTrait = false,
-    modifier = modifier
+    modifier = null
 } = {}) {
+
+    /* Basic error checking */
+    if (checkType === null) {
+        ui.notifications.error(`FATAL ERROR! CheckType not set!`)
+        return
+    }
 
     /* Set up base dice formula based on if it's a hero point check or not. 
     Also set up required variables. */
 
     let baseDice = heroPoint === true ? "2d10x9" : "1d10x9",
-        rollFormula,
-        rollData,
+        rollFormula = null,
+        rollData = null,
         skillName = null,
         traitName = null,
         actionValue = null,
         traitValue = null;
 
-    const messageTemplate = "systems/cd10/templates/partials/skill-roll.hbs";
+    /* Set up correct chat message template */
+    let messageTemplate = null;
+    if (checkType === "Simple" || checkType === "Complex") {
+        messageTemplate = "systems/cd10/templates/partials/skill-roll.hbs";
+    } else if (checkType === "Attack" || checkType === "SimpleAttack") {
+        messageTemplate = "systems/cd10/templates/partials/attack-roll.hbs";
+    } else if (checkType === "Save") {
+        messageTemplate = "systems/cd10/templates/partials/physical-save.hbs";
+    }
 
     /* Fetch skill level */
     if (skillObj != null) {
-        actionValue = parseInt(skillObj.data.data.skillLevel.value);
+        actionValue = parseInt(skillObj.data.skillLevel.value);
         skillName = skillObj.name;
     } else {
-        skillName = null
+        skillName = null;
     }
 
-    /* Set up traitvalue for the roll */
-    if (posTraitObj != null && negTraitObj != null) {
-        /* If both traits are provided, use the sum of them. */
-        traitValue = parseInt(posTraitObj.data.data.skillLevel.value) + parseInt(negTraitObj.data.data.skillLevel.value);
+    if (checkType != "Simple" || checkType != "SimpleAttack") {
+        /* Set up traitvalue for the roll */
+        if (posTraitObj != null && negTraitObj != null) {
+            /* If both traits are provided, use the sum of them. */
+            traitValue = parseInt(posTraitObj.data.skillLevel.value) + parseInt(negTraitObj.data.skillLevel.value);
 
-        /* Set up the traitName variable for the roll message */
-        let posName = posTraitObj.name,
-            negName = negTraitObj.name,
-            andName = " and ";
+            /* Set up the traitName variable for the roll message */
+            let posName = posTraitObj.name,
+                negName = negTraitObj.name;
 
-        traitName = posName.concat(andName, negName);
+            traitName = posName.concat(" and ", negName);
 
-    } else if (posTraitObj != null && negTraitObj === null) {
-        /* If only a positive trait is provided set traitvalue. */
-        traitValue = parseInt(posTraitObj.data.data.skillLevel.value);
-        traitName = posTraitObj.name;
-    } else if (posTraitObj === null && negTraitObj != null) {
-        traitValue = parseInt(negTraitObj.data.data.skillLevel.value);
-        traitName = negTraitObj.name;
-    }
+        } else if (posTraitObj != null && negTraitObj === null) {
+            /* If only a positive trait is provided set traitvalue. */
+            traitValue = parseInt(posTraitObj.data.skillLevel.value);
+            traitName = posTraitObj.name;
+        } else if (posTraitObj === null && negTraitObj != null) {
+            traitValue = parseInt(negTraitObj.data.skillLevel.value);
+            traitName = negTraitObj.name;
+        }
 
-    /* If a traitvalue is set, check if traits were reversed */
-    if (reverseTrait && traitValue != null) {
-        traitValue = -Math.abs(traitValue);
+        /* If a traitvalue is set, check if traits were reversed */
+        if (reverseTrait && traitValue != null) {
+            traitValue = -Math.abs(traitValue);
+        }
     }
 
     /* Set up the rollformula */
-    if (traitValue === null && modifier === 0 && actionValue != null) {
-        rollFormula = `${baseDice} + @actionValue`;
-    } else if (traitValue === null && modifier != 0 && actionValue != null) {
-        rollFormula = `${baseDice} + @actionValue - @modifier`;
-    } else if (traitValue != null && modifier === 0 && actionValue != null) {
-        rollFormula = `${baseDice} + @actionValue + @traitValue`;
-    } else if (actionValue === null && modifier === 0 && traitValue != null) {
-        rollFormula = `${baseDice} + @traitValue`;
-    } else if (actionValue === null && modifier != 0 && traitValue != null) {
-        rollFormula = `${baseDice} + @traitValue - @modifier`;
-    } else {
-        rollFormula = `${baseDice} + @actionValue + @traitValue - @modifier`;
+    rollFormula = `${baseDice}`;
+
+    if (skillObj != null) {
+        rollFormula += " + @actionValue";
+    }
+
+    if (posTraitObj != null || negTraitObj != null) {
+        if (traitValue > 0) {
+            rollFormula += " + @traitValue";
+        } else if (traitValue < 0) {
+            rollFormula += " @traitValue";
+        }
+    }
+
+    if (modifier > 0) {
+        rollFormula += " - @modifier";
     }
 
     rollData = {
@@ -76,9 +104,9 @@ export async function TaskCheck({
         modifier: modifier
     };
 
-    /* Roll the dice. Save as variable for manipulation. */
-    let rollD10 = new Roll(rollFormula, rollData).roll({
-        async: false
+    /* Roll the dice. Save as object for manipulation. */
+    let rollD10 = await new Roll(rollFormula, rollData).roll({
+        async: true
     });
 
     /* Catch the dreaded 0 */
@@ -89,106 +117,121 @@ export async function TaskCheck({
         }
     }
 
-    /* Set up the roll message data structures. */
+    /* Set up the roll message data structures based on checkType. */
     let renderedRoll = await rollD10.render(),
+        templateContext = null,
+        chatData = null;
+
+    if (checkType === "Simple") {
+        templateContext = {
+            skillName: skillName,
+            roll: renderedRoll
+        }
+    } else if (checkType === "Complex") {
         templateContext = {
             skillName: skillName,
             traitName: traitName,
             roll: renderedRoll,
             traitValue: traitValue
-        },
-        chatData = {
-            speaker: ChatMessage.getSpeaker(),
-            roll: rollD10,
-            content: await renderTemplate(messageTemplate, templateContext),
-            sound: CONFIG.sounds.dice,
-            type: CONST.CHAT_MESSAGE_TYPES.ROLL
-        };
-
-    /* Print results to chatlog. */
-    ChatMessage.create(chatData);
-}
-
-/* Standard attack check. Performed when you click a damage type on a weapon card.
-For details, see TaskCheck above. */
-export async function AttackCheck({
-    actionValue = null,
-    traitValue = null,
-    heroPoint = false,
-    reverseTrait = false,
-    modifier = null,
-    weapon = null,
-    damageType = null,
-    skillName = null
-} = {}) {
-
-    const messageTemplate = "systems/cd10/templates/partials/attack-roll.hbs";
-
-    let rollFormula;
-
-    let baseDice = heroPoint === true ? "2d10x9" : "1d10x9";
-
-    if (traitValue === null && modifier === 0) {
-        rollFormula = `${baseDice} + @actionValue`;
-    } else if (traitValue === null && modifier != 0) {
-        rollFormula = `${baseDice} + @actionValue - @modifier`;
-    } else if (traitValue != null && modifier === 0) {
-        rollFormula = `${baseDice} + @actionValue + @traitValue`;
-    } else {
-        rollFormula = `${baseDice} + @actionValue + @traitValue - @modifier`;
-    }
-
-    let rollData;
-
-    if (reverseTrait) {
-        rollData = {
-            actionValue: actionValue,
-            traitValue: -traitValue,
-            modifier: modifier
-        };
-    } else {
-        rollData = {
-            actionValue: actionValue,
-            traitValue: traitValue,
-            modifier: modifier
-        };
-    }
-
-    let rollD10 = new Roll(rollFormula, rollData).roll({
-        async: false
-    });
-
-    /* Catch the dreaded 0 */
-    for (let i = 0; i < rollD10.terms[0].results.length; i++) {
-
-        if (rollD10.terms[0].results[i].result === 10) {
-            rollD10._total -= 10;
+        }
+    } else if (checkType === "SimpleAttack") {
+        let attackOutcome = _handleAttack(rollD10._total, skillObj, shieldSkillObj, weaponObj, damageType, usingShield);
+        templateContext = {
+            weapon: weaponObj,
+            roll: renderedRoll,
+            lethality: attackOutcome.lethality,
+            excess: attackOutcome.excess,
+            type: damageType,
+            skillName: attackOutcome.skillName,
+            actionValue: attackOutcome.actionValue
+        }
+    } else if (checkType === "Attack") {
+        let attackOutcome = _handleAttack(rollD10._total, skillObj, shieldSkillObj, weaponObj, damageType, usingShield);
+        templateContext = {
+            weapon: weaponObj,
+            roll: renderedRoll,
+            lethality: attackOutcome.lethality,
+            excess: attackOutcome.excess,
+            type: damageType,
+            skillName: attackOutcome.skillName,
+            traitName: traitName,
+            actionValue: attackOutcome.actionValue,
+            traitValue: traitValue
+        }
+    } else if (checkType === "Save") {
+        templateContext = {
+            armor: armorObj,
+            roll: renderedRoll,
+            lethality: lethality,
+            type: damageType,
+            shockResult: shockResult,
+            saveOutcome: outcome
         }
     }
 
-    /* Calculate details of the attack, such as Lethality and Excess. */
-    let lethality = parseInt(rollD10._total) + parseInt(weapon.data.data.damage[damageType].value - 9),
-        excess = parseInt(rollD10._total) - 9;
+    chatData = {
+        speaker: ChatMessage.getSpeaker(),
+        roll: rollD10,
+        content: await renderTemplate(messageTemplate, templateContext),
+        sound: CONFIG.sounds.dice,
+        type: CONST.CHAT_MESSAGE_TYPES.ROLL
+    };
 
-    let renderedRoll = await rollD10.render(),
-        templateContext = {
-            weapon: weapon,
-            roll: renderedRoll,
-            lethality: lethality,
-            excess: excess,
-            type: damageType,
-            skillName: skillName,
-            actionValue: actionValue
-        },
-        chatData = {
-            speaker: ChatMessage.getSpeaker(),
-            roll: rollD10,
-            content: await renderTemplate(messageTemplate, templateContext),
-            sound: CONFIG.sounds.dice,
-            type: CONST.CHAT_MESSAGE_TYPES.ROLL
-        };
-
+    /* Print results to chatlog. */
     ChatMessage.create(chatData);
+
+    /* If the check was a save, return the necessary values to update the actor. */
+    if (checkType === "Save") {
+        return {
+            result: saveResult,
+            shock: shockResult,
+            saveOutcome: outcome
+        }
+    }
+}
+
+function _handleAttack(rollTotal, skillObj, shieldSkillObj, weaponObj, damageType, usingShield) {
+    /* Calculate details of the attack, such as Lethality and Excess. */
+    let excess,
+        lethality,
+        actionValue,
+        skillName;
+
+    excess = parseInt(rollTotal) - 9
+
+    if (excess < 1) {
+        excess = 0;
+    }
+
+    lethality = parseInt(weaponObj.data.damage[damageType].value) + (excess);
+
+    if (usingShield) {
+        /* If a shield is equipped: determine which skill is optimal to use by 
+        comparing if the shield-using skill is higher than the regular
+        attack skill with penalty.
+        */
+
+        let actionValueAttack = skillObj.data.skillLevel.value,
+            actionValueShield = shieldSkillObj.data.skillLevel.value;
+
+        if ((actionValueAttack - 3) > actionValueShield) {
+            actionValue = actionValueAttack - 3;
+            skillName = skillObj.name;
+        } else {
+            actionValue = actionValueShield;
+            skillName = shieldSkillObj.name;
+        }
+    } else {
+        actionValue = skillObj.data.skillLevel.value;
+        skillName = skillObj.name;
+    }
+
+    return {
+        actionValue,
+        skillName,
+        lethality,
+        excess
+    }
 }
 
 /* Perform a physical save. Done when you click a protection type on an armor card.
