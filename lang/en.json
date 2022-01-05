@@ -53,12 +53,15 @@
             "combat": "Combat",
             "complexCheck": "Complex Check",
             "coverage": "Coverage",
+            "currency": "Currency",
             "edit": "Edit",
+            "enter": "Enter",
             "equip": "Equip or unequp",
             "equipShort": "Eq.",
             "encumbranceUnit": "Kg",
             "health": "Health",
             "heroPoint": "Use heropoint",
+            "hitLocation": "Hit location",
             "inventory": "Inventory",
             "max": "Maximum",
             "min": "Minimum",
@@ -85,6 +88,7 @@
             "trait": "Trait",
             "traitCheck": "Skillcheck with trait",
             "traits": "Traits",
+            "type": "Type",
             "weapons": "Weapons",
             "weight": "Weight"
         },
@@ -163,10 +167,8 @@
         "armor": {
             "coverage": {
                 "all": "All",
+                "body": "Body",
                 "head": "Head",
-                "chest": "Chest",
-                "torso": "Torso",
-                "torsoArms": "Torso and arms",
                 "arms": "Arms",
                 "legs": "Legs"
             },
@@ -251,6 +253,20 @@
             "sight": "Sight",
             "duchy": "Duchy",
             "kingdom": "Kingdom"
+        }
+    },
+    "SETTINGS": {
+        "damageTypes": {
+            "name": "Which damage types should be available?",
+            "label": "Selecting this affects complexity of combat."
+        },
+        "encumbrance": {
+            "name": "Use encumbrance system.",
+            "label": "If activated, each character can gain shock from being overencumbered."
+        },
+        "hitLocation": {
+            "name": "Use hit location for attacks?",
+            "label": "If disabled, all hits default to chest."
         }
     }
 }

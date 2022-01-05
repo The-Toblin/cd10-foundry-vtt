@@ -139,10 +139,13 @@
             "armor",
             "disease",
             "genericItem",
+            "meleeweapon",
+            "rangedWeapon",
             "skill",
             "spell",
-            "trait",
-            "weapon"
+            "shield",
+            "trait"
+
         ],
         "templates": {
             "itemDescription": {
@@ -218,9 +221,26 @@
                 "itemDescription"
             ],
             "coverage": {
-                "type": "string",
-                "label": "Coverage",
-                "value": "All"
+                "head": {
+                    "type": "boolean",
+                    "label": "Head",
+                    "value": false
+                },
+                "body": {
+                    "type": "boolean",
+                    "label": "Body",
+                    "value": true
+                },
+                "arms": {
+                    "type": "boolean",
+                    "label": "Arms",
+                    "value": false
+                },
+                "legs": {
+                    "type": "boolean",
+                    "label": "Legs",
+                    "value": false
+                }
             },
             "protection": {
                 "slash": {
@@ -248,11 +268,6 @@
                     "label": "Shock Protection",
                     "value": 0
                 }
-            },
-            "isShield": {
-                "type": "boolean",
-                "label": "Is Shield?",
-                "value": false
             },
             "blockValue": {
                 "type": "number",
@@ -307,7 +322,7 @@
                 "value": false
             }
         },
-        "weapon": {
+        "meleeWeapon": {
             "templates": [
                 "commonStats",
                 "itemDescription"
@@ -359,10 +374,21 @@
                 "label": "Block",
                 "value": 0
             },
-            "isRanged": {
+            "isEquipped": {
                 "type": "boolean",
-                "label": "Ranged weapon?",
+                "label": "Is it equipped?",
                 "value": false
+            }
+        },
+        "rangedWeapon": {
+            "templates": [
+                "commonStats",
+                "itemDescription"
+            ],
+            "attackSkill": {
+                "type": "string",
+                "label": "Skill",
+                "value": ""
             },
             "consumesAmmo": {
                 "type": "boolean",

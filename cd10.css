@@ -4,10 +4,8 @@
 }
 /* Main sheet definitions */
 .cd10.sheet.namedCharacter {
-  min-width: 750px;
-  min-height: 765px;
-  max-width: 1000px;
-  max-height: 1920px;
+  min-height: 250px;
+  min-width: 510px;
 }
 .cd10.sheet.namedCharacter h1,
 .cd10.sheet.namedCharacter h2,
@@ -124,7 +122,7 @@
 .cd10.sheet.namedCharacter form .sheet-sidebar .d10-roll-icon img {
   padding-top: 4px;
   margin-left: 5px;
-  width: 25px;
+  width: 15px;
   border: none;
 }
 .cd10.sheet.namedCharacter form .sheet-sidebar .red {

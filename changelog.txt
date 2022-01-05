@@ -1,0 +1,10 @@
+#Version 0.3.0
+
+- Set default size for character sheets and made it more responsive for resizing.
+- Moved experience to the skills tabs.
+- Moved coins to inventory.
+- Created buttons and dialogs for complex attack checks as well as physical saves.
+- Armor coverage reworked from a string to an array of booleans. Sheet updated.
+- Added system setting for simple, standard or complex damage types.
+- Added system setting for using hit location specific damage. 
+- Added system setting for displaying encumbrance. No mechanics implemented until active effects is done.

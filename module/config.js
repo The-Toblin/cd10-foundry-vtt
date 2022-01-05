@@ -26,6 +26,20 @@ cd10.combatSkills = {
     throwing: "cd10.attack.throwing",
     twoHandedWeapons: "cd10.attack.twoHandedWeapons"
 }
+cd10.simpleDamageTypes = {
+    lethality: "cd10.chat.attack.lethality"
+}
+cd10.standardDamageTypes = {
+    slash: "cd10.attack.slash",
+    blunt: "cd10.attack.blunt",
+    pierce: "cd10.attack.pierce"
+}
+cd10.complexDamageTypes = {
+    slash: "cd10.attack.slash",
+    blunt: "cd10.attack.blunt",
+    pierce: "cd10.attack.pierce",
+    energy: "cd10.attack.energy"
+}
 cd10.reach = {
     grappling: "cd10.reach.grappling",
     close: "cd10.reach.close",
@@ -34,11 +48,8 @@ cd10.reach = {
     vlong: "cd10.reach.vlong"
 }
 cd10.coverage = {
-    all: "cd10.armor.coverage.all",
+    body: "cd10.armor.coverage.body",
     head: "cd10.armor.coverage.head",
-    chest: "cd10.armor.coverage.chest",
-    torso: "cd10.armor.coverage.torso",
-    torsoArms: "cd10.armor.coverage.torsoArms",
     arms: "cd10.armor.coverage.arms",
     legs: "cd10.armor.coverage.legs"
 }

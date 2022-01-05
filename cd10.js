@@ -32,6 +32,44 @@ async function preloadHandlebarsTemplates() {
 
     return loadTemplates(templatePaths);
 }
+
+function registerSystemSettings() {
+    game.settings.register("cd10", "systemDamageTypes", {
+        config: true,
+        scope: "world",
+        name: "SETTINGS.damageTypes.name",
+        hint: "SETTINGS.damageTypes.label",
+        type: String,
+        choices: {
+            "simple": "Single damage type",
+            "standard": "Slash, Blunt, Pierce",
+            "complex": "Slash, Blunt, Pierce, Energy"
+        },
+        default: "b",
+        onChange: value => {
+            console.log(value)
+        }
+    });
+
+    game.settings.register("cd10", "systemHitLocation", {
+        config: true,
+        scope: "world",
+        name: "SETTINGS.hitLocation.name",
+        hint: "SETTINGS.hitLocation.label",
+        type: Boolean,
+        default: false,
+    });
+
+    game.settings.register("cd10", "systemEncumbrance", {
+        config: true,
+        scope: "world",
+        name: "SETTINGS.encumbrance.name",
+        hint: "SETTINGS.encumbrance.label",
+        type: Boolean,
+        default: false,
+    });
+}
+
 Hooks.once("init", function() {
     console.log("==== CD10 | Initialising CD10 RPG System ====");
 
@@ -61,6 +99,7 @@ Hooks.once("init", function() {
 
     /* Load Handlebars helpers and partials */
     preloadHandlebarsTemplates();
+    registerSystemSettings();
 
     Handlebars.registerHelper("times", function(n, content) {
         /* Handlebars helper to run a for-loop. Used to render dots on sheets. */

@@ -7,11 +7,13 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             classes: [
                 "cd10", "sheet", "namedCharacter"
             ],
+            height: 750,
+            width: 750,
             tabs: [{
                 navSelector: ".sheet-tabs",
                 contentSelector: ".sheet-body",
                 initial: "biography"
-            }, ]
+            }]
         });
     }
 
@@ -110,6 +112,11 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         sheetData.spells = sheetData.items.filter((p) => p.type == "spell");
         sheetData.normalItems = sheetData.items.filter((p) => p.type != "spell" && p.type != "skill" && p.type != "trait");
 
+        /* Make system settings available for sheets to use for rendering */
+        sheetData.damageTypeSetting = game.settings.get("cd10", "systemDamageTypes");
+        sheetData.hitLocationSetting = game.settings.get("cd10", "systemHitLocation");
+        sheetData.encumbranceSetting = game.settings.get("cd10", "systemEncumbrance");
+
         return sheetData;
     }
 
@@ -119,8 +126,10 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             /*html.find(".item-roll").click(this._onItemRoll.bind(this));*/
             html.find(".task-check").click(this._onTaskCheck.bind(this));
             html.find(".attack-check").click(this._simpleAttackCheck.bind(this));
-            html.find(".reveal-rollable").on("mouseover mouseout", this._onToggleRollable.bind(this));
             html.find(".complex-check").click(this._onComplexCheck.bind(this));
+            html.find(".physical-save").click(this._onPhysicalSave.bind(this));
+            html.find(".complex-attack").click(this._onComplexAttack.bind(this));
+            html.find(".reveal-rollable").on("mouseover mouseout", this._onToggleRollable.bind(this));
             html.find(".stressBox").click(this._stressBoxClicked.bind(this));
         }
 
@@ -265,24 +274,16 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             title: "Complex Check Dialog",
             content: await renderTemplate("systems/cd10/templates/partials/complex-check-dialog.hbs", this.getData()),
             buttons: {
-                complexCheck: {
-                    label: "Roll check!",
+                roll: {
+                    label: "Roll!",
                     callback: (html) => this._complexSkillCheck(html)
-                },
-                physicalSave: {
-                    label: "Save!",
-                    callback: (html) => this._PhysicalSave(html)
-                },
-                attackCheck: {
-                    label: "Attack!",
-                    callback: (html) => this._complexAttackCheck(html)
                 }
             }
         }, dialogOptions).render(true);
     }
 
     async _complexSkillCheck(html) {
-        /* Perform a complex skill check, complex attack or physical save,
+        /* Perform a complex skill check save 
         called from the Complex dialog */
 
         /* Set up variables for the method */
@@ -348,16 +349,36 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         });
     }
 
-    async _complexAttackCheck(event) {
-
+    async _onComplexAttack(event) {
+        /* Open the complex check dialog */
+        event.preventDefault();
+        let dialogOptions = {
+            classes: [
+                "cd10-dialog", "complex-attack-dialog"
+            ],
+            top: 300,
+            left: 400
+        };
+        new Dialog({
+            title: "Complex Attack Dialog",
+            content: await renderTemplate("systems/cd10/templates/partials/complex-attack-dialog.hbs", this.getData()),
+            buttons: {
+                roll: {
+                    label: "Attack!",
+                    callback: (html) => this._complexAttackCheck(html)
+                }
+            }
+        }, dialogOptions).render(true);
     }
 
-    async _PhysicalSave(event) {
-        /* Perform a physical save. */
-        event.preventDefault();
 
-        let damageType = event.currentTarget.dataset.damageType;
-        let armorObj = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId);
+    async _complexAttackCheck(event) {
+        ui.notifications.error(`I would've made a roll here, but it's not implemented yet.`)
+    }
+
+    async _onPhysicalSave(event) {
+        /* Open the physical saves dialog */
+        event.preventDefault();
 
         let dialogOptions = {
             classes: [
@@ -371,23 +392,24 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             content: await renderTemplate("systems/cd10/templates/partials/physical-save-dialog.hbs", this.getData()),
             buttons: {
                 roll: {
-                    label: "Roll!",
-                    callback: (html) => this._doSaveStuff(html, armorObj, damageType)
+                    label: "Save!",
+                    callback: (html) => this._doSaveStuff(html)
                 }
             }
         }, dialogOptions).render(true);
     }
 
-    async _doSaveStuff(html, armorObj, damageType) {
+    async _doSaveStuff(html) {
         /* Perform a physical save, called from the physical save dialog.
         This function is complex and deals with gathering the data for
         the roll, as well as responding to the result and doing the
         actor updates for wounds and shock. */
 
-
-        /* First, we check if traits were selected in the dialog or not. */
         let rollTraitLevel,
             outcome;
+
+        /* First, we check if traits were selected in the dialog or not. */
+
         if (html.find("select#pos-trait-selected").val() != "None" && html.find("select#neg-trait-selected").val() != "None") {
             let posTraitLevel = this.getData().traits[html.find("select#pos-trait-selected").val()].data.skillLevel.value;
             let negTraitLevel = this.getData().traits[html.find("select#neg-trait-selected").val()].data.skillLevel.value;
@@ -401,49 +423,46 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         }
 
         /* Check if any of the checkboxes were ticked, as well as gather
-        lethality and shock data values. */
+        lethality, damageType and shock data values. */
         let heroPointChecked = html.find("input#heroPoint")[0].checked,
             reverseTraitChecked = html.find("input#reverseTrait")[0].checked,
-            lethality = html.find("input#lethality").val(),
-            shock = html.find("input#shock").val();
+            lethality = parseInt(html.find("input#lethality").val()),
+            shock = parseInt(html.find("input#shock").val()),
+            damageType = html.find("select#damage-type").val(),
+            hitLocation = html.find("select#hit-location").val();
 
-
-        /* Once we have the values, we perform either a hero point save
-        or a regular save, saving the returned data in 'outcome'. */
-        if (heroPointChecked && this.actor.getExp > 0) {
-            let expValue = this.actor.getExp - 1;
-            await this.actor.update({
-                data: {
-                    exp: {
-                        total: expValue
-                    }
-                }
-            });
-            outcome = Dice.PhysicalSave({
-                traitValue: rollTraitLevel,
-                heroPoint: heroPointChecked,
-                reverseTrait: reverseTraitChecked,
-                armor: armor,
-                damageType: damageType,
-                lethality: lethality,
-                shock: shock
-            });
-        } else if (!heroPointChecked) {
-            outcome = Dice.PhysicalSave({
-                traitValue: rollTraitLevel,
-                heroPoint: false,
-                reverseTrait: reverseTraitChecked,
-                armor: armor,
-                damageType: damageType,
-                lethality: lethality,
-                shock: shock
-            });
-        } else {
-            ui.notifications.error(`${
-                this.actor.name
-            } does not have enough experience.`)
+        if (!lethality > 0 || !shock > 0) {
+            ui.notifications.error(`Please select a non-zero value for Lethality and Shock`)
             return
         }
+
+        /* If a hero point is spent, check if there's enough points.
+        Otherwise cancel the check. */
+        if (heroPointChecked) {
+            if (this._checkHeroPoints() === false) {
+                return
+            }
+        }
+
+        /* Check which armor is being worn on the applicable body part */
+        this.getData().armors.forEach((armor) => {
+            if (armor.data.isEquipped.value) {
+                ui.notifications.error(`I'm checking for armor here.`)
+            }
+        });
+
+        /* Roll the actual check. */
+        outcome = Dice.TaskCheck({
+            checkType: "Save",
+            traitValue: rollTraitLevel,
+            heroPoint: heroPointChecked,
+            reverseTrait: reverseTraitChecked,
+            armor: armor,
+            damageType: damageType,
+            lethality: lethality,
+            shock: shock,
+            hitLocation: hitLocation
+        });
 
         /* Create an update value for wounds and shock, as well as do some
         NaN edge-case fixes for shock. */
@@ -496,11 +515,11 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         });
     }
 
-    /*
+
     _onItemRoll(item) {
         item.roll();
     }
-    */
+
 
     /******************
      * Sheet functions *
@@ -635,16 +654,10 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         event.preventDefault();
 
         let value = this.actor.data.data.stressing.value;
-        if (value) {
-            this.actor.update({
-                "data.stressing.value": false
-            });
 
-        } else if (!value) {
-            this.actor.update({
-                "data.stressing.value": true
-            });
-        }
+        this.actor.update({
+            "data.stressing.value": !value
+        });
     }
     _checkHeroPoints() {
         if (this.actor.getExp > 0) {

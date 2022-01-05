@@ -12,6 +12,7 @@ export async function TaskCheck({
     lethality = null,
     shock = null,
     damageType = null,
+    hitLocation = null,
     heroPoint = false,
     reverseTrait = false,
     modifier = null

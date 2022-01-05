@@ -28,5 +28,4 @@ export default class CD10Item extends Item {
 
         return ChatMessage.create(chatData);
     }
-
 }

@@ -22,11 +22,22 @@
 
             {{!-- Skills Tab --}}
             <div class="tab sheet-skills" data-group="primary" data-tab="skills">
-                <div class="sheet-card flex-row flex-even">
-                    <div>{{localize "cd10.sheet.positive"}}: {{data.posTraits.value}}</div>
-                    <div>{{localize "cd10.sheet.negative"}}: {{data.negTraits.value}}</div>
-                    <div>{{localize "cd10.sheet.total"}}: {{data.traitsValue.value}}</div>
-                </div>
+                <table>
+                    <tr>
+                        <th>{{localize "cd10.sheet.positive"}}</th>
+                        <th>{{localize "cd10.sheet.negative"}}</th>
+                        <th>{{localize "cd10.sheet.total"}}</th>
+                        <th>{{localize "cd10.stats.exp"}}</th>
+                    </tr>
+
+                    <tr>
+                        <td>{{data.posTraits.value}}</td>
+                        <td>{{data.negTraits.value}}</td>
+                        <td>{{data.traitsValue.value}}</td>
+                        <td><input name="data.exp.total" type="text" value="{{data.exp.total}}"
+                            data-dtype="{{data.exp.type}}" placeholder="{{localize " cd10.stats.exp"}}" /></td>
+                    </tr>
+                </table>
                 <div>
                     {{> "systems/cd10/templates/partials/skill-list.hbs"}}
                 </div>
@@ -36,7 +47,6 @@
             <div class="tab sheet-combat" data-group="primary" data-tab="combat">
                 {{> "systems/cd10/templates/partials/combat-tab.hbs"}}
             </div>
-
             {{!-- Spells Tab --}}
             <div class="tab sheet-spells" data-group="primary" data-tab="spells">
                 {{> "systems/cd10/templates/partials/spell-list.hbs"}}
@@ -46,7 +56,6 @@
             <div class="tab sheet-inventory" data-group="primary" data-tab="inventory">
                 {{> "systems/cd10/templates/partials/inventory-list.hbs"}}
             </div>
-
             {{!-- Notes Tab --}}
             <div class="tab sheet-notes" data-group="primary" data-tab="notes">
                 <div class="sheet-card">
@@ -72,29 +81,7 @@
             </h3>
             {{> "systems/cd10/templates/partials/character-stat-block.hbs"}}
         </div>
-        <div class="sheet-card flex-column flex-center">
-            <h3 class="sheet-header">
-                {{localize "cd10.stats.exp"}}
-            </h3>
-            <div class="flex-row flex-center">
-                <input name="data.exp.total" type="text" value="{{data.exp.total}}" data-dtype="{{data.exp.type}}"
-                    placeholder="{{localize "cd10.stats.exp"}}" />
-            </div>
-        </div>
-        <div class="sheet-money sheet-card">
-            <h3 class="sheet-header">
-                {{localize "cd10.stats.money"}}
-            </h3>
-            <div class="flex-row flex-center">
-                <div class="sheet-money-input">
-                    <input name="data.money.value" type="text" value="{{data.money.value}}"
-                        data-dtype="{{data.money.type}}" placeholder=0 />
-                </div>
-                <div class="money">
-                    {{localize "cd10.stats.currency"}}
-                </div>
-            </div>
-        </div>
+        {{#if encumbranceSetting}}
         <div class="sheet-card encumbrance-list flex-column flex-center">
             <h3 class="sheet-header">
                 {{localize "cd10.stats.encumbrance"}}
@@ -104,14 +91,42 @@
                 {{data.currentEncumbrance.value}} {{localize "cd10.sheet.encumbranceUnit"}}
             </div>
         </div>
+        {{/if}}
         <div class="button">
-            <a class="complex-check flex-row flex-even pad-top" data-type="text" data-action-value="{{skill.data.skillLevel.value}}" title={{localize "cd10.sheet.roll" }}>
+            <a class="complex-check flex-row flex-even pad-top" data-type="text"
+                data-action-value="{{skill.data.skillLevel.value}}" title={{localize "cd10.sheet.roll" }}>
                 <div class="d10-roll-icon">
-                    <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png"/>
+                    <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
                 </div>
                 <div>
                     <h3 class="sheet-header">
                         {{localize "cd10.sheet.complexCheck"}}
+                    </h3>
+                </div>
+            </a>
+        </div>
+        <div class="button">
+            <a class="physical-save flex-row flex-even pad-top" data-type="text"
+                data-action-value="{{skill.data.skillLevel.value}}" title={{localize "cd10.sheet.roll" }}>
+                <div class="d10-roll-icon">
+                    <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
+                </div>
+                <div>
+                    <h3 class="sheet-header">
+                        {{localize "cd10.sheet.save"}}
+                    </h3>
+                </div>
+            </a>
+        </div>
+        <div class="button">
+            <a class="complex-attack flex-row flex-even pad-top" data-type="text"
+                data-action-value="{{skill.data.skillLevel.value}}" title={{localize "cd10.sheet.roll" }}>
+                <div class="d10-roll-icon">
+                    <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
+                </div>
+                <div>
+                    <h3 class="sheet-header">
+                        {{localize "cd10.sheet.attack"}}
                     </h3>
                 </div>
             </a>

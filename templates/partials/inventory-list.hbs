@@ -1,5 +1,20 @@
 <section class="inventory-list sheet-card flex-column flex-start">
     <div class="armor-list flex-column">
+        <h3>{{localize "cd10.sheet.currency"}}</h3>
+    </div>
+    <hr>
+    <table>
+        <tr>
+            <th>
+                {{localize "cd10.stats.currency"}}
+            </th>
+            <td>
+                <input name="data.money.value" type="text" value="{{data.money.value}}" data-dtype="{{data.money.type}}"
+                    placeholder=0 />
+            </td>
+        </tr>
+    </table>
+    <div class="armor-list flex-column">
         <h3>Armors</h3>
         <hr>
         <div class="item-table-data" data-item-id="{{item._id}}">
