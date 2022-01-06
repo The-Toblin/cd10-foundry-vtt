@@ -21,7 +21,7 @@ export async function TaskCheck({
     /* Basic error checking */
     if (checkType === null) {
         ui.notifications.error(`FATAL ERROR! CheckType not set!`)
-        return
+        return;
     }
 
     /* Set up base dice formula based on if it's a hero point check or not. 
@@ -38,11 +38,11 @@ export async function TaskCheck({
     /* Set up correct chat message template */
     let messageTemplate = null;
     if (checkType === "Simple" || checkType === "Complex") {
-        messageTemplate = "systems/cd10/templates/partials/skill-roll.hbs";
+        messageTemplate = "systems/cd10/templates/partials/chat-messages/skill-roll.hbs";
     } else if (checkType === "Attack" || checkType === "SimpleAttack") {
-        messageTemplate = "systems/cd10/templates/partials/attack-roll.hbs";
+        messageTemplate = "systems/cd10/templates/partials/chat-messages/attack-roll.hbs";
     } else if (checkType === "Save") {
-        messageTemplate = "systems/cd10/templates/partials/physical-save.hbs";
+        messageTemplate = "systems/cd10/templates/partials/chat-messages/physical-save.hbs";
     }
 
     /* Fetch skill level */
@@ -99,11 +99,19 @@ export async function TaskCheck({
         rollFormula += " - @modifier";
     }
 
+    /* Check if an attempt is being made without possessing the necessary skill. */
+    if (skillObj === null && checkType === "Simple" || checkType === "SimpleAttack") {
+        actionValue = 0;
+        skillName = "No Skill!";
+    }
+
     rollData = {
         actionValue: actionValue,
         traitValue: traitValue,
         modifier: modifier
     };
+
+
 
     /* Roll the dice. Save as object for manipulation. */
     let rollD10 = await new Roll(rollFormula, rollData).roll({
@@ -212,19 +220,39 @@ function _handleAttack(rollTotal, skillObj, shieldSkillObj, weaponObj, damageTyp
         attack skill with penalty.
         */
 
-        let actionValueAttack = skillObj.data.skillLevel.value,
+        let actionValueAttack, actionValueShield, attackName, shieldName;
+
+        if (skillObj === null) {
+            actionValueAttack = 0;
+            attackName = "No skill!"
+        } else {
+            actionValueAttack = skillObj.data.skillLevel.value;
+            attackName = skillObj.name;
+        }
+
+        if (shieldSkillObj === null) {
+            actionValueShield = 0;
+            shieldName = "No skill!"
+        } else {
             actionValueShield = shieldSkillObj.data.skillLevel.value;
+            shieldName = shieldSkillObj.name;
+        }
 
         if ((actionValueAttack - 3) > actionValueShield) {
             actionValue = actionValueAttack - 3;
-            skillName = skillObj.name;
+            skillName = attackName;
         } else {
             actionValue = actionValueShield;
-            skillName = shieldSkillObj.name;
+            skillName = shieldName;
         }
     } else {
-        actionValue = skillObj.data.skillLevel.value;
-        skillName = skillObj.name;
+        if (skillObj === null) {
+            skillName = "No skill!";
+            actionValue = 0;
+        } else {
+            actionValue = skillObj.data.skillLevel.value;
+            skillName = skillObj.name;
+        }
     }
 
     return {

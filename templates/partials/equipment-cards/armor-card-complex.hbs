@@ -1,0 +1,103 @@
+<div class="armor-card sheet-card flex-column item" data-item-id="{{_id}}">
+    <div class="armor-info armor-name dark-background pad-8">
+        <p>{{name}}</p>
+    </div>
+    <div class="flex-row flex-start image-stats-box">
+        <div class="item-img">
+            <img class="item-img" src="{{img}}" title="{{name}}" />
+        </div>
+        <div class="armor-box dark-background pad-8">
+            {{#if data.protection.slash.value}}
+            <div class="armor-stats reveal-rollable">
+                <div class="stat-name">
+                    {{localize "cd10.armor.slashProtection"}}
+                </div>
+                <div class="armor-statvalue">
+                    {{data.protection.slash.value}}
+                    <a class="physical-save item-roll hidden rollable" data-damage-type="slash" title={{localize "cd10.sheet.roll"}}>
+                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png"/>
+                    </a>
+                </div>
+            </div>
+            {{/if}}
+            {{#if data.protection.pierce.value}}
+            <div class="armor-stats reveal-rollable">
+                <div class="stat-name">
+                    {{localize "cd10.armor.pierceProtection"}}
+                </div>
+                <div class="armor-statvalue">
+                    {{data.protection.pierce.value}}
+                    <a class="physical-save item-roll hidden rollable" data-damage-type="pierce" title={{localize "cd10.sheet.roll"}}>
+                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png"/>
+                    </a>
+                </div>
+            </div>
+            {{/if}}
+            {{#if data.protection.blunt.value}}
+            <div class="armor-stats reveal-rollable">
+                <div class="stat-name">
+                    {{localize "cd10.armor.bluntProtection"}}
+                </div>
+                <div class="armor-statvalue">
+                    {{data.protection.blunt.value}}
+                    <a class="physical-save item-roll hidden rollable" data-damage-type="blunt" title={{localize "cd10.sheet.roll"}}>
+                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png"/>
+                    </a>
+                </div>
+            </div>
+            {{/if}}
+            {{#if data.protection.energy.value}}
+            <div class="armor-stats reveal-rollable">
+                <div class="stat-name">
+                    {{localize "cd10.armor.energyProtection"}}
+                </div>
+                <div class="armor-statvalue">
+                    {{data.protection.energy.value}}
+                    <a class="physical-save item-roll hidden rollable" data-damage-type="energy" title={{localize "cd10.sheet.roll"}}>
+                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png"/>
+                    </a>
+                </div>
+            </div>
+            {{/if}}
+            {{#if data.protection.shock.value}}
+            <div class="armor-stats">
+                <div class="stat-name">
+                    {{localize "cd10.armor.shockProtection"}}
+                </div>
+                <div class="armor-statvalue">
+                    {{data.protection.shock.value}}
+                </div>
+            </div>
+            {{/if}}
+            {{#if data.blockValue.value}}
+            <div class="armor-stats">
+                <div class="stat-name">
+                    {{localize "cd10.armor.blockValue"}}
+                </div>
+                <div class="armor-statvalue">
+                    {{data.blockValue.value}}
+                </div>
+            </div>
+            {{/if}}
+            <div class="armor-stats">
+                <div class="stat-name">
+                    {{localize "cd10.sheet.coverage"}}
+                </div>
+                <div class="armor-statvalue">
+                    {{#if (eq data.coverage.value "head")}}
+                        {{localize "cd10.armor.coverage.head"}}
+                    {{else if (eq data.coverage.value "body")}}
+                        {{localize "cd10.armor.coverage.body"}}
+                    {{else if (eq data.coverage.value "arms")}}
+                        {{localize "cd10.armor.coverage.arms"}}
+                    {{else if (eq data.coverage.value "legs")}}
+                        {{localize "cd10.armor.coverage.legs"}}
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        <div class="description-box dark-background">
+            {{{data.description.value}}}
+        </div>
+    </div>
+</div>

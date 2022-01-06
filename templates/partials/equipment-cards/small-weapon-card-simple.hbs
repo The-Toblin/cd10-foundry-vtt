@@ -3,13 +3,10 @@
         <p>{{name}}</p>
     </div>
     <div class="flex-row flex-start image-stats-box">
-        <div class="item-img">
-            <img class="item-img" src="{{img}}" title="{{name}}" />
-        </div>
         <div class="weapon-box dark-background pad-8">
             {{#unless data.isRanged.value}}
             {{#if data.damage.slash.value}}
-            <div class="weapon-stats reveal-rollable">
+            <div class="weapon-stats reveal-rollable" data-damage-type="slash">
                 <div class="stat-name">
                     {{localize "cd10.weapon.slashDamage"}}
                 </div>
@@ -22,33 +19,33 @@
             </div>
             {{/if}}
             {{#if data.damage.pierce.value}}
-            <div class="weapon-stats reveal-rollable">
+            <div class="weapon-stats reveal-rollable" data-damage-type="pierce">
                 <div class="stat-name">
                     {{localize "cd10.weapon.pierceDamage"}}
                 </div>
                 <div class="weapon-statvalue">
                     {{data.damage.pierce.value}}
-                    <a class="attack-check item-roll hidden rollable" data-damage-type="pierce" title={{localize "cd10.sheet.roll"}}>
+                    <a class="attack-check item-roll item-roll hidden rollable" data-damage-type="pierce" title={{localize "cd10.sheet.roll"}}>
                         <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png"/>
                     </a>
                 </div>
             </div>
             {{/if}}
             {{#if data.damage.blunt.value}}
-            <div class="weapon-stats reveal-rollable">
+            <div class="weapon-stats reveal-rollable" data-damage-type="blunt">
                 <div class="stat-name">
                     {{localize "cd10.weapon.bluntDamage"}}
                 </div>
                 <div class="weapon-statvalue">
                     {{data.damage.blunt.value}}
-                    <a class="attack-check item-roll hidden rollable" data-damage-type="blunt" title={{localize "cd10.sheet.roll"}}>
+                    <a class="attack-check item-roll item-roll hidden rollable" data-damage-type="blunt" title={{localize "cd10.sheet.roll"}}>
                         <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png"/>
                     </a>
                 </div>
             </div>
             {{/if}}
             {{#if data.damage.energy.value}}
-            <div class="weapon-stats reveal-rollable">
+            <div class="weapon-stats reveal-rollable" data-damage-type="energy">
                 <div class="stat-name">
                     {{localize "cd10.weapon.energyDamage"}}
                 </div>
@@ -58,7 +55,6 @@
                         <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png"/>
                     </a>
                 </div>
-
             </div>
             {{/if}}
             {{#if data.damage.shock.value}}
@@ -151,9 +147,6 @@
             {{log "Selected Ammo: " data.selectedAmmo.value}}
             {{/unless}}
         {{/unless}}
-        </div>
-        <div class="description-box dark-background pad-8">
-            {{{data.description.value}}}
         </div>
     </div>
 </div>

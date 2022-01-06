@@ -1,10 +1,28 @@
 #Version 0.3.0
 
+=== CRITICAL ===
+Weapon types have been split from "weapon" to "meleeWeapon" and "rangedWeapon".
+A migration script will run, reading the "isRanged" property of all items and reclassify them as necessary.
+The old "weapon" type will be deprecated in future versions.
+
+Armor types have been split from "armor" to "armor" and "shield".
+A migration script will run, reading the "isShield" property of all items and reclassify them as necessary.
+The old "armor" has been changed, and some properties relating to shields will be deprecated in future versions.
+
+The "weapon" type remains in the item creation menu, but it's creation dialog is intercepted with an error message.
+It will be removed in the next release.
+
+=== General ===
 - Set default size for character sheets and made it more responsive for resizing.
 - Moved experience to the skills tabs.
 - Moved coins to inventory.
 - Created buttons and dialogs for complex attack checks as well as physical saves.
 - Armor coverage reworked from a string to an array of booleans. Sheet updated.
-- Added system setting for simple, standard or complex damage types.
-- Added system setting for using hit location specific damage. 
-- Added system setting for displaying encumbrance. No mechanics implemented until active effects is done.
+- Added system setting for simple, standard or complex damage types. Default: "standard"
+- Added system setting for using hit location specific damage. Default: "false"
+- Added system setting for displaying encumbrance. No mechanics implemented until active effects is done. Default: "false"
+- Added system setting for using barter (tradeGroups) or straight coinage. Default: "false"
+- Separated weapon and armor cards into versions based on system damage model setting.
+- Internal organization: restructuring of partials.
+- Spells tab is now hidden by default and won't show up until the character has (knows) at least 1 spell.
+- Unused sections in the inventory (armors, weapons, other) are now hidden if no such items are added.

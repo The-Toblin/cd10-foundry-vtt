@@ -1,0 +1,111 @@
+<section class="small-weapon-armor-stats flex-row flex-even">
+    <div class="melee-weapon pad">
+        <table>
+            <tr>
+                <th>{{localize "cd10.weapon.attackWith"}}</th>
+                <th>{{localize "cd10.weapon.usedWithShield"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <select name="data.attackSkill.value">
+                        <option value="None">{{localize "cd10.sheet.none"}}</option>
+                        {{#select data.attackSkill.value}}
+                        {{#each config.combatSkills as |name type|}}
+                        <option value="{{type}}">{{localize name}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                </td>
+                <td>
+                    <select name="data.shieldSkill.value">
+                        <option value="None">{{localize "cd10.sheet.none"}}</option>
+                        {{#select data.shieldSkill.value}}
+                        {{#each config.combatSkills as |name type|}}
+                        <option value="{{type}}">{{localize name}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <table>
+{{log this}}
+            <tr>
+                {{#if (eq damageTypeSetting "simple")}}
+                <th>
+                    {{localize "cd10.chat.attack.lethality"}}
+                </th>
+                {{else if (eq damageTypeSetting "standard")}}
+                {{#each config.standardDamageTypes as | name |}}
+                <th>
+                    {{localize name}}
+                </th>
+                {{/each}}
+                {{else if (eq damageTypeSetting "complex")}}
+                {{#each config.complexDamageTypes as | name |}}
+                <th>
+                    {{localize name}}
+                </th>
+                {{/each}}
+                {{/if}}
+                <th>{{localize "cd10.weapon.shockDamage"}}</th>
+                <th>{{localize "cd10.weapon.reach"}}</th>
+                <th>{{localize "cd10.weapon.blockValue"}}</th>
+            </tr>
+            <tr>
+                {{#if (eq damageTypeSetting "simple")}}
+                <td>
+                    <input name="data.damage.slash.value" type="text" value="{{data.damage.slash.value}}"
+                        data-dtype="{{data.damage.slash.type}}" />
+                </td>
+                {{else if (eq damageTypeSetting "standard")}}
+                <td>
+                    <input name="data.damage.slash.value" type="text" value="{{data.damage.slash.value}}"
+                        data-dtype="{{data.damage.slash.type}}" />
+                </td>
+                <td>
+                    <input name="data.damage.pierce.value" type="text" value="{{data.damage.pierce.value}}"
+                        data-dtype="{{data.damage.pierce.type}}" />
+                </td>
+                <td>
+                    <input name="data.damage.blunt.value" type="text" value="{{data.damage.blunt.value}}"
+                        data-dtype="{{data.damage.blunt.type}}" />
+                </td>
+                {{else if (eq damageTypeSetting "complex")}}
+                <td>
+                    <input name="data.damage.slash.value" type="text" value="{{data.damage.slash.value}}"
+                        data-dtype="{{data.damage.slash.type}}" />
+                </td>
+                <td>
+                    <input name="data.damage.pierce.value" type="text" value="{{data.damage.pierce.value}}"
+                        data-dtype="{{data.damage.pierce.type}}" />
+                </td>
+                <td>
+                    <input name="data.damage.blunt.value" type="text" value="{{data.damage.blunt.value}}"
+                        data-dtype="{{data.damage.blunt.type}}" />
+                </td>
+                <td>
+                    <input name="data.damage.energy.value" type="text" value="{{data.damage.energy.value}}"
+                        data-dtype="{{data.damage.energy.type}}" />
+                </td>
+                {{/if}}
+                <td>
+                    <input name="data.damage.shock.value" type="text" value="{{data.damage.shock.value}}"
+                        data-dtype="{{data.damage.shock.type}}" />
+                </td>
+                <td>
+                    <select name="data.reach.value">
+                        {{#select data.reach.value}}
+                        {{#each config.reach as |name type|}}
+                        <option value="{{type}}">{{localize name}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                </td>
+                <td>
+                    <input name="data.blockValue.value" type="text" value="{{data.blockValue.value}}"
+                        data-dtype="{{data.blockValue.type}}" />
+                </td>
+        </table>
+    </div>
+</section>

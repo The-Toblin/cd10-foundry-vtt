@@ -41,9 +41,9 @@ cd10.complexDamageTypes = {
     energy: "cd10.attack.energy"
 }
 cd10.reach = {
+    normal: "cd10.reach.normal",
     grappling: "cd10.reach.grappling",
     close: "cd10.reach.close",
-    normal: "cd10.reach.normal",
     long: "cd10.reach.long",
     vlong: "cd10.reach.vlong"
 }

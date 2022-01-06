@@ -2,8 +2,8 @@ export default class CD10ItemSheet extends ItemSheet {
 
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            width: 560,
-            height: 380,
+            width: 725,
+            height: 600,
             classes: ["cd10", "sheet", "item"]
         });
 
@@ -23,9 +23,11 @@ export default class CD10ItemSheet extends ItemSheet {
             config: CONFIG.cd10
         };
 
-        /* Make system settings available for sheet rendering. */
+        /* Make system settings available for sheets to use for rendering */
         sheetData.damageTypeSetting = game.settings.get("cd10", "systemDamageTypes");
         sheetData.hitLocationSetting = game.settings.get("cd10", "systemHitLocation");
+        sheetData.encumbranceSetting = game.settings.get("cd10", "systemEncumbrance");
+        sheetData.barterSetting = game.settings.get("cd10", "systemBarter");
 
         return sheetData;
     }

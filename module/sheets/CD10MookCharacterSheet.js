@@ -164,7 +164,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
 
         } else {
             ui.notifications.error(`${this.actor.name} does not have enough experience.`)
-            return
+            return;
         }
     }
 
@@ -249,7 +249,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
             });
         } else {
             ui.notifications.error(`${this.actor.name} does not have enough experience.`)
-            return
+            return;
         }
 
         /* Create an update value for wounds and shock, as well as do some
@@ -354,7 +354,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
             ui.notifications.error(`${
                 this.actor.name
             } does not have enough experience.`)
-            return
+            return;
         }
     }
 
@@ -415,7 +415,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
             ui.notifications.error(`${
                 this.actor.name
             } does not have enough experience.`)
-            return
+            return;
         }
     }
 

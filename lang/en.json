@@ -267,6 +267,10 @@
         "hitLocation": {
             "name": "Use hit location for attacks?",
             "label": "If disabled, all hits default to chest."
+        },
+        "barter": {
+            "name": "Use barter system?",
+            "label": "Items will be displayed with relative value, rather than straight coinage."
         }
     }
 }

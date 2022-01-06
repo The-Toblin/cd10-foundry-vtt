@@ -16,9 +16,12 @@
             data-edit="img"
             title="{{item.name}}"
         />
-        <div class="generic-info-box dark-background">
+        <div class="generic-info-box sheet-card">
             {{> "systems/cd10/templates/partials/item-sheet-components/generic-item-data.hbs" this }}
         </div>
+    </div>
+    <div class="weapon-and-armor-stats sheet-card">
+        {{> "systems/cd10/templates/partials/item-sheet-components/small-weapon-stats.hbs" this }}
     </div>
     <div class="editor-box dark-background pad-8">
         {{editor

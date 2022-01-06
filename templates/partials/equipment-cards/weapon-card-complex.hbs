@@ -1,0 +1,97 @@
+<div class="weapon-card sheet-card flex-column item" data-item-id="{{_id}}">
+    <div class="weapon-info weapon-name dark-background pad-8">
+        <p>{{name}}</p>
+    </div>
+    <div class="flex-row flex-start image-stats-box">
+        <div class="item-img">
+            <img class="item-img" src="{{img}}" title="{{name}}" />
+        </div>
+        <div class="weapon-box dark-background pad-8">
+            <div class="weapon-stats reveal-rollable">
+                <div class="stat-name">
+                    {{localize "cd10.weapon.slashDamage"}}
+                </div>
+                <div class="weapon-statvalue">
+                    {{data.damage.slash.value}}
+                    <a class="attack-check item-roll item-roll hidden rollable" data-damage-type="slash"
+                        title={{localize "cd10.sheet.roll" }}>
+                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="weapon-stats reveal-rollable">
+                <div class="stat-name">
+                    {{localize "cd10.weapon.pierceDamage"}}
+                </div>
+                <div class="weapon-statvalue">
+                    {{data.damage.pierce.value}}
+                    <a class="attack-check item-roll hidden rollable" data-damage-type="pierce"
+                        title={{localize "cd10.sheet.roll" }}>
+                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="weapon-stats reveal-rollable">
+                <div class="stat-name">
+                    {{localize "cd10.weapon.bluntDamage"}}
+                </div>
+                <div class="weapon-statvalue">
+                    {{data.damage.blunt.value}}
+                    <a class="attack-check item-roll hidden rollable" data-damage-type="blunt"
+                        title={{localize "cd10.sheet.roll" }}>
+                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="weapon-stats reveal-rollable">
+                <div class="stat-name">
+                    {{localize "cd10.weapon.energyDamage"}}
+                </div>
+                <div class="weapon-statvalue">
+                    {{data.damage.energy.value}}
+                    <a class="attack-check item-roll item-roll hidden rollable" data-damage-type="energy"
+                        title={{localize "cd10.sheet.roll" }}>
+                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
+                    </a>
+                </div>
+            </div>
+            <div class="weapon-stats">
+                <div class="stat-name">
+                    {{localize "cd10.weapon.shockDamage"}}
+                </div>
+                <div class="weapon-statvalue">
+                    {{data.damage.shock.value}}
+                </div>
+            </div>
+            <div class="weapon-stats">
+                <div class="stat-name">
+                    {{localize "cd10.weapon.blockValue"}}
+                </div>
+                <div class="weapon-statvalue">
+                    {{data.blockValue.value}}
+                </div>
+            </div>
+            <div class="weapon-stats">
+                <div class="stat-name">
+                    {{localize "cd10.weapon.reach"}}
+                </div>
+                <div class="weapon-statvalue">
+                    {{#if (eq data.reach.value "grappling")}}
+                    {{localize "cd10.reach.grappling"}}
+                    {{else if (eq data.reach.value "close")}}
+                    {{localize "cd10.reach.close"}}
+                    {{else if (eq data.reach.value "normal")}}
+                    {{localize "cd10.reach.normal"}}
+                    {{else if (eq data.reach.value "long")}}
+                    {{localize "cd10.reach.long"}}
+                    {{else if (eq data.reach.value "vlong")}}
+                    {{localize "cd10.reach.vlong"}}
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        <div class="description-box dark-background pad-8">
+            {{{data.description.value}}}
+        </div>
+    </div>
+</div>

@@ -448,10 +448,6 @@
   display: flex;
   flex-direction: column;
   justify-content: start;
-  min-width: 560px;
-  max-width: 850px;
-  height: fit-content !important;
-  width: fit-content !important;
 }
 .cd10.sheet.item img {
   width: 150px;

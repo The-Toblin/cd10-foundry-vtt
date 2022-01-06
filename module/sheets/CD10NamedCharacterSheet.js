@@ -90,13 +90,13 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         });
 
         /* Create subproperties for item types */
-        sheetData.ammunition = sheetData.items.filter((p) => p.type == "ammunition");
-        sheetData.allArmors = sheetData.items.filter((p) => p.type == "armor");
-        sheetData.armors = sheetData.items.filter((p) => p.type == "armor" && !p.data.isShield.value);
-        sheetData.shields = sheetData.items.filter((p) => p.type == "armor" && p.data.isShield.value);
-        sheetData.allWeapons = sheetData.items.filter((p) => p.type == "weapon");
-        sheetData.meleeWeapons = sheetData.items.filter((p) => p.type == "weapon" && !p.data.isRanged.value);
-        sheetData.rangedWeapons = sheetData.items.filter((p) => p.type == "weapon" && p.data.isRanged.value);
+        sheetData.ammunition = sheetData.items.filter((p) => p.type === "ammunition");
+        sheetData.allArmors = sheetData.items.filter((p) => p.type === "armor" || p.type === "shield");
+        sheetData.armors = sheetData.items.filter((p) => p.type === "armor");
+        sheetData.shields = sheetData.items.filter((p) => p.type === "shield");
+        sheetData.allWeapons = sheetData.items.filter((p) => p.type === "meleeWeapon" || p.type === "rangedWeapon");
+        sheetData.meleeWeapons = sheetData.items.filter((p) => p.type === "meleeWeapon");
+        sheetData.rangedWeapons = sheetData.items.filter((p) => p.type === "rangedWeapon");
         sheetData.skills = sheetData.items.filter((p) => p.type == "skill");
         sheetData.traits = sheetData.items.filter((p) => p.type == "trait");
         sheetData.posTraits = sheetData.traits.filter((p) => {
@@ -110,12 +110,14 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             }
         });
         sheetData.spells = sheetData.items.filter((p) => p.type == "spell");
-        sheetData.normalItems = sheetData.items.filter((p) => p.type != "spell" && p.type != "skill" && p.type != "trait");
+        sheetData.normalItems = sheetData.items.filter((p) => p.type != "spell" && p.type != "skill" && p.type != "trait" &&
+            p.type != "meleeWeapon" && p.type != "armor" && p.type != "rangedWeapon" && p.type != "shield");
 
         /* Make system settings available for sheets to use for rendering */
         sheetData.damageTypeSetting = game.settings.get("cd10", "systemDamageTypes");
         sheetData.hitLocationSetting = game.settings.get("cd10", "systemHitLocation");
         sheetData.encumbranceSetting = game.settings.get("cd10", "systemEncumbrance");
+        sheetData.barterSetting = game.settings.get("cd10", "systemBarter");
 
         return sheetData;
     }
@@ -162,7 +164,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         Otherwise cancel the check. */
         if (event.shiftKey) {
             if (this._checkHeroPoints() === false) {
-                return
+                return;
             }
         }
 
@@ -188,7 +190,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         /* If a hero point is spent, check if there's enough points. */
         if (event.shiftKey) {
             if (this._checkHeroPoints() === false) {
-                return
+                return;
             }
         }
 
@@ -308,14 +310,14 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         if (skillObj === null && posTraitObj === null && negTraitObj === null) {
             ui.notifications.error(`Please select at least one skill or trait!`);
 
-            return
+            return;
         }
 
         /* If a hero point is spent, check if there's enough points.
         Otherwise cancel the check. */
         if (heroPointChecked) {
             if (this._checkHeroPoints() === false) {
-                return
+                return;
             }
         }
 
@@ -433,14 +435,14 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
 
         if (!lethality > 0 || !shock > 0) {
             ui.notifications.error(`Please select a non-zero value for Lethality and Shock`)
-            return
+            return;
         }
 
         /* If a hero point is spent, check if there's enough points.
         Otherwise cancel the check. */
         if (heroPointChecked) {
             if (this._checkHeroPoints() === false) {
-                return
+                return;
             }
         }
 
