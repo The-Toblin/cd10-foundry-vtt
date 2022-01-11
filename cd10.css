@@ -112,6 +112,18 @@
 .cd10.sheet.namedCharacter form .encumbrance-list {
   display: flex;
 }
+.cd10.sheet.namedCharacter form .fa-angle-double-up {
+  padding-top: 5px;
+}
+.cd10.sheet.namedCharacter form .fifty {
+  width: 50%;
+}
+.cd10.sheet.namedCharacter form .fifteen {
+  width: 15%;
+}
+.cd10.sheet.namedCharacter form .twenty {
+  width: 20%;
+}
 .cd10.sheet.namedCharacter form .sheet-sidebar {
   padding: 10px;
   min-width: 225px;

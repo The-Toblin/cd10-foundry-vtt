@@ -22,6 +22,11 @@
                 <th>
                     {{localize "cd10.armor.shockProtection"}}
                 </th>
+                {{#if (eq this.item.data.type "shield")}}
+                <th>
+                    {{localize "cd10.armor.defenseValueShort"}}
+                </th>
+                {{/if}}
             </tr>
 
             <tr>
@@ -65,9 +70,16 @@
                     <input name="data.protection.shock.value" type="text" value="{{data.protection.shock.value}}"
                         data-dtype="{{data.protection.shock.type}}" />
                 </td>
+                {{#if (eq this.item.data.type "shield")}}
+                    <td>
+                        <input name="data.defenseValue.value" type="text" value="{{data.defenseValue.value}}"
+                        data-dtype="{{data.defenseValue.type}}" />
+                    </td>
+                {{/if}}
             </tr>
         </table>
         {{#if hitLocationSetting}}
+        {{#unless (eq this.item.data.type "shield")}}
         <table>
             <tr>
                 {{#each config.coverage as | name |}}
@@ -84,6 +96,7 @@
                 {{/each}}
             </tr>
         </table>
+        {{/unless}}
         {{/if}}
     </div>
 </section>

@@ -49,6 +49,8 @@
             "armor": "Armor",
             "attack": "Attack check",
             "bio": "Biography",
+            "block": "Block",
+            "blockQuestion": "Did you block?",
             "category": "Category",
             "combat": "Combat",
             "complexCheck": "Complex Check",
@@ -56,13 +58,14 @@
             "currency": "Currency",
             "edit": "Edit",
             "enter": "Enter",
-            "equip": "Equip or unequp",
+            "equip": "Equip or unequip",
             "equipShort": "Eq.",
             "encumbranceUnit": "Kg",
             "health": "Health",
             "heroPoint": "Use heropoint",
             "hitLocation": "Hit location",
             "inventory": "Inventory",
+            "levelUp": "Toggle levelUp",
             "max": "Maximum",
             "min": "Minimum",
             "modifier": "Modifier",
@@ -178,7 +181,8 @@
             "energyProtection": "Energy",
             "shockProtection": "Shock",
             "blockValue": "Block",
-            "isShield": "Shield?"
+            "defenseValue": "Defensive Value",
+            "defenseValueShort": "DV"
         },
         "item": {
             "image": "Image",
@@ -271,6 +275,10 @@
         "barter": {
             "name": "Use barter system?",
             "label": "Items will be displayed with relative value, rather than straight coinage."
+        },
+        "dumpDescriptions": {
+            "name": "Display skill descriptions in chat on use.",
+            "label": "Skills, traits and spells will dump their descriptions to chat when used."
         }
     }
 }

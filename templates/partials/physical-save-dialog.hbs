@@ -1,8 +1,7 @@
 <form class="physical-save-dialog sheet-card">
     <div class="flex-column">
         <div class="flex-column pad-8">
-            <label>{{localize "cd10.sheet.select"}} {{localize "cd10.sheet.positive"}} {{localize
-                "cd10.sheet.trait"}}</label>
+            <label>{{localize "cd10.sheet.select"}} {{localize "cd10.sheet.positive"}} {{localize "cd10.sheet.trait"}}</label>
             <select id="pos-trait-selected" name="pos-trait-selected">
                 <option value="None">None</option>
                 {{#select posTraits}}
@@ -13,8 +12,7 @@
             </select>
         </div>
         <div class="flex-column pad-8">
-            <label>{{localize "cd10.sheet.select"}} {{localize "cd10.sheet.negative"}} {{localize
-                "cd10.sheet.trait"}}</label>
+            <label>{{localize "cd10.sheet.select"}} {{localize "cd10.sheet.negative"}} {{localize "cd10.sheet.trait"}}</label>
             <select id="neg-trait-selected" name="neg-trait-selected">
                 <option value="None">None</option>
                 {{#select negTraits}}
@@ -61,6 +59,10 @@
         <div class="flex-column pad-8">
             <label>{{localize "cd10.sheet.enter"}} {{localize "cd10.chat.attack.shock"}}</label>
             <input id="shock" name="shock" type="text">
+        </div>
+        <div class="flex-column pad-8">
+            <label>{{localize "cd10.sheet.blockQuestion"}}</label>
+            <input id="parried" name="parried" type="checkbox" value="off" />
         </div>
         <div class="flex-row flex-even">
             <div class="flex-column">

@@ -79,6 +79,7 @@
                 </div>
             </div>
             {{/if}}
+            {{#unless (eq this.type "shield")}}
             <div class="armor-stats">
                 <div class="stat-name">
                     {{localize "cd10.sheet.coverage"}}
@@ -95,6 +96,7 @@
                     {{/if}}
                 </div>
             </div>
+            {{/unless}}
         </div>
         <div class="description-box dark-background">
             {{{data.description.value}}}

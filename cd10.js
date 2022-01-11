@@ -86,6 +86,16 @@ function registerSystemSettings() {
         type: Boolean,
         default: false,
     });
+    /* Option to choose if item, weapon and skill descriptions
+    should be dumped to chat on use. */
+    game.settings.register("cd10", "systemDumpDescriptions", {
+        config: true,
+        scope: "world",
+        name: "SETTINGS.dumpDescriptions.name",
+        hint: "SETTINGS.dumpDescriptions.label",
+        type: Boolean,
+        default: true,
+    });
 
     /* Check if migration is needed */
     game.settings.register("cd10", "systemMigrationVersion", {
@@ -100,6 +110,10 @@ function registerSystemSettings() {
 
 function migrateItemData(item) {
     let updateData = {};
+
+    if (item.type === "skill") {
+        updateData["data.isPhysical.value"] = false
+    }
 
     if (item.type === "weapon" && item.data.isRanged.value) {
         updateData["type"] = "rangedWeapon"
@@ -253,10 +267,4 @@ Hooks.once("ready", function() {
         migrateWorld();
         game.settings.set("cd10", "systemMigrationVersion", game.system.data.version);
     }
-});
-
-Hooks.once('ready', async function() {
-    /* Temporary measure to remove "weapon" type in the item creation menu.
-    This will be deleted once the weapon type is fully removed. */
-    delete CONFIG.Item.typeLabels.weapon;
 });

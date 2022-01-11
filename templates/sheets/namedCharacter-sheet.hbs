@@ -24,22 +24,30 @@
 
             {{!-- Skills Tab --}}
             <div class="tab sheet-skills" data-group="primary" data-tab="skills">
-                <table>
-                    <tr>
-                        <th>{{localize "cd10.sheet.positive"}}</th>
-                        <th>{{localize "cd10.sheet.negative"}}</th>
-                        <th>{{localize "cd10.sheet.total"}}</th>
-                        <th>{{localize "cd10.stats.exp"}}</th>
-                    </tr>
-
-                    <tr>
-                        <td>{{data.posTraits.value}}</td>
-                        <td>{{data.negTraits.value}}</td>
-                        <td>{{data.traitsValue.value}}</td>
-                        <td><input name="data.exp.total" type="text" value="{{data.exp.total}}"
-                            data-dtype="{{data.exp.type}}" placeholder="{{localize " cd10.stats.exp"}}" /></td>
-                    </tr>
-                </table>
+                <div class="sheet-card">
+                    <table>
+                        <colgroup>
+                            <col class="fifty">
+                            <col class="fifteen">
+                            <col class="fifteen">
+                            <col class="twenty">
+                        </colgroup>
+                        <tr>
+                            <th>{{localize "cd10.stats.exp"}}</th>
+                            <th>{{localize "cd10.sheet.positive"}}</th>
+                            <th>{{localize "cd10.sheet.negative"}}</th>
+                            <th>{{localize "cd10.sheet.total"}}</th>
+                        </tr>
+                        <tr>
+                            <td><input name="data.exp.total" type="text" value="{{data.exp.total}}"
+                                data-dtype="{{data.exp.type}}" placeholder="{{localize " cd10.stats.exp"}}" />
+                            </td>
+                            <td>{{data.posTraits.value}}</td>
+                            <td>{{data.negTraits.value}}</td>
+                            <td>{{data.traitsValue.value}}</td>
+                        </tr>
+                    </table>
+                </div>
                 <div>
                     {{> "systems/cd10/templates/partials/sheet-tabs/skill-list.hbs"}}
                 </div>

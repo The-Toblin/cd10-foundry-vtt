@@ -229,6 +229,57 @@ export default class CD10Actor extends Actor {
             "modifier": data.shock.value + woundsModifier,
             "type": debilitationType
         }
+    }
 
+    async modifyExp(amount) {
+        if (typeof amount != "number") {
+            ui.notifications.error(`Not a number for Exp update!`);
+            return;
+        }
+        let currentExp = this.getExp,
+            newExp = currentExp + amount;
+
+        await this.update({
+            "data.exp.total": newExp
+
+        });
+    }
+
+    async modifyWounds(amount) {
+        if (typeof amount != "number") {
+            ui.notifications.error(`Not a number for wounds update!`);
+            return;
+        }
+        let currentWounds = this.getWounds,
+            newWounds;
+
+        if (amount > 0) {
+            newWounds = Math.min(currentWounds + amount, this.data.data.wounds.max);
+        } else if (amount < 0) {
+            newWounds = Math.max(currentWounds - 1, 0);
+        }
+
+        await this.update({
+            "data.wounds.value": newWounds
+        });
+    }
+
+    async modifyShock(amount) {
+        if (typeof amount != "number") {
+            ui.notifications.error(`Not a number for shock update!`);
+            return;
+        }
+        let currentShock = this.getShock,
+            newShock;
+
+        if (amount > 0) {
+            newShock = Math.min(currentShock + amount, this.data.data.shock.max);
+        } else if (amount < 0) {
+            newShock = Math.max(currentShock - 1, 0);
+        }
+
+        await this.update({
+            "data.shock.value": newShock
+        });
     }
 }
