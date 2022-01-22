@@ -141,20 +141,24 @@ function migrateItemData(item) {
         if (coverage === "All") {
             head = body = arms = legs = true;
         }
-        if (coverage === "Chest" || coverage === "Torso" || coverage === "torso" || coverage === "corso") {
+        if (coverage === "Chest" || coverage === "Torso" || coverage === "torso" || coverage === "chest") {
             body = true;
         }
         if (coverage === "Head" || coverage === "head") {
-            head = true
+            head = true;
         }
         if (coverage === "Legs" || coverage === "legs") {
             legs = true;
         }
         if (coverage === "Arms" || coverage === "arms") {
-            arms = true
+            arms = true;
         }
         if (coverage === "torsoArms") {
-            arms = body = true
+            arms = body = true;
+        }
+
+        if (!arms && !head && !legs && !body) {
+            body = true;
         }
 
         updateData["type"] = "armor";
