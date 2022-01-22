@@ -1,7 +1,4 @@
 <div class="task-check physical-save-card save flex-column flex-start">
-
-    {{log this}}
-
     <div>
         <h3>{{localize "cd10.chat.defense.title" armor=armor.name}}</h3>
     </div>
@@ -10,6 +7,10 @@
     </div>
     <div>
         {{{roll}}}
+        {{#if fail}} 
+        {{localize "cd10.chat.roll.fail"}}
+            {{{fail}}}
+        {{/if}}
     </div>
     <div class="centered">
         <h3>{{localize "cd10.chat.outcomes.outcome"}} {{saveOutcome}}</h3>

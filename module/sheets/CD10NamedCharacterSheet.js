@@ -154,6 +154,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         sheetData.hitLocationSetting = game.settings.get("cd10", "systemHitLocation");
         sheetData.encumbranceSetting = game.settings.get("cd10", "systemEncumbrance");
         sheetData.barterSetting = game.settings.get("cd10", "systemBarter");
+        sheetData.modernity = game.settings.get("cd10", "systemModernity");
 
         return sheetData;
     }
@@ -172,6 +173,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             html.find(".inline-edit").change(this._onSkillEdit.bind(this));
             html.find(".item-delete").click(this._onItemDelete.bind(this));
             html.find(".item-equip").click(this._onItemEquip.bind(this));
+            html.find(".ammo-select").click(this._onAmmoSelect.bind(this));
             html.find(".skill-item").click(this._toggleSkillUp.bind(this));
             html.find(".shock-icons").on("click contextmenu", this._onShockMarkChange.bind(this));
             html.find(".wounds-icons").on("click contextmenu", this._onWoundsMarkChange.bind(this));
@@ -194,6 +196,28 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
      * Various checks and saves *
      ***************************/
 
+    async _onAmmoSelect(event) {
+
+        let ammoObj = this.actor.items.get(event.currentTarget.closest(".ammo-selector").dataset.itemId),
+            weaponObj = this.actor.items.get(event.currentTarget.closest(".ammo-selector").dataset.weaponId);
+
+        if (weaponObj.data.data.selectedAmmo.id === ammoObj.id) {
+            await weaponObj.update({
+                "data.selectedAmmo": {
+                    "value": "None",
+                    "id": "None"
+                }
+            });
+        } else {
+            await weaponObj.update({
+                "data.selectedAmmo": {
+                    "value": ammoObj.name,
+                    "id": ammoObj.id
+                }
+            });
+        }
+    }
+
     async _onTaskCheck(event) {
         /* Method to handle a simple skill check. */
         event.preventDefault();
@@ -215,7 +239,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         }
 
         /* Perform the check */
-        console.log(skillObj.name, skillObj.data.data.skillLevel.value);
         Dice.TaskCheck({
             checkType: "Simple",
             skillObj: skillObj.data,
@@ -236,10 +259,16 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             }
         }
 
-        const damageType = event.currentTarget.dataset.damageType,
+        let damageType = event.currentTarget.dataset.damageType,
             weaponObj = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId).data,
             attackSkill = weaponObj.data.attackSkill.value,
+            shieldSkill = null;
+
+        if (weaponObj.data.shieldSkill != undefined) {
             shieldSkill = weaponObj.data.shieldSkill.value;
+        } else {
+            shieldSkill = "None";
+        }
 
         let usingShield = false,
             attackSkillObj = null,
@@ -289,6 +318,22 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
                 shieldObj = shield;
             }
         });
+
+
+        /* Check if it's a ranged weapon */
+        if (weaponObj.type === "rangedWeapon") {
+            let ammo = this.actor.items.get(weaponObj.data.selectedAmmo.id);
+            if (ammo.data.data.damage.slash.selected) {
+                damageType = "slash"
+            } else if (ammo.data.data.damage.pierce.selected) {
+                damageType = "pierce"
+            } else if (ammo.data.data.damage.blunt.selected) {
+                damageType = "blunt"
+            } else if (ammo.data.data.damage.energy.selected) {
+                damageType = "energy"
+            }
+
+        }
 
         /* Perform the attack check */
         Dice.TaskCheck({
@@ -626,21 +671,15 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         });
     }
 
-    async _onShockMarkChange(event) {
+    _onShockMarkChange(event) {
         /* Listen for changes to Shock and update the value accordingly. */
         event.preventDefault();
-        let currentCount = this.actor.data.data.shock.value;
-        let newCount;
 
         if (event.type == "click") {
-            newCount = Math.min(currentCount + 1, this.actor.data.data.shock.max);
+            this.actor.modifyShock(1);
         } else {
-            newCount = Math.max(currentCount - 1, 0);
+            this.actor.modifyShock(-1);
         }
-
-        await this.actor.update({
-            "data.shock.value": newCount
-        });
     }
 
     _onWoundsMarkChange(event) {

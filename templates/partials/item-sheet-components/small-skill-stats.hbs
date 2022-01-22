@@ -19,9 +19,9 @@
             <td>
                 <select name="data.skillType.value">
                     {{#select data.skillType.value}}
-                    {{#each config.skillCategories as |name type|}}
-                    <option value="{{type}}">{{localize name}}</option>
-                    {{/each}}
+                        {{#each config.skillCategories as |name type|}}
+                            <option value="{{type}}">{{localize name}}</option>
+                        {{/each}}
                     {{/select}}
                 </select>
             </td>

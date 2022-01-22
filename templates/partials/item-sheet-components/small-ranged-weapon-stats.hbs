@@ -41,4 +41,20 @@
             </td>
         </tr>
     </table>
+    {{#if modernity}}
+    <table>
+        <tr>
+            <th>{{localize "cd10.rangedWeapon.accuracy"}}</th>
+            <th>{{localize "cd10.rangedWeapon.magazine"}}</th>
+            <th>{{localize "cd10.rangedWeapon.burst"}}</th>
+            <th>{{localize "cd10.rangedWeapon.fullAuto"}}</th>
+        </tr>
+        <tr>
+            <td><input name="data.accuracy.value" type="text" value="{{data.accuracy.value}}" data-dtype="{{data.accuracy.type}}" /></td>
+            <td><input name="data.magazine.value" type="text" value="{{data.magazine.value}}" data-dtype="{{data.magazine.type}}" /></td>
+            <td><input name="data.rof.value.burst" type="text" value="{{data.rof.value.burst}}" data-dtype="{{data.rof.type}}"/></td>
+            <td><input name="data.rof.value.fullAuto" type="text" value="{{data.rof.value.fullAuto}}" data-dtype="{{data.rof.type}}"/></td>
+        </tr>
+    </table>
+    {{/if}}
 </div>

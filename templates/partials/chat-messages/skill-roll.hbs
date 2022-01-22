@@ -11,5 +11,9 @@
     {{/if}}
     <div>
         {{{roll}}}
+        {{#if fail}} 
+        {{localize "cd10.chat.roll.fail"}}
+            {{{fail}}}
+        {{/if}}
     </div>
 </div>

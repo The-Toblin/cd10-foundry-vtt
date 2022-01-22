@@ -1,38 +1,51 @@
 <div class="shield pad">
-        <table>
-            <tr>
-                <th>{{localize "cd10.armor.blockValue"}}</th>
+    <table>
+        <tr>
+            <th>{{localize "cd10.armor.defenseValueShort"}}</th>
+            {{#if (eq damageTypeSetting "simple")}}
+                <th>{{localize "cd10.armor.Protection"}}</th>
+            {{else}}
                 <th>{{localize "cd10.armor.slashProtection"}}</th>
                 <th>{{localize "cd10.armor.pierceProtection"}}</th>
                 <th>{{localize "cd10.armor.bluntProtection"}}</th>
-                <th>{{localize "cd10.armor.energyProtection"}}</th>
-                <th>{{localize "cd10.armor.shockProtection"}}</th>
-            </tr>
-            <tr>
-                <td>
-                    <input name="data.blockValue.value" type="text" value="{{data.blockValue.value}}"
-                        data-dtype="{{data.blockValue.type}}" />
-                </td>
-                <td>
-                    <input name="data.protection.slash.value" type="text" value="{{data.protection.slash.value}}"
-                        data-dtype="{{data.protection.slash.type}}" />
-                </td>
-                <td>
-                    <input name="data.protection.pierce.value" type="text" value="{{data.protection.pierce.value}}"
-                        data-dtype="{{data.protection.pierce.type}}" />
-                </td>
-                <td>
-                    <input name="data.protection.blunt.value" type="text" value="{{data.protection.blunt.value}}"
-                        data-dtype="{{data.protection.blunt.type}}" />
-                </td>
+                {{#if (eq damageTypeSetting "complex")}}
+                    <th>{{localize "cd10.armor.energyProtection"}}</th>
+                {{/if}}
+            {{/if}}
+            <th>{{localize "cd10.armor.shockProtection"}}</th>
+        </tr>
+        <tr>
+            <td>
+                <input name="data.defenseValue.value" type="text" value="{{data.defenseValue.value}}"
+                    data-dtype="{{data.defenseValue.type}}" />
+            </td>
+            {{#if (eq damageTypeSetting "simple")}}
+                <td><input name="data.protection.slash.value" type="text" value="{{data.protection.slash.value}}"
+                    data-dtype="{{data.protection.slash.type}}" /></td>
+            {{else}}
+            <td>
+                <input name="data.protection.slash.value" type="text" value="{{data.protection.slash.value}}"
+                    data-dtype="{{data.protection.slash.type}}" />
+            </td>
+            <td>
+                <input name="data.protection.pierce.value" type="text" value="{{data.protection.pierce.value}}"
+                    data-dtype="{{data.protection.pierce.type}}" />
+            </td>
+            <td>
+                <input name="data.protection.blunt.value" type="text" value="{{data.protection.blunt.value}}"
+                    data-dtype="{{data.protection.blunt.type}}" />
+            </td>
+                {{#if (eq damageTypeSetting "complex")}}
                 <td>
                     <input name="data.protection.energy.value" type="text" value="{{data.protection.energy.value}}"
                         data-dtype="{{data.protection.energy.type}}" />
                 </td>
-                <td>
-                    <input name="data.protection.shock.value" type="text" value="{{data.protection.shock.value}}"
-                        data-dtype="{{data.protection.shock.type}}" />
-                </td>
-            </tr>
-        </table>
-    </div>
+                {{/if}}
+            {{/if}}
+            <td>
+                <input name="data.protection.shock.value" type="text" value="{{data.protection.shock.value}}"
+                    data-dtype="{{data.protection.shock.type}}" />
+            </td>
+        </tr>
+    </table>
+</div>

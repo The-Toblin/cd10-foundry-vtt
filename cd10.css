@@ -124,6 +124,9 @@
 .cd10.sheet.namedCharacter form .twenty {
   width: 20%;
 }
+.cd10.sheet.namedCharacter form .ammo-select .far {
+  padding-right: 8px;
+}
 .cd10.sheet.namedCharacter form .sheet-sidebar {
   padding: 10px;
   min-width: 225px;
@@ -244,8 +247,8 @@
 .weapon-card .item-img {
   display: block;
   margin: 0 10px 0 3px;
-  min-width: 150px;
-  min-height: 150px;
+  max-width: 100px;
+  max-height: 100px;
 }
 .weapon-card .d10-roll-icon {
   height: 10px;
@@ -259,7 +262,8 @@
   text-align: center;
   margin-bottom: 10px;
 }
-.weapon-card .description-box {
+.weapon-card .description-box,
+.weapon-card .ammo-box {
   width: 100%;
   max-height: 150px;
   overflow: auto;
@@ -639,6 +643,9 @@
 .cd10.sheet.mookCharacter form .body-box {
   padding: 10px;
 }
+.cd10.sheet.mookCharacter form .center {
+  text-align: center;
+}
 .cd10.sheet.mookCharacter form .quote textarea {
   resize: none;
   min-height: unset;
@@ -651,6 +658,12 @@
 }
 .cd10.sheet.mookCharacter form .weapon-item {
   margin-right: 5px;
+}
+.cd10.sheet.mookCharacter form .ammo-select .far {
+  padding-right: 8px;
+}
+.cd10.sheet.mookCharacter form .item-delete .fas {
+  text-align: right;
 }
 .cd10-dialog {
   width: fit-content !important;

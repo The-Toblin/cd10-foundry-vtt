@@ -41,7 +41,8 @@
             "roll": {
                 "check": "Check",
                 "skill": "Skill",
-                "trait": "Trait"
+                "trait": "Trait",
+                "fail": "Fail reroll"
             }
         },
         "sheet": {
@@ -154,6 +155,7 @@
             "bluntDamage": "Blunt",
             "energyDamage": "Energy",
             "shockDamage": "Shock",
+            "lethality": "Lethality",
             "reach": "Reach",
             "blockValue": "Block",
             "isRanged": "Ranged weapon?",
@@ -165,7 +167,12 @@
             "rangeNormal": "Normal",
             "rangeLong": "Long",
             "rangeMax": "Max",
-            "ammunition": "Ammo"
+            "ammunition": "Ammunition",
+            "accuracy": "Accuracy",
+            "magazine": "Clip size",
+            "rof": "Rate of fire",
+            "burst": "Burst",
+            "fullAuto": "Full auto"
         },
         "armor": {
             "coverage": {
@@ -175,6 +182,7 @@
                 "arms": "Arms",
                 "legs": "Legs"
             },
+            "protection": "Protection",
             "slashProtection": "Slash",
             "pierceProtection": "Pierce",
             "bluntProtection": "Blunt",
@@ -188,6 +196,7 @@
             "image": "Image",
             "availability": "Availability",
             "trader": "Trader",
+            "count": "Count",
             "weight": "Weight",
             "tradeGroup": "Trade Group",
             "price": "Price",
@@ -261,8 +270,8 @@
     },
     "SETTINGS": {
         "damageTypes": {
-            "name": "Which damage types should be available?",
-            "label": "Selecting this affects complexity of combat."
+            "name": "Damage system complexity",
+            "label": "Determine which damage types are available in the system."
         },
         "encumbrance": {
             "name": "Use encumbrance system.",
@@ -277,8 +286,12 @@
             "label": "Items will be displayed with relative value, rather than straight coinage."
         },
         "dumpDescriptions": {
-            "name": "Display skill descriptions in chat on use.",
+            "name": "Dump skill descriptions on use?",
             "label": "Skills, traits and spells will dump their descriptions to chat when used."
+        },
+        "modernity": {
+            "name": "Is this a modern setting with firearms?",
+            "label": "Determines if values such as rate of fire or magazine is shown."
         }
     }
 }

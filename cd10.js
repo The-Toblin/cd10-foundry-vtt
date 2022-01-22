@@ -15,21 +15,20 @@ async function preloadHandlebarsTemplates() {
         "systems/cd10/templates/partials/sheet-tabs/spell-list.hbs",
         "systems/cd10/templates/partials/sheet-tabs/combat-tab.hbs",
         "systems/cd10/templates/partials/sheet-tabs/inventory-list.hbs",
-        "systems/cd10/templates/partials/equipment-cards/weapon-card-simple.hbs",
-        "systems/cd10/templates/partials/equipment-cards/weapon-card-standard.hbs",
-        "systems/cd10/templates/partials/equipment-cards/weapon-card-complex.hbs",
-        "systems/cd10/templates/partials/equipment-cards/armor-card-simple.hbs",
-        "systems/cd10/templates/partials/equipment-cards/armor-card-standard.hbs",
-        "systems/cd10/templates/partials/equipment-cards/armor-card-complex.hbs",
-        "systems/cd10/templates/partials/equipment-cards/small-weapon-card-simple.hbs",
-        "systems/cd10/templates/partials/equipment-cards/small-weapon-card-standard.hbs",
-        "systems/cd10/templates/partials/equipment-cards/small-weapon-card-complex.hbs",
-        "systems/cd10/templates/partials/equipment-cards/small-armor-card-simple.hbs",
-        "systems/cd10/templates/partials/equipment-cards/small-armor-card-standard.hbs",
-        "systems/cd10/templates/partials/equipment-cards/small-armor-card-complex.hbs",
+        "systems/cd10/templates/partials/equipment-cards/weapon-card.hbs",
+        "systems/cd10/templates/partials/equipment-cards/rangedWeapon-card.hbs",
+        "systems/cd10/templates/partials/equipment-cards/armor-card.hbs",
+        "systems/cd10/templates/partials/equipment-cards/shield-card.hbs",
+        "systems/cd10/templates/partials/equipment-cards/small-weapon-card.hbs",
+        "systems/cd10/templates/partials/equipment-cards/small-ranged-weapon-card.hbs",
+        "systems/cd10/templates/partials/equipment-cards/small-armor-card.hbs",
+        "systems/cd10/templates/partials/equipment-cards/small-shield-card.hbs",
         "systems/cd10/templates/partials/item-sheet-components/generic-item-data.hbs",
         "systems/cd10/templates/partials/item-sheet-components/small-weapon-stats.hbs",
+        "systems/cd10/templates/partials/item-sheet-components/small-ranged-weapon-stats.hbs",
         "systems/cd10/templates/partials/item-sheet-components/small-armor-stats.hbs",
+        "systems/cd10/templates/partials/item-sheet-components/small-shield-stats.hbs",
+        "systems/cd10/templates/partials/item-sheet-components/small-ammo-stats.hbs",
         "systems/cd10/templates/partials/item-sheet-components/small-skill-stats.hbs",
         "systems/cd10/templates/partials/item-sheet-components/small-trait-stats.hbs",
         "systems/cd10/templates/partials/item-sheet-components/small-spell-stats.hbs",
@@ -55,6 +54,15 @@ function registerSystemSettings() {
             "complex": "Slash, Blunt, Pierce, Energy"
         },
         default: "b",
+    });
+
+    game.settings.register("cd10", "systemModernity", {
+        config: true,
+        scope: "world",
+        name: "SETTINGS.modernity.name",
+        hint: "SETTINGS.modernity.label",
+        type: Boolean,
+        default: false,
     });
 
     /* Set if hit location is to be used in the system. */
@@ -248,7 +256,7 @@ Hooks.once("init", function() {
         damage model is set. */
         let highest = Math.max(slash, blunt, pierce, energy);
         return highest;
-    })
+    });
 
     console.log("==== CD10 | Pushing TinyMCE CSS ====");
     CONFIG.TinyMCE.content_css.push(`systems/cd10/less/cd10_tinymcemods.css`);

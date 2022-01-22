@@ -9,11 +9,9 @@
         <div class="weapon-box dark-background pad-8">
             <div class="weapon-stats reveal-rollable">
                 <div class="stat-name">
-                    {{localize "cd10.chat.attack.lethality"}}
+                    {{localize "cd10.chat.attack.attack"}}
                 </div>
                 <div class="weapon-statvalue">
-                    {{#highest data.damage.slash.value data.damage.blunt.value data.damage.pierce.value
-                    data.damage.energy.value}}{{/highest}}
                     <a class="attack-check item-roll item-roll hidden rollable" data-damage-type="slash"
                         title={{localize "cd10.sheet.roll" }}>
                         <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
@@ -22,41 +20,50 @@
             </div>
             <div class="weapon-stats">
                 <div class="stat-name">
-                    {{localize "cd10.weapon.shockDamage"}}
+                    {{localize "cd10.rangedWeapon.rangeClose"}}
                 </div>
                 <div class="weapon-statvalue">
-                    {{data.damage.shock.value}}
+                    {{data.range.value.rangeClose}}
                 </div>
             </div>
             <div class="weapon-stats">
                 <div class="stat-name">
-                    {{localize "cd10.weapon.blockValue"}}
+                    {{localize "cd10.rangedWeapon.rangeNormal"}}
                 </div>
                 <div class="weapon-statvalue">
-                    {{data.blockValue.value}}
+                    {{data.range.value.rangeNormal}}
                 </div>
             </div>
             <div class="weapon-stats">
                 <div class="stat-name">
-                    {{localize "cd10.weapon.reach"}}
+                    {{localize "cd10.rangedWeapon.rangeLong"}}
                 </div>
                 <div class="weapon-statvalue">
-                    {{#if (eq data.reach.value "grappling")}}
-                    {{localize "cd10.reach.grappling"}}
-                    {{else if (eq data.reach.value "close")}}
-                    {{localize "cd10.reach.close"}}
-                    {{else if (eq data.reach.value "normal")}}
-                    {{localize "cd10.reach.normal"}}
-                    {{else if (eq data.reach.value "long")}}
-                    {{localize "cd10.reach.long"}}
-                    {{else if (eq data.reach.value "vlong")}}
-                    {{localize "cd10.reach.vlong"}}
-                    {{/if}}
+                    {{data.range.value.rangeLong}}
+                </div>
+            </div>
+            <div class="weapon-stats">
+                <div class="stat-name">
+                    {{localize "cd10.rangedWeapon.rangeMax"}}
+                </div>
+                <div class="weapon-statvalue">
+                    {{data.range.value.rangeMax}}
                 </div>
             </div>
         </div>
-        <div class="description-box dark-background pad-8">
-            {{{data.description.value}}}
+        <div class="ammo-box dark-background pad-8">
+            {{localize "cd10.rangedWeapon.ammunition"}}
+            <hr>
+            <div class="flex-column">
+                {{#each @root.ammunition as |ammo|}}
+                <div class="flex-row ammo-selector item" data-item-id="{{ammo._id}}" data-weapon-id="{{../_id}}">
+                    <a class="ammo-select" data-type="text">
+                        <i class="far fa-{{#if (eq ../data.selectedAmmo.value ammo.name)}}check-{{/if}}square"></i>
+                    </a>
+                    {{ammo.name}}
+                </div>
+                {{/each}}
+            </div>
         </div>
     </div>
 </div>

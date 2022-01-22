@@ -7,68 +7,24 @@
             </a>
         </div>
     </div>
-    {{#if (eq damageTypeSetting "simple")}}
         {{#each meleeWeapons as |weapon|}}
             {{#if weapon.data.isEquipped.value}}
-                {{> "systems/cd10/templates/partials/equipment-cards/weapon-card-simple.hbs"}}
+                {{> "systems/cd10/templates/partials/equipment-cards/weapon-card.hbs"}}
             {{/if}}
         {{/each}}
         {{#each rangedWeapons as |weapon|}}
             {{#if weapon.data.isEquipped.value}}
-                {{> "systems/cd10/templates/partials/equipment-cards/weapon-card-simple.hbs"}}
-            {{/if}}
-        {{/each}}
-        {{#each shields as |shield|}}
-            {{#if shield.data.isEquipped.value}}
-                {{> "systems/cd10/templates/partials/equipment-cards/armor-card-simple.hbs"}}
+                {{> "systems/cd10/templates/partials/equipment-cards/rangedWeapon-card.hbs"}}
             {{/if}}
         {{/each}}
         {{#each armors as |armor|}}
             {{#if armor.data.isEquipped.value}}
-                {{> "systems/cd10/templates/partials/equipment-cards/armor-card-simple.hbs"}}
-            {{/if}}
-        {{/each}}
-    {{else if (eq damageTypeSetting "standard")}}
-        {{#each meleeWeapons as |weapon|}}
-            {{#if weapon.data.isEquipped.value}}
-                {{> "systems/cd10/templates/partials/equipment-cards/weapon-card-standard.hbs"}}
-            {{/if}}
-        {{/each}}
-        {{#each rangedWeapons as |weapon|}}
-            {{#if weapon.data.isEquipped.value}}
-                {{> "systems/cd10/templates/partials/equipment-cards/weapon-card-standard.hbs"}}
+                {{> "systems/cd10/templates/partials/equipment-cards/armor-card.hbs"}}
             {{/if}}
         {{/each}}
         {{#each shields as |shield|}}
             {{#if shield.data.isEquipped.value}}
-                {{> "systems/cd10/templates/partials/equipment-cards/armor-card-standard.hbs"}}
+                {{> "systems/cd10/templates/partials/equipment-cards/shield-card.hbs"}}
             {{/if}}
         {{/each}}
-        {{#each armors as |armor|}}
-            {{#if armor.data.isEquipped.value}}
-                {{> "systems/cd10/templates/partials/equipment-cards/armor-card-standard.hbs"}}
-            {{/if}}
-        {{/each}}
-    {{else if (eq damageTypeSetting "complex")}}
-        {{#each meleeWeapons as |weapon|}}
-            {{#if weapon.data.isEquipped.value}}
-                {{> "systems/cd10/templates/partials/equipment-cards/weapon-card-complex.hbs"}}
-            {{/if}}
-        {{/each}}
-        {{#each rangedWeapons as |weapon|}}
-            {{#if weapon.data.isEquipped.value}}
-                {{> "systems/cd10/templates/partials/equipment-cards/weapon-card-complex.hbs"}}
-            {{/if}}
-        {{/each}}
-        {{#each shields as |shield|}}
-            {{#if shield.data.isEquipped.value}}
-                {{> "systems/cd10/templates/partials/equipment-cards/armor-card-complex.hbs"}}
-            {{/if}}
-        {{/each}}
-        {{#each armors as |armor|}}
-            {{#if armor.data.isEquipped.value}}
-                {{> "systems/cd10/templates/partials/equipment-cards/armor-card-complex.hbs"}}
-            {{/if}}
-        {{/each}}
-    {{/if}}
 </section>

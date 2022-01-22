@@ -16,24 +16,43 @@ all checks with this skill involved will include the modifier for physical debli
 A migration script will run on loading an older world and update all items accordingly. Skills will ALL be set to "false"
 for the physical debilitation, so you will have to go through your skills and enable it for relevant skills.
 
+=== Bugfixes ===
+- Spell skillevel wasn't properly passed to the roll message, but was still internally applied.
+- Automatic fails (rolling a 0) are now taken into account, and will automatically reroll to determine if you fumbled.
+- Spelling correction in template.json (ammunition.damage.brunt -> ammunition.damage.blunt).
+
 === General UI ===
 - Set default size for character sheets and made it more responsive for resizing.
 - Moved experience to the skills tabs.
 - Moved coins to inventory.
-- Created buttons and dialogs for complex attack checks as well as physical saves.
 - Spells tab is now hidden by default and won't show up until the character has (knows) at least 1 spell.
 - Unused sections in the inventory (armors, weapons, other) are now hidden if no such items are added.
 - Added a left-click option on skills on the skill list to toggle the skill's "LevelUp" property, so players can track which skills can be upgraded at the end of a session.
+- Added an "Equipped" tickbox to Mook sheets, to make sure calculations are made correctly. Make sure your mooks are actually wearing their items!
+- All equipment cards and sheets have been updated and cleaned up.
+- Ammunition sheet added and updated.
+- Added ammunition selector to ranged weapons.
 
 === Internal ===
 - Armor coverage reworked from a string to an array of booleans. Sheet updated.
 - Added system setting for simple, standard or complex damage types. Default: "standard"
 - Added system setting for using hit location specific damage. Default: "false"
 - Added system setting for displaying encumbrance. No mechanics implemented until active effects is done. Default: "false"
-- Added system setting for using barter (tradeGroups) or straight coinage. Default: "false"
-- Separated weapon and armor cards into versions based on system damage model setting.
+- Added system setting for using barter (tradeGroups) or straight coinage. Default: "false" (coinage)
+- Added a system setting for modernity. This determines if values like "Rate of fire" and "Magazine" is shown.
+- Made Armor Card responsive to hitLocationSetting and damageTypeSetting
+- Made Weapon Card responsive to hitLocationSetting and damageTypeSetting
+- Made Small Armor Card responsive to hitLocationSetting and damageTypeSetting
+- Made Small Weapon Card responsive to hitLocationSetting and damageTypeSetting
+- Created Shield Card
+- Created Small Shield Card
+- Created Ranged Weapon Card
+- Created Small Ranged Weapon Card
 - Internal organization: restructuring of partials.
-- Moved the majority of Actor modifications (health updates etc) to the Actor class. (unfinished)
+- Moved the majority of Actor modifications (health updates etc) to the Actor class. More in future releases.
+- Made attack checks automatically check ammo type for ranged weapons.
 
 === Mechanics and functionality ===
 - Implemented single-trait rolls by clicking the roll icon on a trait. This will perform a blank check with that trait.
+- Ranged Weapons implemented with ammo selector and automatical calculation of lethality based on ammo.
+- Physical Saves are now performed from a separate dialog, called up from the sheet. No need to click armor anymore. Clickable areas of armors removed.

@@ -165,6 +165,11 @@
                     "label": "Trader",
                     "value": ""
                 },
+                "count": {
+                    "type": "number",
+                    "label": "Count",
+                    "value": 1
+                },
                 "tradeGroup": {
                     "type": "number",
                     "label": "Trade Group",
@@ -213,13 +218,42 @@
                 "commonStats",
                 "itemDescription"
             ],
-            "ammoCount": 0,
-            "ammoType": "",
-            "slashDamage": 0,
-            "pierceDamage": 0,
-            "bluntDamage": 0,
-            "energyDamage": 0,
-            "shockDamage": 0
+            "type": {
+                "type": "string",
+                "label": "Ammo Type",
+                "value": ""
+            },
+            "damage": {
+                "slash": {
+                    "type": "number",
+                    "label": "Slash damage",
+                    "value": 0,
+                    "selected": false
+                },
+                "pierce": {
+                    "type": "number",
+                    "label": "Pierce damage",
+                    "value": 0,
+                    "selected": false
+                },
+                "blunt": {
+                    "type": "number",
+                    "label": "Blunt damage",
+                    "value": 0,
+                    "selected": false
+                },
+                "energy": {
+                    "type": "number",
+                    "label": "Energy damage",
+                    "value": 0,
+                    "selected": false
+                },
+                "shock": {
+                    "type": "number",
+                    "label": "Shock",
+                    "value": 0
+                }
+            }
         },
         "armor": {
             "templates": [
@@ -231,7 +265,6 @@
                 "type": "boolean",
                 "label": "Shield?",
                 "value": false
-
             },
             "coverage": {
                 "head": {
@@ -320,11 +353,6 @@
                     "label": "Shock Protection",
                     "value": 0
                 }
-            },
-            "blockValue": {
-                "type": "number",
-                "label": "Blockvalue",
-                "value": 0
             },
             "defenseValue": {
                 "type": "number",
@@ -444,25 +472,21 @@
                 "label": "Skill",
                 "value": ""
             },
-            "consumesAmmo": {
-                "type": "boolean",
-                "label": "Consumes ammo?",
-                "value": false
-            },
             "ammoGroup": {
                 "type": "string",
                 "label": "Ammo Group",
-                "value": ""
+                "value": "None"
             },
             "selectedAmmo": {
                 "type": "string",
                 "label": "Selected Ammo",
-                "value": "No ammo selected"
+                "value": "No ammo selected",
+                "id": ""
             },
             "magazine": {
                 "type": "number",
                 "label": "Magazine size",
-                "value": 0
+                "value": 1
             },
             "ammoCount": {
                 "type": "number",
@@ -477,6 +501,19 @@
                     "rangeNormal": 0,
                     "rangeLong": 0,
                     "rangeMax": 0
+                }
+            },
+            "accuracy": {
+                "type": "number",
+                "label": "Accuracy penalty",
+                "value": 0
+            },
+            "rof": {
+                "type": "number",
+                "label": "Rate of fire",
+                "value": {
+                    "burst": 0,
+                    "fullAuto": 0
                 }
             }
         },

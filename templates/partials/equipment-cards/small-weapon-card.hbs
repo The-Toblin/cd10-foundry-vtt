@@ -1,19 +1,34 @@
 <div class="weapon-card sheet-card flex-column item" data-item-id="{{_id}}">
     <div class="weapon-info weapon-name dark-background pad-8">
-        <p>{{name}}</p>
+        <p><a class="item-equip" data-type="text">
+                <i class="far fa-{{#if this.data.isEquipped.value}}check-{{/if}}square"></i>
+            </a>
+            {{name}}</p>
     </div>
     <div class="flex-row flex-start image-stats-box">
-        <div class="item-img">
-            <img class="item-img" src="{{img}}" title="{{name}}" />
-        </div>
         <div class="weapon-box dark-background pad-8">
+            {{#if (eq @root.damageTypeSetting "simple")}}
+            <div class="weapon-stats reveal-rollable">
+                <div class="stat-name">
+                    {{localize "cd10.weapon.lethality"}}
+                </div>
+                <div class="weapon-statvalue">
+                    {{#highest data.damage.slash.value data.damage.blunt.value data.damage.pierce.value
+                    data.damage.energy.value}}{{/highest}}
+                    <a class="attack-check item-roll item-roll hidden rollable" data-damage-type="slash"
+                        title={{localize "cd10.sheet.roll" }}>
+                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
+                    </a>
+                </div>
+            </div>
+            {{else}}
             <div class="weapon-stats reveal-rollable">
                 <div class="stat-name">
                     {{localize "cd10.weapon.slashDamage"}}
                 </div>
                 <div class="weapon-statvalue">
                     {{data.damage.slash.value}}
-                    <a class="attack-check item-roll item-roll hidden rollable" data-damage-type="slash"
+                    <a class="attack-check item-roll hidden rollable" data-damage-type="slash"
                         title={{localize "cd10.sheet.roll" }}>
                         <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
                     </a>
@@ -43,6 +58,7 @@
                     </a>
                 </div>
             </div>
+            {{#if (eq @root.damageTypeSetting "complex")}}
             <div class="weapon-stats reveal-rollable">
                 <div class="stat-name">
                     {{localize "cd10.weapon.energyDamage"}}
@@ -55,6 +71,8 @@
                     </a>
                 </div>
             </div>
+            {{/if}}
+            {{/if}}
             <div class="weapon-stats">
                 <div class="stat-name">
                     {{localize "cd10.weapon.shockDamage"}}
@@ -89,9 +107,6 @@
                     {{/if}}
                 </div>
             </div>
-        </div>
-        <div class="description-box dark-background pad-8">
-            {{{data.description.value}}}
         </div>
     </div>
 </div>

@@ -28,6 +28,7 @@ export default class CD10ItemSheet extends ItemSheet {
         sheetData.hitLocationSetting = game.settings.get("cd10", "systemHitLocation");
         sheetData.encumbranceSetting = game.settings.get("cd10", "systemEncumbrance");
         sheetData.barterSetting = game.settings.get("cd10", "systemBarter");
+        sheetData.modernity = game.settings.get("cd10", "systemModernity");
 
         return sheetData;
     }
@@ -35,6 +36,7 @@ export default class CD10ItemSheet extends ItemSheet {
     activateListeners(html) {
 
         html.find(".protection-check-box").click(this._protectionCheckBoxClicked.bind(this));
+        html.find(".damage-select").click(this._onDamageSelect.bind(this));
         super.activateListeners(html);
     }
 
@@ -46,6 +48,33 @@ export default class CD10ItemSheet extends ItemSheet {
 
         await this.item.update({
             [`data.coverage.${target}.value`]: !value
+        });
+    }
+
+    async _onDamageSelect(event) {
+        /* Monitor the state of damage types on Ammo Sheets. */
+        event.preventDefault();
+        const damageType = event.currentTarget.dataset.damageType;
+
+        await this.item.update({
+            "data.damage": {
+                "slash": {
+                    "selected": false
+                },
+                "pierce": {
+                    "selected": false
+                },
+                "blunt": {
+                    "selected": false
+                },
+                "energy": {
+                    "selected": false
+                }
+            }
+        });
+
+        await this.item.update({
+            [`data.damage.${damageType}.selected`]: true
         });
     }
 }

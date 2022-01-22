@@ -31,13 +31,13 @@ cd10.simpleDamageTypes = {
 }
 cd10.standardDamageTypes = {
     slash: "cd10.attack.slash",
-    blunt: "cd10.attack.blunt",
-    pierce: "cd10.attack.pierce"
+    pierce: "cd10.attack.pierce",
+    blunt: "cd10.attack.blunt"
 }
 cd10.complexDamageTypes = {
     slash: "cd10.attack.slash",
-    blunt: "cd10.attack.blunt",
     pierce: "cd10.attack.pierce",
+    blunt: "cd10.attack.blunt",
     energy: "cd10.attack.energy"
 }
 cd10.reach = {

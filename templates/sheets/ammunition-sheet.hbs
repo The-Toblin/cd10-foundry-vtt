@@ -1,85 +1,33 @@
 <form class="{{cssClass}}" autocomplete="off">
-    <header class="sheet-header">
-        <img
-        src="{{item.img}}"
-        data-edit="img"
-        title="{{item.name}}"
-        height="64"
-        width="64"
-        />
-        <h1><input
-            name="name"
-            type="text"
-            value="{{item.name}}"
-            placeholder="{{localize "cd10.stats.name"}}"
-        />
+    <div class="item-sheet-header">
+        <h1>
+            <input
+                name="name"
+                type="text"
+                value="{{item.name}}"
+                placeholder="{{localize "cd10.skill.name"}}"
+            />
         </h1>
-    </header>
-    <div class="sheet-content">
-        <table>
-            <tr>
-                <th>{{localize "cd10.ammunition.type"}}</th>
-                <th>{{localize "cd10.weapon.slashDamage"}}</th>
-                <th>{{localize "cd10.weapon.pierceDamage"}}</th>
-                <th>{{localize "cd10.weapon.bluntDamage"}}</th>
-                <th>{{localize "cd10.weapon.energyDamage"}}</th>
-                <th>{{localize "cd10.weapon.shockDamage"}}</th>
-            </tr>
-            <tr>
-                <td>
-                    <select name="data.ammoType">
-                        {{#select data.ammoType}}
-                            {{#each config.ammunitionTypes as |name type|}}
-                                <option value="{{type}}">{{localize name}}</option>
-                            {{/each}}
-                        {{/select}}
-                    </select>
-                </td>
-                <td>
-                    <input
-                        name="data.slashDamage"
-                        type="text"
-                        value="{{data.slashDamage}}"
-                        data-dtype=" Number"
-                    />
-                </td>
-                <td>
-                    <input
-                        name="data.pierceDamage"
-                        type="text"
-                        value="{{data.pierceDamage}}"
-                        data-dtype="Number"
-                    />
-                </td>
-                <td>
-                    <input
-                        name="data.bluntDamage"
-                        type="text"
-                        value="{{data.bluntDamage}}"
-                        data-dtype="Number"
-                    />
-                </td>
-                <td>
-                    <input
-                        name="data.energyDamage"
-                        type="text"
-                        value="{{data.energyDamage}}"
-                        data-dtype="Number"
-                    />
-                </td>
-                <td>
-                <input
-                    name="data.shockDamage"
-                    type="text"
-                    value="{{data.shockDamage}}"
-                    data-dtype="Number"
-                />
-                </td>
-            </tr>
-        </table>
+        
+    </div>
+    <hr>
+    <div class="item-sheet-main-content flex-row flex-evenly">
+        <img 
+            src="{{item.img}}"
+            data-edit="img"
+            title="{{item.name}}"
+        />
+        <div class="generic-info-box sheet-card">
+            {{> "systems/cd10/templates/partials/item-sheet-components/generic-item-data.hbs" this }}
+        </div>
+    </div>
+    <div class="weapon-and-armor-stats sheet-card">
+        {{> "systems/cd10/templates/partials/item-sheet-components/small-ammo-stats.hbs" this }}
+    </div>
+    <div class="editor-box dark-background pad-8">
         {{editor
-            content=data.description
-            target="data.description"
+            content=data.description.value
+            target="data.description.value"
             button=true
             owner=owner
             editable=editable

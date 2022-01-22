@@ -85,13 +85,15 @@ export async function TaskCheck({
     /* Set up the rollformula */
     rollFormula = `${baseDice}`;
 
-    if (skillObj != null && skillObj.type === "skill") {
-        rollFormula += " + @actionValue";
-    } else if (skillObj != null && skillObj.type === "trait") {
-        if (actionValue > 0) {
+    if (skillObj != null) {
+        if (skillObj.type === "spell" || skillObj.type === "skill") {
             rollFormula += " + @actionValue";
-        } else if (actionValue < 0) {
-            rollFormula += " @actionValue";
+        } else if (skillObj.type === "trait") {
+            if (actionValue > 0) {
+                rollFormula += " + @actionValue";
+            } else if (actionValue < 0) {
+                rollFormula += " @actionValue";
+            }
         }
     }
 
@@ -129,20 +131,20 @@ export async function TaskCheck({
 
     /* Catch the dreaded 0 */
     for (let i = 0; i < rollD10.terms[0].results.length; i++) {
-
         if (rollD10.terms[0].results[i].result === 10) {
             rollD10._total -= 10;
             failRoll = true;
+            console.log("ROLLED A ZERO!");
         }
     }
 
     if (failRoll) {
+        console.log("ROLLING SECOND D10!");
         failD10 = await new Roll(rollFormula, rollData).roll({
             async: true
         });
 
         for (let i = 0; i < failD10.terms[0].results.length; i++) {
-
             if (failD10.terms[0].results[i].result === 10) {
                 failD10._total -= 10;
             }
@@ -155,8 +157,9 @@ export async function TaskCheck({
         chatData = null,
         renderedFailRoll = null;
 
+
     if (failRoll) {
-        renderedFailRoll = failD10;
+        renderedFailRoll = await failD10.render();
     }
 
     if (checkType === "Simple") {
@@ -174,9 +177,11 @@ export async function TaskCheck({
             fail: renderedFailRoll
         }
     } else if (checkType === "SimpleAttack") {
-        let attackOutcome = _handleAttack(rollD10._total, skillObj, shieldSkillObj, weaponObj, damageType, usingShield);
+        let attackOutcome = _handleAttack(rollD10._total, skillObj, shieldSkillObj, weaponObj, damageType, usingShield, actor);
         templateContext = {
             weapon: weaponObj,
+            weaponDamage: attackOutcome.weaponDamage,
+            weaponShock: attackOutcome.weaponShock,
             roll: renderedRoll,
             lethality: attackOutcome.lethality,
             excess: attackOutcome.excess,
@@ -186,9 +191,11 @@ export async function TaskCheck({
             fail: renderedFailRoll
         }
     } else if (checkType === "Attack") {
-        let attackOutcome = _handleAttack(rollD10._total, skillObj, shieldSkillObj, weaponObj, damageType, usingShield);
+        let attackOutcome = _handleAttack(rollD10._total, skillObj, shieldSkillObj, weaponObj, damageType, usingShield, actor);
         templateContext = {
             weapon: weaponObj,
+            weaponDamage: attackOutcome.weaponDamage,
+            weaponShock: attackOutcome.weaponShock,
             roll: renderedRoll,
             lethality: attackOutcome.lethality,
             excess: attackOutcome.excess,
@@ -201,7 +208,6 @@ export async function TaskCheck({
         }
     } else if (checkType === "Save") {
         let outcome = _handleSave(rollD10._total, traitValue, damageType, armorObj, shieldObj, usingShield, lethality, shock, hitLocation, actor);
-        console.log(outcome);
         templateContext = {
             armor: armorObj,
             roll: renderedRoll,
@@ -214,7 +220,6 @@ export async function TaskCheck({
         }
 
     }
-
     chatData = {
         speaker: ChatMessage.getSpeaker(),
         roll: rollD10,
@@ -227,12 +232,14 @@ export async function TaskCheck({
     ChatMessage.create(chatData);
 }
 
-function _handleAttack(rollTotal, skillObj, shieldSkillObj, weaponObj, damageType, usingShield) {
+function _handleAttack(rollTotal, skillObj, shieldSkillObj, weaponObj, damageType, usingShield, actorId) {
     /* Calculate details of the attack, such as Lethality and Excess. */
     let excess,
         lethality,
         actionValue,
-        skillName;
+        skillName,
+        weaponDamage,
+        weaponShock;
 
     excess = parseInt(rollTotal) - 9;
 
@@ -240,7 +247,17 @@ function _handleAttack(rollTotal, skillObj, shieldSkillObj, weaponObj, damageTyp
         excess = 0;
     }
 
-    lethality = parseInt(weaponObj.data.damage[damageType].value) + (excess);
+    if (weaponObj.type === "rangedWeapon") {
+        let a = game.actors.get(actorId);
+        let ammo = a.items.get(weaponObj.data.selectedAmmo.id);
+        lethality = parseInt(ammo.data.data.damage[damageType].value) + (excess);
+        weaponDamage = parseInt(ammo.data.data.damage[damageType].value);
+        weaponShock = parseInt(ammo.data.data.damage.shock.value)
+    } else {
+        lethality = parseInt(weaponObj.data.damage[damageType].value) + (excess);
+        weaponDamage = parseInt(weaponObj.data.damage[damageType].value);
+        weaponShock = parseInt(weaponObj.data.damage.shock.value);
+    }
 
     if (usingShield) {
         /* If a shield is equipped: determine which skill is optimal to use by 
@@ -287,7 +304,9 @@ function _handleAttack(rollTotal, skillObj, shieldSkillObj, weaponObj, damageTyp
         actionValue,
         skillName,
         lethality,
-        excess
+        excess,
+        weaponDamage,
+        weaponShock
     }
 }
 
@@ -300,34 +319,17 @@ function _handleSave(roll, traitValue, damageType, armorObj, shieldObj, usingShi
         lethalityValue = lethality,
         shockValue = shock;
 
-    console.log("Roll: ", roll);
-    console.log("TraitValue: ", traitValue);
-    console.log("DamageType: ", damageType);
-    if (armorObj != null) {
-        console.log("Armor: ", armorObj.name);
-    }
-    if (shieldObj != null) {
-        console.log("Shield: ", shieldObj.name);
-    }
-    console.log("Lethality: ", lethalityValue);
-    console.log("Shock: ", shock);
-    console.log("Hit Location: ", hitLocation);
-
     /* This is where we calculate the outcome of the save, based
     on input factors. */
 
     /* First we check to see if there is a block or parry to account for. */
     if (usingShield) {
-        console.log(`Removing ${shieldObj.data.protection[damageType].value} Lethality due to ${shieldObj.name}`)
-        console.log(`Removing ${shieldObj.data.protection.shock.value} Shock due to ${shieldObj.name}`)
         lethalityValue -= shieldObj.data.protection[damageType].value;
         shockValue -= shieldObj.data.protection.shock.value;
     }
 
     /* Then we account for armor. */
     if (armorObj != null) {
-        console.log(`Removing ${armorObj.data.protection[damageType].value} Lethality due to ${armorObj.name}`)
-        console.log(`Removing ${armorObj.data.protection.shock.value} Shock due to ${armorObj.name}`)
         lethalityValue -= armorObj.data.protection[damageType].value;
         shockValue -= armorObj.data.protection.shock.value;
     }
@@ -340,10 +342,7 @@ function _handleSave(roll, traitValue, damageType, armorObj, shieldObj, usingShi
         traitModification = traitValue;
     }
 
-    console.log("Roll value:", roll);
-    console.log("Lethality Left:", lethalityValue);
     saveResult = roll - lethalityValue + traitModification;
-    console.log("Save Result: ", saveResult);
 
     /* Set up limits for fumble and perfection */
     let fumbleLimit = parseInt(lethalityValue) - 10,
@@ -381,9 +380,6 @@ function _handleSave(roll, traitValue, damageType, armorObj, shieldObj, usingShi
         wounds = 2;
     }
 
-    console.log("Outcome: ", outcome);
-    console.log("Final shock: ", shockValue);
-    console.log("Wounds: ", wounds);
     /* Update the actor with the values from the save. */
     let actorObj = game.actors.get(actor);
 
