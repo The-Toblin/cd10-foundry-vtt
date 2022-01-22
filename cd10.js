@@ -129,7 +129,7 @@ function migrateItemData(item) {
         updateData["type"] = "meleeWeapon"
     } else if (item.type === "armor" && item.data.isShield.value) {
         updateData["type"] = "shield"
-    } else if (item.type === "armor" && !item.data.isShield.value && !item.data.coverage.value === "deprecated") {
+    } else if (item.type === "armor" && !item.data.isShield.value) {
         let head,
             body,
             arms,
@@ -162,7 +162,6 @@ function migrateItemData(item) {
         updateData["data.coverage.body.value"] = body
         updateData["data.coverage.arms.value"] = arms
         updateData["data.coverage.legs.value"] = legs
-        updateData["data.coverage.value"] = "deprecated"
     }
 
     return updateData;
