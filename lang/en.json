@@ -41,24 +41,32 @@
             "roll": {
                 "check": "Check",
                 "skill": "Skill",
-                "trait": "Trait"
+                "trait": "Trait",
+                "fail": "Fail reroll"
             }
         },
         "sheet": {
             "add": "Add",
             "armor": "Armor",
+            "attack": "Attack check",
             "bio": "Biography",
+            "block": "Block",
+            "blockQuestion": "Did you block?",
             "category": "Category",
             "combat": "Combat",
             "complexCheck": "Complex Check",
             "coverage": "Coverage",
+            "currency": "Currency",
             "edit": "Edit",
-            "equip": "Equip or unequp",
+            "enter": "Enter",
+            "equip": "Equip or unequip",
             "equipShort": "Eq.",
             "encumbranceUnit": "Kg",
             "health": "Health",
             "heroPoint": "Use heropoint",
+            "hitLocation": "Hit location",
             "inventory": "Inventory",
+            "levelUp": "Toggle levelUp",
             "max": "Maximum",
             "min": "Minimum",
             "modifier": "Modifier",
@@ -72,6 +80,7 @@
             "removeShort": "Rem.",
             "reverse": "Reverse",
             "roll": "Roll",
+            "save": "Physical save",
             "select": "Select",
             "skill": "Skill",
             "skills": "Skills",
@@ -81,7 +90,9 @@
             "to": "to",
             "total": "Total",
             "trait": "Trait",
+            "traitCheck": "Skillcheck with trait",
             "traits": "Traits",
+            "type": "Type",
             "weapons": "Weapons",
             "weight": "Weight"
         },
@@ -144,6 +155,7 @@
             "bluntDamage": "Blunt",
             "energyDamage": "Energy",
             "shockDamage": "Shock",
+            "lethality": "Lethality",
             "reach": "Reach",
             "blockValue": "Block",
             "isRanged": "Ranged weapon?",
@@ -155,30 +167,36 @@
             "rangeNormal": "Normal",
             "rangeLong": "Long",
             "rangeMax": "Max",
-            "ammunition": "Ammo"
+            "ammunition": "Ammunition",
+            "accuracy": "Accuracy",
+            "magazine": "Clip size",
+            "rof": "Rate of fire",
+            "burst": "Burst",
+            "fullAuto": "Full auto"
         },
         "armor": {
             "coverage": {
                 "all": "All",
+                "body": "Body",
                 "head": "Head",
-                "chest": "Chest",
-                "torso": "Torso",
-                "torsoArms": "Torso and arms",
                 "arms": "Arms",
                 "legs": "Legs"
             },
+            "protection": "Protection",
             "slashProtection": "Slash",
             "pierceProtection": "Pierce",
             "bluntProtection": "Blunt",
             "energyProtection": "Energy",
             "shockProtection": "Shock",
             "blockValue": "Block",
-            "isShield": "Shield?"
+            "defenseValue": "Defensive Value",
+            "defenseValueShort": "DV"
         },
         "item": {
             "image": "Image",
             "availability": "Availability",
             "trader": "Trader",
+            "count": "Count",
             "weight": "Weight",
             "tradeGroup": "Trade Group",
             "price": "Price",
@@ -248,6 +266,32 @@
             "sight": "Sight",
             "duchy": "Duchy",
             "kingdom": "Kingdom"
+        }
+    },
+    "SETTINGS": {
+        "damageTypes": {
+            "name": "Damage system complexity",
+            "label": "Determine which damage types are available in the system."
+        },
+        "encumbrance": {
+            "name": "Use encumbrance system.",
+            "label": "If activated, each character can gain shock from being overencumbered."
+        },
+        "hitLocation": {
+            "name": "Use hit location for attacks?",
+            "label": "If disabled, all hits default to chest."
+        },
+        "barter": {
+            "name": "Use barter system?",
+            "label": "Items will be displayed with relative value, rather than straight coinage."
+        },
+        "dumpDescriptions": {
+            "name": "Dump skill descriptions on use?",
+            "label": "Skills, traits and spells will dump their descriptions to chat when used."
+        },
+        "modernity": {
+            "name": "Is this a modern setting with firearms?",
+            "label": "Determines if values such as rate of fire or magazine is shown."
         }
     }
 }

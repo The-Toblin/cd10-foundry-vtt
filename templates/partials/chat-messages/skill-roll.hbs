@@ -1,5 +1,5 @@
 <div class="task-check skill skill-roll-card flex-column flex-start">
-    {{#unless (eq skillname "null")}}
+    {{#unless (eq skillName null)}}
     <div>
         <h3>{{skillName}} {{localize "cd10.chat.roll.check"}}</h3>
     </div>
@@ -11,5 +11,9 @@
     {{/if}}
     <div>
         {{{roll}}}
+        {{#if fail}} 
+        {{localize "cd10.chat.roll.fail"}}
+            {{{fail}}}
+        {{/if}}
     </div>
 </div>

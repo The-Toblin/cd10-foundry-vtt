@@ -7,19 +7,27 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             classes: [
                 "cd10", "sheet", "namedCharacter"
             ],
+            height: 750,
+            width: 750,
             tabs: [{
                 navSelector: ".sheet-tabs",
                 contentSelector: ".sheet-body",
                 initial: "biography"
-            }, ]
+            }]
         });
     }
 
+    /* Define which template to be used by this actor type. */
     get template() {
         return `systems/cd10/templates/sheets/namedCharacter-sheet.hbs`;
     }
 
-    /* Define ContextMenus */
+    /**********************
+     * Define ContextMenus *
+     **********************/
+
+    /* This menu applies to equipment that can be put on a character.
+    It allows you to edit, equip/unequip or delete an item. */
     equippableItemContextMenu = [{
         name: game.i18n.localize("cd10.sheet.edit"),
         icon: '<i class="fas fa-edit"></i>',
@@ -36,17 +44,12 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         callback: (element) => {
             const itemId = element.data("item-id");
             const item = this.actor.items.get(itemId);
-            let boolValue = false;
+            let boolValue = item.data.data.isEquipped.value;
 
-            if (item.data.data.isEquipped.value) {
-                boolValue = false;
-            } else {
-                boolValue = true;
-            }
             item.update({
                 data: {
                     isEquipped: {
-                        value: boolValue
+                        value: !boolValue
                     }
                 }
             });
@@ -59,7 +62,10 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         }
     }, ];
 
-    itemContextMenu = [{
+    /* This menu is applied to only skills in the skill-menu.
+    It allows you to edit, toggle the levelup indicator
+    or remove a skill. */
+    itemSkillContextMenu = [{
         name: game.i18n.localize("cd10.sheet.edit"),
         icon: '<i class="fas fa-edit"></i>',
         callback: (element) => {
@@ -69,12 +75,44 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             item.sheet.render(true);
         }
     }, {
+        name: game.i18n.localize("cd10.sheet.levelUp"),
+        icon: '<i class="fas fa-angle-double-up"></i>',
+        callback: (element) => {
+            const itemId = element.data("item-id");
+            const item = this.actor.items.get(itemId);
+
+            let levelUpValue = item.data.data.levelUp.value;
+
+            item.update({
+                "data.levelUp.value": !levelUpValue
+            });
+        }
+    }, {
         name: game.i18n.localize("cd10.sheet.remove"),
         icon: '<i class="fas fa-trash"></i>',
         callback: (element) => {
             this.actor.deleteEmbeddedDocuments("Item", [element.data("item-id")]);
         }
-    }, ];
+    }];
+
+    itemContextMenu = [{
+            name: game.i18n.localize("cd10.sheet.edit"),
+            icon: '<i class="fas fa-edit"></i>',
+            callback: (element) => {
+                const itemId = element.data("item-id");
+                const item = this.actor.items.get(itemId);
+
+                item.sheet.render(true);
+            }
+        },
+        {
+            name: game.i18n.localize("cd10.sheet.remove"),
+            icon: '<i class="fas fa-trash"></i>',
+            callback: (element) => {
+                this.actor.deleteEmbeddedDocuments("Item", [element.data("item-id")]);
+            }
+        }
+    ];
 
     getData() {
         /* Override default getData() function */
@@ -88,17 +126,35 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         });
 
         /* Create subproperties for item types */
-        sheetData.ammunition = sheetData.items.filter((p) => p.type == "ammunition");
-        sheetData.allArmors = sheetData.items.filter((p) => p.type == "armor");
-        sheetData.armors = sheetData.items.filter((p) => p.type == "armor" && !p.data.isShield.value);
-        sheetData.shields = sheetData.items.filter((p) => p.type == "armor" && p.data.isShield.value);
-        sheetData.allWeapons = sheetData.items.filter((p) => p.type == "weapon");
-        sheetData.meleeWeapons = sheetData.items.filter((p) => p.type == "weapon" && !p.data.isRanged.value);
-        sheetData.rangedWeapons = sheetData.items.filter((p) => p.type == "weapon" && p.data.isRanged.value);
+        sheetData.ammunition = sheetData.items.filter((p) => p.type === "ammunition");
+        sheetData.allArmors = sheetData.items.filter((p) => p.type === "armor" || p.type === "shield");
+        sheetData.armors = sheetData.items.filter((p) => p.type === "armor");
+        sheetData.shields = sheetData.items.filter((p) => p.type === "shield");
+        sheetData.allWeapons = sheetData.items.filter((p) => p.type === "meleeWeapon" || p.type === "rangedWeapon");
+        sheetData.meleeWeapons = sheetData.items.filter((p) => p.type === "meleeWeapon");
+        sheetData.rangedWeapons = sheetData.items.filter((p) => p.type === "rangedWeapon");
         sheetData.skills = sheetData.items.filter((p) => p.type == "skill");
         sheetData.traits = sheetData.items.filter((p) => p.type == "trait");
+        sheetData.posTraits = sheetData.traits.filter((p) => {
+            if (p.data.skillLevel.value > 0) {
+                return p
+            }
+        });
+        sheetData.negTraits = sheetData.traits.filter((p) => {
+            if (p.data.skillLevel.value < 0) {
+                return p
+            }
+        });
         sheetData.spells = sheetData.items.filter((p) => p.type == "spell");
-        sheetData.normalItems = sheetData.items.filter((p) => p.type != "spell" && p.type != "skill" && p.type != "trait");
+        sheetData.normalItems = sheetData.items.filter((p) => p.type != "spell" && p.type != "skill" && p.type != "trait" &&
+            p.type != "meleeWeapon" && p.type != "armor" && p.type != "rangedWeapon" && p.type != "shield");
+
+        /* Make system settings available for sheets to use for rendering */
+        sheetData.damageTypeSetting = game.settings.get("cd10", "systemDamageTypes");
+        sheetData.hitLocationSetting = game.settings.get("cd10", "systemHitLocation");
+        sheetData.encumbranceSetting = game.settings.get("cd10", "systemEncumbrance");
+        sheetData.barterSetting = game.settings.get("cd10", "systemBarter");
+        sheetData.modernity = game.settings.get("cd10", "systemModernity");
 
         return sheetData;
     }
@@ -108,80 +164,318 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         if (this.actor.isOwner) {
             /*html.find(".item-roll").click(this._onItemRoll.bind(this));*/
             html.find(".task-check").click(this._onTaskCheck.bind(this));
-            html.find(".attack-check").click(this._onAttackCheck.bind(this));
-            html.find(".physical-save").click(this._onPhysicalSave.bind(this));
-            html.find(".reveal-rollable").on("mouseover mouseout", this._onToggleRollable.bind(this));
+            html.find(".attack-check").click(this._simpleAttackCheck.bind(this));
             html.find(".complex-check").click(this._onComplexCheck.bind(this));
+            html.find(".physical-save").click(this._onPhysicalSave.bind(this));
+            html.find(".complex-attack").click(this._onComplexAttack.bind(this));
+            html.find(".reveal-rollable").on("mouseover mouseout", this._onToggleRollable.bind(this));
             html.find(".stressBox").click(this._stressBoxClicked.bind(this));
+            html.find(".inline-edit").change(this._onSkillEdit.bind(this));
+            html.find(".item-delete").click(this._onItemDelete.bind(this));
+            html.find(".item-equip").click(this._onItemEquip.bind(this));
+            html.find(".ammo-select").click(this._onAmmoSelect.bind(this));
+            html.find(".skill-item").click(this._toggleSkillUp.bind(this));
+            html.find(".shock-icons").on("click contextmenu", this._onShockMarkChange.bind(this));
+            html.find(".wounds-icons").on("click contextmenu", this._onWoundsMarkChange.bind(this));
+
+            /* ContextMenu listeners */
+            new ContextMenu(html, ".weapon-card", this.equippableItemContextMenu);
+            new ContextMenu(html, ".armor-card", this.equippableItemContextMenu);
+            new ContextMenu(html, ".equippable-inventory-item", this.equippableItemContextMenu);
+            new ContextMenu(html, ".inventory-item", this.itemContextMenu);
+            new ContextMenu(html, ".skill-item", this.itemSkillContextMenu);
         }
 
         /* General listeners */
         /*html.find(".item-create").click(this._onItemCreate.bind(this));*/
-        html.find(".inline-edit").change(this._onSkillEdit.bind(this));
-        html.find(".item-delete").click(this._onItemDelete.bind(this));
-        html.find(".item-equip").click(this._onItemEquip.bind(this));
-        html.find(".shock-icons").on("click contextmenu", this._onShockMarkChange.bind(this));
-        html.find(".wounds-icons").on("click contextmenu", this._onWoundsMarkChange.bind(this));
-
-        /* ContextMenu listeners */
-        new ContextMenu(html, ".weapon-card", this.equippableItemContextMenu);
-        new ContextMenu(html, ".armor-card", this.equippableItemContextMenu);
-        new ContextMenu(html, ".equippable-inventory-item", this.equippableItemContextMenu);
-        new ContextMenu(html, ".inventory-item", this.itemContextMenu);
 
         super.activateListeners(html);
     }
 
-    /***************************
+    /****************************
      * Various checks and saves *
      ***************************/
 
-    async _onTaskCheck(event) {
-        event.preventDefault();
-        /* Standard skill check, called from left-clicking a skill/spell on the sheet */
-        let skillItem = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId),
-            skillName = skillItem.name;
+    async _onAmmoSelect(event) {
 
-        /* Dump the description to chat. */
-        this._onItemRoll(skillItem.data._id);
+        let ammoObj = this.actor.items.get(event.currentTarget.closest(".ammo-selector").dataset.itemId),
+            weaponObj = this.actor.items.get(event.currentTarget.closest(".ammo-selector").dataset.weaponId);
 
-        if (!event.shiftKey) {
-
-            Dice.TaskCheck({
-                actionValue: event.currentTarget.dataset.actionValue,
-                skillName: skillName,
-                modifier: this.actor.getModifier
-            });
-        } else if (event.shiftKey && this.actor.getExp > 0) {
-            let expValue = this.actor.getExp - 1;
-            await this.actor.update({
-                data: {
-                    exp: {
-                        total: expValue
-                    }
+        if (weaponObj.data.data.selectedAmmo.id === ammoObj.id) {
+            await weaponObj.update({
+                "data.selectedAmmo": {
+                    "value": "None",
+                    "id": "None"
                 }
             });
-            Dice.TaskCheck({
-                actionValue: event.currentTarget.dataset.actionValue,
-                skillName: skillName,
-                modifier: this.actor.getModifier,
-                heroPoint: event.shiftKey
-            });
-
         } else {
-            ui.notifications.error(`${
-                this.actor.name
-            } does not have enough experience.`)
-            return
+            await weaponObj.update({
+                "data.selectedAmmo": {
+                    "value": ammoObj.name,
+                    "id": ammoObj.id
+                }
+            });
         }
     }
 
-    async _onPhysicalSave(event) {
-        /* Perform a physical save, directly from equipped armor */
+    async _onTaskCheck(event) {
+        /* Method to handle a simple skill check. */
         event.preventDefault();
 
-        let damageType = event.currentTarget.dataset.damageType;
-        let armor = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId);
+        /* If a hero point is spent, check if there's enough points.
+        Otherwise cancel the check. */
+        if (event.shiftKey) {
+            if (this._checkHeroPoints() === false) {
+                return;
+            }
+        }
+
+        /* Fetch the skill, based on ItemId. */
+        let skillObj = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId);
+
+        /* Dump the skill description to chat. */
+        if (game.settings.get("cd10", "systemDumpDescriptions")) {
+            skillObj.roll()
+        }
+
+        /* Perform the check */
+        Dice.TaskCheck({
+            checkType: "Simple",
+            skillObj: skillObj.data,
+            modifier: this.actor.getModifier,
+            heroPoint: event.shiftKey,
+            actor: this.actor.id
+        });
+    }
+
+    async _simpleAttackCheck(event) {
+        /* Attack check performed by left-clicking a damage value on a weapon card */
+        event.preventDefault();
+
+        /* If a hero point is spent, check if there's enough points. */
+        if (event.shiftKey) {
+            if (this._checkHeroPoints() === false) {
+                return;
+            }
+        }
+
+        let damageType = event.currentTarget.dataset.damageType,
+            weaponObj = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId).data,
+            attackSkill = weaponObj.data.attackSkill.value,
+            shieldSkill = null;
+
+        if (weaponObj.data.shieldSkill != undefined) {
+            shieldSkill = weaponObj.data.shieldSkill.value;
+        } else {
+            shieldSkill = "None";
+        }
+
+        let usingShield = false,
+            attackSkillObj = null,
+            shieldSkillObj = null;
+
+        /* Fetch the actor skills and prepare them for comparison. Due
+        to config limitations, skills are stored as punctuation-less
+        variables in the config file, but the skill names are regular
+        text. This function turns the freely-typed skills into space-less,
+        punctuation-less strings for comparison. 
+        */
+
+        if (shieldSkill === "None") {
+            this.getData().skills.forEach((skill) => {
+                let punctuationless = skill.name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+                let finalString = punctuationless.replace(/\s+/g, '').toLowerCase();
+
+                if (finalString === attackSkill.toLowerCase()) {
+                    attackSkillObj = skill;
+                }
+            });
+        } else {
+            this.getData().skills.forEach((skill) => {
+                let punctuationless = skill.name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+                let finalString = punctuationless.replace(/\s+/g, '').toLowerCase();
+
+                if (finalString === attackSkill.toLowerCase()) {
+                    attackSkillObj = skill;
+                }
+            });
+
+            this.getData().skills.forEach((skill) => {
+                let punctuationless = skill.name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+                let finalString = punctuationless.replace(/\s+/g, '').toLowerCase();
+
+                if (finalString === shieldSkill.toLowerCase()) {
+                    shieldSkillObj = skill;
+                }
+            });
+        }
+
+        /* Check if the character has equipped a shield.*/
+        let shieldObj = null;
+        this.getData().shields.forEach((shield) => {
+            if (shield.data.isEquipped.value) {
+                usingShield = true;
+                shieldObj = shield;
+            }
+        });
+
+
+        /* Check if it's a ranged weapon */
+        if (weaponObj.type === "rangedWeapon") {
+            let ammo = this.actor.items.get(weaponObj.data.selectedAmmo.id);
+            if (ammo.data.data.damage.slash.selected) {
+                damageType = "slash"
+            } else if (ammo.data.data.damage.pierce.selected) {
+                damageType = "pierce"
+            } else if (ammo.data.data.damage.blunt.selected) {
+                damageType = "blunt"
+            } else if (ammo.data.data.damage.energy.selected) {
+                damageType = "energy"
+            }
+
+        }
+
+        /* Perform the attack check */
+        Dice.TaskCheck({
+            actor: this.actor.id,
+            checkType: "SimpleAttack",
+            skillObj: attackSkillObj,
+            shieldSkillObj: shieldSkillObj,
+            usingShield: usingShield,
+            weaponObj: weaponObj,
+            damageType: damageType,
+            heroPoint: event.shiftKey,
+            modifier: this.actor.getModifier
+        });
+
+    }
+
+    async _onComplexCheck(event) {
+        /* Open the complex check dialog. A complex check allows the use of
+        traits for a check, in addition to configuring it in more detail.*/
+        event.preventDefault();
+        let dialogOptions = {
+            classes: [
+                "cd10-dialog", "complex-check-dialog"
+            ],
+            top: 300,
+            left: 400
+        };
+        new Dialog({
+            title: "Complex Check Dialog",
+            content: await renderTemplate("systems/cd10/templates/partials/complex-check-dialog.hbs", this.getData()),
+            buttons: {
+                roll: {
+                    label: "Roll!",
+                    callback: (html) => this._complexSkillCheck(html)
+                }
+            }
+        }, dialogOptions).render(true);
+    }
+
+    async _complexSkillCheck(html) {
+        /* Perform a complex skill check save 
+        called from the Complex dialog */
+
+        /* Set up variables for the method */
+        let heroPointChecked = html.find("input#heroPoint")[0].checked,
+            reverseTraitChecked = html.find("input#reverseTrait")[0].checked,
+            skillObj = null,
+            posTraitObj = null,
+            negTraitObj = null;
+
+        /* Fetch the objects for skills and traits involved*/
+        if (html.find("select#skill-selected").val() != "None") {
+            skillObj = this.actor.items.get(this.getData().skills[html.find("select#skill-selected").val()]._id);
+        }
+        if (html.find("select#pos-trait-selected").val() != "None") {
+            posTraitObj = this.actor.items.get(this.getData().posTraits[html.find("select#pos-trait-selected").val()]._id);
+        }
+        if (html.find("select#neg-trait-selected").val() != "None") {
+            negTraitObj = this.actor.items.get(this.getData().negTraits[html.find("select#neg-trait-selected").val()]._id);
+        }
+
+        /* Check if at least one of the selections were done, else show an error message. 
+        if (skillObj === null && posTraitObj === null && negTraitObj === null) {
+            ui.notifications.error(`Please select at least one skill or trait!`);
+
+            return;
+        }/*
+
+        /* If a hero point is spent, check if there's enough points.
+        Otherwise cancel the check. */
+        if (heroPointChecked) {
+            if (this._checkHeroPoints() === false) {
+                return;
+            }
+        }
+
+        let skillObjData = null,
+            posTraitObjData = null,
+            negTraitObjData = null;
+
+        /* Dump skills and traits to chat. */
+        if (skillObj != null) {
+            if (game.settings.get("cd10", "systemDumpDescriptions")) {
+                skillObj.roll();
+            }
+            skillObjData = skillObj.data;
+        }
+        if (posTraitObj != null) {
+            if (game.settings.get("cd10", "systemDumpDescriptions")) {
+                posTraitObj.roll();
+            }
+            posTraitObjData = posTraitObj.data;
+        }
+        if (negTraitObj != null) {
+            if (game.settings.get("cd10", "systemDumpDescriptions")) {
+                negTraitObj.roll();
+            }
+            negTraitObjData = negTraitObj.data;
+        }
+
+        Dice.TaskCheck({
+            actor: this.actor.id,
+            checkType: "Complex",
+            skillObj: skillObjData,
+            posTraitObj: posTraitObjData,
+            negTraitObj: negTraitObjData,
+            modifier: this.actor.getModifier,
+            heroPoint: heroPointChecked,
+            reverseTrait: reverseTraitChecked
+        });
+    }
+
+    async _onComplexAttack(event) {
+        /* Open the complex check dialog */
+        event.preventDefault();
+        let dialogOptions = {
+            classes: [
+                "cd10-dialog", "complex-attack-dialog"
+            ],
+            top: 300,
+            left: 400
+        };
+        new Dialog({
+            title: "Complex Attack Dialog",
+            content: await renderTemplate("systems/cd10/templates/partials/complex-attack-dialog.hbs", this.getData()),
+            buttons: {
+                roll: {
+                    label: "Attack!",
+                    callback: (html) => this._complexAttackCheck(html)
+                }
+            }
+        }, dialogOptions).render(true);
+    }
+
+
+    async _complexAttackCheck(event) {
+        ui.notifications.error(`I would've made a roll here, but it's not implemented yet.`)
+    }
+
+    async _onPhysicalSave(event) {
+        /* Open the physical saves dialog */
+        event.preventDefault();
 
         let dialogOptions = {
             classes: [
@@ -195,355 +489,101 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             content: await renderTemplate("systems/cd10/templates/partials/physical-save-dialog.hbs", this.getData()),
             buttons: {
                 roll: {
-                    label: "Roll!",
-                    callback: (html) => this._doSaveStuff(html, armor, damageType)
+                    label: "Save!",
+                    callback: (html) => this._doSaveStuff(html)
                 }
             }
         }, dialogOptions).render(true);
     }
 
-    async _doSaveStuff(html, armor, damageType) {
+    async _doSaveStuff(html) {
         /* Perform a physical save, called from the physical save dialog.
         This function is complex and deals with gathering the data for
         the roll, as well as responding to the result and doing the
         actor updates for wounds and shock. */
 
+        let posTraitObj,
+            negTraitObj,
+            armor = null,
+            shield = null,
+            usingShield = false,
+            posTraitObjData = null,
+            negTraitObjData = null;
 
-        /* First, we check if a trait was selected in the dialog or not. */
-        let rollTraitLevel,
-            outcome;
-
-        if (html.find("select#trait-selected").val() != "None") {
-            rollTraitLevel = this.getData().traits[html.find("select#trait-selected").val()].data.skillLevel.value;
-        } else {
-            rollTraitLevel = null
+        /* First, we check if traits were selected in the dialog or not and
+        if so, fetch the relevant objects. */
+        if (html.find("select#pos-trait-selected").val() != "None") {
+            posTraitObj = this.actor.items.get(this.getData().posTraits[html.find("select#pos-trait-selected").val()]._id);
+            posTraitObjData = posTraitObj.data;
+        }
+        if (html.find("select#neg-trait-selected").val() != "None") {
+            negTraitObj = this.actor.items.get(this.getData().negTraits[html.find("select#neg-trait-selected").val()]._id);
+            negTraitObjData = negTraitObj.data;
         }
 
         /* Check if any of the checkboxes were ticked, as well as gather
-        lethality and shock data values. */
+        the necessary data for the check. */
         let heroPointChecked = html.find("input#heroPoint")[0].checked,
             reverseTraitChecked = html.find("input#reverseTrait")[0].checked,
-            lethality = html.find("input#lethality").val(),
-            shock = html.find("input#shock").val();
+            lethality = parseInt(html.find("input#lethality").val()),
+            shock = parseInt(html.find("input#shock").val()),
+            damageType = html.find("select#damage-type").val(),
+            hitLocation = html.find("select#hit-location").val();
 
-
-        /* Once we have the values, we perform either a hero point save
-        or a regular save, saving the returned data in 'outcome'. */
-        if (heroPointChecked && this.actor.getExp > 0) {
-            let expValue = this.actor.getExp - 1;
-            await this.actor.update({
-                data: {
-                    exp: {
-                        total: expValue
-                    }
-                }
-            });
-            outcome = Dice.PhysicalSave({
-                traitValue: rollTraitLevel,
-                heroPoint: heroPointChecked,
-                reverseTrait: reverseTraitChecked,
-                armor: armor,
-                damageType: damageType,
-                lethality: lethality,
-                shock: shock
-            });
-        } else if (!heroPointChecked) {
-            outcome = Dice.PhysicalSave({
-                traitValue: rollTraitLevel,
-                heroPoint: false,
-                reverseTrait: reverseTraitChecked,
-                armor: armor,
-                damageType: damageType,
-                lethality: lethality,
-                shock: shock
-            });
-        } else {
-            ui.notifications.error(`${
-                this.actor.name
-            } does not have enough experience.`)
-            return
+        if (!lethality > 0) {
+            ui.notifications.error(`Please select a non-zero value for Lethality!`)
+            return;
         }
 
-        /* Create an update value for wounds and shock, as well as do some
-        NaN edge-case fixes for shock. */
-        let currentShock = this.actor.getShock,
-            rollShock = (await outcome).shock,
-            newShock = currentShock + rollShock,
-            newWounds;
-
-        if (typeof currentShock != "number") {
-            console.log("Uh oh");
-            this.actor.update({
-                data: {
-                    shock: {
-                        value: 0
-                    }
-                }
-            });
-        }
-
-        /* Create wounds values for the injury type. */
-
-        if ((await outcome).saveOutcome === "Fumble") {
-            newWounds = parseInt(this.actor.getWounds) + parseInt(6);
-        } else if ((await outcome).saveOutcome === "Failure" || (await outcome).saveOutcome === "StatusQuo") {
-            newWounds = parseInt(this.actor.getWounds) + parseInt(2);
-        } else if ((await outcome).saveOutcome === "Success") {
-            newWounds = parseInt(this.actor.getWounds) + parseInt(1);
-        }
-
-        /* Do not let shock or wounds overflow. */
-
-        if (newShock > this.actor.data.data.shock.max) {
-            newShock = this.actor.data.data.shock.max;
-        }
-
-        if (newWounds > this.actor.data.data.wounds.max) {
-            newWounds = this.actor.data.data.wounds.max;
-        }
-
-        /* Make the actual actor update */
-        await this.actor.update({
-            data: {
-                wounds: {
-                    value: newWounds
-                },
-                shock: {
-                    value: newShock
-                }
+        /* If a hero point is spent, check if there's enough points.
+        Otherwise cancel the check. */
+        if (heroPointChecked) {
+            if (this._checkHeroPoints() === false) {
+                return;
             }
-        });
-    }
-
-    async _onAttackCheck(event) {
-        /* Attack check performed by left-clicking a damage value on a weapon card */
-        const type = event.currentTarget.dataset.damageType,
-            item = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId),
-            attackSkill = item.data.data.attackSkill.value,
-            shieldSkill = item.data.data.shieldSkill.value;
-        let actionValue = 0,
-            usingShield = false,
-            skillName = "";
-
-        /* Fetch the actor skills and prepare them for comparison. Due
-        to config limitations, skills are stored as punctuation-less
-        variables in the config file, but the skill names are regular
-        text. This function turns the freely-typed skills into space-less,
-        punctuation-less strings for comparison. 
-        */
-
-        let actionValueAttack = 0,
-            actionValueShield = 0;
-
-        if (shieldSkill === "None") {
-            this.getData().skills.forEach((skill) => {
-                let punctuationless = skill.name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
-                let finalString = punctuationless.replace(/\s+/g, '').toLowerCase();
-
-                if (finalString === attackSkill.toLowerCase()) {
-                    actionValueAttack = skill.data.skillLevel.value;
-                }
-            });
-        } else {
-            this.getData().skills.forEach((skill) => {
-                let punctuationless = skill.name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
-                let finalString = punctuationless.replace(/\s+/g, '').toLowerCase();
-
-                if (finalString === attackSkill.toLowerCase()) {
-                    actionValueAttack = skill.data.skillLevel.value;
-                }
-            });
-
-            this.getData().skills.forEach((skill) => {
-                let punctuationless = skill.name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
-                let finalString = punctuationless.replace(/\s+/g, '').toLowerCase();
-
-                if (finalString === shieldSkill.toLowerCase()) {
-                    actionValueShield = skill.data.skillLevel.value;
-                }
-
-
-            });
         }
 
-        /* Check if the character has equipped a shield.*/
-
-        this.getData().shields.forEach((shield) => {
-            if (shield.data.isEquipped.value) {
-                usingShield = true;
+        /* Check which armor is being worn on the applicable body part,
+        if so, fetch the relevant object. */
+        this.getData().armors.forEach((a) => {
+            if (a.data.isEquipped.value && a.data.coverage[hitLocation].value) {
+                armor = a;
             }
         });
 
-        if (usingShield) {
-            /* If a shield is equipped: determine which skill is optimal to use by 
-            comparing if the shield-using skill is higher than the regular
-            attack skill with penalty.
-            */
-
-            if ((actionValueAttack - 3) > actionValueShield) {
-                actionValue = actionValueAttack - 3;
-                skillName = game.i18n.localize(`cd10.attack.${attackSkill}`);
-            } else {
-                actionValue = actionValueShield;
-                skillName = game.i18n.localize(`cd10.attack.${shieldSkill}`);
-            }
-
-        } else {
-            if ((actionValueShield - 3) > actionValueAttack) {
-                actionValue = actionValueShield - 3;
-                skillName = game.i18n.localize(`cd10.attack.${shieldSkill}`);
-            } else {
-                actionValue = actionValueAttack;
-                skillName = game.i18n.localize(`cd10.attack.${attackSkill}`);
-            }
-        }
-
-        /* Determine if a Hero Point is spent */
-        if (!event.shiftKey) {
-            Dice.AttackCheck({
-                actionValue: actionValue,
-                modifier: this.actor.getModifier,
-                weapon: item,
-                damageType: type,
-                skillName: skillName
-            });
-        } else if (event.shiftKey && this.actor.getExp > 0) {
-            let expValue = this.actor.getExp - 1;
-            await this.actor.update({
-                data: {
-                    exp: {
-                        total: expValue
-                    }
+        /* Check if a shield is equipped, if so, fetch the relevant object. */
+        if (html.find("input#parried")[0].checked) {
+            this.getData().shields.forEach((s) => {
+                if (s.data.isEquipped.value) {
+                    shield = s;
+                    usingShield = true;
                 }
             });
 
-            Dice.AttackCheck({
-                actionValue: actionValue,
-                modifier: this.actor.getModifier,
-                weapon: item,
-                damageType: type,
-                skillName: skillName,
-                heroPoint: event.shiftKey
-            });
-
-        } else {
-            ui.notifications.error(`${
-                this.actor.name
-            } does not have enough experience.`)
-            return
         }
+        /* Roll the actual check. */
+        Dice.TaskCheck({
+            checkType: "Save",
+            posTraitObj: posTraitObjData,
+            negTraitObj: negTraitObjData,
+            heroPoint: heroPointChecked,
+            reverseTrait: reverseTraitChecked,
+            armorObj: armor,
+            shieldObj: shield,
+            usingShield: usingShield,
+            damageType: damageType,
+            lethality: lethality,
+            shock: shock,
+            hitLocation: hitLocation,
+            actor: this.actor.id
+        });
     }
 
-    async _onComplexCheck(event) {
-        /* Open the complex check dialog */
-        event.preventDefault();
-        let dialogOptions = {
-            classes: [
-                "cd10-dialog", "complex-check-dialog"
-            ],
-            top: 300,
-            left: 400
-        };
-        new Dialog({
-            title: "Complex Skill Check",
-            content: await renderTemplate("systems/cd10/templates/partials/complex-check-dialog.hbs", this.getData()),
-            buttons: {
-                roll: {
-                    label: "Roll!",
-                    callback: (html) => this._doRollStuff(html)
-                }
-            }
-        }, dialogOptions).render(true);
-    }
 
-    async _doRollStuff(html) {
-        /* Perform a complex skill check, called from the Complex dialog */
-        /* Set up variables for the method */
-
-        let rollSkillLevel,
-            rollTraitLevel,
-            skillName,
-            traitName,
-            heroPointChecked,
-            reverseTraitChecked;
-
-        /* Check if at least one of the selections were done, else show an error message. */
-        if (html.find("select#skill-selected").val() === "None" && html.find("select#trait-selected").val() === "None") {
-            ui.notifications.error(`Please select at least one skill or trait!`);
-
-            return
-
-        } else if (html.find("select#trait-selected").val() === "None") {
-            /* If only the traitbox is empty, perform a normal skill check */
-            rollSkillLevel = this.getData().skills[html.find("select#skill-selected").val()].data.skillLevel.value;
-            skillName = this.getData().skills[html.find("select#skill-selected").val()].name;
-            heroPointChecked = html.find("input#heroPoint")[0].checked;
-
-            this._onItemRoll(this.getData().skills[html.find("select#skill-selected").val()]._id);
-
-        } else if (html.find("select#skill-selected").val() === "None") {
-            /* If only the skillbox is empty, perform a blank trait check */
-            rollTraitLevel = this.getData().traits[html.find("select#trait-selected").val()].data.skillLevel.value;
-            traitName = this.getData().traits[html.find("select#trait-selected").val()].name;
-            heroPointChecked = html.find("input#heroPoint")[0].checked;
-            reverseTraitChecked = html.find("input#reverseTrait")[0].checked;
-
-            this._onItemRoll(this.getData().traits[html.find("select#trait-selected").val()]._id);
-
-        } else {
-            rollTraitLevel = this.getData().traits[html.find("select#trait-selected").val()].data.skillLevel.value;
-            rollSkillLevel = this.getData().skills[html.find("select#skill-selected").val()].data.skillLevel.value;
-            skillName = this.getData().skills[html.find("select#skill-selected").val()].name;
-            traitName = this.getData().traits[html.find("select#trait-selected").val()].name;
-            heroPointChecked = html.find("input#heroPoint")[0].checked;
-            reverseTraitChecked = html.find("input#reverseTrait")[0].checked;
-
-            this._onItemRoll(this.getData().skills[html.find("select#skill-selected").val()]._id);
-            this._onItemRoll(this.getData().traits[html.find("select#trait-selected").val()]._id);
+    _onItemRoll(item) {
+        if (game.settings.get("cd10", "systemDumpDescriptions")) {
+            item.roll();
         }
-
-        if (heroPointChecked && this.actor.getExp > 0) {
-            let expValue = this.actor.getExp - 1;
-            await this.actor.update({
-                data: {
-                    exp: {
-                        total: expValue
-                    }
-                }
-            });
-            Dice.TaskCheck({
-                actionValue: rollSkillLevel,
-                traitValue: rollTraitLevel,
-                modifier: this.actor.getModifier,
-                heroPoint: heroPointChecked,
-                reverseTrait: reverseTraitChecked,
-                skillName: skillName,
-                traitName: traitName
-
-            });
-        } else if (!heroPointChecked) {
-            Dice.TaskCheck({
-                actionValue: rollSkillLevel,
-                traitValue: rollTraitLevel,
-                modifier: this.actor.getModifier,
-                heroPoint: heroPointChecked,
-                reverseTrait: reverseTraitChecked,
-                skillName: skillName,
-                traitName: traitName
-            });
-        } else {
-            ui.notifications.error(`${
-                this.actor.name
-            } does not have enough experience.`)
-            return
-        }
-    }
-
-    _onItemRoll(ID) {
-        /* Method to dump an item to chat */
-        let item = this.actor.items.get(ID);
-
-        item.roll();
     }
 
     /******************
@@ -604,19 +644,10 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         let itemId = element.closest(".item").dataset.itemId;
         const item = this.actor.items.get(itemId);
 
-        let boolValue = false;
-        if (item.data.data.isEquipped.value) {
-            boolValue = false;
-        } else {
-            boolValue = true;
-        }
+        let boolValue = item.data.data.isEquipped.value;
 
         await item.update({
-            data: {
-                isEquipped: {
-                    value: boolValue
-                }
-            }
+            "data.isEquipped.value": !boolValue
         });
     }
 
@@ -640,38 +671,26 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         });
     }
 
-    async _onShockMarkChange(event) {
+    _onShockMarkChange(event) {
         /* Listen for changes to Shock and update the value accordingly. */
         event.preventDefault();
-        let currentCount = this.actor.data.data.shock.value;
-        let newCount;
 
         if (event.type == "click") {
-            newCount = Math.min(currentCount + 1, this.actor.data.data.shock.max);
+            this.actor.modifyShock(1);
         } else {
-            newCount = Math.max(currentCount - 1, 0);
+            this.actor.modifyShock(-1);
         }
-
-        await this.actor.update({
-            "data.shock.value": newCount
-        });
     }
 
-    async _onWoundsMarkChange(event) {
+    _onWoundsMarkChange(event) {
         /* Listen for changes to Wounds and update the value accordingly. */
         event.preventDefault();
-        let currentCount = this.actor.data.data.wounds.value;
-        let newCount;
 
         if (event.type == "click") {
-            newCount = Math.min(currentCount + 1, this.actor.data.data.wounds.max);
+            this.actor.modifyWounds(1);
         } else {
-            newCount = Math.max(currentCount - 1, 0);
+            this.actor.modifyWounds(-1);
         }
-
-        await this.actor.update({
-            "data.wounds.value": newCount
-        });
     }
 
     _stressBoxClicked(event) {
@@ -679,15 +698,33 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         event.preventDefault();
 
         let value = this.actor.data.data.stressing.value;
-        if (value) {
-            this.actor.update({
-                "data.stressing.value": false
-            });
 
-        } else if (!value) {
-            this.actor.update({
-                "data.stressing.value": true
-            });
+        this.actor.update({
+            "data.stressing.value": !value
+        });
+    }
+    _checkHeroPoints() {
+        if (this.actor.getExp > 0) {
+            this.actor.modifyExp(-1);
+            return true;
+        } else {
+            ui.notifications.error(`${
+            this.actor.name
+        } does not have enough experience.`)
+            return false
         }
+    }
+
+    async _toggleSkillUp(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemId;
+        let item = this.actor.items.get(itemId);
+
+        let levelUpValue = item.data.data.levelUp.value;
+
+        await item.update({
+            "data.levelUp.value": !levelUpValue
+        });
     }
 }

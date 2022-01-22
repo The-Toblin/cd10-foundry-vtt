@@ -1,260 +1,399 @@
-/* Standard skill check. Used by both the roll icon and the complex check dialog */
+/* Core dice roll functions for making skillchecks, attacks and saves. The variable checkType determines
+how this class functions. */
 export async function TaskCheck({
-    actionValue = null,
-    traitValue = null,
+    actor = null,
+    checkType = null,
+    skillObj = null,
+    shieldSkillObj = null,
+    usingShield = false,
+    shieldObj = null,
+    posTraitObj = null,
+    negTraitObj = null,
+    weaponObj = null,
+    armorObj = null,
+    lethality = null,
+    shock = null,
+    damageType = null,
+    hitLocation = null,
     heroPoint = false,
     reverseTrait = false,
-    modifier = null,
-    skillName = null,
-    traitName = null
+    modifier = null
 } = {}) {
-    /* Set up base dice formula based on if it's a hero point check or not. */
-    let baseDice = heroPoint === true ? "2d10x9" : "1d10x9";
-    let rollFormula;
-    const messageTemplate = "systems/cd10/templates/partials/skill-roll.hbs";
 
-    if (traitValue === null && modifier === 0) {
-        rollFormula = `${baseDice} + @actionValue`;
-    } else if (traitValue === null && modifier != 0) {
-        rollFormula = `${baseDice} + @actionValue - @modifier`;
-    } else if (traitValue != null && modifier === 0) {
-        rollFormula = `${baseDice} + @actionValue + @traitValue`;
-    } else {
-        rollFormula = `${baseDice} + @actionValue + @traitValue - @modifier`;
+    /* Basic error checking */
+    if (checkType === null) {
+        ui.notifications.error(`FATAL ERROR! CheckType not set!`)
+        return;
     }
 
-    let rollData;
+    /* Set up base dice formula based on if it's a hero point check or not. 
+    Also set up required variables. */
 
-    /* Check if the Reverse Trait box is checked, if so, reverse trait value. */
-    if (reverseTrait) {
-        rollData = {
-            actionValue: actionValue,
-            traitValue: -traitValue,
-            modifier: modifier
-        };
-    } else {
-        rollData = {
-            actionValue: actionValue,
-            traitValue: traitValue,
-            modifier: modifier
-        };
+    let baseDice = heroPoint === true ? "2d10x9" : "1d10x9",
+        rollFormula = null,
+        rollData = null,
+        skillName = null,
+        traitName = null,
+        actionValue = null,
+        traitValue = null;
+
+    /* Set up correct chat message template */
+    let messageTemplate = null;
+    if (checkType === "Simple" || checkType === "Complex") {
+        messageTemplate = "systems/cd10/templates/partials/chat-messages/skill-roll.hbs";
+    } else if (checkType === "Attack" || checkType === "SimpleAttack") {
+        messageTemplate = "systems/cd10/templates/partials/chat-messages/attack-roll.hbs";
+    } else if (checkType === "Save") {
+        messageTemplate = "systems/cd10/templates/partials/chat-messages/physical-save.hbs";
     }
 
-    /* Roll the dice. Save as variable for manipulation. */
-    let rollD10 = new Roll(rollFormula, rollData).roll({
-        async: false
-    });
+    /* Fetch skill level */
+    if (skillObj != null) {
+        actionValue = parseInt(skillObj.data.skillLevel.value);
+        skillName = skillObj.name;
+    } else {
+        skillName = null;
+    }
 
-    /* Catch the dreaded 0 */
-    for (let i = 0; i < rollD10.terms[0].results.length; i++) {
+    if (checkType != "Simple" || checkType != "SimpleAttack") {
+        /* Set up traitvalue for the roll */
+        if (posTraitObj != null && negTraitObj != null) {
+            /* If both traits are provided, use the sum of them. */
+            traitValue = parseInt(posTraitObj.data.skillLevel.value) + parseInt(negTraitObj.data.skillLevel.value);
 
-        if (rollD10.terms[0].results[i].result === 10) {
-            rollD10._total -= 10;
+            /* Set up the traitName variable for the roll message */
+            let posName = posTraitObj.name,
+                negName = negTraitObj.name;
+
+            traitName = posName.concat(" and ", negName);
+
+        } else if (posTraitObj != null && negTraitObj === null) {
+            /* If only a positive trait is provided set traitvalue. */
+            traitValue = parseInt(posTraitObj.data.skillLevel.value);
+            traitName = posTraitObj.name;
+        } else if (posTraitObj === null && negTraitObj != null) {
+            traitValue = parseInt(negTraitObj.data.skillLevel.value);
+            traitName = negTraitObj.name;
+        }
+
+        /* If a traitvalue is set, check if traits were reversed */
+        if (reverseTrait && traitValue != null) {
+            traitValue = -Math.abs(traitValue);
         }
     }
 
-    /* Set up the roll message data structures. */
+    /* Set up the rollformula */
+    rollFormula = `${baseDice}`;
+
+    if (skillObj != null) {
+        if (skillObj.type === "spell" || skillObj.type === "skill") {
+            rollFormula += " + @actionValue";
+        } else if (skillObj.type === "trait") {
+            if (actionValue > 0) {
+                rollFormula += " + @actionValue";
+            } else if (actionValue < 0) {
+                rollFormula += " @actionValue";
+            }
+        }
+    }
+
+    if (posTraitObj != null || negTraitObj != null) {
+        if (traitValue > 0) {
+            rollFormula += " + @traitValue";
+        } else if (traitValue < 0) {
+            rollFormula += " @traitValue";
+        }
+    }
+
+    if (modifier > 0 && checkType != "Save") {
+        rollFormula += " - @modifier";
+    }
+
+    /* Check if an attempt is being made without possessing the necessary skill. */
+    if (skillObj === null && checkType === "Simple" || skillObj === null && checkType === "SimpleAttack") {
+        actionValue = 0;
+        skillName = "No Skill!";
+    }
+
+    rollData = {
+        actionValue: actionValue,
+        traitValue: traitValue,
+        modifier: modifier
+    };
+
+    /* Roll the dice. Save as object for manipulation. */
+    let rollD10 = await new Roll(rollFormula, rollData).roll({
+        async: true
+    });
+
+    let failRoll = false,
+        failD10;
+
+    /* Catch the dreaded 0 */
+    for (let i = 0; i < rollD10.terms[0].results.length; i++) {
+        if (rollD10.terms[0].results[i].result === 10) {
+            rollD10._total -= 10;
+            failRoll = true;
+            console.log("ROLLED A ZERO!");
+        }
+    }
+
+    if (failRoll) {
+        console.log("ROLLING SECOND D10!");
+        failD10 = await new Roll(rollFormula, rollData).roll({
+            async: true
+        });
+
+        for (let i = 0; i < failD10.terms[0].results.length; i++) {
+            if (failD10.terms[0].results[i].result === 10) {
+                failD10._total -= 10;
+            }
+        }
+    }
+
+    /* Set up the roll message data structures based on checkType. */
     let renderedRoll = await rollD10.render(),
+        templateContext = null,
+        chatData = null,
+        renderedFailRoll = null;
+
+
+    if (failRoll) {
+        renderedFailRoll = await failD10.render();
+    }
+
+    if (checkType === "Simple") {
+        templateContext = {
+            skillName: skillName,
+            roll: renderedRoll,
+            fail: renderedFailRoll
+        }
+    } else if (checkType === "Complex") {
         templateContext = {
             skillName: skillName,
             traitName: traitName,
             roll: renderedRoll,
-            traitValue: traitValue
-        },
-        chatData = {
-            speaker: ChatMessage.getSpeaker(),
-            roll: rollD10,
-            content: await renderTemplate(messageTemplate, templateContext),
-            sound: CONFIG.sounds.dice,
-            type: CONST.CHAT_MESSAGE_TYPES.ROLL
-        };
+            traitValue: traitValue,
+            fail: renderedFailRoll
+        }
+    } else if (checkType === "SimpleAttack") {
+        let attackOutcome = _handleAttack(rollD10._total, skillObj, shieldSkillObj, weaponObj, damageType, usingShield, actor);
+        templateContext = {
+            weapon: weaponObj,
+            weaponDamage: attackOutcome.weaponDamage,
+            weaponShock: attackOutcome.weaponShock,
+            roll: renderedRoll,
+            lethality: attackOutcome.lethality,
+            excess: attackOutcome.excess,
+            type: damageType,
+            skillName: attackOutcome.skillName,
+            actionValue: attackOutcome.actionValue,
+            fail: renderedFailRoll
+        }
+    } else if (checkType === "Attack") {
+        let attackOutcome = _handleAttack(rollD10._total, skillObj, shieldSkillObj, weaponObj, damageType, usingShield, actor);
+        templateContext = {
+            weapon: weaponObj,
+            weaponDamage: attackOutcome.weaponDamage,
+            weaponShock: attackOutcome.weaponShock,
+            roll: renderedRoll,
+            lethality: attackOutcome.lethality,
+            excess: attackOutcome.excess,
+            type: damageType,
+            skillName: attackOutcome.skillName,
+            traitName: traitName,
+            actionValue: attackOutcome.actionValue,
+            traitValue: traitValue,
+            fail: renderedFailRoll
+        }
+    } else if (checkType === "Save") {
+        let outcome = _handleSave(rollD10._total, traitValue, damageType, armorObj, shieldObj, usingShield, lethality, shock, hitLocation, actor);
+        templateContext = {
+            armor: armorObj,
+            roll: renderedRoll,
+            lethality: lethality,
+            type: damageType,
+            shockResult: outcome.shockResult,
+            saveOutcome: outcome.saveOutcome,
+            wounds: outcome.wounds,
+            fail: renderedFailRoll
+        }
+
+    }
+    chatData = {
+        speaker: ChatMessage.getSpeaker(),
+        roll: rollD10,
+        content: await renderTemplate(messageTemplate, templateContext),
+        sound: CONFIG.sounds.dice,
+        type: CONST.CHAT_MESSAGE_TYPES.ROLL
+    };
 
     /* Print results to chatlog. */
     ChatMessage.create(chatData);
 }
 
-/* Standard attack check. Performed when you click a damage type on a weapon card.
-For details, see TaskCheck above. */
-export async function AttackCheck({
-    actionValue = null,
-    traitValue = null,
-    heroPoint = false,
-    reverseTrait = false,
-    modifier = null,
-    weapon = null,
-    damageType = null,
-    skillName = null
-} = {}) {
+function _handleAttack(rollTotal, skillObj, shieldSkillObj, weaponObj, damageType, usingShield, actorId) {
+    /* Calculate details of the attack, such as Lethality and Excess. */
+    let excess,
+        lethality,
+        actionValue,
+        skillName,
+        weaponDamage,
+        weaponShock;
 
-    const messageTemplate = "systems/cd10/templates/partials/attack-roll.hbs";
+    excess = parseInt(rollTotal) - 9;
 
-    let rollFormula;
-
-    let baseDice = heroPoint === true ? "2d10x9" : "1d10x9";
-
-    if (traitValue === null && modifier === 0) {
-        rollFormula = `${baseDice} + @actionValue`;
-    } else if (traitValue === null && modifier != 0) {
-        rollFormula = `${baseDice} + @actionValue - @modifier`;
-    } else if (traitValue != null && modifier === 0) {
-        rollFormula = `${baseDice} + @actionValue + @traitValue`;
-    } else {
-        rollFormula = `${baseDice} + @actionValue + @traitValue - @modifier`;
+    if (excess < 1) {
+        excess = 0;
     }
 
-    let rollData;
-
-    if (reverseTrait) {
-        rollData = {
-            actionValue: actionValue,
-            traitValue: -traitValue,
-            modifier: modifier
-        };
+    if (weaponObj.type === "rangedWeapon") {
+        let a = game.actors.get(actorId);
+        let ammo = a.items.get(weaponObj.data.selectedAmmo.id);
+        lethality = parseInt(ammo.data.data.damage[damageType].value) + (excess);
+        weaponDamage = parseInt(ammo.data.data.damage[damageType].value);
+        weaponShock = parseInt(ammo.data.data.damage.shock.value)
     } else {
-        rollData = {
-            actionValue: actionValue,
-            traitValue: traitValue,
-            modifier: modifier
-        };
+        lethality = parseInt(weaponObj.data.damage[damageType].value) + (excess);
+        weaponDamage = parseInt(weaponObj.data.damage[damageType].value);
+        weaponShock = parseInt(weaponObj.data.damage.shock.value);
     }
 
-    let rollD10 = new Roll(rollFormula, rollData).roll({
-        async: false
-    });
+    if (usingShield) {
+        /* If a shield is equipped: determine which skill is optimal to use by 
+        comparing if the shield-using skill is higher than the regular
+        attack skill with penalty.
+        */
 
-    /* Catch the dreaded 0 */
-    for (let i = 0; i < rollD10.terms[0].results.length; i++) {
+        let actionValueAttack, actionValueShield, attackName, shieldName;
 
-        if (rollD10.terms[0].results[i].result === 10) {
-            rollD10._total -= 10;
+        if (skillObj === null) {
+            actionValueAttack = 0;
+            attackName = "No skill!"
+        } else {
+            actionValueAttack = skillObj.data.skillLevel.value;
+            attackName = skillObj.name;
+        }
+
+        if (shieldSkillObj === null) {
+            actionValueShield = 0;
+            shieldName = "No skill!"
+        } else {
+            actionValueShield = shieldSkillObj.data.skillLevel.value;
+            shieldName = shieldSkillObj.name;
+        }
+
+        if ((actionValueAttack - 3) > actionValueShield) {
+            actionValue = actionValueAttack - 3;
+            skillName = attackName;
+        } else {
+            actionValue = actionValueShield;
+            skillName = shieldName;
+        }
+    } else {
+        if (skillObj === null) {
+            skillName = "No skill!";
+            actionValue = 0;
+        } else {
+            actionValue = skillObj.data.skillLevel.value;
+            skillName = skillObj.name;
         }
     }
 
-    /* Calculate details of the attack, such as Lethality and Excess. */
-    let lethality = parseInt(rollD10._total) + parseInt(weapon.data.data.damage[damageType].value - 9),
-        excess = parseInt(rollD10._total) - 9;
-
-    let renderedRoll = await rollD10.render(),
-        templateContext = {
-            weapon: weapon,
-            roll: renderedRoll,
-            lethality: lethality,
-            excess: excess,
-            type: damageType,
-            skillName: skillName,
-            actionValue: actionValue
-        },
-        chatData = {
-            speaker: ChatMessage.getSpeaker(),
-            roll: rollD10,
-            content: await renderTemplate(messageTemplate, templateContext),
-            sound: CONFIG.sounds.dice,
-            type: CONST.CHAT_MESSAGE_TYPES.ROLL
-        };
-
-    ChatMessage.create(chatData);
+    return {
+        actionValue,
+        skillName,
+        lethality,
+        excess,
+        weaponDamage,
+        weaponShock
+    }
 }
 
-/* Perform a physical save. Done when you click a protection type on an armor card.
-For details, see TaskCheck above. */
-export async function PhysicalSave({
-    traitValue = null,
-    heroPoint = false,
-    reverseTrait = false,
-    armor = null,
-    damageType = null,
-    lethality = null,
-    shock = null
-} = {}) {
+/* Perform a physical save. For details, see TaskCheck above. */
+function _handleSave(roll, traitValue, damageType, armorObj, shieldObj, usingShield, lethality, shock, hitLocation, actor) {
 
-    const messageTemplate = "systems/cd10/templates/partials/physical-save.hbs";
+    let outcome = "",
+        wounds = 0,
+        saveResult = 0,
+        lethalityValue = lethality,
+        shockValue = shock;
 
-    let rollFormula,
-        baseDice = heroPoint === true ? "2d10x9" : "1d10x9",
-        rollData,
-        outcome;
+    /* This is where we calculate the outcome of the save, based
+    on input factors. */
 
-    if (traitValue === null) {
-        rollFormula = `${baseDice}`;
-    } else {
-        rollFormula = `${baseDice} + @traitValue`;
+    /* First we check to see if there is a block or parry to account for. */
+    if (usingShield) {
+        lethalityValue -= shieldObj.data.protection[damageType].value;
+        shockValue -= shieldObj.data.protection.shock.value;
     }
 
-    if (reverseTrait) {
-        rollData = {
-            traitValue: -traitValue,
-        };
-    } else {
-        rollData = {
-            traitValue: traitValue,
-        };
+    /* Then we account for armor. */
+    if (armorObj != null) {
+        lethalityValue -= armorObj.data.protection[damageType].value;
+        shockValue -= armorObj.data.protection.shock.value;
     }
 
-    let rollD10 = new Roll(rollFormula, rollData).roll({
-        async: false
-    });
-
-    /* Catch the dreaded 0 */
-    for (let i = 0; i < rollD10.terms[0].results.length; i++) {
-
-        if (rollD10.terms[0].results[i].result === 10) {
-            rollD10._total -= 10;
-        }
+    let traitModification = null;
+    /* Then we account for traits, if any. */
+    if (traitValue != null && traitValue > 0) {
+        traitModification = traitValue;
+    } else if (traitValue != null && traitValue < 0) {
+        traitModification = traitValue;
     }
 
-    let renderedRoll = await rollD10.render(),
-        saveResult = parseInt(rollD10._total) + parseInt(armor.data.data.protection[damageType].value),
-        shockResult = shock - parseInt(armor.data.data.protection.shock.value);
-
-    /* Catch smaller than 0 Shockresults */
-
-    if (shockResult < 0) {
-        shockResult = 0;
-    }
+    saveResult = roll - lethalityValue + traitModification;
 
     /* Set up limits for fumble and perfection */
-    let fumbleLimit = parseInt(lethality) - 10,
-        perfectionLimit = parseInt(lethality) + 10;
+    let fumbleLimit = parseInt(lethalityValue) - 10,
+        perfectionLimit = parseInt(lethalityValue) + 10;
 
+    if (shockValue <= 0) {
+        shockValue = 1;
+    }
     /* Calculate outcome and adjust Shock values accordingly*/
     if (saveResult >= perfectionLimit) {
         outcome = "Perfection";
-        shockResult = 1;
-    } else if (saveResult > lethality) {
-        outcome = "Success"
+        shockValue = 1;
+        wounds = 0;
+    } else if (saveResult > lethalityValue) {
+        outcome = "Success";
+        wounds = 1;
     } else if (saveResult < fumbleLimit) {
         outcome = "Fumble"
-        shockResult *= 3;
-    } else if (saveResult < lethality) {
+        shockValue *= 3;
+        wounds = 6;
+    } else if (saveResult < lethalityValue) {
         outcome = "Failure"
-        shockResult *= 2;
-    } else if (saveResult = lethality) {
+        shockValue *= 2;
+        wounds = 2;
+    } else if (saveResult = lethalityValue) {
         outcome = "StatusQuo"
+        wounds = 2;
+        shockValue *= 2;
     }
 
-    let templateContext = {
-            armor: armor,
-            roll: renderedRoll,
-            lethality: lethality,
-            type: damageType,
-            shock: shock,
-            shockResult: shockResult,
-            saveOutcome: outcome
-        },
-        chatData = {
-            speaker: ChatMessage.getSpeaker(),
-            roll: rollD10,
-            content: await renderTemplate(messageTemplate, templateContext),
-            sound: CONFIG.sounds.dice,
-            type: CONST.CHAT_MESSAGE_TYPES.ROLL
-        };
+    /* Catch automatic failure. */
+    if (!outcome === "Fumble" && roll === 0) {
+        outcome = "Failure"
+        shockValue *= 2;
+        wounds = 2;
+    }
 
-    ChatMessage.create(chatData);
+    /* Update the actor with the values from the save. */
+    let actorObj = game.actors.get(actor);
 
-    /* Return the necessary values to adjust the values on the character. */
+    if (shockValue > 0) {
+        actorObj.modifyShock(shockValue);
+    }
+
+    if (wounds > 0) {
+        actorObj.modifyWounds(wounds);
+    }
+
     return {
-        result: saveResult,
-        shock: shockResult,
-        saveOutcome: outcome
+        shockResult: shockValue,
+        saveOutcome: outcome,
+        wounds: wounds
     }
 }

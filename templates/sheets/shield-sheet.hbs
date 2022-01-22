@@ -8,7 +8,6 @@
                 placeholder="{{localize "cd10.skill.name"}}"
             />
         </h1>
-        
     </div>
     <hr>
     <div class="item-sheet-main-content flex-row flex-evenly">
@@ -17,12 +16,12 @@
             data-edit="img"
             title="{{item.name}}"
         />
-        <div class="generic-info-box sheet-card">
+        <div class="generic-info-box dark-background">
             {{> "systems/cd10/templates/partials/item-sheet-components/generic-item-data.hbs" this }}
         </div>
     </div>
-    <div class="weapon-and-armor-stats sheet-card">
-        {{> "systems/cd10/templates/partials/item-sheet-components/small-ammo-stats.hbs" this }}
+    <div class="weapon-and-armor-stats dark-background">
+        {{> "systems/cd10/templates/partials/item-sheet-components/small-shield-stats.hbs" this }}
     </div>
     <div class="editor-box dark-background pad-8">
         {{editor

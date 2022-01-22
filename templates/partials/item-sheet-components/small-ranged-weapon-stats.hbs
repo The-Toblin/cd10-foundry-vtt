@@ -1,0 +1,60 @@
+<div class="ranged-weapon pad">
+    <table>
+        <tr>
+            <th>{{localize "cd10.rangedWeapon.attackWith"}}</th>
+            <th>{{localize "cd10.rangedWeapon.rangeClose"}}</th>
+            <th>{{localize "cd10.rangedWeapon.rangeNormal"}}</th>
+            <th>{{localize "cd10.rangedWeapon.rangeLong"}}</th>
+            <th>{{localize "cd10.rangedWeapon.rangeMax"}}</th>
+            <th>{{localize "cd10.rangedWeapon.ammunition"}}</th>
+        </tr>
+        <tr>
+            <td>
+                <select name="data.attackSkill.value">
+                    {{#select data.attackSkill.value}}
+                        {{#each config.combatSkills as |name type|}}
+                            <option value="{{type}}">{{localize name}}</option>
+                        {{/each}}
+                    {{/select}}
+                </select>
+            </td>
+            <td>
+                <input name="data.range.value.rangeClose" type="text" value="{{data.range.value.rangeClose}}" data-dtype="{{data.range.type}}" />
+            </td>
+            <td>
+                <input name="data.range.value.rangeNormal" type="text" value="{{data.range.value.rangeNormal}}" data-dtype="{{data.range.type}}" />
+            </td>
+            <td>
+                <input name="data.range.value.rangeLong" type="text" value="{{data.range.value.rangeLong}}" data-dtype="{{data.range.type}}" />
+            </td>
+            <td>
+                <input name="data.range.value.rangeMax" type="text" value="{{data.range.value.rangeMax}}" data-dtype="{{data.range.type}}" />
+            </td>
+            <td>
+                <select name="data.ammoGroup.value">
+                    {{#select data.ammoGroup.value}}
+                        {{#each config.ammunitionTypes as |name type|}}
+                            <option value="{{type}}">{{localize name}}</option>
+                        {{/each}}
+                    {{/select}}
+                </select>
+            </td>
+        </tr>
+    </table>
+    {{#if modernity}}
+    <table>
+        <tr>
+            <th>{{localize "cd10.rangedWeapon.accuracy"}}</th>
+            <th>{{localize "cd10.rangedWeapon.magazine"}}</th>
+            <th>{{localize "cd10.rangedWeapon.burst"}}</th>
+            <th>{{localize "cd10.rangedWeapon.fullAuto"}}</th>
+        </tr>
+        <tr>
+            <td><input name="data.accuracy.value" type="text" value="{{data.accuracy.value}}" data-dtype="{{data.accuracy.type}}" /></td>
+            <td><input name="data.magazine.value" type="text" value="{{data.magazine.value}}" data-dtype="{{data.magazine.type}}" /></td>
+            <td><input name="data.rof.value.burst" type="text" value="{{data.rof.value.burst}}" data-dtype="{{data.rof.type}}"/></td>
+            <td><input name="data.rof.value.fullAuto" type="text" value="{{data.rof.value.fullAuto}}" data-dtype="{{data.rof.type}}"/></td>
+        </tr>
+    </table>
+    {{/if}}
+</div>

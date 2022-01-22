@@ -1,31 +1,78 @@
-<form class="physical-save-dialog">
+<form class="physical-save-dialog sheet-card">
     <div class="flex-column">
-        <label>Select trait</label>
-        <select id="trait-selected" name="trait-selected">
-            <option value="None">None</option>
-            {{#select traits}}
-            {{#each traits as |trait index|}}
-            <option value="{{index}}">{{trait.name}}</option>
-            {{/each}}
-            {{/select}}
-        </select>
-    </div>
-    <div class="flex-column">
-        <label>Input {{localize "cd10.chat.attack.shock"}}</label>
-        <input id="shock" name="shock" type="text">
-    </div>
-    <div class="flex-column">
-        <label>Input {{localize "cd10.chat.attack.lethality"}}</label>
-        <input id="lethality" name="lethality" type="text">
-    </div>
-    <div class="flex-row flex-even">
-        <div class="flex-column">
-            <label>Use hero point?</label>
-            <input id="heroPoint" name="heroPoint" type="checkbox" value="off" />
+        <div class="flex-column pad-8">
+            <label>{{localize "cd10.sheet.select"}} {{localize "cd10.sheet.positive"}} {{localize "cd10.sheet.trait"}}</label>
+            <select id="pos-trait-selected" name="pos-trait-selected">
+                <option value="None">None</option>
+                {{#select posTraits}}
+                {{#each posTraits as |trait index|}}
+                <option value="{{index}}">{{trait.name}}</option>
+                {{/each}}
+                {{/select}}
+            </select>
         </div>
-        <div class="flex-column">
-            <label>Reverse trait?</label>
-            <input id="reverseTrait" name="reverseTrait" type="checkbox" value="off" />
+        <div class="flex-column pad-8">
+            <label>{{localize "cd10.sheet.select"}} {{localize "cd10.sheet.negative"}} {{localize "cd10.sheet.trait"}}</label>
+            <select id="neg-trait-selected" name="neg-trait-selected">
+                <option value="None">None</option>
+                {{#select negTraits}}
+                {{#each negTraits as |trait index|}}
+                <option value="{{index}}">{{trait.name}}</option>
+                {{/each}}
+                {{/select}}
+            </select>
+        </div>
+        {{#if hitLocationSetting}}
+        <div class="flex-column pad-8">
+            <label>{{localize "cd10.sheet.select"}} {{localize "cd10.sheet.hitLocation"}}</label>
+            <select id="hit-location" name="hit-location">
+                {{#select hit-location}}
+                    {{#each config.coverage as |name type|}}
+                        <option value="{{type}}">{{localize name}}</option>
+                    {{/each}}
+                {{/select}}
+            </select>
+        </div>
+        {{/if}}
+        {{#unless (eq damageTypeSetting "simple")}}
+        <div class="flex-column pad-8">
+            <label>{{localize "cd10.sheet.select"}} {{localize "cd10.sheet.type"}}</label>
+            <select id="damage-type" name="damage-type">
+                {{#select damage-type}}
+                {{#if (eq damageTypeSetting "standard")}}
+                    {{#each config.standardDamageTypes as |name type|}}
+                        <option value="{{type}}">{{localize name}}</option>
+                    {{/each}}
+                {{else if (eq damageTypeSetting "complex")}}
+                    {{#each config.complexDamageTypes as |name type|}}
+                        <option value="{{type}}">{{localize name}}</option>
+                    {{/each}}
+                {{/if}}
+                {{/select}}
+            </select>
+        </div>
+        {{/unless}}
+        <div class="flex-column pad-8">
+            <label>{{localize "cd10.sheet.enter"}} {{localize "cd10.chat.attack.lethality"}}</label>
+            <input id="lethality" name="lethality" type="text">
+        </div>
+        <div class="flex-column pad-8">
+            <label>{{localize "cd10.sheet.enter"}} {{localize "cd10.chat.attack.shock"}}</label>
+            <input id="shock" name="shock" type="text">
+        </div>
+        <div class="flex-column pad-8">
+            <label>{{localize "cd10.sheet.blockQuestion"}}</label>
+            <input id="parried" name="parried" type="checkbox" value="off" />
+        </div>
+        <div class="flex-row flex-even">
+            <div class="flex-column">
+                <label>{{localize "cd10.sheet.heroPoint"}}</label>
+                <input id="heroPoint" name="heroPoint" type="checkbox" value="off" />
+            </div>
+            <div class="flex-column">
+                <label>{{localize "cd10.sheet.reverse"}} {{localize "cd10.sheet.trait"}}</label>
+                <input id="reverseTrait" name="reverseTrait" type="checkbox" value="off" />
+            </div>
         </div>
     </div>
 </form>

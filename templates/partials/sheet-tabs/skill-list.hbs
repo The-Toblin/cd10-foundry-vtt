@@ -2,9 +2,10 @@
     <div class="skill-list sheet-card flex-column flex-start">
         {{#each skills as |skill id|}}
         <div class="attribute-pair flex-row flex-evenly item reveal-rollable" data-item-id="{{skill._id}}">
-            <div class="attribute-name inventory-item" data-item-id="{{skill._id}}">
+            <div class="attribute-name skill-item" data-item-id="{{skill._id}}">
                 {{skill.name}}
             </div>
+            {{#if skill.data.levelUp.value}}<i class="fas fa-angle-double-up"></i>{{/if}}
             <input class="attribute-value inline-edit" data-field="data.skillLevel.value"
                 data-dtype="{{skill.data.skillLevel.type}}" value="{{skill.data.skillLevel.value}}"
                 placeholder="{{localize "cd10.skill.skillLevel"}}" />
@@ -23,6 +24,9 @@
             <input class="attribute-value inline-edit" data-field="data.skillLevel.value"
                 data-dtype="{{trait.data.skillLevel.type}}" value="{{trait.data.skillLevel.value}}"
                 placeholder="{{localize "cd10.skill.skillLevel"}}" />
+            <a class="item-roll hidden rollable task-check" data-type="text" data-trait-value="{{trait.data.skillLevel.value}}" title={{localize "cd10.sheet.roll"}}>
+                <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png"/>
+            </a>
         </div>
         {{/each}}
     </div>

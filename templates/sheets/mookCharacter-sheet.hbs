@@ -3,15 +3,24 @@
         <div class="flex-row flex-between header-box">
             <div class="flex-column flex-center title-box">
                 <h1>
-                    <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "cd10.stats.name"}}" />
+                    <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "
+                        cd10.stats.name"}}" />
                 </h1>
                 <div class="character-stats">
                     <h3 class="sheet-header">{{localize "cd10.sheet.health"}}
                     </h3>
-                    {{> "systems/cd10/templates/partials/character-stat-block.hbs"}}
+                    {{> "systems/cd10/templates/partials/sheet-tabs/character-stat-block.hbs"}}
                 </div>
             </div>
-            <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" class="actor-image" />
+            <div class="flex-column flex-center pad-4">
+                <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" class="actor-image" />
+                <div class="stressBoxSelect pad-8 center">
+                    <label>{{localize "cd10.sheet.stress"}}?</label>
+                    <a class="stressBox" data-type="text">
+                        <i class="far fa-{{#if this.actor.data.data.stressing.value}}check-{{/if}}square"></i>
+                    </a>
+                </div>
+            </div>
         </div>
         <hr>
         <div class="quote">
@@ -25,7 +34,7 @@
                 <div>{{localize "cd10.sheet.total"}}: {{data.traitsValue.value}}</div>
             </div>
             <div>
-                {{> "systems/cd10/templates/partials/skill-list.hbs"}}
+                {{> "systems/cd10/templates/partials/sheet-tabs/skill-list.hbs"}}
             </div>
         </div>
     </div>
@@ -33,18 +42,17 @@
     <div class="body-box flex-column flex-between">
         <div class="flex-row flex-even equipment-list">
             {{#each meleeWeapons as |meleeWeapon id|}}
-            {{> "systems/cd10/templates/partials/small-weapon-card.hbs" meleeWeapon }}
+            {{> "systems/cd10/templates/partials/equipment-cards/small-weapon-card.hbs" meleeWeapon }}
             {{/each}}
             {{#each rangedWeapons as |rangedWeapon id|}}
-            {{> "systems/cd10/templates/partials/small-weapon-card.hbs" rangedWeapon }}
+            {{> "systems/cd10/templates/partials/equipment-cards/small-ranged-weapon-card.hbs" rangedWeapon }}
             {{/each}}
             {{#each armors as |armor id|}}
-            {{> "systems/cd10/templates/partials/small-armor-card.hbs" armor }}
+            {{> "systems/cd10/templates/partials/equipment-cards/small-armor-card.hbs" armor }}
             {{/each}}
             {{#each shields as |shield id|}}
-            {{> "systems/cd10/templates/partials/small-armor-card.hbs" shield }}
+            {{> "systems/cd10/templates/partials/equipment-cards/small-shield-card.hbs" shield }}
             {{/each}}
         </div>
-    </div>
     </div>
 </form>

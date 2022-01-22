@@ -4,10 +4,8 @@
 }
 /* Main sheet definitions */
 .cd10.sheet.namedCharacter {
-  min-width: 750px;
-  min-height: 765px;
-  max-width: 1000px;
-  max-height: 1920px;
+  min-height: 250px;
+  min-width: 510px;
 }
 .cd10.sheet.namedCharacter h1,
 .cd10.sheet.namedCharacter h2,
@@ -114,6 +112,21 @@
 .cd10.sheet.namedCharacter form .encumbrance-list {
   display: flex;
 }
+.cd10.sheet.namedCharacter form .fa-angle-double-up {
+  padding-top: 5px;
+}
+.cd10.sheet.namedCharacter form .fifty {
+  width: 50%;
+}
+.cd10.sheet.namedCharacter form .fifteen {
+  width: 15%;
+}
+.cd10.sheet.namedCharacter form .twenty {
+  width: 20%;
+}
+.cd10.sheet.namedCharacter form .ammo-select .far {
+  padding-right: 8px;
+}
 .cd10.sheet.namedCharacter form .sheet-sidebar {
   padding: 10px;
   min-width: 225px;
@@ -124,7 +137,7 @@
 .cd10.sheet.namedCharacter form .sheet-sidebar .d10-roll-icon img {
   padding-top: 4px;
   margin-left: 5px;
-  width: 25px;
+  width: 15px;
   border: none;
 }
 .cd10.sheet.namedCharacter form .sheet-sidebar .red {
@@ -234,8 +247,8 @@
 .weapon-card .item-img {
   display: block;
   margin: 0 10px 0 3px;
-  min-width: 150px;
-  min-height: 150px;
+  max-width: 100px;
+  max-height: 100px;
 }
 .weapon-card .d10-roll-icon {
   height: 10px;
@@ -249,7 +262,8 @@
   text-align: center;
   margin-bottom: 10px;
 }
-.weapon-card .description-box {
+.weapon-card .description-box,
+.weapon-card .ammo-box {
   width: 100%;
   max-height: 150px;
   overflow: auto;
@@ -450,10 +464,6 @@
   display: flex;
   flex-direction: column;
   justify-content: start;
-  min-width: 560px;
-  max-width: 850px;
-  height: fit-content !important;
-  width: fit-content !important;
 }
 .cd10.sheet.item img {
   width: 150px;
@@ -633,6 +643,9 @@
 .cd10.sheet.mookCharacter form .body-box {
   padding: 10px;
 }
+.cd10.sheet.mookCharacter form .center {
+  text-align: center;
+}
 .cd10.sheet.mookCharacter form .quote textarea {
   resize: none;
   min-height: unset;
@@ -646,17 +659,25 @@
 .cd10.sheet.mookCharacter form .weapon-item {
   margin-right: 5px;
 }
+.cd10.sheet.mookCharacter form .ammo-select .far {
+  padding-right: 8px;
+}
+.cd10.sheet.mookCharacter form .item-delete .fas {
+  text-align: right;
+}
 .cd10-dialog {
   width: fit-content !important;
   height: fit-content !important;
-  background: url(./assets/backgrounds/card_background.jpg);
+  padding: 10px;
+  background: url(./assets/backgrounds/card_detail_background.jpg);
   border-style: solid;
   border-width: 3px;
-  border-image: radial-gradient(black, var(--font-color)) 1;
-  padding: 5px;
-  box-shadow: 5px 10px 10px #000000;
-  margin-bottom: 10px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
   color: var(--font-color);
+}
+.cd10-dialog h3 {
+  text-align: center;
 }
 .cd10-dialog .window-content {
   color: var(--font-color) !important;

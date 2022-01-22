@@ -10,14 +10,15 @@
             {{localize "cd10.chat.attack.weapon"}} {{localize "cd10.chat.attack.lethality"}}
         </div>
         <div class="value-box">
+            {{weaponDamage}}
             {{#if (eq type "slash")}}
-            {{weapon.data.data.damage.slash.value}} {{localize "cd10.attack.slash"}}
+            {{localize "cd10.attack.slash"}}
             {{else if (eq type "pierce")}}
-            {{weapon.data.data.damage.pierce.value}} {{localize "cd10.attack.pierce"}}
+            {{localize "cd10.attack.pierce"}}
             {{else if (eq type "blunt")}}
-            {{weapon.data.data.damage.blunt.value}} {{localize "cd10.attack.blunt"}}
+            {{localize "cd10.attack.blunt"}}
             {{else if (eq type "energy")}}
-            {{weapon.data.data.damage.energy.value}} {{localize "cd10.attack.energy"}}
+            {{localize "cd10.attack.energy"}}
             {{/if}}
         </div>
     </div>
@@ -31,6 +32,10 @@
      </div>
     <div>
         {{{roll}}}
+        {{#if fail}} 
+        {{localize "cd10.chat.roll.fail"}}
+            {{{fail}}}
+        {{/if}}
     </div>
     <div class="spacer"></div>
     {{#if (gte excess 0)}}
@@ -65,7 +70,7 @@
             {{localize "cd10.chat.attack.shock"}}
         </div>
         <div class="value-box bold">
-            {{weapon.data.data.damage.shock.value}}
+            {{weaponShock}}
         </div>
     </div>
 </div>

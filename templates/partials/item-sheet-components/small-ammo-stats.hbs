@@ -1,0 +1,84 @@
+<section class="small-weapon-armor-stats flex-row flex-even">
+    <div class="ammo pad">
+        <table>
+            <tr>
+                <th>{{localize "cd10.ammunition.type"}}</th>
+                {{#if (eq damageTypeSetting "simple")}}
+                <th>
+                    {{localize "cd10.chat.attack.lethality"}}
+                </th>
+                {{else}}
+                <th>
+                    {{localize "cd10.weapon.slashDamage"}}
+                </th>
+                <th>
+                    {{localize "cd10.weapon.pierceDamage"}}
+                </th>
+                <th>
+                    {{localize "cd10.weapon.bluntDamage"}}
+                </th>
+                {{#if (eq damageTypeSetting "complex")}}
+                <th>
+                    {{localize "cd10.weapon.bluntDamage"}}
+                </th>
+                {{/if}}
+                {{/if}}
+                <th>
+                    {{localize "cd10.weapon.shockDamage"}}
+                </th>
+            </tr>
+                <td>
+                    <select name="data.ammoType">
+                        {{#select data.ammoType}}
+                            {{#each config.ammunitionTypes as |name type|}}
+                                <option value="{{type}}">{{localize name}}</option>
+                            {{/each}}
+                        {{/select}}
+                    </select>
+                </td>
+                {{#if (eq damageTypeSetting "simple")}}
+                <td>
+                    <a class="damage-select" data-type="text" data-damage-type="slash">
+                        <i class="far fa-{{#if data.damage.slash.selected}}check-{{/if}}square"></i>
+                    </a>
+                    <input name="data.damage.slash.value" type="text" value="{{data.damage.slash.value}}"
+                        data-dtype="{{data.damage.slash.type}}" />
+                </td>
+                {{else}}
+                <td>
+                    <a class="damage-select" data-type="text" data-damage-type="slash">
+                        <i class="far fa-{{#if data.damage.slash.selected}}check-{{/if}}square"></i>
+                    </a>
+                    <input name="data.damage.slash.value" type="text" value="{{data.damage.slash.value}}"
+                        data-dtype="{{data.damage.slash.type}}" />
+                </td>
+                <td>
+                    <a class="damage-select" data-type="text" data-damage-type="pierce">
+                        <i class="far fa-{{#if data.damage.pierce.selected}}check-{{/if}}square"></i>
+                    </a>
+                    <input name="data.damage.pierce.value" type="text" value="{{data.damage.pierce.value}}"
+                        data-dtype="{{data.damage.pierce.type}}" />
+                </td>
+                <td>
+                    <a class="damage-select" data-type="text" data-damage-type="blunt">
+                        <i class="far fa-{{#if data.damage.blunt.selected}}check-{{/if}}square"></i>
+                    </a>
+                    <input name="data.damage.blunt.value" type="text" value="{{data.damage.blunt.value}}"
+                        data-dtype="{{data.damage.blunt.type}}" />
+                </td>
+                {{#if (eq damageTypeSetting "complex")}}
+                <a class="damage-select" data-type="text" data-damage-type="energy">
+                        <i class="far fa-{{#if data.damage.energy.selected}}check-{{/if}}square"></i>
+                    </a>
+                    <input name="data.damage.energy.value" type="text" value="{{data.damage.energy.value}}"
+                        data-dtype="{{data.damage.energy.type}}" />
+                </td>
+                {{/if}}
+                {{/if}}
+                <td>
+                    <input name="data.damage.shock.value" type="text" value="{{data.damage.shock.value}}"
+                        data-dtype="{{data.damage.shock.type}}" />
+                </td>
+        </table>
+    </div>
+</section>

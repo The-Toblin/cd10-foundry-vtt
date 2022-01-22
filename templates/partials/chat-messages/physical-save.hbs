@@ -7,6 +7,10 @@
     </div>
     <div>
         {{{roll}}}
+        {{#if fail}} 
+        {{localize "cd10.chat.roll.fail"}}
+            {{{fail}}}
+        {{/if}}
     </div>
     <div class="centered">
         <h3>{{localize "cd10.chat.outcomes.outcome"}} {{saveOutcome}}</h3>
@@ -31,7 +35,7 @@
                 {{localize "cd10.injuries.wounds"}}
             </div>
             <div class="value-box pad-4">
-                6
+                {{wounds}}
             </div>
         </div>
         <div class="centered">
@@ -58,7 +62,7 @@
                 {{localize "cd10.injuries.wounds"}}
             </div>
             <div class="value-box pad-4">
-                2
+                {{wounds}}
             </div>
         </div>
         <div class="centered">
@@ -85,7 +89,7 @@
                 {{localize "cd10.injuries.wounds"}}
             </div>
             <div class="value-box pad-4">
-                2
+                {{wounds}}
             </div>
         </div>
         {{else if (eq saveOutcome "Success")}}
@@ -107,7 +111,7 @@
                 {{localize "cd10.injuries.wounds"}}
             </div>
             <div class="value-box pad-4">
-                1
+                {{wounds}}
             </div>
         </div>
         {{else if (eq saveOutcome "Perfection")}}
