@@ -8,7 +8,15 @@
         </div>
         <div class="armor-box dark-background pad-8">
             {{#if (eq @root.damageTypeSetting "simple")}}
-                <div class="armor-stats reveal-rollable">
+                <div class="armor-stat">
+                    <div class="stat-name">
+                        {{localize "cd10.armor.defenseValue"}}
+                    </div>
+                     <div class="armor-statvalue">
+                        {{data.defenseValue.value}}
+                    </div>
+                </div>
+                <div class="armor-stat">
                     <div class="stat-name">
                         {{localize "cd10.armor.protection"}}
                     </div>
@@ -17,7 +25,7 @@
                     </div>
                 </div>
             {{else}}
-                <div class="armor-stats reveal-rollable">
+                <div class="armor-stat">
                     <div class="stat-name">
                         {{localize "cd10.armor.slashProtection"}}
                     </div>
@@ -25,7 +33,7 @@
                         {{data.protection.slash.value}}
                     </div>
                 </div>
-                <div class="armor-stats reveal-rollable">
+                <div class="armor-stat">
                     <div class="stat-name">
                         {{localize "cd10.armor.pierceProtection"}}
                     </div>
@@ -33,7 +41,7 @@
                         {{data.protection.pierce.value}}
                     </div>
                 </div>
-                <div class="armor-stats reveal-rollable">
+                <div class="armor-stat">
                     <div class="stat-name">
                         {{localize "cd10.armor.bluntProtection"}}
                     </div>
