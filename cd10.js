@@ -141,16 +141,16 @@ function migrateItemData(item) {
         if (coverage === "All") {
             head = body = arms = legs = true;
         }
-        if (coverage === "Chest" || coverage === "Torso") {
+        if (coverage === "Chest" || coverage === "Torso" || coverage === "torso" || coverage === "corso") {
             body = true;
         }
-        if (coverage === "Head") {
+        if (coverage === "Head" || coverage === "head") {
             head = true
         }
-        if (coverage === "Legs") {
+        if (coverage === "Legs" || coverage === "legs") {
             legs = true;
         }
-        if (coverage === "Arms") {
+        if (coverage === "Arms" || coverage === "arms") {
             arms = true
         }
         if (coverage === "torsoArms") {
@@ -162,6 +162,7 @@ function migrateItemData(item) {
         updateData["data.coverage.body.value"] = body
         updateData["data.coverage.arms.value"] = arms
         updateData["data.coverage.legs.value"] = legs
+        updateData["data.coverage.value"] = "deprecated"
     }
 
     return updateData;
