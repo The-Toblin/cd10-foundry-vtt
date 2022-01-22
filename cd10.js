@@ -162,7 +162,6 @@ function migrateItemData(item) {
         updateData["data.coverage.body.value"] = body
         updateData["data.coverage.arms.value"] = arms
         updateData["data.coverage.legs.value"] = legs
-        updateData["data.coverage.value"] = "deprecated"
     }
 
     return updateData;
