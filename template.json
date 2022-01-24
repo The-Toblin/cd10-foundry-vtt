@@ -417,11 +417,13 @@
                 "type": "string",
                 "label": "Skill",
                 "value": ""
+
             },
             "shieldSkill": {
                 "type": "string",
                 "label": "Skill",
                 "value": ""
+
             },
             "damage": {
                 "slash": {
@@ -573,7 +575,8 @@
             "shieldSkill": {
                 "type": "string",
                 "label": "Skill",
-                "value": ""
+                "value": "",
+                "id": ""
             },
             "isRanged": {
                 "type": "boolean",

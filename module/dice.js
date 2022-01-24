@@ -1,16 +1,16 @@
 /* Core dice roll functions for making skillchecks, attacks and saves. The variable checkType determines
 how this class functions. */
 export async function TaskCheck({
-    actor = null,
+    actorId = null,
     checkType = null,
-    skillObj = null,
-    shieldSkillObj = null,
+    skillObjId = null,
+    shieldSkillObjId = null,
     usingShield = false,
-    shieldObj = null,
-    posTraitObj = null,
-    negTraitObj = null,
-    weaponObj = null,
-    armorObj = null,
+    shieldObjId = null,
+    posTraitObjId = null,
+    negTraitObjId = null,
+    weaponObjId = null,
+    armorObjId = null,
     lethality = null,
     shock = null,
     damageType = null,
@@ -24,6 +24,51 @@ export async function TaskCheck({
     if (checkType === null) {
         ui.notifications.error(`FATAL ERROR! CheckType not set!`)
         return;
+    }
+
+    /* Grab the necessary objects */
+    let skillObj,
+        posTraitObj,
+        negTraitObj,
+        shieldSkillObj,
+        shieldObj,
+        weaponObj,
+        armorObj;
+
+    if (skillObjId != null) {
+        skillObj = game.actors.get(actorId).items.get(skillObjId).data;
+    } else {
+        skillObj = null
+    }
+    if (posTraitObjId != null) {
+        posTraitObj = game.actors.get(actorId).items.get(posTraitObjId).data;
+    } else {
+        posTraitObj = null
+    }
+    if (negTraitObjId != null) {
+        negTraitObj = game.actors.get(actorId).items.get(negTraitObjId).data;
+    } else {
+        negTraitObj = null
+    }
+    if (shieldSkillObjId != null) {
+        shieldSkillObj = game.actors.get(actorId).items.get(shieldSkillObjId).data;
+    } else {
+        shieldSkillObj = null
+    }
+    if (shieldObjId != null) {
+        shieldObj = game.actors.get(actorId).items.get(shieldObjId).data;
+    } else {
+        shieldObj = null
+    }
+    if (weaponObjId != null) {
+        weaponObj = game.actors.get(actorId).items.get(weaponObjId).data;
+    } else {
+        weaponObj = null
+    }
+    if (armorObjId != null) {
+        armorObj = game.actors.get(actorId).items.get(armorObjId).data;
+    } else {
+        armorObj = null
     }
 
     /* Set up base dice formula based on if it's a hero point check or not. 
@@ -48,7 +93,7 @@ export async function TaskCheck({
     }
 
     /* Fetch skill level */
-    if (skillObj != null) {
+    if (skillObjId != null) {
         actionValue = parseInt(skillObj.data.skillLevel.value);
         skillName = skillObj.name;
     } else {
@@ -78,7 +123,11 @@ export async function TaskCheck({
 
         /* If a traitvalue is set, check if traits were reversed */
         if (reverseTrait && traitValue != null) {
-            traitValue = -Math.abs(traitValue);
+            if (traitValue > 0) {
+                traitValue = -Math.abs(traitValue);
+            } else {
+                traitValue = Math.abs(traitValue);
+            }
         }
     }
 
@@ -105,14 +154,27 @@ export async function TaskCheck({
         }
     }
 
-    if (modifier > 0 && checkType != "Save") {
-        rollFormula += " - @modifier";
+    /* Check if it's a physical skill and modifier is of the type that debilitates only physical */
+    if (skillObj != null && checkType != "Save") {
+        if (skillObj.data.isPhysical.value && game.actors.get(actorId).getDebilitationType === game.i18n.localize("cd10.injuries.debilitation.physOnly")) {
+            rollFormula += " - @modifier";
+            modifier = game.actors.get(actorId).getModifier;
+        } else if (game.actors.get(actorId).getDebilitationType === game.i18n.localize("cd10.injuries.debilitation.all")) {
+            rollFormula += " - @modifier";
+            modifier = game.actors.get(actorId).getModifier;
+        }
     }
 
     /* Check if an attempt is being made without possessing the necessary skill. */
     if (skillObj === null && checkType === "Simple" || skillObj === null && checkType === "SimpleAttack") {
         actionValue = 0;
         skillName = "No Skill!";
+    }
+
+    if (usingShield) {
+        let shieldOutcome = _usingShieldTest(skillObj, shieldSkillObj);
+        actionValue = shieldOutcome.actionValue;
+        skillName = shieldOutcome.skillName;
     }
 
     rollData = {
@@ -177,7 +239,7 @@ export async function TaskCheck({
             fail: renderedFailRoll
         }
     } else if (checkType === "SimpleAttack") {
-        let attackOutcome = _handleAttack(rollD10._total, skillObj, shieldSkillObj, weaponObj, damageType, usingShield, actor);
+        let attackOutcome = _handleAttack(rollD10._total, skillObj, shieldSkillObj, weaponObj, damageType, usingShield, actorId);
         templateContext = {
             weapon: weaponObj,
             weaponDamage: attackOutcome.weaponDamage,
@@ -186,12 +248,12 @@ export async function TaskCheck({
             lethality: attackOutcome.lethality,
             excess: attackOutcome.excess,
             type: damageType,
-            skillName: attackOutcome.skillName,
-            actionValue: attackOutcome.actionValue,
+            skillName: skillName,
+            actionValue: actionValue,
             fail: renderedFailRoll
         }
     } else if (checkType === "Attack") {
-        let attackOutcome = _handleAttack(rollD10._total, skillObj, shieldSkillObj, weaponObj, damageType, usingShield, actor);
+        let attackOutcome = _handleAttack(rollD10._total, skillObj, shieldSkillObj, weaponObj, damageType, usingShield, actorId);
         templateContext = {
             weapon: weaponObj,
             weaponDamage: attackOutcome.weaponDamage,
@@ -200,14 +262,14 @@ export async function TaskCheck({
             lethality: attackOutcome.lethality,
             excess: attackOutcome.excess,
             type: damageType,
-            skillName: attackOutcome.skillName,
+            skillName: skillName,
             traitName: traitName,
-            actionValue: attackOutcome.actionValue,
+            actionValue: actionValue,
             traitValue: traitValue,
             fail: renderedFailRoll
         }
     } else if (checkType === "Save") {
-        let outcome = _handleSave(rollD10._total, traitValue, damageType, armorObj, shieldObj, usingShield, lethality, shock, hitLocation, actor);
+        let outcome = _handleSave(rollD10._total, traitValue, damageType, armorObj, shieldObj, usingShield, lethality, shock, hitLocation, actorId);
         templateContext = {
             armor: armorObj,
             roll: renderedRoll,
@@ -227,7 +289,6 @@ export async function TaskCheck({
         sound: CONFIG.sounds.dice,
         type: CONST.CHAT_MESSAGE_TYPES.ROLL
     };
-
     /* Print results to chatlog. */
     ChatMessage.create(chatData);
 }
@@ -236,8 +297,6 @@ function _handleAttack(rollTotal, skillObj, shieldSkillObj, weaponObj, damageTyp
     /* Calculate details of the attack, such as Lethality and Excess. */
     let excess,
         lethality,
-        actionValue,
-        skillName,
         weaponDamage,
         weaponShock;
 
@@ -249,60 +308,17 @@ function _handleAttack(rollTotal, skillObj, shieldSkillObj, weaponObj, damageTyp
 
     if (weaponObj.type === "rangedWeapon") {
         let a = game.actors.get(actorId);
-        let ammo = a.items.get(weaponObj.data.selectedAmmo.id);
-        lethality = parseInt(ammo.data.data.damage[damageType].value) + (excess);
-        weaponDamage = parseInt(ammo.data.data.damage[damageType].value);
-        weaponShock = parseInt(ammo.data.data.damage.shock.value)
+        let ammo = a.items.get(weaponObj.data.selectedAmmo.id).data;
+        lethality = parseInt(ammo.data.damage[damageType].value) + (excess);
+        weaponDamage = parseInt(ammo.data.damage[damageType].value);
+        weaponShock = parseInt(ammo.data.damage.shock.value)
     } else {
         lethality = parseInt(weaponObj.data.damage[damageType].value) + (excess);
         weaponDamage = parseInt(weaponObj.data.damage[damageType].value);
         weaponShock = parseInt(weaponObj.data.damage.shock.value);
     }
 
-    if (usingShield) {
-        /* If a shield is equipped: determine which skill is optimal to use by 
-        comparing if the shield-using skill is higher than the regular
-        attack skill with penalty.
-        */
-
-        let actionValueAttack, actionValueShield, attackName, shieldName;
-
-        if (skillObj === null) {
-            actionValueAttack = 0;
-            attackName = "No skill!"
-        } else {
-            actionValueAttack = skillObj.data.skillLevel.value;
-            attackName = skillObj.name;
-        }
-
-        if (shieldSkillObj === null) {
-            actionValueShield = 0;
-            shieldName = "No skill!"
-        } else {
-            actionValueShield = shieldSkillObj.data.skillLevel.value;
-            shieldName = shieldSkillObj.name;
-        }
-
-        if ((actionValueAttack - 3) > actionValueShield) {
-            actionValue = actionValueAttack - 3;
-            skillName = attackName;
-        } else {
-            actionValue = actionValueShield;
-            skillName = shieldName;
-        }
-    } else {
-        if (skillObj === null) {
-            skillName = "No skill!";
-            actionValue = 0;
-        } else {
-            actionValue = skillObj.data.skillLevel.value;
-            skillName = skillObj.name;
-        }
-    }
-
     return {
-        actionValue,
-        skillName,
         lethality,
         excess,
         weaponDamage,
@@ -310,8 +326,46 @@ function _handleAttack(rollTotal, skillObj, shieldSkillObj, weaponObj, damageTyp
     }
 }
 
+function _usingShieldTest(skillObj, shieldSkillObj) {
+
+    /* If a shield is equipped: determine which skill is optimal to use by 
+    comparing if the shield-using skill is higher than the regular
+    attack skill with penalty.
+    */
+
+    let actionValueAttack, actionValueShield, attackName, shieldName, actionValue, skillName;
+
+    if (skillObj === null) {
+        actionValueAttack = 0;
+        attackName = "No skill!"
+    } else {
+        actionValueAttack = skillObj.data.skillLevel.value;
+        attackName = skillObj.name;
+    }
+
+    if (shieldSkillObj === null) {
+        actionValueShield = 0;
+        shieldName = "No skill!"
+    } else {
+        actionValueShield = shieldSkillObj.data.skillLevel.value;
+        shieldName = shieldSkillObj.name;
+    }
+
+    if ((actionValueAttack - 2) > actionValueShield) {
+        actionValue = actionValueAttack - 2;
+        skillName = attackName;
+    } else {
+        actionValue = actionValueShield;
+        skillName = shieldName;
+    }
+
+    return {
+        skillName,
+        actionValue
+    }
+}
 /* Perform a physical save. For details, see TaskCheck above. */
-function _handleSave(roll, traitValue, damageType, armorObj, shieldObj, usingShield, lethality, shock, hitLocation, actor) {
+function _handleSave(roll, traitValue, damageType, armorObj, shieldObj, usingShield, lethality, shock, hitLocation, actorId) {
 
     let outcome = "",
         wounds = 0,
@@ -381,7 +435,7 @@ function _handleSave(roll, traitValue, damageType, armorObj, shieldObj, usingShi
     }
 
     /* Update the actor with the values from the save. */
-    let actorObj = game.actors.get(actor);
+    let actorObj = game.actors.get(actorId);
 
     if (shockValue > 0) {
         actorObj.modifyShock(shockValue);

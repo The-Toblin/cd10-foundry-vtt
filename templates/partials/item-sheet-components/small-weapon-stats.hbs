@@ -10,9 +10,9 @@
                     <select name="data.attackSkill.value">
                         <option value="None">{{localize "cd10.sheet.none"}}</option>
                         {{#select data.attackSkill.value}}
-                        {{#each config.combatSkills as |name type|}}
-                        <option value="{{type}}">{{localize name}}</option>
-                        {{/each}}
+                            {{#each gameSkills as |name id|}}
+                                <option value="{{id}}">{{localize name}}</option>
+                            {{/each}}
                         {{/select}}
                     </select>
                 </td>
@@ -20,8 +20,8 @@
                     <select name="data.shieldSkill.value">
                         <option value="None">{{localize "cd10.sheet.none"}}</option>
                         {{#select data.shieldSkill.value}}
-                        {{#each config.combatSkills as |name type|}}
-                        <option value="{{type}}">{{localize name}}</option>
+                         {{#each gameSkills as |name id|}}
+                        <option value="{{id}}">{{localize name}}</option>
                         {{/each}}
                         {{/select}}
                     </select>

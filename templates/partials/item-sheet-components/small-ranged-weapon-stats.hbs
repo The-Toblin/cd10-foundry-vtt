@@ -12,8 +12,8 @@
             <td>
                 <select name="data.attackSkill.value">
                     {{#select data.attackSkill.value}}
-                        {{#each config.combatSkills as |name type|}}
-                            <option value="{{type}}">{{localize name}}</option>
+                        {{#each gameSkills as |name id|}}
+                        <option value="{{id}}">{{localize name}}</option>
                         {{/each}}
                     {{/select}}
                 </select>

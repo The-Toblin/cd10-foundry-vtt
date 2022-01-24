@@ -119,55 +119,7 @@ function registerSystemSettings() {
 function migrateItemData(item) {
     let updateData = {};
 
-    if (item.type === "skill") {
-        updateData["data.isPhysical.value"] = false
-    }
-
-    if (item.type === "weapon" && item.data.isRanged.value) {
-        updateData["type"] = "rangedWeapon"
-    } else if (item.type === "weapon" && !item.data.isRanged.value) {
-        updateData["type"] = "meleeWeapon"
-    } else if (item.type === "armor" && item.data.isShield.value) {
-        updateData["type"] = "shield"
-    } else if (item.type === "armor" && !item.data.isShield.value) {
-        let head,
-            body,
-            arms,
-            legs,
-            coverage = item.data.coverage.value;
-
-        head = body = arms = legs = false;
-
-        if (coverage === "All") {
-            head = body = arms = legs = true;
-        }
-        if (coverage === "Chest" || coverage === "Torso" || coverage === "torso" || coverage === "chest") {
-            body = true;
-        }
-        if (coverage === "Head" || coverage === "head") {
-            head = true;
-        }
-        if (coverage === "Legs" || coverage === "legs") {
-            legs = true;
-        }
-        if (coverage === "Arms" || coverage === "arms") {
-            arms = true;
-        }
-        if (coverage === "torsoArms") {
-            arms = body = true;
-        }
-
-        if (!arms && !head && !legs && !body) {
-            body = true;
-        }
-
-        updateData["type"] = "armor";
-        updateData["data.coverage.head.value"] = head
-        updateData["data.coverage.body.value"] = body
-        updateData["data.coverage.arms.value"] = arms
-        updateData["data.coverage.legs.value"] = legs
-    }
-
+    if (item.type === "skill") {}
     return updateData;
 }
 

@@ -57,6 +57,8 @@
             "complexCheck": "Complex Check",
             "coverage": "Coverage",
             "currency": "Currency",
+            "difficulty": "Difficulty",
+            "difficultyShort": "DC",
             "edit": "Edit",
             "enter": "Enter",
             "equip": "Equip or unequip",
@@ -121,6 +123,8 @@
         "skill": {
             "teachableYes": "Requires a teacher.",
             "teachableNo": "No teacher required",
+            "isPhysical": "Affected by physical debilitation",
+            "isPhysicalShort": "Phys. deb.",
             "range": "Range",
             "skillLevel": "Skill level",
             "communication": "Communication",
@@ -141,7 +145,6 @@
             "skillLevel": "Trait level"
         },
         "spell": {
-            "difficulty": "Difficulty",
             "cast": "Cast",
             "duration": "Duration",
             "range": "Range",
@@ -216,7 +219,12 @@
             "linjury": "Light Injury",
             "sinjury": "Serious Injury",
             "finjury": "Fatal Injury",
-            "debilitation": "Debilitation",
+            "debilitation": {
+                "debilitation": "Debilitation",
+                "physOnly": "on physical checks",
+                "all": "on all checks",
+                "dead": "You are dead!"
+            },
             "dao": "Down and out",
             "unconscious": "Unconscious"
         },

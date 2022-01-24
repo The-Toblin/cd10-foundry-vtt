@@ -30,6 +30,17 @@ export default class CD10ItemSheet extends ItemSheet {
         sheetData.barterSetting = game.settings.get("cd10", "systemBarter");
         sheetData.modernity = game.settings.get("cd10", "systemModernity");
 
+        let g = game.items.filter((s) => s.type === "skill");
+        let gameSkillList = {};
+
+        for (let i = 0; i < g.length; i++) {
+            let a = g[i].data.data.matchID.value,
+                b = g[i].name
+            gameSkillList[a] = b;
+        }
+
+        sheetData.gameSkills = gameSkillList;
+
         return sheetData;
     }
 
@@ -37,6 +48,8 @@ export default class CD10ItemSheet extends ItemSheet {
 
         html.find(".protection-check-box").click(this._protectionCheckBoxClicked.bind(this));
         html.find(".damage-select").click(this._onDamageSelect.bind(this));
+        html.find(".teachable-check").click(this._onTeachableClick.bind(this));
+        html.find(".physical-check").click(this._onPhysicalClick.bind(this));
         super.activateListeners(html);
     }
 
@@ -48,6 +61,24 @@ export default class CD10ItemSheet extends ItemSheet {
 
         await this.item.update({
             [`data.coverage.${target}.value`]: !value
+        });
+    }
+
+    async _onTeachableClick(event) {
+        /* Monitor the state of the teachable state of skills */
+        event.preventDefault();
+        let value = this.item.data.data.teachable.value;
+        await this.item.update({
+            "data.teachable.value": !value
+        });
+    }
+
+    async _onPhysicalClick(event) {
+        /* Monitor the state of physical debilitation setting for skills. */
+        event.preventDefault();
+        let value = this.item.data.data.isPhysical.value;
+        await this.item.update({
+            "data.isPhysical.value": !value
         });
     }
 

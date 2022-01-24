@@ -245,7 +245,6 @@ export default class CD10MookCharacterSheet extends ActorSheet {
         Dice.TaskCheck({
             checkType: "Simple",
             skillObj: skillObj.data,
-            modifier: this.actor.getModifier,
             heroPoint: event.shiftKey,
             actor: this.actor.id
         });
@@ -325,8 +324,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
             usingShield: usingShield,
             weaponObj: weaponObj,
             damageType: damageType,
-            heroPoint: event.shiftKey,
-            modifier: this.actor.getModifier
+            heroPoint: event.shiftKey
         });
 
     }
