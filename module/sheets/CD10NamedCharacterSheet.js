@@ -572,7 +572,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         if so, fetch the relevant object. */
         this.getData().armors.forEach((a) => {
             if (a.data.isEquipped.value && a.data.coverage[hitLocation].value) {
-                armor = a;
+                armor = this.actor.items.get(a._id);
             } else {
                 armor = {
                     id: null
@@ -584,7 +584,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         if (html.find("input#parried")[0].checked) {
             this.getData().shields.forEach((s) => {
                 if (s.data.isEquipped.value) {
-                    shield = s;
+                    shield = this.actor.items.get(s._id);
                     usingShield = true;
                 } else {
                     shield = {
@@ -607,8 +607,8 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             negTraitObjId: negTraitObj.id,
             heroPoint: heroPointChecked,
             reverseTrait: reverseTraitChecked,
-            armorObjId: armor._id,
-            shieldObjId: shield._id,
+            armorObjId: armor.id,
+            shieldObjId: shield.id,
             usingShield: usingShield,
             damageType: damageType,
             lethality: lethality,

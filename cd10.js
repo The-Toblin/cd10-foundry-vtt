@@ -109,17 +109,157 @@ function registerSystemSettings() {
     game.settings.register("cd10", "systemMigrationVersion", {
         config: false,
         scope: "world",
-        type: Boolean,
+        type: String,
         default: ""
     });
 }
 
-/* Version 0.2.x migration functions to update data structures to 0.3.0. */
+/* Version 0.3.x migration functions to update data structures to 0.3.7. */
 
 function migrateItemData(item) {
     let updateData = {};
+    if (item.type === "skill" && typeof item.data.matchID === undefined && !item.isEmbedded) {
+        /* Give all world-residing skills a unique MatchID. */
+        updateData = {
+            "data.isPhysical.value": false,
+            "data.matchID": {
+                "type": "text",
+                "label": "MatchID",
+                "value": randomID()
+            }
+        }
 
-    if (item.type === "skill") {}
+    } else if (item.type === "skill" && typeof item.data.matchID === 'undefined' && item.isEmbedded) {
+        /* If the skill is embedded (ie on a character), copy the MatchID from the world-residing skill. */
+        let punctuationless = item.name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+        let skillName = punctuationless.replace(/\s+/g, '').toLowerCase();
+
+        game.items.forEach((s) => {
+            if (s.type === "skill") {
+                let ptLess = s.name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+                let compareName = ptLess.replace(/\s+/g, '').toLowerCase();
+
+                if (skillName === compareName) {
+                    updateData = {
+                        "data.matchID": {
+                            "type": "string",
+                            "label": "MatchID",
+                            "value": s.data.data.matchID.value
+                        }
+                    };
+                }
+            }
+        });
+
+    } else if (item.type === "meleeWeapon" || item.type === "rangedWeapon") {
+        /* If the item is a weapon, we need to copy the skills' MatchID to the AttackSkill value of the weapon. */
+        let a = item.data.attackSkill.value.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ""),
+            attackSkillName = a.replace(/\s+/g, '').toLowerCase(),
+            shieldSkillName = null,
+            updateAttackName = null,
+            updateShieldName = null;
+
+        if (item.data.shieldSkill != undefined) {
+            let s = item.data.shieldSkill.value.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+            shieldSkillName = s.replace(/\s+/g, '').toLowerCase();
+        }
+
+        if (item.isEmbedded && shieldSkillName != null) {
+            let actor = item.parent;
+
+            actor.items.forEach((i) => {
+                let ptLess = i.name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+                let compareName = ptLess.replace(/\s+/g, '').toLowerCase();
+                if (i.type === 'skill' && compareName === attackSkillName) {
+                    updateAttackName = i.data.data.matchID.value;
+                } else if ((i.type === 'skill' && compareName === shieldSkillName)) {
+                    updateShieldName = i.data.data.matchID.value;
+                }
+            });
+
+            if (updateAttackName != null && updateShieldName != null) {
+
+                updateData = {
+                    "data.attackSkill": {
+                        "type": "string",
+                        "label": "Skill",
+                        "value": updateAttackName
+                    },
+                    "data.shieldSkill": {
+                        "type": "string",
+                        "label": "Skill",
+                        "value": updateShieldName
+                    }
+                };
+            }
+        } else if (item.isEmbedded && shieldSkillName === null) {
+            let actor = item.parent;
+
+            actor.items.forEach((i) => {
+                let ptLess = i.name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+                let compareName = ptLess.replace(/\s+/g, '').toLowerCase();
+                if (i.type === 'skill' && compareName === attackSkillName) {
+                    updateAttackName = i.data.data.matchID.value;
+                }
+            });
+            if (updateAttackName != null) {
+                updateData = {
+                    "data.attackSkill": {
+                        "type": "string",
+                        "label": "Skill",
+                        "value": updateAttackName
+                    }
+                }
+            }
+        } else if (!item.isEmbedded && shieldSkillName != null) {
+
+            game.items.forEach((i) => {
+                let ptLess = i.name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+                let compareName = ptLess.replace(/\s+/g, '').toLowerCase();
+                if (i.type === 'skill' && compareName === attackSkillName) {
+                    updateAttackName = i.data.data.matchID.value;
+                } else if ((i.type === 'skill' && compareName === shieldSkillName)) {
+                    updateShieldName = i.data.data.matchID.value;
+                }
+            });
+
+            if (updateAttackName != null && updateShieldName != null) {
+
+                updateData = {
+                    "data.attackSkill": {
+                        "type": "string",
+                        "label": "Skill",
+                        "value": updateAttackName
+                    },
+                    "data.shieldSkill": {
+                        "type": "string",
+                        "label": "Skill",
+                        "value": updateShieldName
+                    }
+                };
+            }
+        } else if (!item.isEmbedded && shieldSkillName === null) {
+            game.items.forEach((i) => {
+                let ptLess = i.name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+                let compareName = ptLess.replace(/\s+/g, '').toLowerCase();
+                if (i.type === 'skill' && compareName === attackSkillName) {
+                    updateAttackName = i.data.data.matchID.value;
+                }
+            });
+
+            if (updateAttackName != null) {
+
+                updateData = {
+                    "data.attackSkill": {
+                        "type": "string",
+                        "label": "Skill",
+                        "value": updateAttackName
+                    }
+                };
+            }
+        }
+    }
+
     return updateData;
 }
 
@@ -134,10 +274,13 @@ async function migrateWorld() {
         }
     }
 
-    console.log("SYSTEM: Migrating actor items.")
+    console.log("SYSTEM: Migrating actor skills.")
     for (let actor of game.actors.contents) {
+        let updateData = {};
         for (let item of actor.items) {
-            const updateData = migrateItemData(item.data);
+            if (item.type === "skill") {
+                updateData = migrateItemData(item.data);
+            }
 
             if (!foundry.utils.isObjectEmpty(updateData)) {
                 console.log(`SYSTEM: Migrating Item entity ${item.name} belonging to ${actor.name}`);
@@ -145,6 +288,22 @@ async function migrateWorld() {
             }
         }
     }
+
+    console.log("SYSTEM: Migrating actor items.")
+    for (let actor of game.actors.contents) {
+        let updateData = {};
+        for (let item of actor.items) {
+            if (item.type === "meleeWeapon" || item.type === "rangedWeapon") {
+                updateData = migrateItemData(item.data);
+            }
+
+            if (!foundry.utils.isObjectEmpty(updateData)) {
+                console.log(`SYSTEM: Migrating Item entity ${item.name} belonging to ${actor.name}`);
+                await item.update(updateData);
+            }
+        }
+    }
+
     console.log("SYSTEM: Setting game settings");
     let damageTypeSet = game.settings.get("cd10", "systemDamageTypes"),
         hitTypeSet = game.settings.get("cd10", "systemHitLocation"),
@@ -223,8 +382,10 @@ Hooks.once("ready", function() {
     }
 
     const currentVersion = game.settings.get("cd10", "systemMigrationVersion");
-    const NEEDS_MIGRATION_VERSION = "0.2.0";
-    const needsMigration = !currentVersion || isNewerVersion(NEEDS_MIGRATION_VERSION, currentVersion);
+    const NEEDS_MIGRATION_VERSION = "0.3.7";
+    let needsMigration = !currentVersion || isNewerVersion(NEEDS_MIGRATION_VERSION, currentVersion);
+
+    needsMigration = true;
 
     if (needsMigration) {
         migrateWorld();
