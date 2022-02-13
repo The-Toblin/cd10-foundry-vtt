@@ -264,10 +264,24 @@ function migrateItemData(item) {
 }
 
 async function migrateWorld() {
-    console.log("SYSTEM: Migrating game items.")
+    console.log("SYSTEM: Migrating game skills.")
+    let updateData = {};
     for (let item of game.items.contents) {
-        const updateData = migrateItemData(item.data);
+        if (item.type === 'skill') {
+            updateData = migrateItemData(item.data);
+        }
+        if (!foundry.utils.isObjectEmpty(updateData)) {
+            console.log(`SYSTEM: Migrating Item entity ${item.name}`);
+            await item.update(updateData);
+        }
+    }
 
+    console.log("SYSTEM: Migrating game items.")
+    updateData = {};
+    for (let item of game.items.contents) {
+        if (item.type === 'meleeWeapon' || item.type === 'rangedWeapon') {
+            updateData = migrateItemData(item.data);
+        }
         if (!foundry.utils.isObjectEmpty(updateData)) {
             console.log(`SYSTEM: Migrating Item entity ${item.name}`);
             await item.update(updateData);
@@ -382,10 +396,8 @@ Hooks.once("ready", function() {
     }
 
     const currentVersion = game.settings.get("cd10", "systemMigrationVersion");
-    const NEEDS_MIGRATION_VERSION = "0.3.7";
+    const NEEDS_MIGRATION_VERSION = "0.3.6";
     let needsMigration = !currentVersion || isNewerVersion(NEEDS_MIGRATION_VERSION, currentVersion);
-
-    needsMigration = true;
 
     if (needsMigration) {
         migrateWorld();
