@@ -115,6 +115,12 @@ export async function TaskCheck({
         skillName = "No Skill!";
     }
 
+    if (usingShield) {
+        let shieldOutcome = _usingShieldTest(skillObj, shieldSkillObj);
+        actionValue = shieldOutcome.actionValue;
+        skillName = shieldOutcome.skillName;
+    }
+
     rollData = {
         actionValue: actionValue,
         traitValue: traitValue,
@@ -264,7 +270,7 @@ function _handleAttack(rollTotal, skillObj, shieldSkillObj, weaponObj, damageTyp
         comparing if the shield-using skill is higher than the regular
         attack skill with penalty.
         */
-
+        
         let actionValueAttack, actionValueShield, attackName, shieldName;
 
         if (skillObj === null) {
@@ -395,5 +401,44 @@ function _handleSave(roll, traitValue, damageType, armorObj, shieldObj, usingShi
         shockResult: shockValue,
         saveOutcome: outcome,
         wounds: wounds
+    }
+}
+
+function _usingShieldTest(skillObj, shieldSkillObj) {
+
+    /* If a shield is equipped: determine which skill is optimal to use by 
+    comparing if the shield-using skill is higher than the regular
+    attack skill with penalty.
+    */
+
+    let actionValueAttack, actionValueShield, attackName, shieldName, actionValue, skillName;
+
+    if (skillObj === null) {
+        actionValueAttack = 0;
+        attackName = "No skill!"
+    } else {
+        actionValueAttack = skillObj.data.skillLevel.value;
+        attackName = skillObj.name;
+    }
+
+    if (shieldSkillObj === null) {
+        actionValueShield = 0;
+        shieldName = "No skill!"
+    } else {
+        actionValueShield = shieldSkillObj.data.skillLevel.value;
+        shieldName = shieldSkillObj.name;
+    }
+
+    if ((actionValueAttack - 2) > actionValueShield) {
+        actionValue = actionValueAttack - 2;
+        skillName = attackName;
+    } else {
+        actionValue = actionValueShield;
+        skillName = shieldName;
+    }
+
+    return {
+        skillName,
+        actionValue
     }
 }
