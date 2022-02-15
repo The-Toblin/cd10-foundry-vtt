@@ -570,33 +570,33 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
 
         /* Check which armor is being worn on the applicable body part,
         if so, fetch the relevant object. */
-        this.getData().armors.forEach((a) => {
-            if (a.data.isEquipped.value && a.data.coverage[hitLocation].value) {
-                armor = this.actor.items.get(a._id);
-            } else {
-                armor = {
-                    id: null
-                }
-            }
-        });
-
-        /* Check if a shield is equipped, if so, fetch the relevant object. */
-        if (html.find("input#parried")[0].checked) {
-            this.getData().shields.forEach((s) => {
-                if (s.data.isEquipped.value) {
-                    shield = this.actor.items.get(s._id);
-                    usingShield = true;
-                } else {
-                    shield = {
-                        id: null
-                    }
-                    ui.notifications.error(`You do not have a shield equipped. Rolling without shield.`)
+        if (this.getData().armors.length != 0) {
+            this.getData().armors.forEach((a) => {
+                if (a.data.isEquipped.value && a.data.coverage[hitLocation].value) {
+                    armor = this.actor.items.get(a._id);
                 }
             });
 
         } else {
-            shield = {
+            armor = {
                 id: null
+            }
+        }
+
+        /* Check if a shield is equipped, if so, fetch the relevant object. */
+        if (html.find("input#parried")[0].checked) {
+            if (this.getData().shields.length != 0) {
+                this.getData().shields.forEach((s) => {
+                    if (s.data.isEquipped.value) {
+                        shield = this.actor.items.get(s._id);
+                        usingShield = true;
+                    }
+                });
+            } else {
+                ui.notifications.error(`You do not have a shield equipped. Rolling without shield.`)
+                shield = {
+                    id: null
+                }
             }
         }
 

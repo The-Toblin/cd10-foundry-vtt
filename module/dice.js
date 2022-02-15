@@ -436,6 +436,7 @@ function _handleSave(roll, traitValue, damageType, armorObj, shieldObj, usingShi
 
     /* Update the actor with the values from the save. */
     let actorObj = game.actors.get(actorId);
+    console.log(actorObj);
 
     if (shockValue > 0) {
         actorObj.modifyShock(shockValue);

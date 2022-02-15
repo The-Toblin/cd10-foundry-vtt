@@ -1,4 +1,4 @@
-#Version 0.3.7
+#Version 0.3.9
 
 === CRITICAL ===
 With this version, weapons and skills will match against each other with a unique, persistent ID, rather than via name. This means you can now 
@@ -19,9 +19,10 @@ If you end up with a weapon that doesn't properly match with a skill, try deleti
 - Fixed partials path in Item.js. Dumping descriptions for all items should work now.
 
 === UI and general fixes ===
-- Converted all checkboxes to JS-toggled checkboxes, rather than HTML. More reliable toggling of stats.
+- Converted all checkboxes on sheets to JS-toggled checkboxes, rather than HTML. More reliable toggling of stats.
 - Added "Physical skill" to skillsheet. This allows you to toggle whether or not this skill is affected by physical debilitation.
 - Typo fixed in weapon stats if complex damage is used. Damage types are now Slash, Pierce, Blunt and Energy instead of Slash, Pierce, Blunt and Blunt.
 
 === Mechanics and new functionality ===
-- Dice rolls now take physical deblitiation into account. If you have a negative modifier due to injuries, but it isn't bad enough to affect all rolls, it will now only affect skills flagged "physical debilitation"
+- Dice rolls now take physical deblitiation into account. If you have a negative modifier due to injuries, but it isn't bad enough to affect all rolls, 
+it will now only affect skills flagged "physical debilitation"
