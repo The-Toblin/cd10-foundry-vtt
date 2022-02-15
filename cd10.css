@@ -669,6 +669,12 @@
 .cd10.sheet.mookCharacter form .button:hover {
   box-shadow: inset 2px 2px 10px 5px black;
 }
+.cd10.sheet.mookCharacter form .d10-roll-icon img {
+  padding-top: 4px;
+  margin-left: 5px;
+  width: 15px;
+  border: none;
+}
 .cd10.sheet.mookCharacter form .weapon-item {
   margin-right: 5px;
 }
