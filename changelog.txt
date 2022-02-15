@@ -1,3 +1,5 @@
 #Version 0.3.8
 === Bugfixes ===
 - Using a shield with a weapon led to incorrect ActionValue being used, due to ActionValue being set before shield equipped-status was checked. 
+- Added Physical Save button to Mook Sheets. They were unable to save following the removal of the "click to roll" on Armors.
+- Fixed bug with physical saves failing if no armor or shield was worn/equipped.
