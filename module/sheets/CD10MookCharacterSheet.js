@@ -327,7 +327,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
             if (shield.data.isEquipped.value) {
                 usingShield = true;
                 shieldObj = shield;
-            } else {}
+            }
         });
 
 

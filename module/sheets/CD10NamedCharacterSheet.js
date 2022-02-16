@@ -324,7 +324,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             if (shield.data.isEquipped.value) {
                 usingShield = true;
                 shieldObj = shield;
-            } else {}
+            }
         });
 
 
@@ -574,6 +574,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             this.getData().armors.forEach((a) => {
                 if (a.data.isEquipped.value && a.data.coverage[hitLocation].value) {
                     armor = this.actor.items.get(a._id);
+                    break;
                 }
             });
 
@@ -590,6 +591,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
                     if (s.data.isEquipped.value) {
                         shield = this.actor.items.get(s._id);
                         usingShield = true;
+                        break;
                     }
                 });
             } else {
