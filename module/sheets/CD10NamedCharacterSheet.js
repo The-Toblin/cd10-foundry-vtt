@@ -291,30 +291,39 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             attackSkillObj = null,
             shieldSkillObj = null;
 
-        /* Fetch the actor skills and prepare them for comparison. */
+        /* Fetch the actor skills and prepare them for comparison. Due
+        to config limitations, skills are stored as punctuation-less
+        variables in the config file, but the skill names are regular
+        text. This function turns the freely-typed skills into space-less,
+        punctuation-less strings for comparison. 
+        */
 
         if (shieldSkill === "None") {
-            this.actor.items.forEach((s) => {
-                if (s.type === "skill" && s.data.data.matchID.value === weaponObj.data.attackSkill.value) {
-                    attackSkillObj = s;
+            this.getData().skills.forEach((skill) => {
+                let punctuationless = skill.name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+                let finalString = punctuationless.replace(/\s+/g, '').toLowerCase();
+
+                if (finalString === attackSkill.toLowerCase()) {
+                    attackSkillObj = skill;
+                }
+            });
+        } else {
+            this.getData().skills.forEach((skill) => {
+                let punctuationless = skill.name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+                let finalString = punctuationless.replace(/\s+/g, '').toLowerCase();
+
+                if (finalString === attackSkill.toLowerCase()) {
+                    attackSkillObj = skill;
                 }
             });
 
-        } else {
             this.getData().skills.forEach((skill) => {
-                this.actor.items.forEach((s) => {
-                    if (s.type === "skill" && s.data.data.matchID.value === weaponObj.data.attackSkill.value) {
-                        attackSkillObj = s;
-                    }
-                });
-            });
+                let punctuationless = skill.name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+                let finalString = punctuationless.replace(/\s+/g, '').toLowerCase();
 
-            this.getData().skills.forEach((skill) => {
-                this.actor.items.forEach((s) => {
-                    if (s.type === "skill" && s.data.data.matchID.value === weaponObj.data.shieldSkill.value) {
-                        shieldSkillObj = s;
-                    }
-                });
+                if (finalString === shieldSkill.toLowerCase()) {
+                    shieldSkillObj = skill;
+                }
             });
         }
 
@@ -324,7 +333,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             if (shield.data.isEquipped.value) {
                 usingShield = true;
                 shieldObj = shield;
-            } else {}
+            }
         });
 
 
@@ -343,22 +352,17 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
 
         }
 
-        if (shieldSkillObj === null) {
-            shieldSkillObj = {
-                id: null
-            }
-        }
-
         /* Perform the attack check */
         Dice.TaskCheck({
-            actorId: this.actor.id,
+            actor: this.actor.id,
             checkType: "SimpleAttack",
-            skillObjId: attackSkillObj.id,
-            shieldSkillObjId: shieldSkillObj.id,
+            skillObj: attackSkillObj.id,
+            shieldSkillObj: shieldSkillObj.id,
             usingShield: usingShield,
-            weaponObjId: event.currentTarget.closest(".item").dataset.itemId,
+            weaponObj: weaponObj.id,
             damageType: damageType,
-            heroPoint: event.shiftKey
+            heroPoint: event.shiftKey,
+            modifier: this.actor.getModifier
         });
 
     }
