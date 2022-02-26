@@ -193,8 +193,6 @@ async function v040Migrate() {
             .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
             .replace(/\s+/g, "")
             .toLowerCase();
-
-          console.log("COMPARISON:", skillName, compareName);
           if (skillName === compareName) {
             item.update({
               "data.matchID.value": s.data.data.matchID.value,
@@ -247,7 +245,6 @@ async function v040Migrate() {
               .replace(/\s+/g, "")
               .toLowerCase() === attackSkillName
           ) {
-              console.log(i.name, i.data.data);
             item.update({
               "data.attackSkill.value": i.data.data.matchID.value,
             });
