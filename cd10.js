@@ -188,7 +188,7 @@ Hooks.once("ready", function () {
 });
 
 async function awaitMigration(currentVersion) {
-  await CD10Migration();
+  await CD10Migration(currentVersion);
 
   console.log(
     "==== CD10 | Updating settings version to",

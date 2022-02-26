@@ -1,6 +1,5 @@
 /* Check necessary upgrades that need to be done, then trigger world migration */
-export default async function MigrateWorld() {
-  const currentVersion = game.system.data.version;
+export default async function MigrateWorld(currentVersion) {
   console.log("==== CD10 | Migration needed! Starting migration. ====");
   /* Check how old the system is and determine which update routines need to be ran. */
   let v030 = !currentVersion || isNewerVersion("0.3.0", currentVersion);
