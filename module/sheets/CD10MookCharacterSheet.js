@@ -284,7 +284,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
             attackSkill = weaponObj.data.attackSkill.value,
             shieldSkill = null;
 
-        if (weaponObj.data.shieldSkill != undefined) {
+        if (weaponObj.data.shieldSkill?.value != 'undefined') {
             shieldSkill = weaponObj.data.shieldSkill.value;
         } else {
             shieldSkill = "None";

@@ -281,7 +281,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             attackSkill = weaponObj.data.attackSkill.value,
             shieldSkill = null;
 
-        if (weaponObj.data.shieldSkill != undefined) {
+        if (weaponObj.data.shieldSkill?.value != 'undefined') {
             shieldSkill = weaponObj.data.shieldSkill.value;
         } else {
             shieldSkill = "None";
@@ -574,7 +574,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             this.getData().armors.forEach((a) => {
                 if (a.data.isEquipped.value && a.data.coverage[hitLocation].value) {
                     armor = this.actor.items.get(a._id);
-                    break;
+                    return;
                 }
             });
 
@@ -591,7 +591,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
                     if (s.data.isEquipped.value) {
                         shield = this.actor.items.get(s._id);
                         usingShield = true;
-                        break;
                     }
                 });
             } else {

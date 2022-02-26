@@ -43,14 +43,13 @@ export default class CD10Item extends Item {
         /* Hijack preCreate to create a matchID for items that is persistent across characters. 
         This is mainly used to match weapons with their combat skills. */
 
-        if (!this.isEmbedded && this.type === 'skill' && typeof this.data.data.matchID == 'undefined') {
-            let matchID = randomID();
+        if (!this.isEmbedded && this.type === 'skill' && typeof this.data.data.matchID?.value === 'undefined') {
 
             await this.data.update({
                 "data.matchID": {
                     "type": "text",
                     "label": "MatchID",
-                    "value": matchID
+                    "value": randomID()
                 }
             });
         }
