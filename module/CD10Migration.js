@@ -194,6 +194,10 @@ async function v040Migrate() {
             .replace(/\s+/g, "")
             .toLowerCase();
           if (skillName === compareName) {
+              if (s.data.data.matchID?.value === 'undefined') {
+                  ui.notifications.error(`CRITICAL FAILURE! MatchID for skill ${s.name} belonging to ${s.parent.name} is undefined!`)
+                  return;
+              }
             item.update({
               "data.matchID.value": s.data.data.matchID.value,
             });
