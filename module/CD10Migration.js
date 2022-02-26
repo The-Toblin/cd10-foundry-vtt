@@ -182,17 +182,19 @@ async function v040Migrate() {
 
     async function _copyMatchIDtoEmbeddedSkill(item) {
       /* Find skills on the character that has a world-residing 'master' and copy its matchID to the character's skill. */
-      let punctuationless = item.name.replace(
-        /[.,\/#!$%\^&\*;:{}=\-_`~()]/g,
-        ""
-      );
-      let skillName = punctuationless.replace(/\s+/g, "").toLowerCase();
+      let skillName = item.name
+        .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
+        .replace(/\s+/g, "")
+        .toLowerCase();
 
       await game.items.forEach((s) => {
         if (s.type === "skill") {
-          let ptLess = s.name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
-          let compareName = ptLess.replace(/\s+/g, "").toLowerCase();
+          let compareName = s.name
+            .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
+            .replace(/\s+/g, "")
+            .toLowerCase();
 
+          console.log("COMPARISON:", skillName, compareName);
           if (skillName === compareName) {
             item.update({
               "data.matchID.value": s.data.data.matchID.value,
@@ -245,6 +247,7 @@ async function v040Migrate() {
               .replace(/\s+/g, "")
               .toLowerCase() === attackSkillName
           ) {
+              console.log(i.name, i.data.data);
             item.update({
               "data.attackSkill.value": i.data.data.matchID.value,
             });
@@ -283,7 +286,7 @@ async function v040Migrate() {
     for (let item of game.items.contents) {
       if (
         item.type === "meleeWeapon" &&
-        item.data.data.shieldSkill?.value != 'undefined'
+        item.data.data.shieldSkill?.value != "undefined"
       ) {
         console.log(`==== CD10 | Migrating Item entity ${item.name}`);
         await _copyShieldSkillMatchID(item);
@@ -295,7 +298,7 @@ async function v040Migrate() {
       await actor.items.forEach((item) => {
         if (
           item.type === "meleeWeapon" &&
-          item.data.data.shieldSkill?.value != 'undefined'
+          item.data.data.shieldSkill?.value != "undefined"
         ) {
           console.log(
             `==== CD10 | Migrating Item entity ${item.name} belonging to ${item.parent.name}`
@@ -306,7 +309,7 @@ async function v040Migrate() {
     }
 
     async function _copyShieldSkillMatchID(item) {
-        /* Find the weapon's 'shieldSkill' property and compare it to skills on the character. Copy the matchID from the character's skill. */
+      /* Find the weapon's 'shieldSkill' property and compare it to skills on the character. Copy the matchID from the character's skill. */
       let shieldSkillName = item.data.data.shieldSkill.value
         .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
         .replace(/\s+/g, "")
