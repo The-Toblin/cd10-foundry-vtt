@@ -65,26 +65,6 @@ function registerSystemSettings() {
         default: false,
     });
 
-    /* Set if hit location is to be used in the system. */
-    game.settings.register("cd10", "systemHitLocation", {
-        config: true,
-        scope: "world",
-        name: "SETTINGS.hitLocation.name",
-        hint: "SETTINGS.hitLocation.label",
-        type: Boolean,
-        default: false,
-    });
-
-    /* Option to enable or disable Encumbrance rules. */
-    game.settings.register("cd10", "systemEncumbrance", {
-        config: true,
-        scope: "world",
-        name: "SETTINGS.encumbrance.name",
-        hint: "SETTINGS.encumbrance.label",
-        type: Boolean,
-        default: false,
-    });
-
     /* Option to use barter. Defaults to coinage. */
     game.settings.register("cd10", "systemBarter", {
         config: true,
@@ -112,102 +92,6 @@ function registerSystemSettings() {
         type: Boolean,
         default: ""
     });
-}
-
-/* Version 0.2.x migration functions to update data structures to 0.3.0. */
-
-function migrateItemData(item) {
-    let updateData = {};
-
-    if (item.type === "skill") {
-        updateData["data.isPhysical.value"] = false
-    }
-
-    if (item.type === "weapon" && item.data.isRanged.value) {
-        updateData["type"] = "rangedWeapon"
-    } else if (item.type === "weapon" && !item.data.isRanged.value) {
-        updateData["type"] = "meleeWeapon"
-    } else if (item.type === "armor" && item.data.isShield.value) {
-        updateData["type"] = "shield"
-    } else if (item.type === "armor" && !item.data.isShield.value) {
-        let head,
-            body,
-            arms,
-            legs,
-            coverage = item.data.coverage.value;
-
-        head = body = arms = legs = false;
-
-        if (coverage === "All") {
-            head = body = arms = legs = true;
-        }
-        if (coverage === "Chest" || coverage === "Torso" || coverage === "torso" || coverage === "chest") {
-            body = true;
-        }
-        if (coverage === "Head" || coverage === "head") {
-            head = true;
-        }
-        if (coverage === "Legs" || coverage === "legs") {
-            legs = true;
-        }
-        if (coverage === "Arms" || coverage === "arms") {
-            arms = true;
-        }
-        if (coverage === "torsoArms") {
-            arms = body = true;
-        }
-
-        if (!arms && !head && !legs && !body) {
-            body = true;
-        }
-
-        updateData["type"] = "armor";
-        updateData["data.coverage.head.value"] = head
-        updateData["data.coverage.body.value"] = body
-        updateData["data.coverage.arms.value"] = arms
-        updateData["data.coverage.legs.value"] = legs
-    }
-
-    return updateData;
-}
-
-async function migrateWorld() {
-    console.log("SYSTEM: Migrating game items.")
-    for (let item of game.items.contents) {
-        const updateData = migrateItemData(item.data);
-
-        if (!foundry.utils.isObjectEmpty(updateData)) {
-            console.log(`SYSTEM: Migrating Item entity ${item.name}`);
-            await item.update(updateData);
-        }
-    }
-
-    console.log("SYSTEM: Migrating actor items.")
-    for (let actor of game.actors.contents) {
-        for (let item of actor.items) {
-            const updateData = migrateItemData(item.data);
-
-            if (!foundry.utils.isObjectEmpty(updateData)) {
-                console.log(`SYSTEM: Migrating Item entity ${item.name} belonging to ${actor.name}`);
-                await item.update(updateData);
-            }
-        }
-    }
-    console.log("SYSTEM: Setting game settings");
-    let damageTypeSet = game.settings.get("cd10", "systemDamageTypes"),
-        hitTypeSet = game.settings.get("cd10", "systemHitLocation"),
-        barterTypeSet = game.settings.get("cd10", "systemBarter");
-
-    if (damageTypeSet != "simple" && damageTypeSet != "standard" && damageTypeSet != "complex") {
-        game.settings.set("cd10", "systemDamageTypes", "standard");
-    }
-
-    if (!hitTypeSet || hitTypeSet) {
-        game.settings.get("cd10", "systemHitLocation", false);
-    }
-    if (!barterTypeSet || barterTypeSet) {
-        game.settings.get("cd10", "systemBarter", false);
-    }
 }
 
 Hooks.once("init", function() {
@@ -263,19 +147,4 @@ Hooks.once("init", function() {
 
     console.log("==== CD10 | Pushing TinyMCE CSS ====");
     CONFIG.TinyMCE.content_css.push(`systems/cd10/less/cd10_tinymcemods.css`);
-});
-
-Hooks.once("ready", function() {
-    if (!game.user.isGM) {
-        return;
-    }
-
-    const currentVersion = game.settings.get("cd10", "systemMigrationVersion");
-    const NEEDS_MIGRATION_VERSION = "0.2.0";
-    const needsMigration = !currentVersion || isNewerVersion(NEEDS_MIGRATION_VERSION, currentVersion);
-
-    if (needsMigration) {
-        migrateWorld();
-        game.settings.set("cd10", "systemMigrationVersion", game.system.data.version);
-    }
 });

@@ -1,5 +1,9 @@
-#Version 0.3.8
-=== Bugfixes ===
-- Using a shield with a weapon led to incorrect ActionValue being used, due to ActionValue being set before shield equipped-status was checked. 
-- Added Physical Save button to Mook Sheets. They were unable to save following the removal of the "click to roll" on Armors.
-- Fixed bug with physical saves failing if no armor or shield was worn/equipped.
+#Version 0.3.9
+=== FINAL release ===
+Fixing up code and removing half-implemented and deprecated mechanics. CD10 will be re-released under the redesigned core system.
+
+- Removed Encumbrance.
+- Removed HitLocation.
+- Removed complex checks.
+- Implemented simplified trait checks. Left-click on a trait checkmark to enable that trait for the next check. Right click to reverse trait. Perform skill check as usual. 
+- Simplified combat tab.
