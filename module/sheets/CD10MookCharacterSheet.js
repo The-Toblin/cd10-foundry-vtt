@@ -145,9 +145,9 @@ export default class CD10MookCharacterSheet extends ActorSheet {
             p.type != "meleeWeapon" && p.type != "armor" && p.type != "rangedWeapon" && p.type != "shield");
 
         /* Make system settings available for sheets to use for rendering */
-        sheetData.damageTypeSetting = game.settings.get("cd10", "systemDamageTypes");
-        sheetData.barterSetting = game.settings.get("cd10", "systemBarter");
-        sheetData.modernity = game.settings.get("cd10", "systemModernity");
+        sheetData.damageTypeSetting = game.settings.get("cd10_legacy", "systemDamageTypes");
+        sheetData.barterSetting = game.settings.get("cd10_legacy", "systemBarter");
+        sheetData.modernity = game.settings.get("cd10_legacy", "systemModernity");
 
 
         let choices = {
@@ -234,7 +234,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
         let item = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId);
 
         /* Dump the skill description to chat. */
-        if (game.settings.get("cd10", "systemDumpDescriptions")) {
+        if (game.settings.get("cd10_legacy", "systemDumpDescriptions")) {
             item.roll()
         }
 
@@ -425,7 +425,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
         }
 
         /* Dump skills and traits to chat. */
-        if (game.settings.get("cd10", "systemDumpDescriptions")) {
+        if (game.settings.get("cd10_legacy", "systemDumpDescriptions")) {
             if (skillObj != null) {
                 skillObj.roll();
             }
@@ -552,9 +552,6 @@ export default class CD10MookCharacterSheet extends ActorSheet {
             damageType = html.find("select#damage-type").val(),
             hitLocation = "chest";
 
-        if (game.settings.get("cd10", "systemHitLocation")) {
-            hitLocation = html.find("select#hit-location").val();
-        }
 
         if (!lethality > 0) {
             ui.notifications.error(`Please select a non-zero value for Lethality!`)
@@ -621,7 +618,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
 
 
     _onItemRoll(item) {
-        if (game.settings.get("cd10", "systemDumpDescriptions")) {
+        if (game.settings.get("cd10_legacy", "systemDumpDescriptions")) {
             item.roll();
         }
     }

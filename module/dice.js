@@ -5,11 +5,11 @@ export async function TaskCheck({
     checkType = null,
     skillObj = null,
     shieldSkillObj = null,
-    usingShield = false,
     shieldObj = null,
     posTraitObj = null,
     negTraitObj = null,
     weaponObj = null,
+    usingShield = false,
     armorObj = null,
     lethality = null,
     shock = null,
@@ -40,11 +40,11 @@ export async function TaskCheck({
     /* Set up correct chat message template */
     let messageTemplate = null;
     if (checkType === "Simple" || checkType === "Complex") {
-        messageTemplate = "systems/cd10/templates/partials/chat-messages/skill-roll.hbs";
+        messageTemplate = "systems/cd10_legacy/templates/partials/chat-messages/skill-roll.hbs";
     } else if (checkType === "Attack" || checkType === "SimpleAttack") {
-        messageTemplate = "systems/cd10/templates/partials/chat-messages/attack-roll.hbs";
+        messageTemplate = "systems/cd10_legacy/templates/partials/chat-messages/attack-roll.hbs";
     } else if (checkType === "Save") {
-        messageTemplate = "systems/cd10/templates/partials/chat-messages/physical-save.hbs";
+        messageTemplate = "systems/cd10_legacy/templates/partials/chat-messages/physical-save.hbs";
     }
 
     /* Fetch skill level */
@@ -115,12 +115,6 @@ export async function TaskCheck({
         skillName = "No Skill!";
     }
 
-    if (usingShield) {
-        let shieldOutcome = _usingShieldTest(skillObj, shieldSkillObj);
-        actionValue = shieldOutcome.actionValue;
-        skillName = shieldOutcome.skillName;
-    }
-
     rollData = {
         actionValue: actionValue,
         traitValue: traitValue,
@@ -183,7 +177,7 @@ export async function TaskCheck({
             fail: renderedFailRoll
         }
     } else if (checkType === "SimpleAttack") {
-        let attackOutcome = _handleAttack(rollD10._total, skillObj, shieldSkillObj, weaponObj, damageType, usingShield, actor);
+        let attackOutcome = _handleAttack(rollD10._total, skillObj, shieldSkillObj, weaponObj, damageType, actor);
         templateContext = {
             weapon: weaponObj,
             weaponDamage: attackOutcome.weaponDamage,
@@ -197,7 +191,7 @@ export async function TaskCheck({
             fail: renderedFailRoll
         }
     } else if (checkType === "Attack") {
-        let attackOutcome = _handleAttack(rollD10._total, skillObj, shieldSkillObj, weaponObj, damageType, usingShield, actor);
+        let attackOutcome = _handleAttack(rollD10._total, skillObj, shieldSkillObj, weaponObj, damageType, actor);
         templateContext = {
             weapon: weaponObj,
             weaponDamage: attackOutcome.weaponDamage,
@@ -238,7 +232,7 @@ export async function TaskCheck({
     ChatMessage.create(chatData);
 }
 
-function _handleAttack(rollTotal, skillObj, shieldSkillObj, weaponObj, damageType, usingShield, actorId) {
+function _handleAttack(rollTotal, skillObj, shieldSkillObj, weaponObj, damageType, actorId) {
     /* Calculate details of the attack, such as Lethality and Excess. */
     let excess,
         lethality,
@@ -265,46 +259,15 @@ function _handleAttack(rollTotal, skillObj, shieldSkillObj, weaponObj, damageTyp
         weaponShock = parseInt(weaponObj.data.damage.shock.value);
     }
 
-    if (usingShield) {
-        /* If a shield is equipped: determine which skill is optimal to use by 
-        comparing if the shield-using skill is higher than the regular
-        attack skill with penalty.
-        */
-        
-        let actionValueAttack, actionValueShield, attackName, shieldName;
 
-        if (skillObj === null) {
-            actionValueAttack = 0;
-            attackName = "No skill!"
-        } else {
-            actionValueAttack = skillObj.data.skillLevel.value;
-            attackName = skillObj.name;
-        }
-
-        if (shieldSkillObj === null) {
-            actionValueShield = 0;
-            shieldName = "No skill!"
-        } else {
-            actionValueShield = shieldSkillObj.data.skillLevel.value;
-            shieldName = shieldSkillObj.name;
-        }
-
-        if ((actionValueAttack - 3) > actionValueShield) {
-            actionValue = actionValueAttack - 3;
-            skillName = attackName;
-        } else {
-            actionValue = actionValueShield;
-            skillName = shieldName;
-        }
+    if (skillObj === null) {
+        skillName = "No skill!";
+        actionValue = 0;
     } else {
-        if (skillObj === null) {
-            skillName = "No skill!";
-            actionValue = 0;
-        } else {
-            actionValue = skillObj.data.skillLevel.value;
-            skillName = skillObj.name;
-        }
+        actionValue = skillObj.data.skillLevel.value;
+        skillName = skillObj.name;
     }
+
 
     return {
         actionValue,
@@ -401,44 +364,5 @@ function _handleSave(roll, traitValue, damageType, armorObj, shieldObj, usingShi
         shockResult: shockValue,
         saveOutcome: outcome,
         wounds: wounds
-    }
-}
-
-function _usingShieldTest(skillObj, shieldSkillObj) {
-
-    /* If a shield is equipped: determine which skill is optimal to use by 
-    comparing if the shield-using skill is higher than the regular
-    attack skill with penalty.
-    */
-
-    let actionValueAttack, actionValueShield, attackName, shieldName, actionValue, skillName;
-
-    if (skillObj === null) {
-        actionValueAttack = 0;
-        attackName = "No skill!"
-    } else {
-        actionValueAttack = skillObj.data.skillLevel.value;
-        attackName = skillObj.name;
-    }
-
-    if (shieldSkillObj === null) {
-        actionValueShield = 0;
-        shieldName = "No skill!"
-    } else {
-        actionValueShield = shieldSkillObj.data.skillLevel.value;
-        shieldName = shieldSkillObj.name;
-    }
-
-    if ((actionValueAttack - 2) > actionValueShield) {
-        actionValue = actionValueAttack - 2;
-        skillName = attackName;
-    } else {
-        actionValue = actionValueShield;
-        skillName = shieldName;
-    }
-
-    return {
-        skillName,
-        actionValue
     }
 }
