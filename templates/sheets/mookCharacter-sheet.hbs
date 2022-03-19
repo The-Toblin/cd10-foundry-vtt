@@ -14,19 +14,6 @@
             </div>
             <div class="flex-column flex-center pad-4">
                 <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" class="actor-image" />
-                <div class="button">
-                    <a class="physical-save flex-row flex-even pad-top" data-type="text"
-                        data-action-value="{{skill.data.skillLevel.value}}" title={{localize "cd10.sheet.roll" }}>
-                        <div class="d10-roll-icon">
-                            <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
-                        </div>
-                        <div>
-                            <h3 class="sheet-header">
-                                {{localize "cd10.sheet.save"}}
-                            </h3>
-                        </div>
-                    </a>
-                </div>
                 <div class="stressBoxSelect pad-8 center">
                     <label>{{localize "cd10.sheet.stress"}}?</label>
                     <a class="stressBox" data-type="text">

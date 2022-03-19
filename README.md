@@ -1,6 +1,3 @@
-# Legacy
-This version of the Celenia D10 RPG System (CD10) is no longer supported. See https://www.github.com/The-Toblin/cd10-foundry-vtt for the redesigned, modern system. This system remains for legacy support and occasional bugfixes if one would prefer to use the older version.
-
 # Celenia D10 RPG System
 CD10 RPG is a narratively focused, settings-agnostic RPG systems meant primarily for immersive verisimilitude games with a touch of rule of cool. CD10 attempts to emulate the feel of an 80's action movie, where the main character is just a human, but also the hero of the story. Imagine your character being John McClane of Die Hard and you get pretty close to the aim of the system. It is not suitable for epic, grand-scale, "save the universe" plots common to more traditional high-fantasy games, although with some fenagling, those campaigns are possible. But just don't try to make big, epic boss battles in this system. It's not made for it. It's designed primarily for equal-footing fighters duking it out, or fighting monsters that are of somewhat similar ability as the characters.
 

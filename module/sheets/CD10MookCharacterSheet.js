@@ -145,9 +145,11 @@ export default class CD10MookCharacterSheet extends ActorSheet {
             p.type != "meleeWeapon" && p.type != "armor" && p.type != "rangedWeapon" && p.type != "shield");
 
         /* Make system settings available for sheets to use for rendering */
-        sheetData.damageTypeSetting = game.settings.get("cd10_legacy", "systemDamageTypes");
-        sheetData.barterSetting = game.settings.get("cd10_legacy", "systemBarter");
-        sheetData.modernity = game.settings.get("cd10_legacy", "systemModernity");
+        sheetData.damageTypeSetting = game.settings.get("cd10", "systemDamageTypes");
+        sheetData.hitLocationSetting = game.settings.get("cd10", "systemHitLocation");
+        sheetData.encumbranceSetting = game.settings.get("cd10", "systemEncumbrance");
+        sheetData.barterSetting = game.settings.get("cd10", "systemBarter");
+        sheetData.modernity = game.settings.get("cd10", "systemModernity");
 
 
         let choices = {
@@ -231,39 +233,22 @@ export default class CD10MookCharacterSheet extends ActorSheet {
             }
         }
 
-        let item = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId);
+        /* Fetch the skill, based on ItemId. */
+        let skillObj = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId);
 
         /* Dump the skill description to chat. */
-        if (game.settings.get("cd10_legacy", "systemDumpDescriptions")) {
-            item.roll()
+        if (game.settings.get("cd10", "systemDumpDescriptions")) {
+            skillObj.roll()
         }
 
-
-        if (item.type === "skill") {
-            /* Perform the check */
-            Dice.TaskCheck({
-                checkType: "Simple",
-                skillObjId: event.currentTarget.closest(".item").dataset.itemId,
-                heroPoint: event.shiftKey,
-                actorId: this.actor.id
-            });
-        } else if (item.type === "trait") {
-            if (item.data.data.skillLevel.value > 0) {
-                Dice.TaskCheck({
-                    checkType: "Complex",
-                    posTraitObjId: item.id,
-                    heroPoint: event.shiftKey,
-                    actorId: this.actor.id
-                });
-            } else {
-                Dice.TaskCheck({
-                    checkType: "Complex",
-                    negTraitObjId: item.id,
-                    heroPoint: event.shiftKey,
-                    actorId: this.actor.id
-                });
-            }
-        }
+        /* Perform the check */
+        Dice.TaskCheck({
+            checkType: "Simple",
+            skillObj: skillObj.data,
+            modifier: this.actor.getModifier,
+            heroPoint: event.shiftKey,
+            actor: this.actor.id
+        });
     }
 
     async _simpleAttackCheck(event) {
@@ -277,45 +262,48 @@ export default class CD10MookCharacterSheet extends ActorSheet {
             }
         }
 
-        let damageType = event.currentTarget.dataset.damageType,
+        const damageType = event.currentTarget.dataset.damageType,
             weaponObj = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId).data,
             attackSkill = weaponObj.data.attackSkill.value,
-            shieldSkill = null;
-
-        if (weaponObj.data.shieldSkill != undefined) {
             shieldSkill = weaponObj.data.shieldSkill.value;
-        } else {
-            shieldSkill = "None";
-        }
 
         let usingShield = false,
             attackSkillObj = null,
             shieldSkillObj = null;
 
-        /* Fetch the actor skills and prepare them for comparison. */
+        /* Fetch the actor skills and prepare them for comparison. Due
+        to config limitations, skills are stored as punctuation-less
+        variables in the config file, but the skill names are regular
+        text. This function turns the freely-typed skills into space-less,
+        punctuation-less strings for comparison. 
+        */
 
         if (shieldSkill === "None") {
-            this.actor.items.forEach((s) => {
-                if (s.type === "skill" && s.data.data.matchID.value === weaponObj.data.attackSkill.value) {
-                    attackSkillObj = s;
+            this.getData().skills.forEach((skill) => {
+                let punctuationless = skill.name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+                let finalString = punctuationless.replace(/\s+/g, '').toLowerCase();
+
+                if (finalString === attackSkill.toLowerCase()) {
+                    attackSkillObj = skill;
+                }
+            });
+        } else {
+            this.getData().skills.forEach((skill) => {
+                let punctuationless = skill.name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+                let finalString = punctuationless.replace(/\s+/g, '').toLowerCase();
+
+                if (finalString === attackSkill.toLowerCase()) {
+                    attackSkillObj = skill;
                 }
             });
 
-        } else {
             this.getData().skills.forEach((skill) => {
-                this.actor.items.forEach((s) => {
-                    if (s.type === "skill" && s.data.data.matchID.value === weaponObj.data.attackSkill.value) {
-                        attackSkillObj = s;
-                    }
-                });
-            });
+                let punctuationless = skill.name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+                let finalString = punctuationless.replace(/\s+/g, '').toLowerCase();
 
-            this.getData().skills.forEach((skill) => {
-                this.actor.items.forEach((s) => {
-                    if (s.type === "skill" && s.data.data.matchID.value === weaponObj.data.shieldSkill.value) {
-                        shieldSkillObj = s;
-                    }
-                });
+                if (finalString === shieldSkill.toLowerCase()) {
+                    shieldSkillObj = skill;
+                }
             });
         }
 
@@ -325,170 +313,22 @@ export default class CD10MookCharacterSheet extends ActorSheet {
             if (shield.data.isEquipped.value) {
                 usingShield = true;
                 shieldObj = shield;
-            } else {}
+            }
         });
-
-
-        /* Check if it's a ranged weapon */
-        if (weaponObj.type === "rangedWeapon") {
-            let ammo = this.actor.items.get(weaponObj.data.selectedAmmo.id);
-            if (ammo.data.data.damage.slash.selected) {
-                damageType = "slash"
-            } else if (ammo.data.data.damage.pierce.selected) {
-                damageType = "pierce"
-            } else if (ammo.data.data.damage.blunt.selected) {
-                damageType = "blunt"
-            } else if (ammo.data.data.damage.energy.selected) {
-                damageType = "energy"
-            }
-
-        }
-
-        if (shieldSkillObj === null) {
-            shieldSkillObj = {
-                id: null
-            }
-        }
 
         /* Perform the attack check */
         Dice.TaskCheck({
-            actorId: this.actor.id,
+            actor: this.actor.id,
             checkType: "SimpleAttack",
-            skillObjId: attackSkillObj.id,
-            shieldSkillObjId: shieldSkillObj.id,
+            skillObj: attackSkillObj,
+            shieldSkillObj: shieldSkillObj,
             usingShield: usingShield,
-            weaponObjId: event.currentTarget.closest(".item").dataset.itemId,
+            weaponObj: weaponObj,
             damageType: damageType,
-            heroPoint: event.shiftKey
+            heroPoint: event.shiftKey,
+            modifier: this.actor.getModifier
         });
 
-    }
-
-    async _onComplexCheck(event) {
-        /* Open the complex check dialog. A complex check allows the use of
-        traits for a check, in addition to configuring it in more detail.*/
-        event.preventDefault();
-        let dialogOptions = {
-            classes: [
-                "cd10-dialog", "complex-check-dialog"
-            ],
-            top: 300,
-            left: 400
-        };
-        new Dialog({
-            title: "Complex Check Dialog",
-            content: await renderTemplate("systems/cd10/templates/partials/complex-check-dialog.hbs", this.getData()),
-            buttons: {
-                roll: {
-                    label: "Roll!",
-                    callback: (html) => this._complexSkillCheck(html)
-                }
-            }
-        }, dialogOptions).render(true);
-    }
-
-    async _complexSkillCheck(html) {
-        /* Perform a complex skill check save 
-        called from the Complex dialog */
-
-        /* Set up variables for the method */
-        let heroPointChecked = html.find("input#heroPoint")[0].checked,
-            reverseTraitChecked = html.find("input#reverseTrait")[0].checked,
-            skillObj = null,
-            posTraitObj = null,
-            negTraitObj = null;
-
-        /* Fetch the objects for skills and traits involved*/
-        if (html.find("select#skill-selected").val() != "None") {
-            skillObj = this.actor.items.get(this.getData().skills[html.find("select#skill-selected").val()]._id);
-        }
-        if (html.find("select#pos-trait-selected").val() != "None") {
-            posTraitObj = this.actor.items.get(this.getData().posTraits[html.find("select#pos-trait-selected").val()]._id);
-        }
-        if (html.find("select#neg-trait-selected").val() != "None") {
-            negTraitObj = this.actor.items.get(this.getData().negTraits[html.find("select#neg-trait-selected").val()]._id);
-        }
-
-        /* Check if at least one of the selections were done, else show an error message. 
-        if (skillObj === null && posTraitObj === null && negTraitObj === null) {
-            ui.notifications.error(`Please select at least one skill or trait!`);
-
-            return;
-        }/*
-
-        /* If a hero point is spent, check if there's enough points.
-        Otherwise cancel the check. */
-        if (heroPointChecked) {
-            if (this._checkHeroPoints() === false) {
-                return;
-            }
-        }
-
-        /* Dump skills and traits to chat. */
-        if (game.settings.get("cd10_legacy", "systemDumpDescriptions")) {
-            if (skillObj != null) {
-                skillObj.roll();
-            }
-            if (posTraitObj != null) {
-                posTraitObj.roll();
-            }
-            if (negTraitObj != null) {
-                negTraitObj.roll();
-            }
-        }
-
-        if (skillObj === null) {
-            skillObj = {
-                id: null
-            }
-        }
-        if (posTraitObj === null) {
-            posTraitObj = {
-                id: null
-            }
-        }
-        if (negTraitObj === null) {
-            negTraitObj = {
-                id: null
-            }
-        }
-
-        Dice.TaskCheck({
-            actorId: this.actor.id,
-            checkType: "Complex",
-            skillObjId: skillObj.id,
-            posTraitObjId: posTraitObj.id,
-            negTraitObjId: negTraitObj.id,
-            heroPoint: heroPointChecked,
-            reverseTrait: reverseTraitChecked
-        });
-    }
-
-    async _onComplexAttack(event) {
-        /* Open the complex check dialog */
-        event.preventDefault();
-        let dialogOptions = {
-            classes: [
-                "cd10-dialog", "complex-attack-dialog"
-            ],
-            top: 300,
-            left: 400
-        };
-        new Dialog({
-            title: "Complex Attack Dialog",
-            content: await renderTemplate("systems/cd10/templates/partials/complex-attack-dialog.hbs", this.getData()),
-            buttons: {
-                roll: {
-                    label: "Attack!",
-                    callback: (html) => this._complexAttackCheck(html)
-                }
-            }
-        }, dialogOptions).render(true);
-    }
-
-
-    async _complexAttackCheck(event) {
-        ui.notifications.error(`I would've made a roll here, but it's not implemented yet.`)
     }
 
     async _onPhysicalSave(event) {
@@ -524,23 +364,19 @@ export default class CD10MookCharacterSheet extends ActorSheet {
             negTraitObj,
             armor = null,
             shield = null,
-            usingShield = false;
+            usingShield = false,
+            posTraitObjData = null,
+            negTraitObjData = null;
 
         /* First, we check if traits were selected in the dialog or not and
         if so, fetch the relevant objects. */
         if (html.find("select#pos-trait-selected").val() != "None") {
             posTraitObj = this.actor.items.get(this.getData().posTraits[html.find("select#pos-trait-selected").val()]._id);
-        } else {
-            posTraitObj = {
-                id: null
-            }
+            posTraitObjData = posTraitObj.data;
         }
         if (html.find("select#neg-trait-selected").val() != "None") {
             negTraitObj = this.actor.items.get(this.getData().negTraits[html.find("select#neg-trait-selected").val()]._id);
-        } else {
-            negTraitObj = {
-                id: null
-            }
+            negTraitObjData = negTraitObj.data;
         }
 
         /* Check if any of the checkboxes were ticked, as well as gather
@@ -550,8 +386,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
             lethality = parseInt(html.find("input#lethality").val()),
             shock = parseInt(html.find("input#shock").val()),
             damageType = html.find("select#damage-type").val(),
-            hitLocation = "chest";
-
+            hitLocation = html.find("select#hit-location").val();
 
         if (!lethality > 0) {
             ui.notifications.error(`Please select a non-zero value for Lethality!`)
@@ -568,57 +403,43 @@ export default class CD10MookCharacterSheet extends ActorSheet {
 
         /* Check which armor is being worn on the applicable body part,
         if so, fetch the relevant object. */
-        if (this.getData().armors.length != 0) {
-            this.getData().armors.forEach((a) => {
-                if (a.data.isEquipped.value && a.data.coverage[hitLocation].value) {
-                    armor = this.actor.items.get(a._id);
-                }
-            });
-
-        } else {
-            armor = {
-                id: null
+        this.getData().armors.forEach((a) => {
+            if (a.data.isEquipped.value && a.data.coverage[hitLocation].value) {
+                armor = a;
             }
-        }
+        });
 
         /* Check if a shield is equipped, if so, fetch the relevant object. */
         if (html.find("input#parried")[0].checked) {
-            if (this.getData().shields.length != 0) {
-                this.getData().shields.forEach((s) => {
-                    if (s.data.isEquipped.value) {
-                        shield = this.actor.items.get(s._id);
-                        usingShield = true;
-                    }
-                });
-            } else {
-                ui.notifications.error(`You do not have a shield equipped. Rolling without shield.`)
-                shield = {
-                    id: null
+            this.getData().shields.forEach((s) => {
+                if (s.data.isEquipped.value) {
+                    shield = s;
+                    usingShield = true;
                 }
-            }
-        }
+            });
 
+        }
         /* Roll the actual check. */
         Dice.TaskCheck({
             checkType: "Save",
-            posTraitObjId: posTraitObj.id,
-            negTraitObjId: negTraitObj.id,
+            posTraitObj: posTraitObjData,
+            negTraitObj: negTraitObjData,
             heroPoint: heroPointChecked,
             reverseTrait: reverseTraitChecked,
-            armorObjId: armor.id,
-            shieldObjId: shield.id,
+            armorObj: armor,
+            shieldObj: shield,
             usingShield: usingShield,
             damageType: damageType,
             lethality: lethality,
             shock: shock,
             hitLocation: hitLocation,
-            actorId: this.actor.id
+            actor: this.actor.id
         });
     }
 
 
     _onItemRoll(item) {
-        if (game.settings.get("cd10_legacy", "systemDumpDescriptions")) {
+        if (game.settings.get("cd10", "systemDumpDescriptions")) {
             item.roll();
         }
     }

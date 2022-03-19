@@ -150,9 +150,11 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             p.type != "meleeWeapon" && p.type != "armor" && p.type != "rangedWeapon" && p.type != "shield");
 
         /* Make system settings available for sheets to use for rendering */
-        sheetData.damageTypeSetting = game.settings.get("cd10_legacy", "systemDamageTypes");
-        sheetData.barterSetting = game.settings.get("cd10_legacy", "systemBarter");
-        sheetData.modernity = game.settings.get("cd10_legacy", "systemModernity");
+        sheetData.damageTypeSetting = game.settings.get("cd10", "systemDamageTypes");
+        sheetData.hitLocationSetting = game.settings.get("cd10", "systemHitLocation");
+        sheetData.encumbranceSetting = game.settings.get("cd10", "systemEncumbrance");
+        sheetData.barterSetting = game.settings.get("cd10", "systemBarter");
+        sheetData.modernity = game.settings.get("cd10", "systemModernity");
 
         return sheetData;
     }
@@ -228,39 +230,22 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             }
         }
 
-        let item = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId);
+        /* Fetch the skill, based on ItemId. */
+        let skillObj = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId);
 
         /* Dump the skill description to chat. */
         if (game.settings.get("cd10", "systemDumpDescriptions")) {
-            item.roll()
+            skillObj.roll()
         }
 
-
-        if (item.type === "skill") {
-            /* Perform the check */
-            Dice.TaskCheck({
-                checkType: "Simple",
-                skillObjId: event.currentTarget.closest(".item").dataset.itemId,
-                heroPoint: event.shiftKey,
-                actorId: this.actor.id
-            });
-        } else if (item.type === "trait") {
-            if (item.data.data.skillLevel.value > 0) {
-                Dice.TaskCheck({
-                    checkType: "Complex",
-                    posTraitObjId: item.id,
-                    heroPoint: event.shiftKey,
-                    actorId: this.actor.id
-                });
-            } else {
-                Dice.TaskCheck({
-                    checkType: "Complex",
-                    negTraitObjId: item.id,
-                    heroPoint: event.shiftKey,
-                    actorId: this.actor.id
-                });
-            }
-        }
+        /* Perform the check */
+        Dice.TaskCheck({
+            checkType: "Simple",
+            skillObj: skillObj.data,
+            modifier: this.actor.getModifier,
+            heroPoint: event.shiftKey,
+            actor: this.actor.id
+        });
     }
 
     async _simpleAttackCheck(event) {
@@ -354,10 +339,10 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         Dice.TaskCheck({
             actor: this.actor.id,
             checkType: "SimpleAttack",
-            skillObj: attackSkillObj.id,
-            shieldSkillObj: shieldSkillObj.id,
+            skillObj: attackSkillObj,
+            shieldSkillObj: shieldSkillObj,
             usingShield: usingShield,
-            weaponObj: weaponObj.id,
+            weaponObj: weaponObj,
             damageType: damageType,
             heroPoint: event.shiftKey,
             modifier: this.actor.getModifier
@@ -425,41 +410,37 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             }
         }
 
+        let skillObjData = null,
+            posTraitObjData = null,
+            negTraitObjData = null;
+
         /* Dump skills and traits to chat. */
-        if (game.settings.get("cd10_legacy", "systemDumpDescriptions")) {
-            if (skillObj != null) {
+        if (skillObj != null) {
+            if (game.settings.get("cd10", "systemDumpDescriptions")) {
                 skillObj.roll();
             }
-            if (posTraitObj != null) {
+            skillObjData = skillObj.data;
+        }
+        if (posTraitObj != null) {
+            if (game.settings.get("cd10", "systemDumpDescriptions")) {
                 posTraitObj.roll();
             }
-            if (negTraitObj != null) {
+            posTraitObjData = posTraitObj.data;
+        }
+        if (negTraitObj != null) {
+            if (game.settings.get("cd10", "systemDumpDescriptions")) {
                 negTraitObj.roll();
             }
-        }
-
-        if (skillObj === null) {
-            skillObj = {
-                id: null
-            }
-        }
-        if (posTraitObj === null) {
-            posTraitObj = {
-                id: null
-            }
-        }
-        if (negTraitObj === null) {
-            negTraitObj = {
-                id: null
-            }
+            negTraitObjData = negTraitObj.data;
         }
 
         Dice.TaskCheck({
-            actorId: this.actor.id,
+            actor: this.actor.id,
             checkType: "Complex",
-            skillObjId: skillObj.id,
-            posTraitObjId: posTraitObj.id,
-            negTraitObjId: negTraitObj.id,
+            skillObj: skillObjData,
+            posTraitObj: posTraitObjData,
+            negTraitObj: negTraitObjData,
+            modifier: this.actor.getModifier,
             heroPoint: heroPointChecked,
             reverseTrait: reverseTraitChecked
         });
@@ -525,23 +506,19 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             negTraitObj,
             armor = null,
             shield = null,
-            usingShield = false;
+            usingShield = false,
+            posTraitObjData = null,
+            negTraitObjData = null;
 
         /* First, we check if traits were selected in the dialog or not and
         if so, fetch the relevant objects. */
         if (html.find("select#pos-trait-selected").val() != "None") {
             posTraitObj = this.actor.items.get(this.getData().posTraits[html.find("select#pos-trait-selected").val()]._id);
-        } else {
-            posTraitObj = {
-                id: null
-            }
+            posTraitObjData = posTraitObj.data;
         }
         if (html.find("select#neg-trait-selected").val() != "None") {
             negTraitObj = this.actor.items.get(this.getData().negTraits[html.find("select#neg-trait-selected").val()]._id);
-        } else {
-            negTraitObj = {
-                id: null
-            }
+            negTraitObjData = negTraitObj.data;
         }
 
         /* Check if any of the checkboxes were ticked, as well as gather
@@ -551,7 +528,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             lethality = parseInt(html.find("input#lethality").val()),
             shock = parseInt(html.find("input#shock").val()),
             damageType = html.find("select#damage-type").val(),
-            hitLocation = "chest";
+            hitLocation = html.find("select#hit-location").val();
 
         if (!lethality > 0) {
             ui.notifications.error(`Please select a non-zero value for Lethality!`)
@@ -568,57 +545,43 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
 
         /* Check which armor is being worn on the applicable body part,
         if so, fetch the relevant object. */
-        if (this.getData().armors.length != 0) {
-            this.getData().armors.forEach((a) => {
-                if (a.data.isEquipped.value && a.data.coverage[hitLocation].value) {
-                    armor = this.actor.items.get(a._id);
-                }
-            });
-
-        } else {
-            armor = {
-                id: null
+        this.getData().armors.forEach((a) => {
+            if (a.data.isEquipped.value && a.data.coverage[hitLocation].value) {
+                armor = a;
             }
-        }
+        });
 
         /* Check if a shield is equipped, if so, fetch the relevant object. */
         if (html.find("input#parried")[0].checked) {
-            if (this.getData().shields.length != 0) {
-                this.getData().shields.forEach((s) => {
-                    if (s.data.isEquipped.value) {
-                        shield = this.actor.items.get(s._id);
-                        usingShield = true;
-                    }
-                });
-            } else {
-                ui.notifications.error(`You do not have a shield equipped. Rolling without shield.`)
-                shield = {
-                    id: null
+            this.getData().shields.forEach((s) => {
+                if (s.data.isEquipped.value) {
+                    shield = s;
+                    usingShield = true;
                 }
-            }
-        }
+            });
 
+        }
         /* Roll the actual check. */
         Dice.TaskCheck({
             checkType: "Save",
-            posTraitObjId: posTraitObj.id,
-            negTraitObjId: negTraitObj.id,
+            posTraitObj: posTraitObjData,
+            negTraitObj: negTraitObjData,
             heroPoint: heroPointChecked,
             reverseTrait: reverseTraitChecked,
-            armorObjId: armor.id,
-            shieldObjId: shield.id,
+            armorObj: armor,
+            shieldObj: shield,
             usingShield: usingShield,
             damageType: damageType,
             lethality: lethality,
             shock: shock,
             hitLocation: hitLocation,
-            actorId: this.actor.id
+            actor: this.actor.id
         });
     }
 
 
     _onItemRoll(item) {
-        if (game.settings.get("cd10_legacy", "systemDumpDescriptions")) {
+        if (game.settings.get("cd10", "systemDumpDescriptions")) {
             item.roll();
         }
     }

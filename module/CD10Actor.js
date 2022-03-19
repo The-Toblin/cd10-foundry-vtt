@@ -9,6 +9,13 @@ export default class CD10Actor extends Actor {
         const actorData = this.data;
         const templateData = this.data.data;
 
+        /* Encumbrance */
+        templateData.currentEncumbrance = {
+            type: "number",
+            label: "Encumbrance",
+            value: this._prepareEncumbrance(actorData),
+        };
+
         /* Update Traits totals */
         let traits = this._prepareTraits(actorData);
 
@@ -114,6 +121,31 @@ export default class CD10Actor extends Actor {
      * Custom prepare methods *
      *                        *
      *************************/
+
+    _prepareEncumbrance(data) {
+        let encumbranceValue = 0;
+        let itemList = data.items.filter(
+            (p) => p.type != "spell" && p.type != "skill" && p.type != "trait"
+        );
+
+        for (let i = 0; i < itemList.length; i++) {
+            let adder = 0;
+
+            if (
+                (itemList[i].type == "armor" &&
+                    itemList[i].data.data.isEquipped.value == true) ||
+                (itemList[i].type == "weapon" &&
+                    itemList[i].data.data.isEquipped.value == true)
+            ) {
+                adder = +parseFloat(itemList[i].data.data.weight.value / 2);
+            } else {
+                adder = +parseFloat(itemList[i].data.data.weight.value);
+            }
+
+            encumbranceValue += adder;
+        }
+        return encumbranceValue;
+    }
 
     _prepareTraits(data) {
         let totalValue = 0,

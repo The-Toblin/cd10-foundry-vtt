@@ -90,6 +90,17 @@
             </h3>
             {{> "systems/cd10/templates/partials/sheet-tabs/character-stat-block.hbs"}}
         </div>
+        {{#if encumbranceSetting}}
+        <div class="sheet-card encumbrance-list flex-column flex-center">
+            <h3 class="sheet-header">
+                {{localize "cd10.stats.encumbrance"}}
+            </h3>
+            <div
+                class="flex-row flex-center {{#if (gte data.currentEncumbrance.value data.encumbranceLimit.value)}}red{{/if}}">
+                {{data.currentEncumbrance.value}} {{localize "cd10.sheet.encumbranceUnit"}}
+            </div>
+        </div>
+        {{/if}}
         <div class="button">
             <a class="complex-check flex-row flex-even pad-top" data-type="text"
                 data-action-value="{{skill.data.skillLevel.value}}" title={{localize "cd10.sheet.roll" }}>
