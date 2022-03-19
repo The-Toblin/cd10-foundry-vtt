@@ -119,11 +119,6 @@
                 "type": "number",
                 "label": "Money",
                 "value": 0
-            },
-            "encumbranceLimit": {
-                "type": "float",
-                "label": "Encumbrance limit",
-                "value": 12.0
             }
         },
         "mook": {

@@ -14,7 +14,6 @@ export async function TaskCheck({
     lethality = null,
     shock = null,
     damageType = null,
-    hitLocation = null,
     heroPoint = false,
     reverseTrait = false,
     modifier = null
@@ -115,12 +114,6 @@ export async function TaskCheck({
         skillName = "No Skill!";
     }
 
-    if (usingShield) {
-        let shieldOutcome = _usingShieldTest(skillObj, shieldSkillObj);
-        actionValue = shieldOutcome.actionValue;
-        skillName = shieldOutcome.skillName;
-    }
-
     rollData = {
         actionValue: actionValue,
         traitValue: traitValue,
@@ -183,7 +176,7 @@ export async function TaskCheck({
             fail: renderedFailRoll
         }
     } else if (checkType === "SimpleAttack") {
-        let attackOutcome = _handleAttack(rollD10._total, skillObj, shieldSkillObj, weaponObj, damageType, usingShield, actor);
+        let attackOutcome = _handleAttack(rollD10._total, skillObj, shieldSkillObj, weaponObj, damageType, actor);
         templateContext = {
             weapon: weaponObj,
             weaponDamage: attackOutcome.weaponDamage,
@@ -197,7 +190,7 @@ export async function TaskCheck({
             fail: renderedFailRoll
         }
     } else if (checkType === "Attack") {
-        let attackOutcome = _handleAttack(rollD10._total, skillObj, shieldSkillObj, weaponObj, damageType, usingShield, actor);
+        let attackOutcome = _handleAttack(rollD10._total, skillObj, shieldSkillObj, weaponObj, damageType, actor);
         templateContext = {
             weapon: weaponObj,
             weaponDamage: attackOutcome.weaponDamage,
@@ -213,7 +206,7 @@ export async function TaskCheck({
             fail: renderedFailRoll
         }
     } else if (checkType === "Save") {
-        let outcome = _handleSave(rollD10._total, traitValue, damageType, armorObj, shieldObj, usingShield, lethality, shock, hitLocation, actor);
+        let outcome = _handleSave(rollD10._total, traitValue, damageType, armorObj, shieldObj, usingShield, lethality, shock, actor);
         templateContext = {
             armor: armorObj,
             roll: renderedRoll,
@@ -238,7 +231,7 @@ export async function TaskCheck({
     ChatMessage.create(chatData);
 }
 
-function _handleAttack(rollTotal, skillObj, shieldSkillObj, weaponObj, damageType, usingShield, actorId) {
+function _handleAttack(rollTotal, skillObj, shieldSkillObj, weaponObj, damageType, actorId) {
     /* Calculate details of the attack, such as Lethality and Excess. */
     let excess,
         lethality,
@@ -265,46 +258,15 @@ function _handleAttack(rollTotal, skillObj, shieldSkillObj, weaponObj, damageTyp
         weaponShock = parseInt(weaponObj.data.damage.shock.value);
     }
 
-    if (usingShield) {
-        /* If a shield is equipped: determine which skill is optimal to use by 
-        comparing if the shield-using skill is higher than the regular
-        attack skill with penalty.
-        */
-        
-        let actionValueAttack, actionValueShield, attackName, shieldName;
 
-        if (skillObj === null) {
-            actionValueAttack = 0;
-            attackName = "No skill!"
-        } else {
-            actionValueAttack = skillObj.data.skillLevel.value;
-            attackName = skillObj.name;
-        }
-
-        if (shieldSkillObj === null) {
-            actionValueShield = 0;
-            shieldName = "No skill!"
-        } else {
-            actionValueShield = shieldSkillObj.data.skillLevel.value;
-            shieldName = shieldSkillObj.name;
-        }
-
-        if ((actionValueAttack - 3) > actionValueShield) {
-            actionValue = actionValueAttack - 3;
-            skillName = attackName;
-        } else {
-            actionValue = actionValueShield;
-            skillName = shieldName;
-        }
+    if (skillObj === null) {
+        skillName = "No skill!";
+        actionValue = 0;
     } else {
-        if (skillObj === null) {
-            skillName = "No skill!";
-            actionValue = 0;
-        } else {
-            actionValue = skillObj.data.skillLevel.value;
-            skillName = skillObj.name;
-        }
+        actionValue = skillObj.data.skillLevel.value;
+        skillName = skillObj.name;
     }
+
 
     return {
         actionValue,
@@ -317,7 +279,7 @@ function _handleAttack(rollTotal, skillObj, shieldSkillObj, weaponObj, damageTyp
 }
 
 /* Perform a physical save. For details, see TaskCheck above. */
-function _handleSave(roll, traitValue, damageType, armorObj, shieldObj, usingShield, lethality, shock, hitLocation, actor) {
+function _handleSave(roll, traitValue, damageType, armorObj, shieldObj, usingShield, lethality, shock, actor) {
 
     let outcome = "",
         wounds = 0,
@@ -401,44 +363,5 @@ function _handleSave(roll, traitValue, damageType, armorObj, shieldObj, usingShi
         shockResult: shockValue,
         saveOutcome: outcome,
         wounds: wounds
-    }
-}
-
-function _usingShieldTest(skillObj, shieldSkillObj) {
-
-    /* If a shield is equipped: determine which skill is optimal to use by 
-    comparing if the shield-using skill is higher than the regular
-    attack skill with penalty.
-    */
-
-    let actionValueAttack, actionValueShield, attackName, shieldName, actionValue, skillName;
-
-    if (skillObj === null) {
-        actionValueAttack = 0;
-        attackName = "No skill!"
-    } else {
-        actionValueAttack = skillObj.data.skillLevel.value;
-        attackName = skillObj.name;
-    }
-
-    if (shieldSkillObj === null) {
-        actionValueShield = 0;
-        shieldName = "No skill!"
-    } else {
-        actionValueShield = shieldSkillObj.data.skillLevel.value;
-        shieldName = shieldSkillObj.name;
-    }
-
-    if ((actionValueAttack - 2) > actionValueShield) {
-        actionValue = actionValueAttack - 2;
-        skillName = attackName;
-    } else {
-        actionValue = actionValueShield;
-        skillName = shieldName;
-    }
-
-    return {
-        skillName,
-        actionValue
     }
 }

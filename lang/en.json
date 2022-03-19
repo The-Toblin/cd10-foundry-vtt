@@ -61,10 +61,8 @@
             "enter": "Enter",
             "equip": "Equip or unequip",
             "equipShort": "Eq.",
-            "encumbranceUnit": "Kg",
             "health": "Health",
             "heroPoint": "Use heropoint",
-            "hitLocation": "Hit location",
             "inventory": "Inventory",
             "levelUp": "Toggle levelUp",
             "max": "Maximum",
@@ -238,8 +236,7 @@
             "abilities": "Abilities",
             "money": "Coins",
             "currency": "Silver",
-            "currencyShort": "m",
-            "encumbrance": "Encumbrance"
+            "currencyShort": "m"
         },
         "time": {
             "concentration": "Concentration",
@@ -272,14 +269,6 @@
         "damageTypes": {
             "name": "Damage system complexity",
             "label": "Determine which damage types are available in the system."
-        },
-        "encumbrance": {
-            "name": "Use encumbrance system.",
-            "label": "If activated, each character can gain shock from being overencumbered."
-        },
-        "hitLocation": {
-            "name": "Use hit location for attacks?",
-            "label": "If disabled, all hits default to chest."
         },
         "barter": {
             "name": "Use barter system?",

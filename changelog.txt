@@ -1,3 +1,9 @@
 #Version 0.3.8
-=== Bugfixes ===
-- Using a shield with a weapon led to incorrect ActionValue being used, due to ActionValue being set before shield equipped-status was checked. 
+Legacy final release. Only bugfix will be released after this.
+
+- Removed Hitlocation
+- Removed Encumbrance
+- Removed complex checks.
+- Implemented faster way for trait (complex) checks. Left click on the trait's checkbox to select trait for skill check. Right click to reverse.
+- Cleaned up unimplemented mechanics, simplified code.
+- Remove shield check and defaulting to base combat skills instead of trying to work with "+shield" skills.

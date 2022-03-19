@@ -151,8 +151,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
 
         /* Make system settings available for sheets to use for rendering */
         sheetData.damageTypeSetting = game.settings.get("cd10", "systemDamageTypes");
-        sheetData.hitLocationSetting = game.settings.get("cd10", "systemHitLocation");
-        sheetData.encumbranceSetting = game.settings.get("cd10", "systemEncumbrance");
         sheetData.barterSetting = game.settings.get("cd10", "systemBarter");
         sheetData.modernity = game.settings.get("cd10", "systemModernity");
 
@@ -527,8 +525,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             reverseTraitChecked = html.find("input#reverseTrait")[0].checked,
             lethality = parseInt(html.find("input#lethality").val()),
             shock = parseInt(html.find("input#shock").val()),
-            damageType = html.find("select#damage-type").val(),
-            hitLocation = html.find("select#hit-location").val();
+            damageType = html.find("select#damage-type").val()
 
         if (!lethality > 0) {
             ui.notifications.error(`Please select a non-zero value for Lethality!`)
@@ -546,7 +543,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         /* Check which armor is being worn on the applicable body part,
         if so, fetch the relevant object. */
         this.getData().armors.forEach((a) => {
-            if (a.data.isEquipped.value && a.data.coverage[hitLocation].value) {
+            if (a.data.isEquipped.value && a.data.coverage.chest.value) {
                 armor = a;
             }
         });
@@ -574,7 +571,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
             damageType: damageType,
             lethality: lethality,
             shock: shock,
-            hitLocation: hitLocation,
             actor: this.actor.id
         });
     }
