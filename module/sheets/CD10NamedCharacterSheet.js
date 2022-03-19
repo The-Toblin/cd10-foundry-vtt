@@ -151,8 +151,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
 
         /* Make system settings available for sheets to use for rendering */
         sheetData.damageTypeSetting = game.settings.get("cd10", "systemDamageTypes");
-        sheetData.hitLocationSetting = game.settings.get("cd10", "systemHitLocation");
-        sheetData.encumbranceSetting = game.settings.get("cd10", "systemEncumbrance");
         sheetData.barterSetting = game.settings.get("cd10", "systemBarter");
         sheetData.modernity = game.settings.get("cd10", "systemModernity");
 

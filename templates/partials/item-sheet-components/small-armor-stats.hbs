@@ -78,25 +78,5 @@
                 {{/if}}
             </tr>
         </table>
-        {{#if hitLocationSetting}}
-        {{#unless (eq this.item.data.type "shield")}}
-        <table>
-            <tr>
-                {{#each config.coverage as | name |}}
-                <th>{{localize name}}</th>
-                {{/each}}
-            </tr>
-            <tr>
-                {{#each config.coverage as |name type|}}
-                <td>
-                    <a class="protection-check-box" data-type="text" data-body-type={{type}}>
-                        <i class="far fa{{#if (lookup (lookup ../data.coverage type) "value")}}-check{{/if}}-square"></i>
-                    </a>
-                </td>
-                {{/each}}
-            </tr>
-        </table>
-        {{/unless}}
-        {{/if}}
     </div>
 </section>

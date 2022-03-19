@@ -60,27 +60,6 @@
                     {{data.protection.shock.value}}
                 </div>
             </div>
-            {{#if @root.hitLocationSetting}}
-            <div class="armor-stats">
-                <div class="stat-name">
-                    {{localize "cd10.sheet.coverage"}}
-                </div>
-                <div class="armor-statvalue">
-                    {{#if data.coverage.head.value}}
-                        {{localize "cd10.armor.coverage.head"}}
-                    {{/if}}
-                    {{#if data.coverage.body.value}}
-                        {{localize "cd10.armor.coverage.body"}}
-                    {{/if}}
-                    {{#if data.coverage.arms.value}}
-                        {{localize "cd10.armor.coverage.arms"}}
-                    {{/if}}
-                    {{#if data.coverage.legs.value}}
-                        {{localize "cd10.armor.coverage.legs"}}
-                    {{/if}}
-                </div>
-            </div>
-            {{/if}}
         </div>
         <div class="description-box dark-background">
             {{{data.description.value}}}
