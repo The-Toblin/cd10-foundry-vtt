@@ -55,18 +55,13 @@
             "category": "Category",
             "combat": "Combat",
             "complexCheck": "Complex Check",
-            "coverage": "Coverage",
             "currency": "Currency",
-            "difficulty": "Difficulty",
-            "difficultyShort": "DC",
             "edit": "Edit",
             "enter": "Enter",
             "equip": "Equip or unequip",
             "equipShort": "Eq.",
-            "encumbranceUnit": "Kg",
             "health": "Health",
             "heroPoint": "Use heropoint",
-            "hitLocation": "Hit location",
             "inventory": "Inventory",
             "levelUp": "Toggle levelUp",
             "max": "Maximum",
@@ -123,8 +118,6 @@
         "skill": {
             "teachableYes": "Requires a teacher.",
             "teachableNo": "No teacher required",
-            "isPhysical": "Affected by physical debilitation",
-            "isPhysicalShort": "Phys. deb.",
             "range": "Range",
             "skillLevel": "Skill level",
             "communication": "Communication",
@@ -145,6 +138,7 @@
             "skillLevel": "Trait level"
         },
         "spell": {
+            "difficulty": "Difficulty",
             "cast": "Cast",
             "duration": "Duration",
             "range": "Range",
@@ -178,13 +172,6 @@
             "fullAuto": "Full auto"
         },
         "armor": {
-            "coverage": {
-                "all": "All",
-                "body": "Body",
-                "head": "Head",
-                "arms": "Arms",
-                "legs": "Legs"
-            },
             "protection": "Protection",
             "slashProtection": "Slash",
             "pierceProtection": "Pierce",
@@ -219,12 +206,7 @@
             "linjury": "Light Injury",
             "sinjury": "Serious Injury",
             "finjury": "Fatal Injury",
-            "debilitation": {
-                "debilitation": "Debilitation",
-                "physOnly": "on physical checks",
-                "all": "on all checks",
-                "dead": "You are dead!"
-            },
+            "debilitation": "Debilitation",
             "dao": "Down and out",
             "unconscious": "Unconscious"
         },
@@ -246,8 +228,7 @@
             "abilities": "Abilities",
             "money": "Coins",
             "currency": "Silver",
-            "currencyShort": "m",
-            "encumbrance": "Encumbrance"
+            "currencyShort": "m"
         },
         "time": {
             "concentration": "Concentration",
@@ -280,14 +261,6 @@
         "damageTypes": {
             "name": "Damage system complexity",
             "label": "Determine which damage types are available in the system."
-        },
-        "encumbrance": {
-            "name": "Use encumbrance system.",
-            "label": "If activated, each character can gain shock from being overencumbered."
-        },
-        "hitLocation": {
-            "name": "Use hit location for attacks?",
-            "label": "If disabled, all hits default to chest."
         },
         "barter": {
             "name": "Use barter system?",

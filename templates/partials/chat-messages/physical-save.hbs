@@ -1,4 +1,5 @@
 <div class="task-check physical-save-card save flex-column flex-start">
+    {{log this}}
     <div>
         <h3>{{localize "cd10.chat.defense.title" armor=armor.name}}</h3>
     </div>
@@ -38,11 +39,6 @@
                 {{wounds}}
             </div>
         </div>
-        <div class="centered">
-            <h3>
-                {{localize "cd10.injuries.dao"}}!
-            </h3>
-        </div>
         {{else if (eq saveOutcome "Failure")}}
         <div class="centered">
             <h3>
@@ -64,11 +60,6 @@
             <div class="value-box pad-4">
                 {{wounds}}
             </div>
-        </div>
-        <div class="centered">
-            <h3>
-                {{localize "cd10.injuries.dao"}}!
-            </h3>
         </div>
         {{else if (eq saveOutcome "StatusQuo")}}
         <div class="centered">

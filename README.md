@@ -51,9 +51,6 @@ To create skills, traits and items on a character, simply create items in the ga
 # Weapons, armor and equipment
 Weapons and armor can be equipped from the inventory tab by clicking the "+" symbol, and unequipped by clicking the "-" symbol. You can also equip and unequip using the right-click context menu.
 
-# Equipment load (optional rule)
-Equipment load is automatically calculated and showed on the sheet under "Encumbrance". All characters default to a 12kg encumbrance limit. Future releases will allow species choices, traits etc to affect this value.
-
 # Injuries
 Wounds and shock is added by left-clicking on respective bar. Right clicking removes a pip. Debilitation is automatically calculated and displayed.
 
@@ -63,14 +60,7 @@ Single-click on the roll-icon (a D10 that shows up on Skill mouse-over) will per
 Shift-click on the roll icon performs a hero-point boosted skill check in the same manner, first checking to see there are experience points to spend and deducting one. If there isn't enough experience to make a hero-point check, an error shows instead.
 
 # Complex checks (involving traits)
-Click the "Complex Check" button on the sheet to get a dialog where you can configure the roll, selecting skill and trait, as well as if it should be a hero point check and/or reverse the trait.
-
-(In future versions, this dialog will handle all complex checks, including physical saves and attacks involving traits)
-
-# Attacking and defending
-To make attack checks, left click (or shift-click for heropoint) on the damage type of your weapon (on the weapon card). An attack is automatically rolled.
-
-To make physical saves, left click on the damage type (of the attack) on your armor card. A dialog opens to allow you to configure your save. Wounds and Shock is automatically handled and added to your character sheet.
+Left click the trait's checkbox to involve the trait in the coming skill check. Right click it to reverse the trait.
 
 # Note to Keepers
 CD10 is a Theatre of the Mind game, designed to be played without battle maps. In the future, more support for tokens and combat mechanics will be implemented into Foundry, but at the moment, there is no combat tracker and no targeting mechanic for automatic attack/defense rolls.

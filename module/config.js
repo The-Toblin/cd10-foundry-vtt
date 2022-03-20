@@ -18,9 +18,7 @@ cd10.combatSkills = {
     handguns: "cd10.attack.handguns",
     heavyWeapons: "cd10.attack.heavyWeapons",
     oneHandedWeapons: "cd10.attack.oneHandedWeapons",
-    oneHandedWeaponsAndShield: "cd10.attack.oneHandedWeaponsAndShield",
     polearms: "cd10.attack.polearms",
-    polearmsAndShield: "cd10.attack.polearmsAndShield",
     rifles: "cd10.attack.rifles",
     sling: "cd10.attack.sling",
     throwing: "cd10.attack.throwing",
@@ -46,12 +44,6 @@ cd10.reach = {
     close: "cd10.reach.close",
     long: "cd10.reach.long",
     vlong: "cd10.reach.vlong"
-}
-cd10.coverage = {
-    body: "cd10.armor.coverage.body",
-    head: "cd10.armor.coverage.head",
-    arms: "cd10.armor.coverage.arms",
-    legs: "cd10.armor.coverage.legs"
 }
 cd10.skillCategories = {
     category: "cd10.sheet.category",

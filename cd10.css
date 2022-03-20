@@ -109,9 +109,6 @@
   min-height: 200px;
   box-shadow: 5px 10px 10px #000000;
 }
-.cd10.sheet.namedCharacter form .encumbrance-list {
-  display: flex;
-}
 .cd10.sheet.namedCharacter form .fa-angle-double-up {
   padding-top: 5px;
 }
@@ -308,6 +305,10 @@
   padding: 2px 5px 2px 5px;
   width: 100%;
   margin: 0 0 2px 0;
+}
+.skill-list .attribute-pair .select-trait,
+.traits-list .attribute-pair .select-trait {
+  margin: 5px 5px 0 0;
 }
 .skill-list .attribute-pair .attribute-name,
 .traits-list .attribute-pair .attribute-name {
@@ -655,25 +656,6 @@
   border: none;
   background: none;
   font-family: var(--font-main);
-}
-.cd10.sheet.mookCharacter form .button {
-  background: url(./assets/backgrounds/card_detail_background.jpg);
-  border-style: solid;
-  border-width: 3px;
-  border-color: var(--accent-color);
-  border-radius: 10px;
-  padding: 4px;
-  margin: 0 5px 10px 5px;
-  box-shadow: 5px 10px 10px #000000;
-}
-.cd10.sheet.mookCharacter form .button:hover {
-  box-shadow: inset 2px 2px 10px 5px black;
-}
-.cd10.sheet.mookCharacter form .d10-roll-icon img {
-  padding-top: 4px;
-  margin-left: 5px;
-  width: 15px;
-  border: none;
 }
 .cd10.sheet.mookCharacter form .weapon-item {
   margin-right: 5px;

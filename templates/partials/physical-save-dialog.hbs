@@ -1,39 +1,16 @@
 <form class="physical-save-dialog sheet-card">
     <div class="flex-column">
         <div class="flex-column pad-8">
-            <label>{{localize "cd10.sheet.select"}} {{localize "cd10.sheet.positive"}} {{localize "cd10.sheet.trait"}}</label>
-            <select id="pos-trait-selected" name="pos-trait-selected">
+            <label>{{localize "cd10.sheet.select"}} {{localize "cd10.sheet.trait"}}</label>
+            <select id="trait-selected" name="trait-selected">
                 <option value="None">None</option>
-                {{#select posTraits}}
-                {{#each posTraits as |trait index|}}
+                {{#select traits}}
+                {{#each traits as |trait index|}}
                 <option value="{{index}}">{{trait.name}}</option>
                 {{/each}}
                 {{/select}}
             </select>
         </div>
-        <div class="flex-column pad-8">
-            <label>{{localize "cd10.sheet.select"}} {{localize "cd10.sheet.negative"}} {{localize "cd10.sheet.trait"}}</label>
-            <select id="neg-trait-selected" name="neg-trait-selected">
-                <option value="None">None</option>
-                {{#select negTraits}}
-                {{#each negTraits as |trait index|}}
-                <option value="{{index}}">{{trait.name}}</option>
-                {{/each}}
-                {{/select}}
-            </select>
-        </div>
-        {{#if hitLocationSetting}}
-        <div class="flex-column pad-8">
-            <label>{{localize "cd10.sheet.select"}} {{localize "cd10.sheet.hitLocation"}}</label>
-            <select id="hit-location" name="hit-location">
-                {{#select hit-location}}
-                    {{#each config.coverage as |name type|}}
-                        <option value="{{type}}">{{localize name}}</option>
-                    {{/each}}
-                {{/select}}
-            </select>
-        </div>
-        {{/if}}
         {{#unless (eq damageTypeSetting "simple")}}
         <div class="flex-column pad-8">
             <label>{{localize "cd10.sheet.select"}} {{localize "cd10.sheet.type"}}</label>

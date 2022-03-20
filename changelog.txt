@@ -1,28 +1,15 @@
-#Version 0.3.9
+#Version 0.3.8
+Legacy release. Only bugfixes will be released after this.
+CD10 is being redesigned as a system, and the changes are too vast to use a migration script to fix. For this reason, we're retiring this branch of the system and re-releasing it under a new System package. Keep your eyes open for that system. This one will be renamed "Legacy", to distinguish it from the new system. 
 
-=== CRITICAL ===
-With this version, weapons and skills will match against each other with a unique, persistent ID, rather than via name. This means you can now 
-name your skills whatever you want and still have them match correctly against their weapon. A migration script will run to update the items upon
-upgrading to version 0.3.7. 
+== Minor changes ==
+- Removed Hitlocation
+- Removed Encumbrance
+- Removed complex checks button and dialog.
+- Implemented faster way for trait (complex) checks. Left click on the trait's checkbox to select trait for skill check. Right click to reverse the trait. This also works for attacks.
+- Cleaned up unimplemented mechanics, simplified code.
+- Remove shield check and defaulting to base combat skills instead of trying to work with "+shield" skills.
+- Removed "Weapon" type from template.json. (Split into "meleeWeapon" and "rangedWeapon").
 
-If you have changed the name of a skill on a character, relative to the world-residing copy, it is quite possible for this script to fail for some skills.
-That's unfortunately just the reality of the thing and is why this is being implemented in the first place; to fix mismatch issues based on name. 
-
-If you end up with a weapon that doesn't properly match with a skill, try deleting both from the character and re-add them from world. 
-(Still working on that script. Finish it!)
-
-=== Bugfixes and internal ===
-- Adjusted shield penalty for using a weapon+shield skill without an equipped shield from -3 to -2, as per the rules.
-- Localized debilitation in the actor class (shown on sheets).
-- Adjusted all "shippings" between classes and functions to work with Actor and Item IDs rather than full objects. 
-- Attack checks and such now use a random "weaponMatchId" rather than name for matching skills to weapons. This is generated when a new skill is created.
-- Fixed partials path in Item.js. Dumping descriptions for all items should work now.
-
-=== UI and general fixes ===
-- Converted all checkboxes on sheets to JS-toggled checkboxes, rather than HTML. More reliable toggling of stats.
-- Added "Physical skill" to skillsheet. This allows you to toggle whether or not this skill is affected by physical debilitation.
-- Typo fixed in weapon stats if complex damage is used. Damage types are now Slash, Pierce, Blunt and Energy instead of Slash, Pierce, Blunt and Blunt.
-
-=== Mechanics and new functionality ===
-- Dice rolls now take physical deblitiation into account. If you have a negative modifier due to injuries, but it isn't bad enough to affect all rolls, 
-it will now only affect skills flagged "physical debilitation"
+== MAJOR CHANGE ==
+Weapons no longer match against the NAME of a skill, but a unique MatchID of the skill. This is evident when creating new weapons in the items-drawer. It will pick from all the world-residing skills to populate the list of skills it can use. So if a character has a unique skill for a unique weapon, you need to create said skill in the items drawer, then give the skill to the character, otherwise you won't be able to select it.

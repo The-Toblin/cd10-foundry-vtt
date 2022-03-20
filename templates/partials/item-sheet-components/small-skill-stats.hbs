@@ -2,9 +2,6 @@
     <table>
         <tr>
             <th>
-                {{localize "cd10.skill.isPhysicalShort"}}
-            </th>
-            <th>
                 {{localize "cd10.skill.teachableYes"}}
             </th>
             <th>
@@ -16,14 +13,8 @@
         </tr>
         <tr>
             <td>
-                <a class="physical-check" data-type="text">
-                    <i class="far fa-{{#if data.isPhysical.value}}check-{{/if}}square"></i>
-                </a>
-            </td>
-            <td>
-                <a class="teachable-check" data-type="text">
-                    <i class="far fa-{{#if data.teachable.value}}check-{{/if}}square"></i>
-                </a>
+                <input name="data.teachable.value" type="checkbox" {{checked data.teachable.value}}
+                    data-dtype="{{data.teachable.type}}" />
             </td>
             <td>
                 <select name="data.skillType.value">

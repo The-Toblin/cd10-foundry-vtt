@@ -40,7 +40,7 @@ async function preloadHandlebarsTemplates() {
 function registerSystemSettings() {
   /* Register the settings for the system. */
   /* Setup how damage types are to be handled. If Simple is selected, each weapon defaults
-    to their highest value. */
+        to their highest value. */
   game.settings.register("cd10", "systemDamageTypes", {
     config: true,
     scope: "world",
@@ -64,26 +64,6 @@ function registerSystemSettings() {
     default: false,
   });
 
-  /* Set if hit location is to be used in the system. */
-  game.settings.register("cd10", "systemHitLocation", {
-    config: true,
-    scope: "world",
-    name: "SETTINGS.hitLocation.name",
-    hint: "SETTINGS.hitLocation.label",
-    type: Boolean,
-    default: false,
-  });
-
-  /* Option to enable or disable Encumbrance rules. */
-  game.settings.register("cd10", "systemEncumbrance", {
-    config: true,
-    scope: "world",
-    name: "SETTINGS.encumbrance.name",
-    hint: "SETTINGS.encumbrance.label",
-    type: Boolean,
-    default: false,
-  });
-
   /* Option to use barter. Defaults to coinage. */
   game.settings.register("cd10", "systemBarter", {
     config: true,
@@ -94,7 +74,7 @@ function registerSystemSettings() {
     default: false,
   });
   /* Option to choose if item, weapon and skill descriptions
-    should be dumped to chat on use. */
+        should be dumped to chat on use. */
   game.settings.register("cd10", "systemDumpDescriptions", {
     config: true,
     scope: "world",
@@ -159,9 +139,17 @@ Hooks.once("init", function () {
 
   Handlebars.registerHelper("highest", function (slash, blunt, pierce, energy) {
     /* Helper for converting a 4 damage type weapon into a simple, single type weapon if simple
-        damage model is set. */
+                       damage model is set. */
     let highest = Math.max(slash, blunt, pierce, energy);
     return highest;
+  });
+
+  Handlebars.registerHelper("skills", function() {
+        let skills = [];
+        game.items.forEach((s) => {
+            skills.push(s.name);
+        });
+    return skills;
   });
 
   console.log("==== CD10 | Pushing TinyMCE CSS ====");
@@ -181,22 +169,22 @@ Hooks.once("ready", function () {
     !currentVersion || isNewerVersion(NEEDS_MIGRATION_VERSION, currentVersion);
 
   if (needsMigration) {
-    awaitMigration(currentVersion);
+    CD10Migration(currentVersion);
+
+    console.log(
+      "==== CD10 | Updating settings version to",
+      game.system.data.version,
+      "from",
+      currentVersion,
+      "===="
+    );
+    game.settings.set(
+      "cd10",
+      "systemMigrationVersion",
+      game.system.data.version
+    );
+    return;
   } else {
     console.log("==== CD10 | System up to date! Migration not needed. ====");
   }
 });
-
-async function awaitMigration(currentVersion) {
-  await CD10Migration(currentVersion);
-
-  console.log(
-    "==== CD10 | Updating settings version to",
-    game.system.data.version,
-    "from",
-    currentVersion,
-    "===="
-  );
-  game.settings.set("cd10", "systemMigrationVersion", game.system.data.version);
-  return;
-}

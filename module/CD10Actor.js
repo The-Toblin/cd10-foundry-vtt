@@ -9,13 +9,6 @@ export default class CD10Actor extends Actor {
         const actorData = this.data;
         const templateData = this.data.data;
 
-        /* Encumbrance */
-        templateData.currentEncumbrance = {
-            type: "number",
-            label: "Encumbrance",
-            value: this._prepareEncumbrance(actorData),
-        };
-
         /* Update Traits totals */
         let traits = this._prepareTraits(actorData);
 
@@ -112,10 +105,6 @@ export default class CD10Actor extends Actor {
         return parseInt(this.data.data.modifier.value);
     }
 
-    get getDebilitationType() {
-        return this.data.data.debilitationType.value;
-    }
-
     get getExp() {
         return parseInt(this.data.data.exp.total);
     }
@@ -125,31 +114,6 @@ export default class CD10Actor extends Actor {
      * Custom prepare methods *
      *                        *
      *************************/
-
-    _prepareEncumbrance(data) {
-        let encumbranceValue = 0;
-        let itemList = data.items.filter(
-            (p) => p.type != "spell" && p.type != "skill" && p.type != "trait"
-        );
-
-        for (let i = 0; i < itemList.length; i++) {
-            let adder = 0;
-
-            if (
-                (itemList[i].type == "armor" &&
-                    itemList[i].data.data.isEquipped.value == true) ||
-                (itemList[i].type == "weapon" &&
-                    itemList[i].data.data.isEquipped.value == true)
-            ) {
-                adder = +parseFloat(itemList[i].data.data.weight.value / 2);
-            } else {
-                adder = +parseFloat(itemList[i].data.data.weight.value);
-            }
-
-            encumbranceValue += adder;
-        }
-        return encumbranceValue;
-    }
 
     _prepareTraits(data) {
         let totalValue = 0,
@@ -188,40 +152,40 @@ export default class CD10Actor extends Actor {
 
         if (wounds == 2) {
             woundsModifier = 1;
-            debilitationType = game.i18n.localize("cd10.injuries.debilitation.physOnly");
+            debilitationType = "on physical checks";
         } else if (wounds == 3) {
             woundsModifier = 2;
-            debilitationType = game.i18n.localize("cd10.injuries.debilitation.physOnly");
+            debilitationType = "on physical checks";
         } else if (wounds > 3 && wounds < 6) {
             woundsModifier = 3;
-            debilitationType = game.i18n.localize("cd10.injuries.debilitation.physOnly");
+            debilitationType = "on physical checks";
         } else if (wounds > 5 && wounds < 8) {
             woundsModifier = 4;
-            debilitationType = game.i18n.localize("cd10.injuries.debilitation.all");
+            debilitationType = "on all checks";
         } else if (wounds > 6 && wounds < 10) {
             woundsModifier = 5;
-            debilitationType = game.i18n.localize("cd10.injuries.debilitation.all");
+            debilitationType = "on all checks";
         } else if (wounds == 10) {
             woundsModifier = 6;
-            debilitationType = game.i18n.localize("cd10.injuries.debilitation.all");
+            debilitationType = "on all checks";
         } else if (wounds == 11) {
             woundsModifier = 7;
-            debilitationType = game.i18n.localize("cd10.injuries.debilitation.all") + " " + game.i18n.localize("cd10.sheet.difficultyShort") + " 3";
+            debilitationType = "on all checks. DC 3.";
         } else if (wounds == 12) {
             woundsModifier = 7;
-            debilitationType = game.i18n.localize("cd10.injuries.debilitation.all") + " " + game.i18n.localize("cd10.sheet.difficultyShort") + " 6";
+            debilitationType = "on all checks. DC 6.";
         } else if (wounds == 13) {
             woundsModifier = 8;
-            debilitationType = game.i18n.localize("cd10.injuries.debilitation.all") + " " + game.i18n.localize("cd10.sheet.difficultyShort") + " 9";
+            debilitationType = "on all checks. DC 9.";
         } else if (wounds == 14) {
             woundsModifier = 8;
-            debilitationType = game.i18n.localize("cd10.injuries.debilitation.all") + " " + game.i18n.localize("cd10.sheet.difficultyShort") + " 12";
+            debilitationType = "on all checks. DC 12.";
         } else if (wounds == 15) {
             woundsModifier = 8;
-            debilitationType = game.i18n.localize("cd10.injuries.debilitation.dead");
+            debilitationType = "You are dead!";
         } else {
             woundsModifier = 0;
-            debilitationType = game.i18n.localize("cd10.injuries.debilitation.physOnly");
+            debilitationType = "on physical checks";
         }
 
         if (data.shock.value == 0 && wounds < 2) {
@@ -285,5 +249,22 @@ export default class CD10Actor extends Actor {
         await this.update({
             "data.shock.value": newShock
         });
+    }
+
+    async resetTraitSelection() {
+        let traitArray = [];
+
+        this.getTraits.forEach((t) => {
+            const itemUpdate = {
+                _id: t.id,
+                data: {
+                    "selected": 0
+                }
+            }
+            traitArray.push(itemUpdate);
+        });
+
+        await this.updateEmbeddedDocuments("Item", traitArray);
+        return;
     }
 }
