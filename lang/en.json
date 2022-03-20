@@ -36,9 +36,11 @@
                 "failure": "Failure",
                 "statusQuo": "Status Quo",
                 "success": "Success",
-                "perfection": "Perfection"
+                "perfection": "Perfection",
+                "final": "Final"
             },
             "roll": {
+                "roll": "Roll",
                 "check": "Check",
                 "skill": "Skill",
                 "trait": "Trait",
@@ -180,7 +182,8 @@
             "shockProtection": "Shock",
             "blockValue": "Block",
             "defenseValue": "Defensive Value",
-            "defenseValueShort": "DV"
+            "defenseValueShort": "DV",
+            "shield": "Shield"
         },
         "item": {
             "image": "Image",

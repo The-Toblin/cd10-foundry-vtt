@@ -10,6 +10,7 @@ CD10 is being redesigned as a system, and the changes are too vast to use a migr
 - Cleaned up unimplemented mechanics, simplified code.
 - Remove shield check and defaulting to base combat skills instead of trying to work with "+shield" skills.
 - Removed "Weapon" type from template.json. (Split into "meleeWeapon" and "rangedWeapon").
+- Fixed a MAJOR bug in how injuries were calculated.
 
 == MAJOR CHANGE ==
 Weapons no longer match against the NAME of a skill, but a unique MatchID of the skill. This is evident when creating new weapons in the items-drawer. It will pick from all the world-residing skills to populate the list of skills it can use. So if a character has a unique skill for a unique weapon, you need to create said skill in the items drawer, then give the skill to the character, otherwise you won't be able to select it.

@@ -5,16 +5,16 @@ export async function TaskCheck({
   checkType = null,
   skillObj = null,
   traitObj = null,
-  traitReversed = null,
+  traitReversed = false,
   usingShield = false,
   shieldObj = null,
   weaponObj = null,
   armorObj = null,
-  lethality = null,
-  shock = null,
-  damageType = null,
+  lethality = 0,
+  shock = 0,
+  damageType = "slash",
   heroPoint = false,
-  modifier = null,
+  modifier = 0,
 } = {}) {
   /* Basic error checking */
   if (checkType === null) {
@@ -57,10 +57,12 @@ export async function TaskCheck({
   /* Set up traitvalue for the roll */
   if (traitObj != null) {
     traitName = traitObj.name;
-    traitValue = Math.abs(traitObj.data.data.skillLevel.value);
+    traitValue = parseInt(traitObj.data.data.skillLevel.value);
 
+    console.log(`The traitValue during set is ${traitValue}`);
     if (traitReversed) {
-      traitValue = -Math.abs(traitValue);
+      traitValue *= -1;
+      console.log(`After reversal it's ${traitValue}`);
     }
   }
 
@@ -168,6 +170,24 @@ export async function TaskCheck({
       traitValue: traitValue,
     };
   } else if (checkType === "Save") {
+    let shieldDamageProtection = 0,
+      shieldShockProtection = 0,
+      armorDamageProtection = 0,
+      armorShockProtection = 0;
+
+    if (armorObj != null) {
+      armorDamageProtection = armorObj.data.protection[damageType].value;
+      armorShockProtection = armorObj.data.protection.shock.value;
+    }
+
+    if (usingShield) {
+      shieldDamageProtection = shieldObj.data.protection[damageType].value;
+      shieldShockProtection = shieldObj.data.protection.shock.value;
+    }
+
+    console.log(
+      `The traitvalue before is ${traitValue} and reverse is ${traitReversed}`
+    );
     let outcome = _handleSave(
       rollD10._total,
       traitValue,
@@ -181,12 +201,20 @@ export async function TaskCheck({
     );
     templateContext = {
       armor: armorObj,
+      shield: shieldObj,
       roll: renderedRoll,
+      usingShield: usingShield,
       lethality: lethality,
+      shock: shock,
       type: damageType,
+      shieldDamageProtection: shieldDamageProtection,
+      shieldShockProtection: shieldShockProtection,
+      armorDamageProtection: armorDamageProtection,
+      armorShockProtection: armorShockProtection,
       shockResult: outcome.shockResult,
       saveOutcome: outcome.saveOutcome,
       wounds: outcome.wounds,
+      DC: lethality - armorDamageProtection - shieldDamageProtection,
     };
   }
   chatData = {
@@ -255,10 +283,12 @@ function _handleSave(
 ) {
   let outcome = "",
     wounds = 0,
-    saveResult = 0,
     lethalityValue = lethality,
     shockValue = shock;
 
+  console.log(
+    `We have an incoming attack with Lethality of ${lethalityValue} and Shock of ${shockValue}`
+  );
   /* This is where we calculate the outcome of the save, based
     on input factors. */
 
@@ -266,15 +296,29 @@ function _handleSave(
   if (usingShield) {
     lethalityValue -= shieldObj.data.protection[damageType].value;
     shockValue -= shieldObj.data.protection.shock.value;
+    console.log(
+      `After Shield, Lethality is  ${lethalityValue} and Shock is ${shockValue}`
+    );
   }
 
   /* Then we account for armor. */
   if (armorObj != null) {
     lethalityValue -= armorObj.data.protection[damageType].value;
     shockValue -= armorObj.data.protection.shock.value;
+    console.log(
+      `After Armor, Lethality is  ${lethalityValue} and Shock is ${shockValue}`
+    );
   }
 
-  saveResult = roll - lethalityValue + traitValue;
+  if (lethalityValue < 0) {
+    console.log(`Setting lethalityValue to 0`);
+    lethalityValue = 0;
+  }
+
+  let totalRoll = roll + traitValue;
+  console.log(
+    `After calcs, totalRoll is ${totalRoll}, with roll of ${roll} and Lethality of ${lethalityValue}`
+  );
 
   /* Set up limits for fumble and perfection */
   let fumbleLimit = parseInt(lethalityValue) - 10,
@@ -284,22 +328,26 @@ function _handleSave(
     shockValue = 1;
   }
   /* Calculate outcome and adjust Shock values accordingly*/
-  if (saveResult >= perfectionLimit) {
+  if (lethalityValue < 1) {
     outcome = "Perfection";
     shockValue = 1;
     wounds = 0;
-  } else if (saveResult > lethalityValue) {
+  } else if (totalRoll >= perfectionLimit) {
+    outcome = "Perfection";
+    shockValue = 1;
+    wounds = 0;
+  } else if (totalRoll > lethalityValue) {
     outcome = "Success";
     wounds = 1;
-  } else if (saveResult < fumbleLimit) {
+  } else if (totalRoll < fumbleLimit && fumbleLimit > 0) {
     outcome = "Fumble";
     shockValue *= 3;
     wounds = 6;
-  } else if (saveResult < lethalityValue) {
+  } else if (totalRoll < lethalityValue) {
     outcome = "Failure";
     shockValue *= 2;
     wounds = 2;
-  } else if ((saveResult = lethalityValue)) {
+  } else if (totalRoll === lethalityValue) {
     outcome = "StatusQuo";
     wounds = 2;
     shockValue *= 2;
@@ -312,6 +360,10 @@ function _handleSave(
     wounds = 2;
   }
 
+  console.log(
+    `Outcome is ${outcome} because roll was ${totalRoll} versus a Lethality of ${lethalityValue}`
+  );
+
   /* Update the actor with the values from the save. */
   let actorObj = game.actors.get(actor);
 
@@ -322,6 +374,10 @@ function _handleSave(
   if (wounds > 0) {
     actorObj.modifyWounds(wounds);
   }
+
+  console.log(
+    `Because of ${outcome}, attack causes ${shockValue} shock and inflicting ${wounds} wounds.`
+  );
 
   return {
     shockResult: shockValue,

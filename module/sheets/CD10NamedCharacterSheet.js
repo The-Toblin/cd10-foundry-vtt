@@ -443,9 +443,9 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         the necessary data for the check. */
     let heroPointChecked = html.find("input#heroPoint")[0].checked,
       reverseTraitChecked = html.find("input#reverseTrait")[0].checked,
-      lethality = parseInt(html.find("input#lethality").val()),
-      shock = parseInt(html.find("input#shock").val()),
-      damageType = html.find("select#damage-type").val();
+      lethality = parseInt(html.find("input#lethality").val()) || 0,
+      shock = parseInt(html.find("input#shock").val()) || 0,
+      damageType = html.find("select#damage-type").val() || "slash";
 
     if (!lethality > 0) {
       ui.notifications.error(`Please select a non-zero value for Lethality!`);
@@ -650,8 +650,8 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     let item = this.actor.items.get(itemId);
 
     if (item.getSelectionStatus === 1 || item.getSelectionStatus === 2) {
-        item.setSelectionStatus(0)
-        return
+      item.setSelectionStatus(0);
+      return;
     }
 
     await this.actor.resetTraitSelection();
