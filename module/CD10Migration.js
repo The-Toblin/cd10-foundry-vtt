@@ -207,7 +207,9 @@ async function v040Migrate() {
       await Item.updateDocuments(updateData);
     } else if (updateType === "actor") {
       const actor = game.actors.get(updateData._id);
-      console.log(actor.name, updateData.itemsArray);
+      if (updateData.itemsArray.length > 0) {
+        console.log(`${actor.name}'s updateData`, updateData.itemsArray);
+      }
       await actor.updateEmbeddedDocuments(documentType, updateData.itemsArray);
     }
   }

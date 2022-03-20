@@ -1,12 +1,4 @@
 <section class="sheet-combat-tab">
-    <div class="stressBoxContainer flex-center flex-row">
-        <div class="stressBoxSelect">
-            <label>{{localize "cd10.sheet.stress"}}?</label>
-            <a class="stressBox" data-type="text">
-                <i class="far fa-{{#if this.actor.data.data.stressing.value}}check-{{/if}}square"></i>
-            </a>
-        </div>
-    </div>
     {{#if equippedMeleeWeapon}}
     <div class="weapon-card sheet-card">
         <h3>{{localize "cd10.sheet.weapons"}}</h3>

@@ -59,7 +59,6 @@ export async function TaskCheck({
     traitName = traitObj.name;
     traitValue = parseInt(traitObj.data.data.skillLevel.value);
 
-    console.log(`The traitValue during set is ${traitValue}`);
     if (traitReversed) {
       traitValue *= -1;
       console.log(`After reversal it's ${traitValue}`);
@@ -185,9 +184,6 @@ export async function TaskCheck({
       shieldShockProtection = shieldObj.data.protection.shock.value;
     }
 
-    console.log(
-      `The traitvalue before is ${traitValue} and reverse is ${traitReversed}`
-    );
     let outcome = _handleSave(
       rollD10._total,
       traitValue,
@@ -227,6 +223,8 @@ export async function TaskCheck({
 
   /* Print results to chatlog. */
   ChatMessage.create(chatData);
+
+  game.actors.get(actor).toggleStress(false);
 }
 
 function _handleAttack(rollTotal, skillObj, weaponObj, damageType, actorId) {

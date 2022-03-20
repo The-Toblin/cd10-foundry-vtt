@@ -109,6 +109,10 @@ export default class CD10Actor extends Actor {
         return parseInt(this.data.data.exp.total);
     }
 
+    get getStress() {
+        return this.data.data.stressing.value;
+    }
+
     /**************************
      *                        *
      * Custom prepare methods *
@@ -267,4 +271,34 @@ export default class CD10Actor extends Actor {
         await this.updateEmbeddedDocuments("Item", traitArray);
         return;
     }
+
+    async unequipItems(item) {
+        let traitArray = [];
+
+        this.getTraits.forEach((t) => {
+            const itemUpdate = {
+                _id: t.id,
+                data: {
+                    "selected": 0
+                }
+            }
+            traitArray.push(itemUpdate);
+        });
+
+        await this.updateEmbeddedDocuments("Item", traitArray);
+        return;
+    }
+
+
+    async toggleStress(value) {
+        this.update({
+            data: {
+                stressing: {
+                    value: value
+                }
+            }
+        })
+    }
+
+        
 }

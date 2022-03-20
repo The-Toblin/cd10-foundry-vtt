@@ -336,7 +336,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     /* Perform the check */
     Dice.TaskCheck({
       checkType: "Simple",
-      skillObj: skillObj.data,
+      skillObj: skillObj,
       traitObj: traitObj,
       traitReversed: traitReversed,
       modifier: this.actor.getModifier,
