@@ -7,24 +7,126 @@
             </a>
         </div>
     </div>
-        {{#each meleeWeapons as |weapon|}}
+    {{#if equippedMeleeWeapon}}
+    <div class="weapon-card sheet-card">
+        <h3>{{localize "cd10.sheet.weapons"}}</h3>
+        <table>
+            <tr>
+                <td></td>
+                <td>
+                    {{localize "cd10.stats.name"}}
+                </td>
+                <td>
+                    {{localize "cd10.weapon.reach"}}
+                </td>
+                {{#if (eq @root.damageTypeSetting "simple")}}
+                <td>
+                    {{localize "cd10.weapon.lethality"}}
+                </td>
+                {{else}}
+                <td>
+                    {{localize "cd10.weapon.slashDamage"}}
+                </td>
+                <td>
+                    {{localize "cd10.weapon.pierceDamage"}}
+                </td>
+                <td>
+                    {{localize "cd10.weapon.bluntDamage"}}
+                </td>
+                {{/if}}
+                {{#if (eq @root.damageTypeSetting "complex")}}
+                <td>
+                    {{localize "cd10.weapon.energyDamage"}}
+                </td>
+                {{/if}}
+                <td>
+                    {{localize "cd10.weapon.shockDamage"}}
+                </td>
+            </tr>
+            {{#each meleeWeapons as |weapon|}}
             {{#if weapon.data.isEquipped.value}}
+            <tr>
                 {{> "systems/cd10/templates/partials/equipment-cards/weapon-card.hbs"}}
+            </tr>
             {{/if}}
-        {{/each}}
-        {{#each rangedWeapons as |weapon|}}
+            {{/each}}
+        </table>
+    </div>
+    {{/if}}
+    {{#if equippedRangedWeapon}}
+    <div class="weapon-card sheet-card">
+        <h3>{{localize "cd10.sheet.rangedWeapons"}}</h3>
+        <table class="center-table">
+            <tr>
+                <td></td>
+                <td>
+                    {{localize "cd10.stats.name"}}
+                </td>
+                <td>
+                    {{localize "cd10.rangedWeapon.rangeClose"}}
+                </td>
+
+                <td>
+                    {{localize "cd10.rangedWeapon.rangeNormal"}}
+                </td>
+
+                <td>
+                    {{localize "cd10.rangedWeapon.rangeLong"}}
+                </td>
+                <td>
+                    {{localize "cd10.rangedWeapon.rangeMax"}}
+                </td>
+                <td>
+                    {{localize "cd10.rangedWeapon.ammunition"}}
+                </td>
+                {{#if modernity}}
+                <td>
+                    {{localize "cd10.weapon.energyDamage"}}
+                </td>
+                <td>
+                    {{localize "cd10.weapon.shockDamage"}}
+                </td>
+                {{/if}}
+            </tr>
+            {{#each rangedWeapons as |weapon|}}
             {{#if weapon.data.isEquipped.value}}
+            <tr>
                 {{> "systems/cd10/templates/partials/equipment-cards/rangedWeapon-card.hbs"}}
+            </tr>
             {{/if}}
-        {{/each}}
-        {{#each armors as |armor|}}
+            {{/each}}
+        </table>
+    </div>
+    {{/if}}
+    {{#if equippedArmor}}
+    <div class="weapon-card sheet-card">
+        <h3>{{localize "cd10.sheet.armors"}}</h3>
+        <table class="center-table">
+            <tr>
+            </tr>
+            {{#each armors as |armor|}}
             {{#if armor.data.isEquipped.value}}
+            <tr>
                 {{> "systems/cd10/templates/partials/equipment-cards/armor-card.hbs"}}
+            </tr>
             {{/if}}
-        {{/each}}
-        {{#each shields as |shield|}}
+            {{/each}}
+        </table>
+    </div>
+    {{/if}}
+    {{#if equippedShield}}
+    <div class="weapon-card sheet-card">
+        <table class="center-table">
+            <tr>
+            </tr>
+            {{#each shields as |shield|}}
             {{#if shield.data.isEquipped.value}}
+            <tr>
                 {{> "systems/cd10/templates/partials/equipment-cards/shield-card.hbs"}}
+            </tr>
             {{/if}}
-        {{/each}}
+            {{/each}}
+        </table>
+    </div>
+    {{/if}}
 </section>

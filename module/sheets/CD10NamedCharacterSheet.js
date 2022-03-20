@@ -176,9 +176,39 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         p.type != "shield"
     );
 
+    /* Used for selecting skills for weapons. */
     sheetData.worldSkills = game.items.filter((p) => {
       if (p.type === "skill") {
         return p.name;
+      }
+    });
+
+    /* The following is to detect if certain things are equipped, and thus toggle certain parts of the sheet on or off. */
+    sheetData.equippedMeleeWeapon = false;
+    sheetData.meleeWeapons.forEach((w) => {
+      if (w.data.isEquipped.value) {
+        sheetData.equippedMeleeWeapon = true;
+      }
+    });
+
+    sheetData.equippedRangedWeapon = false;
+    sheetData.rangedWeapons.forEach((w) => {
+      if (w.data.isEquipped.value) {
+        sheetData.equippedRangedWeapon = true;
+      }
+    });
+
+    sheetData.equippedArmor = false;
+    sheetData.armors.forEach((a) => {
+      if (a.data.isEquipped.value) {
+        sheetData.equippedArmor = true;
+      }
+    });
+
+    sheetData.equippedShield = false;
+    sheetData.shields.forEach((s) => {
+      if (s.data.isEquipped.value) {
+        sheetData.equippedShield = true;
       }
     });
 

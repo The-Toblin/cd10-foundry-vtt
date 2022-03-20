@@ -60,6 +60,10 @@
   background: none;
   color: inherit;
 }
+.cd10.sheet.namedCharacter form .center-table {
+  margin-left: auto;
+  margin-right: auto;
+}
 .cd10.sheet.namedCharacter form table {
   border: none;
   border-collapse: separate;
@@ -243,7 +247,6 @@
 }
 .weapon-card .item-img {
   display: block;
-  margin: 0 10px 0 3px;
   max-width: 100px;
   max-height: 100px;
 }
@@ -254,16 +257,19 @@
 }
 .weapon-card .weapon-name {
   text-align: left;
-  font-size: 1.25em;
+  font-size: 1em;
   vertical-align: middle;
   text-align: center;
-  margin-bottom: 10px;
 }
 .weapon-card .description-box,
 .weapon-card .ammo-box {
   width: 100%;
   max-height: 150px;
   overflow: auto;
+}
+.weapon-card .center-table {
+  margin-left: auto;
+  margin-right: auto;
 }
 .weapon-card .weapon-box {
   display: flex;
