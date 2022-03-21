@@ -322,7 +322,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
       traitReversed = false;
 
     this.actor.items.forEach((t) => {
-      if (t.type === "trait") {
+      if (t.type === "trait") { 
         if (t.data.data.selected === 1) {
           traitObj = t;
           traitReversed = false;
