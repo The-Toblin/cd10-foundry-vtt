@@ -34,7 +34,7 @@
     "protected": false,
     "gridDistance": 1.5,
     "gridUnits": "m",
-    "initiative": "1d10x9 + @skillLevel",
+    "initiative": "1d10x9",
     "primaryTokenAttribute": "wounds",
     "secondaryTokenAttribute": "shock"
 }

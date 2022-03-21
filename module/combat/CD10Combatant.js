@@ -22,14 +22,13 @@ export default class CD10Combatant extends Combatant {
       }
     });
 
-    let actionValue = skillValue;
-
-    baseFormula = `1d10x9 + ${actionValue}`;
+    if (skillValue != null) {
+      baseFormula += ` + ${skillValue}`;
+    }
     if (modifier > 0) {
       baseFormula += ` - ${modifier}`;
     }
 
-    console.log(baseFormula);
     return baseFormula;
   }
 }
