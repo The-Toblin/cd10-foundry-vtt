@@ -32,7 +32,7 @@
     "manifest": "https://raw.githubusercontent.com/The-Toblin/cd10-legacy-foundry-vtt/v0.3.9/system.json",
     "download": "https://github.com/The-Toblin/cd10-legacy-foundry-vtt/archive/refs/tags/v0.3.9.zip",
     "protected": false,
-    "gridDistance": 1,
+    "gridDistance": 1.5,
     "gridUnits": "m",
     "primaryTokenAttribute": "wounds",
     "secondaryTokenAttribute": "shock"

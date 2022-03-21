@@ -84,7 +84,7 @@ function registerSystemSettings() {
     default: true,
   });
 
-  /* Check if migration is needed */
+  /* Store version number for migration purposes. */
   game.settings.register("cd10", "systemMigrationVersion", {
     config: false,
     scope: "world",
