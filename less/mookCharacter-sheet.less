@@ -69,6 +69,30 @@
       border-color: var(--font-color);
     }
 
+    table {
+      border: none;
+      border-collapse: separate;
+      border-spacing: 5px;
+
+      tr {
+        background: unset;
+        background-color: unset;
+      }
+
+      th,
+      td {
+        background: url(./assets/backgrounds/card_detail_background.jpg);
+        border-style: solid;
+        border-width: 1px;
+        border-image: radial-gradient(black, var(--accent-color)) 1;
+        box-shadow: inset 2px 2px 10px 5px black;
+        vertical-align: middle;
+        text-align: center;
+        padding: 4px 5px 4px 5px;
+        color: inherit;
+      }
+    }
+
     .header-box,
     .title-box,
     .equipment-list {
@@ -100,6 +124,10 @@
       }
     }
 
+    .display-inline {
+      display: inline;
+    }
+    
     .weapon-item {
       margin-right: 5px;
     }
@@ -107,6 +135,15 @@
     .ammo-select {
       .far {
         padding-right: 8px;
+      }
+    }
+
+    .d10-roll-icon {
+      img {
+        padding-top: 4px;
+        margin-left: 5px;
+        width: 15px;
+        border: none;
       }
     }
 

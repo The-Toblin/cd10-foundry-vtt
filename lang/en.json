@@ -65,6 +65,7 @@
             "equipShort": "Eq.",
             "health": "Health",
             "heroPoint": "Use heropoint",
+            "initiative": "Initiative",
             "inventory": "Inventory",
             "levelUp": "Toggle levelUp",
             "max": "Maximum",

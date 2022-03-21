@@ -1,5 +1,5 @@
 <td class="item equippable-inventory-item" data-item-id="{{_id}}">
-    <img class="item-img" src="{{img}}" title="{{name}}" height="15" width="15" />
+    <img class="item-img display-inline" src="{{img}}" title="{{name}}" height="15" width="15" />
 </td>
 <td class="item equippable-inventory-item" data-item-id="{{_id}}">
     {{name}}
@@ -44,7 +44,7 @@
     {{#if (eq ammo.data.ammoType ../data.ammoGroup.value)}}
     <tr class="item equippable-inventory-item ammo-selector" data-item-id="{{ammo._id}}" data-weapon-id="{{../_id}}">
         <td>
-            <img class="item-img" src="{{img}}" title="{{name}}" height="15" width="15" />
+            <img class="item-img display-inline" src="{{img}}" title="{{name}}" height="15" width="15" />
         </td>
         <td>
             {{name}}

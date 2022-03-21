@@ -60,8 +60,8 @@ export default class CD10MookCharacterSheet extends ActorSheet {
   ];
 
   /* This menu is applied to only skills in the skill-menu.
-    It allows you to edit, toggle the levelup indicator
-    or remove a skill. */
+        It allows you to edit, toggle the levelup indicator
+        or remove a skill. */
   itemSkillContextMenu = [
     {
       name: game.i18n.localize("cd10.sheet.edit"),
@@ -169,6 +169,42 @@ export default class CD10MookCharacterSheet extends ActorSheet {
         p.type != "shield"
     );
 
+    /* Used for selecting skills for weapons. */
+    sheetData.worldSkills = game.items.filter((p) => {
+      if (p.type === "skill") {
+        return p.name;
+      }
+    });
+
+    /* The following is to detect if certain things are equipped, and thus toggle certain parts of the sheet on or off. */
+    sheetData.equippedMeleeWeapon = false;
+    sheetData.meleeWeapons.forEach((w) => {
+      if (w.data.isEquipped.value) {
+        sheetData.equippedMeleeWeapon = true;
+      }
+    });
+
+    sheetData.equippedRangedWeapon = false;
+    sheetData.rangedWeapons.forEach((w) => {
+      if (w.data.isEquipped.value) {
+        sheetData.equippedRangedWeapon = true;
+      }
+    });
+
+    sheetData.equippedArmor = false;
+    sheetData.armors.forEach((a) => {
+      if (a.data.isEquipped.value) {
+        sheetData.equippedArmor = true;
+      }
+    });
+
+    sheetData.equippedShield = false;
+    sheetData.shields.forEach((s) => {
+      if (s.data.isEquipped.value) {
+        sheetData.equippedShield = true;
+      }
+    });
+
     /* Make system settings available for sheets to use for rendering */
     sheetData.damageTypeSetting = game.settings.get(
       "cd10",
@@ -177,15 +213,6 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     sheetData.barterSetting = game.settings.get("cd10", "systemBarter");
     sheetData.modernity = game.settings.get("cd10", "systemModernity");
 
-    let choices = {
-      0: "None",
-    };
-
-    for (let i = 0; i < sheetData.ammunition.length; i++) {
-      choices[sheetData.ammunition[i]._id] = sheetData.ammunition[i].name;
-    }
-
-    sheetData.ammoChoice = choices;
     return sheetData;
   }
 
@@ -200,10 +227,12 @@ export default class CD10MookCharacterSheet extends ActorSheet {
         .find(".reveal-rollable")
         .on("mouseover mouseout", this._onToggleRollable.bind(this));
       html.find(".stressBox").click(this._stressBoxClicked.bind(this));
+      html.find(".initiative-select").click(this._initiativeClicked.bind(this));
       html.find(".inline-edit").change(this._onSkillEdit.bind(this));
       html.find(".item-delete").click(this._onItemDelete.bind(this));
       html.find(".item-equip").click(this._onItemEquip.bind(this));
       html.find(".ammo-select").click(this._onAmmoSelect.bind(this));
+      html.find(".skill-item").click(this._toggleSkillUp.bind(this));
       html
         .find(".shock-icons")
         .on("click contextmenu", this._onShockMarkChange.bind(this));
@@ -266,42 +295,60 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     event.preventDefault();
 
     /* If a hero point is spent, check if there's enough points.
-        Otherwise cancel the check. */
+            Otherwise cancel the check. */
     if (event.shiftKey) {
       if (this._checkHeroPoints() === false) {
         return;
       }
     }
 
+    let traitObj = null,
+      traitReversed = false,
+      skillObj = null;
+
     /* Fetch the skill, based on ItemId. */
-    let skillObj = this.actor.items.get(
+    let rollObj = this.actor.items.get(
       event.currentTarget.closest(".item").dataset.itemId
     );
 
-    /* Dump the skill description to chat. */
-    if (game.settings.get("cd10", "systemDumpDescriptions")) {
-      skillObj.roll();
+    if (rollObj.type === "skill") {
+      skillObj = rollObj;
+      /* Dump the skill description to chat. */
+      if (game.settings.get("cd10", "systemDumpDescriptions")) {
+        skillObj.roll();
+      }
+    } else if (rollObj.type === "trait") {
+      traitObj = rollObj;
+      /* Dump the trait description to chat. */
+      if (game.settings.get("cd10", "systemDumpDescriptions")) {
+        traitObj.roll();
+      }
     }
 
-    let traitObj = null,
-      traitReversed = false;
-
-    this.actor.items.forEach((t) => {
-      if (t.type === "trait") {
-        if (t.data.data.selected === 1) {
-          traitObj = t;
-          traitReversed = false;
-        } else if (t.data.data.selected === 2) {
-          traitObj = t;
-          traitReversed = true;
+    if (rollObj.type != "trait") {
+      this.actor.items.forEach((t) => {
+        if (t.type === "trait") {
+          if (t.data.data.selected === 1) {
+            traitObj = t;
+            traitReversed = false;
+          } else if (t.data.data.selected === 2) {
+            traitObj = t;
+            traitReversed = true;
+          }
         }
+      });
+    } else if (rollObj.type === "trait") {
+      if (rollObj.data.data.selected === 1) {
+        traitReversed = false;
+      } else if (rollObj.data.data.selected === 2) {
+        traitReversed = true;
       }
-    });
+    }
 
     /* Perform the check */
     Dice.TaskCheck({
       checkType: "Simple",
-      skillObj: skillObj.data,
+      skillObj: skillObj,
       traitObj: traitObj,
       traitReversed: traitReversed,
       modifier: this.actor.getModifier,
@@ -342,6 +389,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
       ui.notifications.error(
         `Error! ${weaponObj.name} does not have an assigned skill!`
       );
+      return;
     }
     /* Check if it's a ranged weapon */
     if (weaponObj.type === "rangedWeapon") {
@@ -354,6 +402,23 @@ export default class CD10MookCharacterSheet extends ActorSheet {
         damageType = "blunt";
       } else if (ammo.data.data.damage.energy.selected) {
         damageType = "energy";
+      }
+      if (ammo.data.data.count.value > 0) {
+        let count = ammo.data.data.count.value;
+        count -= 1;
+
+        ammo.update({
+          data: {
+            count: {
+              value: count,
+            },
+          },
+        });
+      } else {
+        ui.notifications.error(
+          `You are out of that ammo type! Select another!`
+        );
+        return;
       }
     }
 
@@ -417,9 +482,9 @@ export default class CD10MookCharacterSheet extends ActorSheet {
 
   async _doSaveStuff(html) {
     /* Perform a physical save, called from the physical save dialog.
-        This function is complex and deals with gathering the data for
-        the roll, as well as responding to the result and doing the
-        actor updates for wounds and shock. */
+            This function is complex and deals with gathering the data for
+            the roll, as well as responding to the result and doing the
+            actor updates for wounds and shock. */
 
     let traitObj,
       armor = null,
@@ -427,7 +492,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
       usingShield = false;
 
     /* First, we check if traits were selected in the dialog or not and
-        if so, fetch the relevant objects. */
+            if so, fetch the relevant objects. */
     if (html.find("select#trait-selected").val() != "None") {
       traitObj = this.actor.items.get(
         this.getData().traits[html.find("select#trait-selected").val()]._id
@@ -435,12 +500,12 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     }
 
     /* Check if any of the checkboxes were ticked, as well as gather
-        the necessary data for the check. */
+            the necessary data for the check. */
     let heroPointChecked = html.find("input#heroPoint")[0].checked,
       reverseTraitChecked = html.find("input#reverseTrait")[0].checked,
-      lethality = parseInt(html.find("input#lethality").val()),
-      shock = parseInt(html.find("input#shock").val()),
-      damageType = html.find("select#damage-type").val();
+      lethality = parseInt(html.find("input#lethality").val()) || 0,
+      shock = parseInt(html.find("input#shock").val()) || 0,
+      damageType = html.find("select#damage-type").val() || "slash";
 
     if (!lethality > 0) {
       ui.notifications.error(`Please select a non-zero value for Lethality!`);
@@ -448,7 +513,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     }
 
     /* If a hero point is spent, check if there's enough points.
-        Otherwise cancel the check. */
+            Otherwise cancel the check. */
     if (heroPointChecked) {
       if (this._checkHeroPoints() === false) {
         return;
@@ -456,7 +521,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     }
 
     /* Check which armor is being worn on the applicable body part,
-        if so, fetch the relevant object. */
+            if so, fetch the relevant object. */
     this.getData().armors.forEach((a) => {
       if (a.data.isEquipped.value) {
         armor = a;
@@ -511,6 +576,19 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     });
   }
 
+  _onItemCreate(event) {
+    /* Remnant function for creating items directly on the sheet. Not actively used anymore. */
+    event.preventDefault();
+    let element = event.currentTarget;
+
+    let itemData = {
+      name: game.i18n.localize("cd10.sheet.newItem"),
+      type: element.dataset.type,
+    };
+
+    return this.actor.createEmbeddedDocuments("Item", [itemData]);
+  }
+
   _onItemEdit(event) {
     /* Called when updating items on the sheet */
     event.preventDefault();
@@ -539,9 +617,13 @@ export default class CD10MookCharacterSheet extends ActorSheet {
 
     let element = event.currentTarget;
     let itemId = element.closest(".item").dataset.itemId;
-    const item = this.actor.items.get(itemId);
+    const item = this.actor.items.get(itemId),
+      type = item.type;
 
     let boolValue = item.data.data.isEquipped.value;
+    if (!boolValue) {
+      this.actor.unequipItems(type);
+    }
 
     await item.update({
       "data.isEquipped.value": !boolValue,
@@ -550,8 +632,8 @@ export default class CD10MookCharacterSheet extends ActorSheet {
 
   async _onSkillEdit(event) {
     /* Somewhat overengineered function, remnant from when skills and traits
-        could be created directly on the character sheet. Now just used to update
-        the actual skillLevel. */
+            could be created directly on the character sheet. Now just used to update
+            the actual skillLevel. */
     event.preventDefault();
 
     if (!this.isEditable) {
@@ -612,6 +694,19 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     }
   }
 
+  async _toggleSkillUp(event) {
+    event.preventDefault();
+    let element = event.currentTarget;
+    let itemId = element.closest(".item").dataset.itemId;
+    let item = this.actor.items.get(itemId);
+
+    let levelUpValue = item.data.data.levelUp.value;
+
+    await item.update({
+      "data.levelUp.value": !levelUpValue,
+    });
+  }
+
   async _onClickTrait(event) {
     event.preventDefault();
     let element = event.currentTarget;
@@ -619,8 +714,115 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     let item = this.actor.items.get(itemId);
 
     if (item.getSelectionStatus === 1 || item.getSelectionStatus === 2) {
-        item.setSelectionStatus(0)
-        return
+      item.setSelectionStatus(0);
+      return;
+    }
+
+    await this.actor.resetTraitSelection();
+
+    if (event.type == "click") {
+      item.setSelectionStatus(1);
+    } else {
+      item.setSelectionStatus(2);
+    }
+    return;
+  }
+  async _initiativeClicked(event) {
+    event.preventDefault();
+    /* Rolling initative manually */
+    let skillValue,
+      skillName,
+      modifier = this.actor.getModifier;
+    this.getData().meleeWeapons.forEach((w) => {
+      if (w.data.isEquipped.value) {
+        let weapon = w;
+
+        this.getData().skills.forEach((s) => {
+          if (s.data.matchID === w.data.attackSkill.value) {
+            skillValue = s.data.skillLevel.value;
+            skillName = s.name;
+          }
+        });
+      }
+    });
+
+    let rollFormula = `1d10x9 + @actionValue`;
+    if (modifier > 0) {
+      rollFormula += " - @modifier";
+    }
+    let rollData = {
+      actionValue: skillValue,
+      modifier: modifier,
+    };
+
+    let rollD10 = await new Roll(rollFormula, rollData).roll({
+      async: true,
+    });
+
+    /* Catch the dreaded 0 */
+    for (let i = 0; i < rollD10.terms[0].results.length; i++) {
+      if (rollD10.terms[0].results[i].result === 10) {
+        rollD10._total -= 10;
+      }
+    }
+
+    let renderedRoll = await rollD10.render(),
+      templateContext = null,
+      chatData = null;
+    let messageTemplate =
+      "systems/cd10/templates/partials/chat-messages/skill-roll.hbs";
+
+    templateContext = {
+      initiative: true,
+      skillName: skillName,
+      skillLevel: skillValue,
+      roll: renderedRoll,
+    };
+
+    chatData = {
+      speaker: ChatMessage.getSpeaker(),
+      roll: rollD10,
+      content: await renderTemplate(messageTemplate, templateContext),
+      sound: CONFIG.sounds.dice,
+      type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+    };
+
+    ChatMessage.create(chatData);
+  }
+  _checkHeroPoints() {
+    if (this.actor.getExp > 0) {
+      this.actor.modifyExp(-1);
+      return true;
+    } else {
+      ui.notifications.error(
+        `${this.actor.name} does not have enough experience.`
+      );
+      return false;
+    }
+  }
+
+  async _toggleSkillUp(event) {
+    event.preventDefault();
+    let element = event.currentTarget;
+    let itemId = element.closest(".item").dataset.itemId;
+    let item = this.actor.items.get(itemId);
+
+    let levelUpValue = item.data.data.levelUp.value;
+
+    await item.update({
+      "data.levelUp.value": !levelUpValue,
+    });
+  }
+
+  async _onClickTrait(event) {
+    event.preventDefault();
+    let element = event.currentTarget;
+    let itemId = element.closest(".item").dataset.itemId;
+    let item = this.actor.items.get(itemId);
+
+    if (item.getSelectionStatus === 1 || item.getSelectionStatus === 2) {
+      item.setSelectionStatus(0);
+      return;
     }
 
     await this.actor.resetTraitSelection();
@@ -633,4 +835,3 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     return;
   }
 }
-

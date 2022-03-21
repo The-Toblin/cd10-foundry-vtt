@@ -34,19 +34,6 @@
   background-color: black;
   font-family: var(--font-main);
 }
-.cd10.sheet.namedCharacter form .button {
-  background: url(./assets/backgrounds/card_detail_background.jpg);
-  border-style: solid;
-  border-width: 3px;
-  border-color: var(--accent-color);
-  border-radius: 10px;
-  padding: 4px;
-  margin: 0 5px 10px 5px;
-  box-shadow: 5px 10px 10px #000000;
-}
-.cd10.sheet.namedCharacter form .button:hover {
-  box-shadow: inset 2px 2px 10px 5px black;
-}
 .cd10.sheet.namedCharacter form .editor {
   height: 100%;
   min-height: 100px;
@@ -127,6 +114,9 @@
 }
 .cd10.sheet.namedCharacter form .ammo-select .far {
   padding-right: 8px;
+}
+.cd10.sheet.namedCharacter form .display-inline {
+  display: inline;
 }
 .cd10.sheet.namedCharacter form .sheet-sidebar {
   padding: 10px;
@@ -639,6 +629,27 @@
   margin-bottom: 5px;
   border-color: var(--font-color);
 }
+.cd10.sheet.mookCharacter form table {
+  border: none;
+  border-collapse: separate;
+  border-spacing: 5px;
+}
+.cd10.sheet.mookCharacter form table tr {
+  background: unset;
+  background-color: unset;
+}
+.cd10.sheet.mookCharacter form table th,
+.cd10.sheet.mookCharacter form table td {
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 1px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  vertical-align: middle;
+  text-align: center;
+  padding: 4px 5px 4px 5px;
+  color: inherit;
+}
 .cd10.sheet.mookCharacter form .header-box,
 .cd10.sheet.mookCharacter form .title-box,
 .cd10.sheet.mookCharacter form .equipment-list {
@@ -663,11 +674,20 @@
   background: none;
   font-family: var(--font-main);
 }
+.cd10.sheet.mookCharacter form .display-inline {
+  display: inline;
+}
 .cd10.sheet.mookCharacter form .weapon-item {
   margin-right: 5px;
 }
 .cd10.sheet.mookCharacter form .ammo-select .far {
   padding-right: 8px;
+}
+.cd10.sheet.mookCharacter form .d10-roll-icon img {
+  padding-top: 4px;
+  margin-left: 5px;
+  width: 15px;
+  border: none;
 }
 .cd10.sheet.mookCharacter form .item-delete .fas {
   text-align: right;
@@ -729,14 +749,19 @@
   height: auto;
 }
 .attack-roll-card .centered,
-.attack-roll-card .value-box {
+.skill-roll-card .centered,
+.attack-roll-card .value-box,
+.skill-roll-card .value-box {
   text-align: center;
 }
-.attack-roll-card .value-box {
+.attack-roll-card .value-box,
+.skill-roll-card .value-box {
   width: 25%;
 }
 .attack-roll-card .value-box,
-.attack-roll-card .stat-box {
+.skill-roll-card .value-box,
+.attack-roll-card .stat-box,
+.skill-roll-card .stat-box {
   margin: 0;
   line-height: 24px;
   background: rgba(0, 0, 0, 0.1);
@@ -747,17 +772,21 @@
   margin-bottom: 5px;
   padding: 4px;
 }
-.attack-roll-card .stat-box {
+.attack-roll-card .stat-box,
+.skill-roll-card .stat-box {
   text-align: left;
   width: 70%;
 }
-.attack-roll-card .spacer {
+.attack-roll-card .spacer,
+.skill-roll-card .spacer {
   margin-top: 5px;
 }
-.attack-roll-card .bold {
+.attack-roll-card .bold,
+.skill-roll-card .bold {
   font-weight: 700;
 }
-.attack-roll-card img {
+.attack-roll-card img,
+.skill-roll-card img {
   width: 100%;
   height: auto;
 }
@@ -837,4 +866,17 @@
 .sheet-body,
 .sheet-body .tab {
   height: 100%;
+}
+.button {
+  background: url(./assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 3px;
+  border-color: var(--accent-color);
+  border-radius: 10px;
+  padding: 4px;
+  margin: 0 5px 10px 5px;
+  box-shadow: 5px 10px 10px #000000;
+}
+.button:hover {
+  box-shadow: inset 2px 2px 10px 5px black;
 }

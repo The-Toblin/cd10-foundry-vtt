@@ -234,6 +234,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         .find(".reveal-rollable")
         .on("mouseover mouseout", this._onToggleRollable.bind(this));
       html.find(".stressBox").click(this._stressBoxClicked.bind(this));
+      html.find(".initiative-select").click(this._initiativeClicked.bind(this));
       html.find(".inline-edit").change(this._onSkillEdit.bind(this));
       html.find(".item-delete").click(this._onItemDelete.bind(this));
       html.find(".item-equip").click(this._onItemEquip.bind(this));
@@ -687,6 +688,66 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     this.actor.update({
       "data.stressing.value": !value,
     });
+  }
+  async _initiativeClicked(event) {
+    event.preventDefault();
+    /* Rolling initative manually */
+    let skillValue,
+      skillName,
+      modifier = this.actor.getModifier;
+    this.getData().meleeWeapons.forEach((w) => {
+      if (w.data.isEquipped.value) {
+        this.getData().skills.forEach((s) => {
+          if (s.data.matchID === w.data.attackSkill.value) {
+            skillValue = s.data.skillLevel.value;
+            skillName = s.name;
+          }
+        });
+      }
+    });
+
+    let rollFormula = `1d10x9 + @actionValue`;
+    if (modifier > 0) {
+      rollFormula += " - @modifier";
+    }
+    let rollData = {
+      actionValue: skillValue,
+      modifier: modifier,
+    };
+
+    let rollD10 = await new Roll(rollFormula, rollData).roll({
+      async: true,
+    });
+
+    /* Catch the dreaded 0 */
+    for (let i = 0; i < rollD10.terms[0].results.length; i++) {
+      if (rollD10.terms[0].results[i].result === 10) {
+        rollD10._total -= 10;
+      }
+    }
+
+    let renderedRoll = await rollD10.render(),
+      templateContext = null,
+      chatData = null;
+    let messageTemplate =
+      "systems/cd10/templates/partials/chat-messages/skill-roll.hbs";
+
+    templateContext = {
+      initiative: true,
+      skillName: skillName,
+      skillLevel: skillValue,
+      roll: renderedRoll,
+    };
+
+    chatData = {
+      speaker: ChatMessage.getSpeaker(),
+      roll: rollD10,
+      content: await renderTemplate(messageTemplate, templateContext),
+      sound: CONFIG.sounds.dice,
+      type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+    };
+
+    ChatMessage.create(chatData);
   }
   _checkHeroPoints() {
     if (this.actor.getExp > 0) {

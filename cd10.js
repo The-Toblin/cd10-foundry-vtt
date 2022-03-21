@@ -5,6 +5,7 @@ import CD10Actor from "./module/CD10Actor.js";
 import CD10ItemSheet from "./module/sheets/CD10ItemSheet.js";
 import CD10NamedCharacterSheet from "./module/sheets/CD10NamedCharacterSheet.js";
 import CD10MookCharacterSheet from "./module/sheets/CD10MookCharacterSheet.js";
+import CD10Combatant from "./module/combat/CD10Combatant.js";
 
 async function preloadHandlebarsTemplates() {
   const templatePaths = [
@@ -100,6 +101,7 @@ Hooks.once("init", function () {
   CONFIG.cd10 = cd10;
   CONFIG.Item.documentClass = CD10Item;
   CONFIG.Actor.documentClass = CD10Actor;
+  CONFIG.Combatant.documentClass = CD10Combatant;
 
   /* Register Sheets */
   Items.unregisterSheet("core", ItemSheet);

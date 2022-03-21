@@ -1,19 +1,27 @@
 <div class="task-check skill skill-roll-card flex-column flex-start">
+    {{#unless initiative}}
     {{#unless (eq skillName null)}}
     <div>
         <h3>{{skillName}} {{localize "cd10.chat.roll.check"}}</h3>
     </div>
     {{else}}
-        <h3>{{localize "cd10.chat.roll.trait"}} {{localize "cd10.chat.roll.check"}}</h3>
+    <h3>{{localize "cd10.chat.roll.trait"}} {{localize "cd10.chat.roll.check"}}</h3>
     {{/unless}}
     {{#if traitName}}
-        {{traitName}} ({{traitValue}})
+    {{traitName}} ({{traitValue}})
     {{/if}}
+    {{else}}
     <div>
-        {{{roll}}}
-        {{#if fail}} 
-        {{localize "cd10.chat.roll.fail"}}
-            {{{fail}}}
-        {{/if}}
+        <h3>{{localize "cd10.sheet.initiative"}} {{localize "cd10.chat.roll.check"}}</h3>
     </div>
+    <div class="flex-row flex-between">
+        <div class="stat-box">
+            {{skillName}}
+        </div>
+        <div class="value-box">
+            {{skillLevel}}
+        </div>
+    </div>
+    {{/unless}}
+    {{{roll}}}
 </div>

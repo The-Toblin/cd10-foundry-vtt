@@ -14,11 +14,37 @@
             </div>
             <div class="flex-column flex-center pad-4">
                 <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" class="actor-image" />
-                <div class="stressBoxSelect pad-8 center">
-                    <label>{{localize "cd10.sheet.stress"}}?</label>
-                    <a class="stressBox" data-type="text">
-                        <i class="far fa-{{#if this.actor.data.data.stressing.value}}check-{{/if}}square"></i>
+                <div class="button">
+                    <a class="physical-save flex-row flex-even pad-top" title={{localize "cd10.sheet.roll" }}>
+                        <div class="d10-roll-icon">
+                            <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
+                        </div>
+                        <div>
+                            <h3 class="sheet-header">
+                                {{localize "cd10.sheet.save"}}
+                            </h3>
+                        </div>
                     </a>
+                </div>
+                <div class="button stressBox stressBoxContainer flex-even flex-row pad-8">
+                    <div class="stressBoxSelect">
+                        <i class="far fa-{{#if this.actor.data.data.stressing.value}}check-{{/if}}square"></i>
+                    </div>
+                    <div>
+                        <h3 class="sheet-header">
+                            {{localize "cd10.sheet.stress"}}
+                        </h3>
+                    </div>
+                </div>
+                <div class="button initiative-select initiativeBox flex-even flex-row pad-8">
+                    <div class="d10-roll-icon">
+                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
+                    </div>
+                    <div>
+                        <h3 class="sheet-header">
+                            {{localize "cd10.sheet.initiative"}}
+                        </h3>
+                    </div>
                 </div>
             </div>
         </div>
@@ -39,20 +65,185 @@
         </div>
     </div>
     <hr>
-    <div class="body-box flex-column flex-between">
-        <div class="flex-row flex-even equipment-list">
-            {{#each meleeWeapons as |meleeWeapon id|}}
-            {{> "systems/cd10/templates/partials/equipment-cards/small-weapon-card.hbs" meleeWeapon }}
-            {{/each}}
-            {{#each rangedWeapons as |rangedWeapon id|}}
-            {{> "systems/cd10/templates/partials/equipment-cards/small-ranged-weapon-card.hbs" rangedWeapon }}
-            {{/each}}
-            {{#each armors as |armor id|}}
-            {{> "systems/cd10/templates/partials/equipment-cards/small-armor-card.hbs" armor }}
-            {{/each}}
-            {{#each shields as |shield id|}}
-            {{> "systems/cd10/templates/partials/equipment-cards/small-shield-card.hbs" shield }}
-            {{/each}}
+    <section class="sheet-combat-tab">
+        {{#if equippedMeleeWeapon}}
+        <div class="weapon-card sheet-card">
+            <h3>{{localize "cd10.sheet.weapons"}}</h3>
+            <table>
+                <tr>
+                    <th></th>
+                    <th>
+                        {{localize "cd10.stats.name"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.weapon.reach"}}
+                    </th>
+                    {{#if (eq @root.damageTypeSetting "simple")}}
+                    <th>
+                        {{localize "cd10.weapon.lethality"}}
+                    </th>
+                    {{else}}
+                    <th>
+                        {{localize "cd10.weapon.slashDamage"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.weapon.pierceDamage"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.weapon.bluntDamage"}}
+                    </th>
+                    {{/if}}
+                    {{#if (eq @root.damageTypeSetting "complex")}}
+                    <th>
+                        {{localize "cd10.weapon.energyDamage"}}
+                    </th>
+                    {{/if}}
+                    <th>
+                        {{localize "cd10.weapon.shockDamage"}}
+                    </th>
+                </tr>
+                {{#each meleeWeapons as |weapon|}}
+                {{#if weapon.data.isEquipped.value}}
+                <tr>
+                    {{> "systems/cd10/templates/partials/equipment-cards/weapon-card.hbs"}}
+                </tr>
+                {{/if}}
+                {{/each}}
+            </table>
         </div>
-    </div>
+        {{/if}}
+        {{#if equippedRangedWeapon}}
+        <div class="weapon-card sheet-card">
+            <h3>{{localize "cd10.sheet.rangedWeapons"}}</h3>
+            <table>
+                <tr>
+                    <th></th>
+                    <th>
+                        {{localize "cd10.stats.name"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.rangedWeapon.rangeClose"}}
+                    </th>
+
+                    <th>
+                        {{localize "cd10.rangedWeapon.rangeNormal"}}
+                    </th>
+
+                    <th>
+                        {{localize "cd10.rangedWeapon.rangeLong"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.rangedWeapon.rangeMax"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.rangedWeapon.ammunition"}}
+                    </th>
+                    {{#if modernity}}
+                    <th>
+                        {{localize "cd10.weapon.energyDamage"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.weapon.shockDamage"}}
+                    </th>
+                    {{/if}}
+                </tr>
+                {{#each rangedWeapons as |weapon|}}
+                {{#if weapon.data.isEquipped.value}}
+                <tr>
+                    {{> "systems/cd10/templates/partials/equipment-cards/rangedWeapon-card.hbs"}}
+                </tr>
+                {{/if}}
+                {{/each}}
+            </table>
+        </div>
+        {{/if}}
+        {{#if equippedArmor}}
+        <div class="weapon-card sheet-card">
+            <h3>{{localize "cd10.sheet.armors"}}</h3>
+            <table>
+                <tr>
+                    <th></th>
+                    <th>
+                        {{localize "cd10.stats.name"}}
+                    </th>
+                    {{#if (eq @root.damageTypeSetting "simple")}}
+                    <th>
+                        {{localize "cd10.armor.protection"}}
+                    </th>
+                    {{else}}
+                    <th>
+                        {{localize "cd10.armor.slashProtection"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.armor.pierceProtection"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.armor.bluntProtection"}}
+                    </th>
+                    {{/if}}
+                    {{#if (eq @root.damageTypeSetting "complex")}}
+                    <th>
+                        {{localize "cd10.armor.energyProtection"}}
+                    </th>
+                    {{/if}}
+                    <th>
+                        {{localize "cd10.armor.shockProtection"}}
+                    </th>
+                </tr>
+                {{#each armors as |armor|}}
+                {{#if armor.data.isEquipped.value}}
+                <tr>
+                    {{> "systems/cd10/templates/partials/equipment-cards/armor-card.hbs"}}
+                </tr>
+                {{/if}}
+                {{/each}}
+            </table>
+        </div>
+        {{/if}}
+        {{#if equippedShield}}
+        <div class="weapon-card sheet-card">
+            <table>
+                <tr>
+                    <th></th>
+                    <th>
+                        {{localize "cd10.stats.name"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.armor.defenseValue"}}
+                    </th>
+                    {{#if (eq @root.damageTypeSetting "simple")}}
+                    <th>
+                        {{localize "cd10.armor.protection"}}
+                    </th>
+                    {{else}}
+                    <th>
+                        {{localize "cd10.armor.slashProtection"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.armor.pierceProtection"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.armor.bluntProtection"}}
+                    </th>
+                    {{/if}}
+                    {{#if (eq @root.damageTypeSetting "complex")}}
+                    <th>
+                        {{localize "cd10.armor.energyProtection"}}
+                    </th>
+                    {{/if}}
+                    <th>
+                        {{localize "cd10.armor.shockProtection"}}
+                    </th>
+                </tr>
+                {{#each shields as |shield|}}
+                {{#if shield.data.isEquipped.value}}
+                <tr>
+                    {{> "systems/cd10/templates/partials/equipment-cards/shield-card.hbs"}}
+                </tr>
+                {{/if}}
+                {{/each}}
+            </table>
+        </div>
+        {{/if}}
+    </section>
 </form>
