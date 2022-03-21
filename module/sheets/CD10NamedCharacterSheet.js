@@ -308,30 +308,48 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
       }
     }
 
+    let traitObj = null,
+      traitReversed = false,
+      skillObj = null;
+
     /* Fetch the skill, based on ItemId. */
-    let skillObj = this.actor.items.get(
+    let rollObj = this.actor.items.get(
       event.currentTarget.closest(".item").dataset.itemId
     );
 
-    /* Dump the skill description to chat. */
-    if (game.settings.get("cd10", "systemDumpDescriptions")) {
-      skillObj.roll();
+    if (rollObj.type === "skill") {
+      skillObj = rollObj;
+      /* Dump the skill description to chat. */
+      if (game.settings.get("cd10", "systemDumpDescriptions")) {
+        skillObj.roll();
+      }
+    } else if (rollObj.type === "trait") {
+      traitObj = rollObj;
+      /* Dump the trait description to chat. */
+      if (game.settings.get("cd10", "systemDumpDescriptions")) {
+        traitObj.roll();
+      }
     }
 
-    let traitObj = null,
-      traitReversed = false;
-
-    this.actor.items.forEach((t) => {
-      if (t.type === "trait") { 
-        if (t.data.data.selected === 1) {
-          traitObj = t;
-          traitReversed = false;
-        } else if (t.data.data.selected === 2) {
-          traitObj = t;
-          traitReversed = true;
+    if (rollObj.type != "trait") {
+      this.actor.items.forEach((t) => {
+        if (t.type === "trait") {
+          if (t.data.data.selected === 1) {
+            traitObj = t;
+            traitReversed = false;
+          } else if (t.data.data.selected === 2) {
+            traitObj = t;
+            traitReversed = true;
+          }
         }
+      });
+    } else if (rollObj.type === "trait") {
+      if (rollObj.data.data.selected === 1) {
+        traitReversed = false;
+      } else if (rollObj.data.data.selected === 2) {
+        traitReversed = true;
       }
-    });
+    }
 
     /* Perform the check */
     Dice.TaskCheck({
@@ -377,6 +395,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
       ui.notifications.error(
         `Error! ${weaponObj.name} does not have an assigned skill!`
       );
+      return;
     }
     /* Check if it's a ranged weapon */
     if (weaponObj.type === "rangedWeapon") {
@@ -389,6 +408,23 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         damageType = "blunt";
       } else if (ammo.data.data.damage.energy.selected) {
         damageType = "energy";
+      }
+      if (ammo.data.data.count.value > 0) {
+        let count = ammo.data.data.count.value;
+        count -= 1;
+
+        ammo.update({
+          data: {
+            count: {
+              value: count,
+            },
+          },
+        });
+      } else {
+        ui.notifications.error(
+          `You are out of that ammo type! Select another!`
+        );
+        return;
       }
     }
 
@@ -587,9 +623,13 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
 
     let element = event.currentTarget;
     let itemId = element.closest(".item").dataset.itemId;
-    const item = this.actor.items.get(itemId);
+    const item = this.actor.items.get(itemId),
+      type = item.type;
 
     let boolValue = item.data.data.isEquipped.value;
+    if (!boolValue) {
+      this.actor.unequipItems(type);
+    }
 
     await item.update({
       "data.isEquipped.value": !boolValue,

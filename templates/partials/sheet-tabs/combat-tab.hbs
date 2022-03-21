@@ -4,36 +4,36 @@
         <h3>{{localize "cd10.sheet.weapons"}}</h3>
         <table>
             <tr>
-                <td></td>
-                <td>
+                <th></th>
+                <th>
                     {{localize "cd10.stats.name"}}
-                </td>
-                <td>
+                </th>
+                <th>
                     {{localize "cd10.weapon.reach"}}
-                </td>
+                </th>
                 {{#if (eq @root.damageTypeSetting "simple")}}
-                <td>
+                <th>
                     {{localize "cd10.weapon.lethality"}}
-                </td>
+                </th>
                 {{else}}
-                <td>
+                <th>
                     {{localize "cd10.weapon.slashDamage"}}
-                </td>
-                <td>
+                </th>
+                <th>
                     {{localize "cd10.weapon.pierceDamage"}}
-                </td>
-                <td>
+                </th>
+                <th>
                     {{localize "cd10.weapon.bluntDamage"}}
-                </td>
+                </th>
                 {{/if}}
                 {{#if (eq @root.damageTypeSetting "complex")}}
-                <td>
+                <th>
                     {{localize "cd10.weapon.energyDamage"}}
-                </td>
+                </th>
                 {{/if}}
-                <td>
+                <th>
                     {{localize "cd10.weapon.shockDamage"}}
-                </td>
+                </th>
             </tr>
             {{#each meleeWeapons as |weapon|}}
             {{#if weapon.data.isEquipped.value}}
@@ -48,36 +48,36 @@
     {{#if equippedRangedWeapon}}
     <div class="weapon-card sheet-card">
         <h3>{{localize "cd10.sheet.rangedWeapons"}}</h3>
-        <table class="center-table">
+        <table>
             <tr>
-                <td></td>
-                <td>
+                <th></th>
+                <th>
                     {{localize "cd10.stats.name"}}
-                </td>
-                <td>
+                </th>
+                <th>
                     {{localize "cd10.rangedWeapon.rangeClose"}}
-                </td>
+                </th>
 
-                <td>
+                <th>
                     {{localize "cd10.rangedWeapon.rangeNormal"}}
-                </td>
+                </th>
 
-                <td>
+                <th>
                     {{localize "cd10.rangedWeapon.rangeLong"}}
-                </td>
-                <td>
+                </th>
+                <th>
                     {{localize "cd10.rangedWeapon.rangeMax"}}
-                </td>
-                <td>
+                </th>
+                <th>
                     {{localize "cd10.rangedWeapon.ammunition"}}
-                </td>
+                </th>
                 {{#if modernity}}
-                <td>
+                <th>
                     {{localize "cd10.weapon.energyDamage"}}
-                </td>
-                <td>
+                </th>
+                <th>
                     {{localize "cd10.weapon.shockDamage"}}
-                </td>
+                </th>
                 {{/if}}
             </tr>
             {{#each rangedWeapons as |weapon|}}
@@ -93,8 +93,35 @@
     {{#if equippedArmor}}
     <div class="weapon-card sheet-card">
         <h3>{{localize "cd10.sheet.armors"}}</h3>
-        <table class="center-table">
+        <table>
             <tr>
+                <th></th>
+                <th>
+                    {{localize "cd10.stats.name"}}
+                </th>
+                {{#if (eq @root.damageTypeSetting "simple")}}
+                <th>
+                    {{localize "cd10.armor.protection"}}
+                </th>
+                {{else}}
+                <th>
+                    {{localize "cd10.armor.slashProtection"}}
+                </th>
+                <th>
+                    {{localize "cd10.armor.pierceProtection"}}
+                </th>
+                <th>
+                    {{localize "cd10.armor.bluntProtection"}}
+                </th>
+                {{/if}}
+                {{#if (eq @root.damageTypeSetting "complex")}}
+                <th>
+                    {{localize "cd10.armor.energyProtection"}}
+                </th>
+                {{/if}}
+                <th>
+                    {{localize "cd10.armor.shockProtection"}}
+                </th>
             </tr>
             {{#each armors as |armor|}}
             {{#if armor.data.isEquipped.value}}
@@ -108,8 +135,38 @@
     {{/if}}
     {{#if equippedShield}}
     <div class="weapon-card sheet-card">
-        <table class="center-table">
+        <table>
             <tr>
+                <th></th>
+                <th>
+                    {{localize "cd10.stats.name"}}
+                </th>
+                <th>
+                    {{localize "cd10.armor.defenseValue"}}
+                </th>
+                {{#if (eq @root.damageTypeSetting "simple")}}
+                <th>
+                    {{localize "cd10.armor.protection"}}
+                </th>
+                {{else}}
+                <th>
+                    {{localize "cd10.armor.slashProtection"}}
+                </th>
+                <th>
+                    {{localize "cd10.armor.pierceProtection"}}
+                </th>
+                <th>
+                    {{localize "cd10.armor.bluntProtection"}}
+                </th>
+                {{/if}}
+                {{#if (eq @root.damageTypeSetting "complex")}}
+                <th>
+                    {{localize "cd10.armor.energyProtection"}}
+                </th>
+                {{/if}}
+                <th>
+                    {{localize "cd10.armor.shockProtection"}}
+                </th>
             </tr>
             {{#each shields as |shield|}}
             {{#if shield.data.isEquipped.value}}

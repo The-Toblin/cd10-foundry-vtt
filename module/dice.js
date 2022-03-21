@@ -61,7 +61,6 @@ export async function TaskCheck({
 
     if (traitReversed) {
       traitValue *= -1;
-      console.log(`After reversal it's ${traitValue}`);
     }
   }
 
@@ -83,12 +82,13 @@ export async function TaskCheck({
   }
 
   /* Check if an attempt is being made without possessing the necessary skill. */
-  if (
-    (skillObj === null && checkType === "Simple") ||
-    (skillObj === null && checkType === "SimpleAttack")
-  ) {
-    actionValue = 0;
-    skillName = "No Skill!";
+  if (checkType === "Simple" || checkType === "SimpleAttack") {
+    if (skillObj === null && traitObj != null) {
+      skillName = traitObj.name;
+    } else if (skillObj === null && traitObj === null) {
+      actionValue = 0;
+      skillName = "No Skill!";
+    }
   }
 
   rollData = {

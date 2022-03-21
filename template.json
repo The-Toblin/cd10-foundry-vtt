@@ -288,11 +288,6 @@
                     "label": "Shock Protection",
                     "value": 0
                 }
-            },
-            "blockValue": {
-                "type": "number",
-                "label": "Blockvalue",
-                "value": 0
             }
         },
         "shield": {
