@@ -284,20 +284,37 @@ export default class CD10Actor extends Actor {
       return;
     } else {
       this.items.forEach((i) => {
-        if (i.type === item) {
-          itemUpdate = {
-            _id: i.id,
-            data: {
-              isEquipped: {
-                value: false,
+        if (item === "meleeWeapon" || item === "rangedWeapon") {
+          if (i.type === "meleeWeapon" || i.type === "rangedWeapon") {
+            itemUpdate = {
+              _id: i.id,
+              data: {
+                isEquipped: {
+                  value: false,
+                },
               },
-            },
-          };
-          if (Object.keys(itemUpdate).length > 1) {
-            itemArray.push(itemUpdate);
+            };
+            if (Object.keys(itemUpdate).length > 1) {
+              itemArray.push(itemUpdate);
+            }
+          }
+        } else {
+          if (i.type === item) {
+            itemUpdate = {
+              _id: i.id,
+              data: {
+                isEquipped: {
+                  value: false,
+                },
+              },
+            };
+            if (Object.keys(itemUpdate).length > 1) {
+              itemArray.push(itemUpdate);
+            }
           }
         }
       });
+
       await this.updateEmbeddedDocuments("Item", itemArray);
     }
     return;

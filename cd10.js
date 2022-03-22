@@ -155,7 +155,7 @@ Hooks.once("init", function () {
   });
 
   console.log("==== CD10 | Pushing TinyMCE CSS ====");
-  CONFIG.TinyMCE.content_css.push(`systems/cd10/less/cd10_tinymcemods.css`);
+  CONFIG.TinyMCE.content_css.push(`systems/cd10/cd10-mce.css`);
 });
 
 Hooks.once("ready", function () {
