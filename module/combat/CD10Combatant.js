@@ -1,12 +1,10 @@
 export default class CD10Combatant extends Combatant {
   _getInitiativeFormula(combatant) {
     let baseFormula = super._getInitiativeFormula(combatant);
-
     const actor = game.actors.get(this.data.actorId);
-
     let skillValue,
-      skillName,
       modifier = actor.getModifier;
+
     actor.items.forEach((w) => {
       if (w.type === "meleeWeapon" || w.type === "rangedWeapon") {
         if (w.data.data.isEquipped.value) {
