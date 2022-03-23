@@ -18,6 +18,7 @@ export default async function MigrateWorld(currentVersion) {
     newData = _oldMigrate(updateData);
     if (newData.exitCode != 0) {
       console.log("==== CD10 | v0.1.0 migration failed! Aborting!");
+      ui.notifications.error(`Migration failed! Check logs and try again!`);
       return;
     } else {
       console.log("==== CD10 | v0.1.0 migration completed!");
@@ -32,6 +33,7 @@ export default async function MigrateWorld(currentVersion) {
     newData = _v020Migrate(updateData);
     if (newData.exitCode != 0) {
       console.log("==== CD10 | v0.2.0 migration failed! Aborting!");
+      ui.notifications.error(`Migration failed! Check logs and try again!`);
       return;
     } else {
       console.log("==== CD10 | v0.2.0 migration completed!");
@@ -43,9 +45,10 @@ export default async function MigrateWorld(currentVersion) {
 
   if (v030) {
     console.log("==== CD10 | Beginning v0.3.0 migration!");
-    newData = _oldMigrate(updateData);
+    newData = _v030Migrate(updateData);
     if (newData.exitCode != 0) {
       console.log("==== CD10 | v0.3.0 migration failed! Aborting!");
+      ui.notifications.error(`Migration failed! Check logs and try again!`);
       return;
     } else {
       console.log("==== CD10 | v0.3.0 migration completed!");
@@ -57,9 +60,10 @@ export default async function MigrateWorld(currentVersion) {
 
   if (v040) {
     console.log("==== CD10 | Beginning v0.4.0 migration!");
-    newData = _oldMigrate(updateData);
+    newData = _v040Migrate(updateData);
     if (newData.exitCode != 0) {
       console.log("==== CD10 | v0.4.0 migration failed! Aborting!");
+      ui.notifications.error(`Migration failed! Check logs and try again!`);
       return;
     } else {
       console.log("==== CD10 | v0.4.0 migration completed!");
@@ -76,4 +80,32 @@ export default async function MigrateWorld(currentVersion) {
 async function _performMigration(type, updateData) {
   /* Do things with the data */
   console.log(`Type is ${type} and data is`, updateData);
+}
+
+function _oldMigrate() {
+  let newData;
+
+  newData.exitCode = 0;
+  return newData;
+}
+
+function _v020Migrate() {
+  let newData;
+
+  newData.exitCode = 0;
+  return newData;
+}
+
+function _v030Migrate() {
+  let newData;
+
+  newData.exitCode = 0;
+  return newData;
+}
+
+function _v040Migrate() {
+  let newData;
+
+  newData.exitCode = 0;
+  return newData;
 }
