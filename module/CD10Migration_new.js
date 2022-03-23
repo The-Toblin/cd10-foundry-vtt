@@ -109,3 +109,20 @@ function _v040Migrate() {
   newData.exitCode = 0;
   return newData;
 }
+
+function _compareNames(nameOne, nameTwo) {
+  let a = nameOne
+      .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
+      .replace(/\s+/g, "")
+      .toLowerCase(),
+    b = nameTwo
+      .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
+      .replace(/\s+/g, "")
+      .toLowerCase();
+
+  if (a === b) {
+    return true;
+  } else {
+    return false;
+  }
+}
