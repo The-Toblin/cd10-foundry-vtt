@@ -1,5 +1,9 @@
-# Celenia D10 RPG System
+# Celenia D10 RPG System (Legacy Branch)
 CD10 RPG is a narratively focused, settings-agnostic RPG systems meant primarily for immersive verisimilitude games with a touch of rule of cool. CD10 attempts to emulate the feel of an 80's action movie, where the main character is just a human, but also the hero of the story. Imagine your character being John McClane of Die Hard and you get pretty close to the aim of the system. It is not suitable for epic, grand-scale, "save the universe" plots common to more traditional high-fantasy games, although with some fenagling, those campaigns are possible. But just don't try to make big, epic boss battles in this system. It's not made for it. It's designed primarily for equal-footing fighters duking it out, or fighting monsters that are of somewhat similar ability as the characters.
+
+Legacy means that this version of the system has reached development's end. Due to a grand-scale redesign of the system, this Foundry System will remain for those who wish to finish their campaigns, since switching systems would break most of everything.
+
+The new CD10 system is currently being developed for Foundry VTT and will be released eventually. For now, you can continue using this system for your campaigns, and it will receive a couple of bug-fix releases as well as a big overhaul patch relating to handling injuries, UI and such. Version 0.4 will be the last release, barring any critical bugs that might surface.
 
 # Core Features
 # No base attributes
@@ -20,16 +24,6 @@ The entire system is based around this horizontal progression, where a character
 
 # In development
 CD10 RPG is currently in development and CD10 Core, the free portion, is considered to be in an alpha state. Things are likely to change as the system develops. It is fully useable for gameplay, but because it is still going through gameplay tests, core mechanics can change. Hence the Alpha status. Otherwise, it would be considered Beta.
-
-# CD10 Core vs CD10 Advanced
-CD10 Advanced, which includes several optional, advanced modules, such as bleeding, poison, disease and magic, is also in alpha, but in a less robust state. Some modules are completed, while others are still in the draft stage. 
-
-CD10 Advanced is the paid-for version of the system and is currently only available to supporters (see below).
-
-# Foundry VTT Development Status
-The Foundry VTT system of CD10 is based on CD10 Core and until that hits 1.0, no CD10A features will be added.
-
-Character and item sheets are fully implemented with internal mechanics, but no auto-calculations are included yet.
 
 The system does not come with any content packs (such as items, skills, traits etc) at present. Because of the alpha-state of the system outside of Foundry, there's still too much in fluctuation to nail down any content packs.
 
