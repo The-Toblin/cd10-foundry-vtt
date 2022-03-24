@@ -15,19 +15,19 @@ export default class CD10Actor extends Actor {
     templateData.traitsValue = {
       type: "number",
       label: "Total traits value",
-      value: traits.totalValue,
+      value: traits.totalValue
     };
 
     templateData.posTraits = {
       type: "number",
       label: "Total positive traits",
-      value: traits.pos,
+      value: traits.pos
     };
 
     templateData.negTraits = {
       type: "number",
       label: "Total negative traits",
-      value: traits.neg,
+      value: traits.neg
     };
 
     /* Set debilitationtype and value */
@@ -41,55 +41,55 @@ export default class CD10Actor extends Actor {
     templateData.modifier = {
       type: "number",
       label: "Modifier",
-      value: debilitation.modifier,
+      value: debilitation.modifier
     };
 
     templateData.debilitationType = {
       type: "string",
       label: "Debilitation",
-      value: debilitation.type,
+      value: debilitation.types
     };
   }
 
-  /***********
+  /** *********
    *         *
    * Getters *
    *         *
    **********/
 
   get getSkills() {
-    return this.data.items.filter((p) => p.data.type == "skill");
+    return this.data.items.filter(p => p.data.type === "skill");
   }
 
   get getSpells() {
-    return this.data.items.filter((p) => p.data.type == "spell");
+    return this.data.items.filter(p => p.data.type === "spell");
   }
 
   get getTraits() {
-    return this.data.items.filter((p) => p.data.type == "trait");
+    return this.data.items.filter(p => p.data.type === "trait");
   }
 
   get getArmors() {
     return this.data.items.filter(
-      (p) => p.data.type == "armor" && !p.data.data.isShield.value
+      p => p.data.type === "armor" && !p.data.data.isShield.value
     );
   }
 
   get getShields() {
     return this.data.items.filter(
-      (p) => p.data.type == "armor" && p.data.data.isShield.value
+      p => p.data.type === "armor" && p.data.data.isShield.value
     );
   }
 
   get getMeleeWeapons() {
     return this.data.items.filter(
-      (p) => p.data.type == "weapon" && !p.data.data.isRanged.value
+      p => p.data.type === "weapon" && !p.data.data.isRanged.value
     );
   }
 
   get getRangedWeapons() {
     return this.data.items.filter(
-      (p) => p.data.type == "weapon" && p.data.data.isRanged.value
+      p => p.data.type === "weapon" && p.data.data.isRanged.value
     );
   }
 
@@ -113,18 +113,18 @@ export default class CD10Actor extends Actor {
     return this.data.data.stressing.value;
   }
 
-  /**************************
+  /** ************************
    *                        *
    * Custom prepare methods *
    *                        *
    *************************/
 
   _prepareTraits(data) {
-    let totalValue = 0,
-      pos = 0,
-      neg = 0;
+    let totalValue = 0;
+    let pos = 0;
+    let neg = 0;
 
-    let totalTraits = data.items.filter((trait) => trait.type === "trait");
+    let totalTraits = data.items.filter(trait => trait.type === "trait");
 
     for (let i = 0; i < totalTraits.length; i++) {
       let adder = 0;
@@ -133,7 +133,7 @@ export default class CD10Actor extends Actor {
       totalValue += adder;
     }
 
-    totalTraits.forEach((p) => {
+    totalTraits.forEach(p => {
       if (p.data.data.skillLevel.value > 0) {
         ++pos;
       } else {
@@ -144,20 +144,20 @@ export default class CD10Actor extends Actor {
     return {
       totalValue: totalValue,
       pos: pos,
-      neg: neg,
+      neg: neg
     };
   }
 
   _prepareDebilitation(data) {
     /* This function calculates the proper modifier and debilitation type for a character */
-    let debilitationType,
-      wounds = data.wounds.value,
-      woundsModifier;
+    let debilitationType;
+    let wounds = data.wounds.value;
+    let woundsModifier;
 
-    if (wounds == 2) {
+    if (wounds === 2) {
       woundsModifier = 1;
       debilitationType = "on physical checks";
-    } else if (wounds == 3) {
+    } else if (wounds === 3) {
       woundsModifier = 2;
       debilitationType = "on physical checks";
     } else if (wounds > 3 && wounds < 6) {
@@ -169,22 +169,22 @@ export default class CD10Actor extends Actor {
     } else if (wounds > 6 && wounds < 10) {
       woundsModifier = 5;
       debilitationType = "on all checks";
-    } else if (wounds == 10) {
+    } else if (wounds === 10) {
       woundsModifier = 6;
       debilitationType = "on all checks";
-    } else if (wounds == 11) {
+    } else if (wounds === 11) {
       woundsModifier = 7;
       debilitationType = "on all checks. DC 3.";
-    } else if (wounds == 12) {
+    } else if (wounds === 12) {
       woundsModifier = 7;
       debilitationType = "on all checks. DC 6.";
-    } else if (wounds == 13) {
+    } else if (wounds === 13) {
       woundsModifier = 8;
       debilitationType = "on all checks. DC 9.";
-    } else if (wounds == 14) {
+    } else if (wounds === 14) {
       woundsModifier = 8;
       debilitationType = "on all checks. DC 12.";
-    } else if (wounds == 15) {
+    } else if (wounds === 15) {
       woundsModifier = 8;
       debilitationType = "You are dead!";
     } else {
@@ -192,37 +192,37 @@ export default class CD10Actor extends Actor {
       debilitationType = "on physical checks";
     }
 
-    if (data.shock.value == 0 && wounds < 2) {
+    if (data.shock.value === 0 && wounds < 2) {
       woundsModifier = 0;
       debilitationType = "";
     }
 
     return {
       modifier: data.shock.value + woundsModifier,
-      type: debilitationType,
+      type: debilitationType
     };
   }
 
   async modifyExp(amount) {
-    if (typeof amount != "number") {
-      ui.notifications.error(`Not a number for Exp update!`);
+    if (typeof amount !== "number") {
+      ui.notifications.error("Not a number for Exp update!");
       return;
     }
-    let currentExp = this.getExp,
-      newExp = currentExp + amount;
+    let currentExp = this.getExp;
+    let newExp = currentExp + amount;
 
     await this.update({
-      "data.exp.total": newExp,
+      "data.exp.total": newExp
     });
   }
 
   async modifyWounds(amount) {
-    if (typeof amount != "number") {
-      ui.notifications.error(`Not a number for wounds update!`);
+    if (typeof amount !== "number") {
+      ui.notifications.error("Not a number for wounds update!");
       return;
     }
-    let currentWounds = this.getWounds,
-      newWounds;
+    let currentWounds = this.getWounds;
+    let newWounds;
 
     if (amount > 0) {
       newWounds = Math.min(currentWounds + amount, this.data.data.wounds.max);
@@ -231,17 +231,17 @@ export default class CD10Actor extends Actor {
     }
 
     await this.update({
-      "data.wounds.value": newWounds,
+      "data.wounds.value": newWounds
     });
   }
 
   async modifyShock(amount) {
-    if (typeof amount != "number") {
-      ui.notifications.error(`Not a number for shock update!`);
+    if (typeof amount !== "number") {
+      ui.notifications.error("Not a number for shock update!");
       return;
     }
-    let currentShock = this.getShock,
-      newShock;
+    let currentShock = this.getShock;
+    let newShock;
 
     if (amount > 0) {
       newShock = Math.min(currentShock + amount, this.data.data.shock.max);
@@ -250,83 +250,81 @@ export default class CD10Actor extends Actor {
     }
 
     await this.update({
-      "data.shock.value": newShock,
+      "data.shock.value": newShock
     });
   }
 
   async resetTraitSelection() {
     let traitArray = [];
 
-    this.getTraits.forEach((t) => {
+    this.getTraits.forEach(t => {
       const itemUpdate = {
         _id: t.id,
         data: {
-          selected: 0,
-        },
+          selected: 0
+        }
       };
       traitArray.push(itemUpdate);
     });
 
     await this.updateEmbeddedDocuments("Item", traitArray);
-    return;
+
   }
 
   async unequipItems(item) {
-    let itemArray = [],
-      itemUpdate = {};
+    let itemArray = [];
+    let itemUpdate = {};
 
     if (
-      item != "meleeWeapon" &&
-      item != "rangedWeapon" &&
-      item != "armor" &&
-      item != "shield"
+      item !== "meleeWeapon"
+      && item !== "rangedWeapon"
+      && item !== "armor"
+      && item !== "shield"
     ) {
       return;
     } else {
-      this.items.forEach((i) => {
+      this.items.forEach(i => {
         if (item === "meleeWeapon" || item === "rangedWeapon") {
           if (i.type === "meleeWeapon" || i.type === "rangedWeapon") {
             itemUpdate = {
               _id: i.id,
               data: {
                 isEquipped: {
-                  value: false,
-                },
-              },
+                  value: false
+                }
+              }
             };
             if (Object.keys(itemUpdate).length > 1) {
               itemArray.push(itemUpdate);
             }
           }
-        } else {
-          if (i.type === item) {
-            itemUpdate = {
-              _id: i.id,
-              data: {
-                isEquipped: {
-                  value: false,
-                },
-              },
-            };
-            if (Object.keys(itemUpdate).length > 1) {
-              itemArray.push(itemUpdate);
+        } else if (i.type === item) {
+          itemUpdate = {
+            _id: i.id,
+            data: {
+              isEquipped: {
+                value: false
+              }
             }
+          };
+          if (Object.keys(itemUpdate).length > 1) {
+            itemArray.push(itemUpdate);
           }
         }
       });
 
       await this.updateEmbeddedDocuments("Item", itemArray);
     }
-    return;
+
   }
 
   async toggleStress(value) {
     this.update({
       data: {
         stressing: {
-          value: value,
-        },
-      },
+          value: value
+        }
+      }
     });
   }
 }

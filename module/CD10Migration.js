@@ -3,6 +3,10 @@ Keep adding to said array until ALL updates necessary have been gathered.
 Then send the whole thing to an update function that performs the actual updates. */
 
 /* Check necessary upgrades that need to be done, then trigger world migration */
+/**
+ *
+ * @param currentVersion
+ */
 export default async function MigrateWorld(currentVersion) {
   console.log("==== CD10 | Migration needed! Starting migration. ====");
   /* Check how old the system is and determine which update routines need to be ran. */
@@ -14,26 +18,32 @@ export default async function MigrateWorld(currentVersion) {
     console.log("==== CD10 | v0.4.0 migration completed!");
   }
 
-  return;
+
 }
 
 /* Version 0.4.x migration, adding MatchID to skills and weapons */
+/**
+ *
+ */
 async function v040Migrate() {
   const updateData = _migrateV040Skills();
-  /*_migrateV040Weapons();*/
+  /* _migrateV040Weapons();*/
   _performMigration("Item", updateData.itemUpdateData, "world");
-  game.actors.forEach((gameActor) => {
-    updateData.listOfActors.forEach((listActor) => {
+  game.actors.forEach(gameActor => {
+    updateData.listOfActors.forEach(listActor => {
       if (gameActor.id === listActor._id) {
         _performMigration("Item", listActor, "actor");
       }
     });
   });
 
+  /**
+   *
+   */
   function _migrateV040Skills() {
     /* World-residing skills */
-    let listOfActors = [],
-      itemUpdateData = [];
+    let listOfActors = [];
+    let itemUpdateData = [];
 
     for (let item of game.items.contents) {
       if (item.type === "skill") {
@@ -45,7 +55,7 @@ async function v040Migrate() {
     /* Character-residing skills */
     for (let actor of game.actors.contents) {
       let actorItems = [];
-      actor.items.forEach((item) => {
+      actor.items.forEach(item => {
         if (item.type === "skill") {
           console.log(
             `==== CD10 | Migrating Item entity ${item.name} belonging to ${actor.name}`
@@ -63,18 +73,22 @@ async function v040Migrate() {
       listOfActors.push(actorObj);
     }
 
+    /**
+     *
+     * @param item
+     */
     function _addMatchIDtoSkill(item) {
       /* Add a randomized, persistent ID to all skills so they can be matched against weapons. */
       let itemUpdateData = {};
       if (
-        typeof item.data.data.matchID === "undefined" ||
-        item.data.data.matchID === ""
+        typeof item.data.data.matchID === "undefined"
+        || item.data.data.matchID === ""
       ) {
         itemUpdateData = {
           _id: item.id,
           data: {
-            matchID: randomID(),
-          },
+            matchID: randomID()
+          }
         };
       } else {
         let setMatchID = item.data.data.matchID;
@@ -84,15 +98,20 @@ async function v040Migrate() {
       return itemUpdateData;
     }
 
+    /**
+     *
+     * @param item
+     * @param worldSkillList
+     */
     function _copyMatchIDtoEmbeddedSkill(item, worldSkillList) {
       /* Find skills on the character that has a world-residing 'master' and copy its matchID to the character's skill. */
-      let actorItemUpdateData = {},
-        skillName = item.name
-          .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
-          .replace(/\s+/g, "")
-          .toLowerCase();
+      let actorItemUpdateData = {};
+      let skillName = item.name
+        .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
+        .replace(/\s+/g, "")
+        .toLowerCase();
 
-      worldSkillList.forEach((skill) => {
+      worldSkillList.forEach(skill => {
         let s = game.items.get(skill._id);
         if (s.type === "skill") {
           let compareName = s.name
@@ -104,17 +123,14 @@ async function v040Migrate() {
               ui.notifications.error(
                 `CRITICAL FAILURE! MatchID for skill ${s.name} is undefined!`
               );
-              return;
-            } else {
-              if (item.data.data.matchID != s.data.data.matchID) {
-                actorItemUpdateData = {
-                  _id: item.id,
-                  data: {
-                    matchID: s.data.data.matchID,
-                  },
-                };
-              }
-              return;
+
+            } else if (item.data.data.matchID !== s.data.data.matchID) {
+              actorItemUpdateData = {
+                _id: item.id,
+                data: {
+                  matchID: s.data.data.matchID
+                }
+              };
             }
           }
         }
@@ -124,12 +140,15 @@ async function v040Migrate() {
 
     let updateData = {
       itemUpdateData: itemUpdateData,
-      listOfActors: listOfActors,
+      listOfActors: listOfActors
     };
 
     return updateData;
   }
 
+  /**
+   *
+   */
   function _migrateV040Weapons() {
     /* Migrate weapons, adding the proper matchID from the skills used to their `attackskill` property. */
     /* World-residing weapons */
@@ -142,7 +161,7 @@ async function v040Migrate() {
 
     /* Character-residing weapons */
     for (let actor of game.actors.contents) {
-      actor.items.forEach((item) => {
+      actor.items.forEach(item => {
         if (item.type === "meleeWeapon" || item.type === "rangedWeapon") {
           console.log(
             `==== CD10 | Migrating Item entity ${item.name} belonging to ${actor.name}`
@@ -152,10 +171,14 @@ async function v040Migrate() {
       });
     }
 
+    /**
+     *
+     * @param item
+     */
     async function _copyMatchIDtoWeapon(item) {
       /* Find the weapon's 'attackSkill' property and compare it to skills on the character. Copy the matchID from the character's skill. */
-      let actorItemUpdateData = {},
-        itemUpdateData = {};
+      let actorItemUpdateData = {};
+      let itemUpdateData = {};
 
       let attackSkillName = item.data.data.attackSkill.value
         .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
@@ -164,7 +187,7 @@ async function v040Migrate() {
 
       if (item.isEmbedded) {
         let actor = item.parent;
-        actor.items.forEach((i) => {
+        actor.items.forEach(i => {
           if (
             i.name
               .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
@@ -172,17 +195,17 @@ async function v040Migrate() {
               .toLowerCase() === attackSkillName
           ) {
             item.update({
-              "data.attackSkill.value": i.data.data.matchID,
+              "data.attackSkill.value": i.data.data.matchID
             });
             console.log(
-              `Copied matchID to`,
+              "Copied matchID to",
               item.name,
               `belonging to ${item.parent.name}`
             );
           }
         });
       } else {
-        game.items.forEach((i) => {
+        game.items.forEach(i => {
           if (
             i.name
               .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
@@ -190,18 +213,24 @@ async function v040Migrate() {
               .toLowerCase() === attackSkillName
           ) {
             item.update({
-              "data.attackSkill.value": i.data.data.matchID,
+              "data.attackSkill.value": i.data.data.matchID
             });
           }
         });
       }
 
-      return;
+
     }
 
-    return;
+
   }
 
+  /**
+   *
+   * @param documentType
+   * @param updateData
+   * @param updateType
+   */
   async function _performMigration(documentType, updateData, updateType) {
     if (updateType === "world") {
       await Item.updateDocuments(updateData);
