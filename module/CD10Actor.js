@@ -250,4 +250,21 @@ export default class CD10Actor extends Actor {
             "data.shock.value": newShock
         });
     }
+
+    async resetTraitSelection() {
+        let traitArray = [];
+
+        this.getTraits.forEach((t) => {
+            const itemUpdate = {
+                _id: t.id,
+                data: {
+                    "selected": 0
+                }
+            }
+            traitArray.push(itemUpdate);
+        });
+
+        await this.updateEmbeddedDocuments("Item", traitArray);
+        return;
+    }
 }

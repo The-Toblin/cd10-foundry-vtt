@@ -205,7 +205,8 @@
                     "value": 0,
                     "min": 0,
                     "max": 12
-                }
+                },
+                "matchID": ""
             }
         },
         "ammunition": {
@@ -260,28 +261,6 @@
                 "type": "boolean",
                 "label": "Shield?",
                 "value": false
-            },
-            "coverage": {
-                "head": {
-                    "type": "boolean",
-                    "label": "Head",
-                    "value": false
-                },
-                "body": {
-                    "type": "boolean",
-                    "label": "Body",
-                    "value": true
-                },
-                "arms": {
-                    "type": "boolean",
-                    "label": "Arms",
-                    "value": false
-                },
-                "legs": {
-                    "type": "boolean",
-                    "label": "Legs",
-                    "value": false
-                }
             },
             "protection": {
                 "slash": {
@@ -396,6 +375,7 @@
                 "max": 4,
                 "value": 0
             },
+            "selected": 0,
             "reversed": {
                 "type": "boolean",
                 "label": "Reversed",
@@ -409,11 +389,6 @@
                 "equipment"
             ],
             "attackSkill": {
-                "type": "string",
-                "label": "Skill",
-                "value": ""
-            },
-            "shieldSkill": {
                 "type": "string",
                 "label": "Skill",
                 "value": ""
@@ -553,100 +528,6 @@
                 "commonStats",
                 "itemDescription"
             ]
-        },
-        "weapon": {
-            "templates": [
-                "commonStats",
-                "itemDescription",
-                "equipment"
-            ],
-            "attackSkill": {
-                "type": "string",
-                "label": "Skill",
-                "value": ""
-            },
-            "shieldSkill": {
-                "type": "string",
-                "label": "Skill",
-                "value": ""
-            },
-            "isRanged": {
-                "type": "boolean",
-                "label": "Ranged weapon",
-                "value": false
-            },
-            "damage": {
-                "slash": {
-                    "type": "number",
-                    "label": "Slash Damage",
-                    "value": 0
-                },
-                "pierce": {
-                    "type": "number",
-                    "label": "Pierce Damage",
-                    "value": 0
-                },
-                "blunt": {
-                    "type": "number",
-                    "label": "Blunt Damage",
-                    "value": 0
-                },
-                "energy": {
-                    "type": "number",
-                    "label": "Energy Damage",
-                    "value": 0
-                },
-                "shock": {
-                    "type": "number",
-                    "label": "Shock Damage",
-                    "value": 0
-                }
-            },
-            "reach": {
-                "type": "string",
-                "label": "Reach",
-                "value": "Normal"
-            },
-            "blockValue": {
-                "type": "number",
-                "label": "Block",
-                "value": 0
-            },
-            "consumesAmmo": {
-                "type": "boolean",
-                "label": "Consumes ammo?",
-                "value": false
-            },
-            "ammoGroup": {
-                "type": "string",
-                "label": "Ammo Group",
-                "value": ""
-            },
-            "selectedAmmo": {
-                "type": "string",
-                "label": "Selected Ammo",
-                "value": "No ammo selected"
-            },
-            "magazine": {
-                "type": "number",
-                "label": "Magazine size",
-                "value": 0
-            },
-            "ammoCount": {
-                "type": "number",
-                "label": "Ammo count",
-                "value": 0
-            },
-            "range": {
-                "type": "number",
-                "label": "Range",
-                "value": {
-                    "rangeClose": 0,
-                    "rangeNormal": 0,
-                    "rangeLong": 0,
-                    "rangeMax": 0
-                }
-            }
         }
     }
 }

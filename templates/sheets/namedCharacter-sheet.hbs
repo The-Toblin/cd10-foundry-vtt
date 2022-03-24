@@ -91,19 +91,6 @@
             {{> "systems/cd10/templates/partials/sheet-tabs/character-stat-block.hbs"}}
         </div>
         <div class="button">
-            <a class="complex-check flex-row flex-even pad-top" data-type="text"
-                data-action-value="{{skill.data.skillLevel.value}}" title={{localize "cd10.sheet.roll" }}>
-                <div class="d10-roll-icon">
-                    <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
-                </div>
-                <div>
-                    <h3 class="sheet-header">
-                        {{localize "cd10.sheet.complexCheck"}}
-                    </h3>
-                </div>
-            </a>
-        </div>
-        <div class="button">
             <a class="physical-save flex-row flex-even pad-top" data-type="text"
                 data-action-value="{{skill.data.skillLevel.value}}" title={{localize "cd10.sheet.roll" }}>
                 <div class="d10-roll-icon">
@@ -116,21 +103,5 @@
                 </div>
             </a>
         </div>
-        <!--
-            In development!
-        <div class="button">
-            <a class="complex-attack flex-row flex-even pad-top" data-type="text"
-                data-action-value="{{skill.data.skillLevel.value}}" title={{localize "cd10.sheet.roll" }}>
-                <div class="d10-roll-icon">
-                    <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
-                </div>
-                <div>
-                    <h3 class="sheet-header">
-                        {{localize "cd10.sheet.attack"}}
-                    </h3>
-                </div>
-            </a>
-        </div>
-        -->
     </div>
 </form>

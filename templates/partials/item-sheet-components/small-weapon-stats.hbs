@@ -3,25 +3,14 @@
         <table>
             <tr>
                 <th>{{localize "cd10.weapon.attackWith"}}</th>
-                <th>{{localize "cd10.weapon.usedWithShield"}}</th>
             </tr>
             <tr>
                 <td>
                     <select name="data.attackSkill.value">
                         <option value="None">{{localize "cd10.sheet.none"}}</option>
                         {{#select data.attackSkill.value}}
-                        {{#each config.combatSkills as |name type|}}
-                        <option value="{{type}}">{{localize name}}</option>
-                        {{/each}}
-                        {{/select}}
-                    </select>
-                </td>
-                <td>
-                    <select name="data.shieldSkill.value">
-                        <option value="None">{{localize "cd10.sheet.none"}}</option>
-                        {{#select data.shieldSkill.value}}
-                        {{#each config.combatSkills as |name type|}}
-                        <option value="{{type}}">{{localize name}}</option>
+                        {{#each worldSkills as |data id|}}
+                        <option value="{{data.matchID}}">{{data.name}}</option>
                         {{/each}}
                         {{/select}}
                     </select>

@@ -55,7 +55,6 @@
             "category": "Category",
             "combat": "Combat",
             "complexCheck": "Complex Check",
-            "coverage": "Coverage",
             "currency": "Currency",
             "edit": "Edit",
             "enter": "Enter",
@@ -173,13 +172,6 @@
             "fullAuto": "Full auto"
         },
         "armor": {
-            "coverage": {
-                "all": "All",
-                "body": "Body",
-                "head": "Head",
-                "arms": "Arms",
-                "legs": "Legs"
-            },
             "protection": "Protection",
             "slashProtection": "Slash",
             "pierceProtection": "Pierce",

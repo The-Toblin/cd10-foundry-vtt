@@ -18,6 +18,11 @@
     <div class="traits-list sheet-card flex-column flex-start">
         {{#each traits as |trait id|}}
         <div class="attribute-pair flex-row flex-evenly item reveal-rollable" data-item-id="{{trait._id}}">
+            <div class="select-trait">
+                <a class="select-trait" data-type="text" data-trait-value="{{trait.data.selected}}" title={{localize "cd10.sheet.select"}}>
+                    <i class="far fa-{{#if (eq this.data.selected 1)}}plus-{{else if (eq this.data.selected 2)}}minus-{{/if}}square"></i>
+                </a>
+            </div>
             <div class="attribute-name inventory-item item" data-item-id="{{trait._id}}">
                 {{trait.name}}
             </div>
