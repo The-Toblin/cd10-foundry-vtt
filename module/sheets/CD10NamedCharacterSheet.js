@@ -19,7 +19,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
 
   /* Define which template to be used by this actor type. */
   get template() {
-    return `systems/cd10/templates/sheets/namedCharacter-sheet.hbs`;
+    return "systems/cd10/templates/sheets/namedCharacter-sheet.hbs";
   }
 
   /** ********************
@@ -183,7 +183,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
       }
     });
 
-    /* The following is to detect if certain things are equipped, and thus toggle certain parts of the sheet on or off. */
+    // The following is to detect if certain things are equipped, and thus toggle certain parts of the sheet on or off.
     sheetData.equippedMeleeWeapon = false;
     sheetData.meleeWeapons.forEach(w => {
       if (w.data.isEquipped.value) {
@@ -514,7 +514,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     let shock = parseInt(html.find("input#shock").val()) || 0;
     let damageType = html.find("select#damage-type").val() || "slash";
 
-    if (!lethality > 0) {
+    if (lethality <= 0) {
       ui.notifications.error("Please select a non-zero value for Lethality!");
       return;
     }

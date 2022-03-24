@@ -53,3 +53,8 @@
 <td class="item equippable-inventory-item" data-item-id="{{_id}}">
     {{data.damage.shock.value}}
 </td>
+<td class="item equippable-inventory-item" data-item-id="{{_id}}">
+    <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
+        <i class="far fa-{{#if item.data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
+    </a>
+</td>

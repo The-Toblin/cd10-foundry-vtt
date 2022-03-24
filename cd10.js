@@ -112,7 +112,7 @@ Hooks.once("init", function() {
   /* Register Sheets */
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("cd10", CD10ItemSheet, {
-    makeDefault: trues
+    makeDefault: true
   });
 
   Actors.unregisterSheet("core", ActorSheet);
@@ -146,8 +146,7 @@ Hooks.once("init", function() {
   });
 
   Handlebars.registerHelper("highest", function(slash, blunt, pierce, energy) {
-    /* Helper for converting a 4 damage type weapon into a simple, single type weapon if simple
-                       damage model is set. */
+  // Helper for converting a 4 damage type weapon into a simple, single type weapon if simple damage model is set.
     let highest = Math.max(slash, blunt, pierce, energy);
     return highest;
   });
@@ -186,11 +185,13 @@ Hooks.once("ready", function() {
       currentVersion,
       "===="
     );
+    /*
     game.settings.set(
       "cd10",
       "systemMigrationVersion",
       game.system.data.version
     );
+    */
 
   } else {
     console.log("==== CD10 | System up to date! Migration not needed. ====");

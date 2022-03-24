@@ -281,7 +281,6 @@ export default class CD10Actor extends Actor {
       && item !== "armor"
       && item !== "shield"
     ) {
-      return;
     } else {
       this.items.forEach(i => {
         if (item === "meleeWeapon" || item === "rangedWeapon") {

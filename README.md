@@ -1,9 +1,5 @@
-# Celenia D10 RPG System (Legacy Branch)
+# Celenia D10 RPG System
 CD10 RPG is a narratively focused, settings-agnostic RPG systems meant primarily for immersive verisimilitude games with a touch of rule of cool. CD10 attempts to emulate the feel of an 80's action movie, where the main character is just a human, but also the hero of the story. Imagine your character being John McClane of Die Hard and you get pretty close to the aim of the system. It is not suitable for epic, grand-scale, "save the universe" plots common to more traditional high-fantasy games, although with some fenagling, those campaigns are possible. But just don't try to make big, epic boss battles in this system. It's not made for it. It's designed primarily for equal-footing fighters duking it out, or fighting monsters that are of somewhat similar ability as the characters.
-
-Legacy means that this version of the system has reached development's end. Due to a grand-scale redesign of the system, this Foundry System will remain for those who wish to finish their campaigns, since switching systems would break most of everything.
-
-The new CD10 system is currently being developed for Foundry VTT and will be released eventually. For now, you can continue using this system for your campaigns, and it will receive a couple of bug-fix releases as well as a big overhaul patch relating to handling injuries, UI and such. Version 0.4 will be the last release, barring any critical bugs that might surface.
 
 # Core Features
 # No base attributes
