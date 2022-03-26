@@ -636,7 +636,8 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
 
     this.actor.update({
       data: {
-        morale: inputVal
+        morale: {
+          value: inputVal }
       }
     });
   }
