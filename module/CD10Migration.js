@@ -1,3 +1,6 @@
+import { v030Migrate } from "./migrationscripts/v030Migrate.js";
+import { v040Migrate } from "./migrationscripts/v040Migrate.js";
+
 /**
  * Once cd10.js has determined migration needs to be done at all
  * this takes the version number and checks what kind of migration
@@ -5,15 +8,22 @@
  * @param {string} currentVersion The current system version
  */
 export default async function MigrateWorld(currentVersion) {
-  const v030 = !currentVersion || isNewerVersion("0.3.8", currentVersion);
+  const v030 = !currentVersion || isNewerVersion("0.3.9", currentVersion);
   const v040 = !currentVersion || isNewerVersion("0.4.0", currentVersion);
 
-  let updateData = {
-    actors: [],
-    tokens: [],
-    items: []
+  let newData = {
+    exitCode: 1
   };
-  let newData;
+  let v030Data = {
+    actors: [],
+    items: [],
+    tokens: []
+  };
+  let v040Data = {
+    actors: [],
+    items: [],
+    tokens: []
+  };
 
   if (v030) {
     /*
@@ -22,40 +32,168 @@ export default async function MigrateWorld(currentVersion) {
      * as well makes it necessary to change all this.
      */
     console.log("==== CD10 | Beginning v0.3.0 migration! ====");
-    newData = _v030Migrate();
+    newData = await v030Migrate();
     if (newData.exitCode !== 0) {
       console.warn("==== CD10 | v0.3.0 migration failed! Aborting!");
       ui.notifications.error("Migration failed! Check logs and try again!");
       return;
     } else {
       if (newData.actors !== undefined) {
-        updateData.actors = newData.actors;
+        v030Data.actors = newData.actors;
       }
       if (newData.items !== undefined) {
-        updateData.items = newData.items;
+        v030Data.items = newData.items;
       }
       if (newData.tokens !== undefined) {
-        updateData.tokens = newData.tokens;
+        v030Data.tokens = newData.tokens;
       }
       console.log("==== CD10 | v0.3.0 migration completed! ====");
     }
   }
 
+  if (v040) {
+    /*
+     * Version 0.4 removes a lot of excess in preparation for the re-design. Following Beyond Reality's
+     * design blog, we're removing hit location settings as well as all the `coverage` data from armors.
+     * In addition, we're introducing equipment restrictions in line with the re-design, in preparation
+     * for the re-design transfer. Only one weapon, armor and shield can be equipped at any time.
+     * This also simplifies roll calculations.
+     */
+    console.log("==== CD10 | Beginning v0.4.0 migration! ====");
+    newData = await v040Migrate();
+    if (newData.exitCode !== 0) {
+      console.warn("==== CD10 | v0.4.0 migration failed! Aborting!");
+      ui.notifications.error("Migration failed! Check logs and try again!");
+      return;
+    } else {
+      if (newData.actors !== undefined) {
+        v040Data.actors = newData.actors;
+      }
+      if (newData.items !== undefined) {
+        v040Data.items = newData.items;
+      }
+      if (newData.tokens !== undefined) {
+        v040Data.tokens = newData.tokens;
+      }
+      console.log("==== CD10 | v0.4.0 migration completed! ====");
+    }
+  }
+
+  const updateData = _joinUpdates(v030Data, v040Data);
+
+  console.log("the finalized UpdateData:", updateData);
+
   if (updateData.items.length > 0) {
     _performMigration("items", updateData.items);
   }
   if (updateData.actors.length > 0) {
-    game.actors.forEach((a) => {
-      updateData.actors.forEach((ac) => {
+    game.actors.forEach(a => {
+      updateData.actors.forEach(ac => {
         if (a.id === ac._id) {
           _performMigration("actors", ac);
         }
       });
     });
   }
-  if (updateData.tokens.length > 0) {
+/**
+  If (updateData.tokens.length > 0) {
     _performMigration("tokens", updateData.tokens);
   }
+ */
+}
+
+/**
+ * A function to join all updates into one object.
+ * @param {object} updateObjectOne
+ * @param {object} updateObjectTwo
+ * @returns {object} Joined updateobject, with all needed updates.
+ */
+async function _joinUpdates(updateObjectOne, updateObjectTwo) {
+  let updateData = {
+    actors: [],
+    items: [],
+    tokens: []
+  };
+
+  const joinedItems = _joinItems(updateObjectOne.items, updateObjectTwo.items);
+  const joinedActors = _joinActors(updateObjectOne.actors, updateObjectTwo.actors);
+
+  updateData.items = joinedItems;
+  updateData.actors = joinedActors;
+
+  /**
+   * Joins two arrays, updating contents as necessary for updating.
+   * @param {Array} firstArray
+   * @param {Array} secondArray
+   * @returns {Array} Returns the joined array.
+   */
+  function _joinItems(firstArray, secondArray) {
+    let joinedData = [];
+
+
+    firstArray.forEach(one => {
+      secondArray.forEach(two => {
+        if (one._id === two._id) {
+          joinedData.push({ ...one, ...two });
+        }
+      });
+    });
+
+    joinedData.forEach(a => {
+      firstArray.forEach(b => {
+        if (joinedData.indexOf(b) === -1) {
+          joinedData.push(b);
+        }
+      });
+    });
+    joinedData.forEach(a => {
+      secondArray.forEach(b => {
+        if (joinedData.indexOf(b) === -1) {
+          joinedData.push(b);
+        }
+      });
+    });
+    console.log("ARRAYS:", firstArray, secondArray, joinedData);
+    return joinedData;
+  }
+  /**
+   * Joins two update objects, updating contents as necessary for updating.
+   * @param {Object} firstObject
+   * @param {Object} secondObject
+   * @returns {Object} Returns the joined object.
+   */
+  function _joinActors(firstObject, secondObject) {
+    let joinedActorData = [];
+    let joinedData = {};
+
+    firstObject.forEach(one => {
+      secondObject.forEach(two => {
+        if (one._id === two._id) {
+          joinedData = _joinItems(one.itemArray, two.itemArray);
+          let updateData = {
+            _id: one._id,
+            itemArray: joinedData
+          };
+          if (joinedActorData.indexOf(updateData) === -1) {
+            joinedActorData.push(updateData);
+          }
+        }
+      });
+    });
+
+    console.log("OBJECTS", firstObject, secondObject, joinedActorData);
+    return joinedActorData;
+  }
+  /**
+   *
+   */
+  function _joinTokens() {
+    let joinedData = [];
+
+    return joinedData;
+  }
+
+  return updateData;
 }
 
 /**
@@ -66,195 +204,9 @@ export default async function MigrateWorld(currentVersion) {
 async function _performMigration(type, updateData) {
   /* Do things with the data */
   if (type === "items") {
-    updateData.forEach((item) => {
-      let i = game.items.get(item._id);
-      console.log("Source:",i.name, i.data._source.data)
-      console.log("Data:",i.name, i.data.data)
-    });
-    await Item.updateDocuments(updateData);
+    // Await Item.updateDocuments(updateData);
   } else if (type === "actors") {
     const actor = game.actors.get(updateData._id);
-    await actor.updateEmbeddedDocuments("Item", updateData.itemArray);
+    // Await actor.updateEmbeddedDocuments("Item", updateData.itemArray);
   }
-}
-
-/**
- * Function to perform migration from old version up to v0.3 standard.
- * Primarly acts on items, splitting weapons into two, as well as armor
- * into two.
- */
-function _v030Migrate() {
-  let items = [];
-  let actors = [];
-  let tokens = [];
-
-  items = _migrateV030Items();
-  actors = _migrateV030Actors();
-  tokens = _migrateV030Tokens();
-
-  /**
-   * Scans all world-residing items in inventory and checks for weapons or armor
-   * and splits it into the proper class.
-   */
-  function _migrateV030Items() {
-    let itemArray = [];
-    let itemUpdateData = {};
-
-    for (const i of game.items.contents) {
-      itemUpdateData = _migrateItem(i);
-      if (Object.keys(itemUpdateData).length > 0) {
-        itemArray.push(itemUpdateData);
-      }
-    }
-    return itemArray;
-  }
-  /**
-   * Scans all actor-residing items in inventory and checks for weapons or armor
-   * and splits it into the proper class, using _migrateItems.
-   */
-  function _migrateV030Actors() {
-    let actorUpdateArray = [];
-    let itemUpdateData = {};
-
-    for (const a of game.actors.contents) {
-      let actorUpdates = {};
-      for (const i of a.items.contents) {
-        let itemArray = [];
-        itemUpdateData = _migrateItem(i);
-        if (Object.keys(itemUpdateData).length > 0) {
-          itemArray.push(itemUpdateData);
-        }
-        if (itemArray.length > 0) {
-          actorUpdates["_id"] = a.id;
-          actorUpdates["itemArray"] = itemArray;
-        }
-      }
-
-      if (Object.keys(actorUpdates).length > 0) {
-        actorUpdateArray.push(actorUpdates);
-      }
-    }
-    return actorUpdateArray;
-  }
-  /**
-   * Scans all token-residing items in inventory and checks for weapons or armor
-   * and splits it into the proper class, using _migrateItem.
-   */
-  function _migrateV030Tokens() {
-    let actorUpdateArray = [];
-    let itemUpdateData;
-    let actorUpdates;
-
-    for (const s of game.scenes.contents) {
-      for (const t of s.tokens) {
-        let actorUpdates = {};
-        if (!t.isLinked) {
-          for (let i of t.actor.items.contents) {
-            let itemArray = [];
-            itemUpdateData = _migrateItem(i);
-            if (Object.keys(itemUpdateData).length > 0) {
-              itemArray.push(itemUpdateData);
-            }
-            if (itemArray.length > 0) {
-              actorUpdates = {
-                _id: t.id,
-                itemArray: itemArray
-              };
-            }
-          }
-        }
-        if (Object.keys(actorUpdates).length > 0) {
-          actorUpdateArray.push(actorUpdates);
-        }
-      }
-    }
-
-    return actorUpdates;
-  }
-  /**
-   * Takes an item object and tests if it needs updating from old datamodel, pre-v0.3.0.
-   * @param {object} i Item object to be tested.
-   * @returns {object}
-   */
-  function _migrateItem(i) {
-    let itemUpdateData = {};
-    if (i.type === "weapon") {
-      let ranged = i.data.data.isRanged?.value;
-      if (ranged) {
-        itemUpdateData = {
-          _id: i.id,
-          type: "rangedWeapon"
-        };
-      } else if (!ranged) {
-        itemUpdateData = {
-          _id: i.id,
-          type: "meleeWeapon"
-        };
-      }
-    } else if (i.type === "armor") {
-      let shield = i.data.data.isShield?.value;
-      if (shield) {
-        itemUpdateData["_id"] = i.id;
-        itemUpdateData["type"] = "shield";
-      } else if (!shield && shield !== undefined) {
-        itemUpdateData["_id"] = i.id;
-        itemUpdateData["type"] = "armor";
-      }
-    }
-
-    if (i.data.data.isRanged?.value !== undefined) {
-      itemUpdateData["data.-=isRanged"] = null;
-    }
-    if (i.data.data.isShield?.value !== undefined) {
-      itemUpdateData["data.-=isShield"] = null;
-    }
-
-    return itemUpdateData;
-  }
-
-  const newData = {
-    items,
-    actors,
-    tokens,
-    exitCode: 0
-  };
-  return newData;
-}
-
-/**
- * Update a v0.3.0 world to 0.4.0. This is made primarily through adding
- * the matchID property to skills and weapons, to match them against eachother.
- */
-function _v040Migrate() {
-  let newData = {
-    items: {},
-    actors: {},
-    tokens: {},
-    exitCode: 1
-  };
-
-  /**
-   * Compares two names, removing punctuation and making them lowercase.
-   * @param {string} nameOne
-   * @param {string} nameTwo
-   */
-  function _compareNames(nameOne, nameTwo) {
-    let a = nameOne
-      .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
-      .replace(/\s+/g, "")
-      .toLowerCase();
-    let b = nameTwo
-      .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
-      .replace(/\s+/g, "")
-      .toLowerCase();
-
-    if (a === b) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  newData.exitCode = 0;
-  return newData;
 }

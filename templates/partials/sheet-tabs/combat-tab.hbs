@@ -34,6 +34,9 @@
                 <th>
                     {{localize "cd10.weapon.shockDamage"}}
                 </th>
+                <th>
+                    {{localize "cd10.sheet.equipShort"}}
+                </th>
             </tr>
             {{#each meleeWeapons as |weapon|}}
             {{#if weapon.data.isEquipped.value}}
@@ -79,6 +82,9 @@
                     {{localize "cd10.weapon.shockDamage"}}
                 </th>
                 {{/if}}
+                <th>
+                    {{localize "cd10.sheet.equipShort"}}
+                </th>
             </tr>
             {{#each rangedWeapons as |weapon|}}
             {{#if weapon.data.isEquipped.value}}
@@ -121,6 +127,9 @@
                 {{/if}}
                 <th>
                     {{localize "cd10.armor.shockProtection"}}
+                </th>
+                <th>
+                    {{localize "cd10.sheet.equipShort"}}
                 </th>
             </tr>
             {{#each armors as |armor|}}
@@ -167,6 +176,9 @@
                 {{/if}}
                 <th>
                     {{localize "cd10.armor.shockProtection"}}
+                </th>
+                <th>
+                    {{localize "cd10.sheet.equipShort"}}
                 </th>
             </tr>
             {{#each shields as |shield|}}

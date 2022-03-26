@@ -334,11 +334,6 @@
                 "skillsTraits",
                 "itemDescription"
             ],
-            "teacher": {
-                "type": "boolean",
-                "label": "Teacher required",
-                "value": false
-            },
             "levelUp": {
                 "type": "boolean",
                 "label": "Eligable for levelup",

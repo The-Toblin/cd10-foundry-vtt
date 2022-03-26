@@ -70,27 +70,19 @@ export default class CD10Actor extends Actor {
   }
 
   get getArmors() {
-    return this.data.items.filter(
-      p => p.data.type === "armor" && !p.data.data.isShield.value
-    );
+    return this.data.items.filter(p => p.data.type === "armor");
   }
 
   get getShields() {
-    return this.data.items.filter(
-      p => p.data.type === "armor" && p.data.data.isShield.value
-    );
+    return this.data.items.filter(p => p.data.type === "shield");
   }
 
   get getMeleeWeapons() {
-    return this.data.items.filter(
-      p => p.data.type === "weapon" && !p.data.data.isRanged.value
-    );
+    return this.data.items.filter(p => p.data.type === "meleeWeapon");
   }
 
   get getRangedWeapons() {
-    return this.data.items.filter(
-      p => p.data.type === "weapon" && p.data.data.isRanged.value
-    );
+    return this.data.items.filter(p => p.data.type === "rangedWeapon");
   }
 
   get getShock() {
@@ -268,19 +260,13 @@ export default class CD10Actor extends Actor {
     });
 
     await this.updateEmbeddedDocuments("Item", traitArray);
-
   }
 
   async unequipItems(item) {
     let itemArray = [];
     let itemUpdate = {};
 
-    if (
-      item !== "meleeWeapon"
-      && item !== "rangedWeapon"
-      && item !== "armor"
-      && item !== "shield"
-    ) {
+    if (item !== "meleeWeapon" && item !== "rangedWeapon" && item !== "armor" && item !== "shield") {
     } else {
       this.items.forEach(i => {
         if (item === "meleeWeapon" || item === "rangedWeapon") {
@@ -314,7 +300,6 @@ export default class CD10Actor extends Actor {
 
       await this.updateEmbeddedDocuments("Item", itemArray);
     }
-
   }
 
   async toggleStress(value) {
