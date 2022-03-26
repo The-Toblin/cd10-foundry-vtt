@@ -28,7 +28,6 @@
                 "excess": "Excess",
                 "total": "Total",
                 "wounds": "Wounds",
-                "morale": "Morale",
                 "injury": "Injury"
             },
             "outcomes": {
@@ -215,6 +214,7 @@
         "injuries": {
             "shock": "Shock",
             "wounds": "Wounds",
+            "morale": "Morale",
             "scratch": "Scratch",
             "linjury": "Light Injury",
             "sinjury": "Serious Injury",
