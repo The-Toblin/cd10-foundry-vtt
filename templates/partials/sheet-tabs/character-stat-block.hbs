@@ -25,7 +25,7 @@
             </h3>
         </label>
         <div class="morale-icons flex-row flex-center">
-            <input data-field="data.morale" data-dtype="Number" value="{{data.morale}}" placeholder="{{localize "cd10.injuries.morale"}}" />
+            <input class="set-morale" id="set-morale" data-field="data.morale" data-dtype="Number" value="{{data.morale}}" placeholder="{{localize "cd10.injuries.morale"}}" />
         </div>
     <!--</div>
     <div class="stat-element">
@@ -48,7 +48,7 @@
             </h3>
         </label>
         <div class="wounds-icons">
-            {{#times 15}}
+            {{#times 5}}
             <div class="dot-container {{#if (gte ../data.wounds.value 15)}}red{{else if (gte ../data.wounds.value @index)}}crossed{{/if}}">
                 <i class="fas fa-circle fa-xs"></i>
             </div>

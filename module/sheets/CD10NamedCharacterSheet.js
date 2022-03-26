@@ -135,23 +135,13 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     });
 
     /* Create subproperties for item types */
-    sheetData.ammunition = sheetData.items.filter(
-      p => p.type === "ammunition"
-    );
-    sheetData.allArmors = sheetData.items.filter(
-      p => p.type === "armor" || p.type === "shield"
-    );
+    sheetData.ammunition = sheetData.items.filter(p => p.type === "ammunition");
+    sheetData.allArmors = sheetData.items.filter(p => p.type === "armor" || p.type === "shield");
     sheetData.armors = sheetData.items.filter(p => p.type === "armor");
     sheetData.shields = sheetData.items.filter(p => p.type === "shield");
-    sheetData.allWeapons = sheetData.items.filter(
-      p => p.type === "meleeWeapon" || p.type === "rangedWeapon"
-    );
-    sheetData.meleeWeapons = sheetData.items.filter(
-      p => p.type === "meleeWeapon"
-    );
-    sheetData.rangedWeapons = sheetData.items.filter(
-      p => p.type === "rangedWeapon"
-    );
+    sheetData.allWeapons = sheetData.items.filter(p => p.type === "meleeWeapon" || p.type === "rangedWeapon");
+    sheetData.meleeWeapons = sheetData.items.filter(p => p.type === "meleeWeapon");
+    sheetData.rangedWeapons = sheetData.items.filter(p => p.type === "rangedWeapon");
     sheetData.skills = sheetData.items.filter(p => p.type === "skill");
     sheetData.traits = sheetData.items.filter(p => p.type === "trait");
     sheetData.posTraits = sheetData.traits.filter(p => {
@@ -213,10 +203,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     });
 
     /* Make system settings available for sheets to use for rendering */
-    sheetData.damageTypeSetting = game.settings.get(
-      "cd10",
-      "systemDamageTypes"
-    );
+    sheetData.damageTypeSetting = game.settings.get("cd10", "systemDamageTypes");
     sheetData.barterSetting = game.settings.get("cd10", "systemBarter");
     sheetData.modernity = game.settings.get("cd10", "systemModernity");
 
@@ -230,34 +217,23 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
       html.find(".task-check").click(this._onTaskCheck.bind(this));
       html.find(".attack-check").click(this._simpleAttackCheck.bind(this));
       html.find(".physical-save").click(this._onPhysicalSave.bind(this));
-      html
-        .find(".reveal-rollable")
-        .on("mouseover mouseout", this._onToggleRollable.bind(this));
+      html.find(".reveal-rollable").on("mouseover mouseout", this._onToggleRollable.bind(this));
       html.find(".stressBox").click(this._stressBoxClicked.bind(this));
       html.find(".initiative-select").click(this._initiativeClicked.bind(this));
       html.find(".inline-edit").change(this._onSkillEdit.bind(this));
+      html.find(".set-morale").change(this._onMoraleEdit.bind(this));
       html.find(".item-delete").click(this._onItemDelete.bind(this));
       html.find(".item-equip").click(this._onItemEquip.bind(this));
       html.find(".ammo-select").click(this._onAmmoSelect.bind(this));
       html.find(".skill-item").click(this._toggleSkillUp.bind(this));
-      html
-        .find(".shock-icons")
-        .on("click contextmenu", this._onShockMarkChange.bind(this));
-      html
-        .find(".wounds-icons")
-        .on("click contextmenu", this._onWoundsMarkChange.bind(this));
-      html
-        .find(".select-trait")
-        .on("click contextmenu", this._onClickTrait.bind(this));
+      html.find(".shock-icons").on("click contextmenu", this._onShockMarkChange.bind(this));
+      html.find(".wounds-icons").on("click contextmenu", this._onWoundsMarkChange.bind(this));
+      html.find(".select-trait").on("click contextmenu", this._onClickTrait.bind(this));
 
       /* ContextMenu listeners */
       new ContextMenu(html, ".weapon-card", this.equippableItemContextMenu);
       new ContextMenu(html, ".armor-card", this.equippableItemContextMenu);
-      new ContextMenu(
-        html,
-        ".equippable-inventory-item",
-        this.equippableItemContextMenu
-      );
+      new ContextMenu(html, ".equippable-inventory-item", this.equippableItemContextMenu);
       new ContextMenu(html, ".inventory-item", this.itemContextMenu);
       new ContextMenu(html, ".skill-item", this.itemSkillContextMenu);
     }
@@ -273,12 +249,8 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
    ***************************/
 
   async _onAmmoSelect(event) {
-    let ammoObj = this.actor.items.get(
-      event.currentTarget.closest(".ammo-selector").dataset.itemId
-    );
-    let weaponObj = this.actor.items.get(
-      event.currentTarget.closest(".ammo-selector").dataset.weaponId
-    );
+    let ammoObj = this.actor.items.get(event.currentTarget.closest(".ammo-selector").dataset.itemId);
+    let weaponObj = this.actor.items.get(event.currentTarget.closest(".ammo-selector").dataset.weaponId);
 
     if (weaponObj.data.data.selectedAmmo.id === ammoObj.id) {
       await weaponObj.update({
@@ -314,9 +286,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     let skillObj = null;
 
     /* Fetch the skill, based on ItemId. */
-    let rollObj = this.actor.items.get(
-      event.currentTarget.closest(".item").dataset.itemId
-    );
+    let rollObj = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId);
 
     if (rollObj.type === "skill") {
       skillObj = rollObj;
@@ -378,9 +348,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     }
 
     let damageType = event.currentTarget.dataset.damageType;
-    let weaponObj = this.actor.items.get(
-      event.currentTarget.closest(".item").dataset.itemId
-    ).data;
+    let weaponObj = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId).data;
     let attackSkill = weaponObj.data.attackSkill.value;
 
     let attackSkillObj = null;
@@ -393,9 +361,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     });
 
     if (attackSkill === "None") {
-      ui.notifications.error(
-        `Error! ${weaponObj.name} does not have an assigned skill!`
-      );
+      ui.notifications.error(`Error! ${weaponObj.name} does not have an assigned skill!`);
       return;
     }
     /* Check if it's a ranged weapon */
@@ -422,9 +388,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
           }
         });
       } else {
-        ui.notifications.error(
-          "You are out of that ammo type! Select another!"
-        );
+        ui.notifications.error("You are out of that ammo type! Select another!");
         return;
       }
     }
@@ -472,10 +436,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     new Dialog(
       {
         title: "Physical Save",
-        content: await renderTemplate(
-          "systems/cd10/templates/partials/physical-save-dialog.hbs",
-          this.getData()
-        ),
+        content: await renderTemplate("systems/cd10/templates/partials/physical-save-dialog.hbs", this.getData()),
         buttons: {
           roll: {
             label: "Save!",
@@ -501,9 +462,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     /* First, we check if traits were selected in the dialog or not and
         if so, fetch the relevant objects. */
     if (html.find("select#trait-selected").val() !== "None") {
-      traitObj = this.actor.items.get(
-        this.getData().traits[html.find("select#trait-selected").val()]._id
-      );
+      traitObj = this.actor.items.get(this.getData().traits[html.find("select#trait-selected").val()]._id);
     }
 
     /* Check if any of the checkboxes were ticked, as well as gather
@@ -657,6 +616,31 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     });
   }
 
+  async _onMoraleEdit(event) {
+    /* Somewhat overengineered function, remnant from when skills and traits
+        could be created directly on the character sheet. Now just used to update
+        the actual skillLevel. */
+    event.preventDefault();
+
+    if (!this.isEditable) {
+      return;
+    }
+
+    let inputVal = document.getElementsByClassName("set-morale")[0].value;
+
+    if (inputVal > 25) {
+      inputVal = 25;
+    } else if (inputVal < 0) {
+      inputVal = 0;
+    }
+
+    this.actor.update({
+      data: {
+        morale: inputVal
+      }
+    });
+  }
+
   _onShockMarkChange(event) {
     /* Listen for changes to Shock and update the value accordingly. */
     event.preventDefault();
@@ -730,8 +714,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     let renderedRoll = await rollD10.render();
     let templateContext = null;
     let chatData = null;
-    let messageTemplate =
-      "systems/cd10/templates/partials/chat-messages/skill-roll.hbs";
+    let messageTemplate = "systems/cd10/templates/partials/chat-messages/skill-roll.hbs";
 
     templateContext = {
       initiative: true,
@@ -756,9 +739,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
       this.actor.modifyExp(-1);
       return true;
     } else {
-      ui.notifications.error(
-        `${this.actor.name} does not have enough experience.`
-      );
+      ui.notifications.error(`${this.actor.name} does not have enough experience.`);
       return false;
     }
   }
@@ -794,6 +775,5 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     } else {
       item.setSelectionStatus(2);
     }
-
   }
 }
