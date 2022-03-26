@@ -12,7 +12,6 @@ export default class CD10Combatant extends Combatant {
             if (s.type === "skill") {
               if (s.data.data.matchID === w.data.data.attackSkill.value) {
                 skillValue = s.data.data.skillLevel.value;
-                skillName = s.name;
               }
             }
           });
