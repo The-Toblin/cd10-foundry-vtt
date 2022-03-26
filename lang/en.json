@@ -28,6 +28,7 @@
                 "excess": "Excess",
                 "total": "Total",
                 "wounds": "Wounds",
+                "morale": "Morale",
                 "injury": "Injury"
             },
             "outcomes": {
@@ -235,7 +236,6 @@
             "gender": "Gender",
             "appearance": "Appearance",
             "personality": "Personality",
-            "morale": "Morale",
             "skills": "Skills",
             "traits": "Traits",
             "abilities": "Abilities",
