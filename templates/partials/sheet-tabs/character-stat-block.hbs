@@ -21,6 +21,18 @@
     <div class="stat-element">
         <label>
             <h3 class="stattitle">
+                {{localize "cd10.injuries.morale"}}
+            </h3>
+        </label>
+        <div class="morale-icons">
+            <input class="attribute-value inline-edit" data-field="data.morale"
+                data-dtype="{{data.morale}}" value="{{data.morale}}"
+                placeholder="{{localize "cd10.injuries.morale"}}" />
+        </div>
+    <!--</div>
+    <div class="stat-element">
+        <label>
+            <h3 class="stattitle">
                 {{localize "cd10.injuries.shock"}} {{data.shock.value}}
             </h3>
         </label>
@@ -32,6 +44,7 @@
             {{/times}}
         </div>
     </div>
+    -->
     <div class="stat-element"> <label>
             <h3 class="stattitle">{{localize "cd10.injuries.wounds"}} {{data.wounds.value}}
             </h3>

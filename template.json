@@ -25,6 +25,7 @@
                     "max": 15,
                     "min": 0
                 },
+                "morale": 25,
                 "quote": {
                     "type": "string",
                     "label": "Quote",

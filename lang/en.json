@@ -235,6 +235,7 @@
             "gender": "Gender",
             "appearance": "Appearance",
             "personality": "Personality",
+            "morale": "Morale",
             "skills": "Skills",
             "traits": "Traits",
             "abilities": "Abilities",
