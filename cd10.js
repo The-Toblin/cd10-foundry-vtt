@@ -163,7 +163,7 @@ Hooks.once("init", function() {
   CONFIG.TinyMCE.content_css.push("systems/cd10/cd10-mce.css");
 });
 
-Hooks.once("ready", function() {
+Hooks.once("ready", async () => {
   if (!game.user.isGM) {
     return;
   }
@@ -171,28 +171,22 @@ Hooks.once("ready", function() {
   console.log("==== CD10 | Checking versions ====");
 
   const currentVersion = game.settings.get("cd10", "systemMigrationVersion");
-  const NEEDS_MIGRATION_VERSION = "0.3.8";
+  const NEEDS_MIGRATION_VERSION = "0.4.0";
   let needsMigration =
     !currentVersion || isNewerVersion(NEEDS_MIGRATION_VERSION, currentVersion);
 
   if (needsMigration) {
-    CD10Migration(currentVersion);
+    try {
+      await CD10Migration(currentVersion);
 
-    console.log(
-      "==== CD10 | Updating settings version to",
-      game.system.data.version,
-      "from",
-      currentVersion,
-      "===="
-    );
-    /*
-    game.settings.set(
-      "cd10",
-      "systemMigrationVersion",
-      game.system.data.version
-    );
-    */
+      // Console.log("==== CD10 | Migrations complete. Updating settings version to",
+      // game.system.data.version, "from", currentVersion, "====");
 
+      // Game.settings.set("cd10", "systemMigrationVersion", game.system.data.version);
+
+    } catch(err) {
+      console.error("MIGRATION FAILED!", err);
+    }
   } else {
     console.log("==== CD10 | System up to date! Migration not needed. ====");
   }

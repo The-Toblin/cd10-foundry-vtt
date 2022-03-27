@@ -3,44 +3,90 @@
  * Primarly acts on items, splitting weapons into two, as well as armor
  * into two.
  */
-export function v030Migrate() {
+export const v030Migrate = async () => {
   let items = [];
   let actors = [];
   let tokens = [];
 
-  items = _migrateV030Items();
-  actors = _migrateV030Actors();
-  tokens = _migrateV030Tokens();
+  /**
+   * Helper function that takes an item object and tests if it needs updating from old datamodel, pre-v0.3.0.
+   * @param {object} i Item object to be tested.
+   * @returns {Promise}
+   */
+  const _migrateItem = async i => {
+    let updateData = {};
+    try {
+      if (i.type === "weapon") {
+        let ranged = i.data.data.isRanged?.value;
+        if (ranged) {
+          updateData = {
+            _id: i.id,
+            type: "rangedWeapon"
+          };
+        } else if (!ranged) {
+          updateData = {
+            _id: i.id,
+            type: "meleeWeapon"
+          };
+        }
+      } else if (i.type === "armor") {
+        let shield = i.data.data.isShield?.value;
+        if (shield) {
+          updateData._id = i.id;
+          updateData.type = "shield";
+        } else if (!shield && shield !== undefined) {
+          updateData._id = i.id;
+          updateData.type = "armor";
+        }
+      }
+
+      if (i.data.data.isRanged?.value !== undefined) {
+        updateData._id = i.id;
+        updateData["data.-=isRanged"] = null;
+      }
+      if (i.data.data.isShield?.value !== undefined) {
+        updateData._id = i.id;
+        updateData["data.-=isShield"] = null;
+      }
+    } catch(err) {
+      console.error(`Item update failed for item ${i.name}`, err);
+    }
+    return updateData;
+  };
 
   /**
    * Scans all world-residing items in inventory and checks for weapons or armor
    * and splits it into the proper class.
    */
-  function _migrateV030Items() {
-    let itemArray = [];
-    let itemUpdateData = {};
+  const _migrateV030Items = async () => {
+    let updateData = [];
+    let newData = {};
 
     for (const i of game.items.contents) {
-      itemUpdateData = _migrateItem(i);
-      if (Object.keys(itemUpdateData).length > 0) {
-        itemArray.push(itemUpdateData);
+      try {
+        newData = await _migrateItem(i);
+        if (Object.keys(newData).length > 0) {
+          updateData.push(newData);
+        }
+      } catch(err) {
+        console.error(`Item migration failed for ${i.name}`, err);
       }
     }
-    return itemArray;
-  }
+    return updateData;
+  };
   /**
    * Scans all actor-residing items in inventory and checks for weapons or armor
    * and splits it into the proper class, using _migrateItems.
    */
-  function _migrateV030Actors() {
-    let actorUpdateArray = [];
+  const _migrateV030Actors = async () => {
+    let updateData = [];
     let itemUpdateData = {};
 
     for (const a of game.actors.contents) {
       let actorUpdates = {};
       let itemArray = [];
       for (const i of a.items.contents) {
-        itemUpdateData = _migrateItem(i);
+        itemUpdateData = await _migrateItem(i);
         if (Object.keys(itemUpdateData).length > 0) {
           if (itemArray.indexOf(itemUpdateData) === -1) {
             itemArray.push(itemUpdateData);
@@ -53,21 +99,22 @@ export function v030Migrate() {
       }
 
       if (Object.keys(actorUpdates).length > 0) {
-        if (actorUpdateArray.indexOf(actorUpdates) === -1) {
-          actorUpdateArray.push(actorUpdates);
+        if (updateData.indexOf(actorUpdates) === -1) {
+          updateData.push(actorUpdates);
         }
       }
     }
-    return actorUpdateArray;
-  }
+    return updateData;
+  };
   /**
    * Scans all token-residing items in inventory and checks for weapons or armor
    * and splits it into the proper class, using _migrateItem.
+   * @returns {Promise} Returns a promise<array> with updateData to be applied.
    */
-  function _migrateV030Tokens() {
+  const _migrateV030Tokens = async () => {
     let actorUpdateArray = [];
     let itemUpdateData;
-    let actorUpdates;
+    let updateData;
 
     for (const s of game.scenes.contents) {
       for (const t of s.tokens) {
@@ -76,17 +123,21 @@ export function v030Migrate() {
           if (t.actor === null) {
             return;
           }
-          for (let i of t.actor.items.contents) {
-            let itemArray = [];
-            itemUpdateData = _migrateItem(i);
-            if (Object.keys(itemUpdateData).length > 0) {
-              itemArray.push(itemUpdateData);
-            }
-            if (itemArray.length > 0) {
-              actorUpdates = {
-                _id: t.id,
-                itemArray: itemArray
-              };
+          for (const i of t.actor.items.contents) {
+            try {
+              let itemArray = [];
+              itemUpdateData = await _migrateItem(i);
+              if (Object.keys(itemUpdateData).length > 0) {
+                itemArray.push(itemUpdateData);
+              }
+              if (itemArray.length > 0) {
+                actorUpdates = {
+                  _id: t.id,
+                  itemArray: itemArray
+                };
+              }
+            } catch(err) {
+              console.error(`Item migration failed for token item ${i.name}`, err);
             }
           }
         }
@@ -96,57 +147,17 @@ export function v030Migrate() {
       }
     }
 
-    return actorUpdates;
-  }
-  /**
-   * Takes an item object and tests if it needs updating from old datamodel, pre-v0.3.0.
-   * @param {object} i Item object to be tested.
-   * @returns {object}
-   */
-  function _migrateItem(i) {
-    let itemUpdateData = {};
-    if (i.type === "weapon") {
-      let ranged = i.data.data.isRanged?.value;
-      if (ranged) {
-        itemUpdateData = {
-          _id: i.id,
-          type: "rangedWeapon"
-        };
-      } else if (!ranged) {
-        itemUpdateData = {
-          _id: i.id,
-          type: "meleeWeapon"
-        };
-      }
-    } else if (i.type === "armor") {
-      let shield = i.data.data.isShield?.value;
-      if (shield) {
-        itemUpdateData._id = i.id;
-        itemUpdateData.type = "shield";
-      } else if (!shield && shield !== undefined) {
-        itemUpdateData._id = i.id;
-        itemUpdateData.type = "armor";
-      }
-    }
+    return updateData;
+  };
 
-    if (i.data.data.isRanged?.value !== undefined) {
-      itemUpdateData._id = i.id;
-      itemUpdateData["data.-=isRanged"] = null;
-    }
-    if (i.data.data.isShield?.value !== undefined) {
-      itemUpdateData._id = i.id;
-      itemUpdateData["data.-=isShield"] = null;
-    }
-
-    return itemUpdateData;
-  }
+  items = await _migrateV030Items();
+  actors = await _migrateV030Actors();
+  // Tokens = await _migrateV030Tokens();
 
   const newData = {
     items,
     actors,
-    tokens,
-    exitCode: 0
+    tokens
   };
-  console.log("v0.3.0 Data", newData);
   return newData;
-}
+};

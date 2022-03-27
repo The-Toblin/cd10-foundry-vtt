@@ -11,15 +11,17 @@ export default async function MigrateWorld(currentVersion) {
   const v030 = !currentVersion || isNewerVersion("0.3.9", currentVersion);
   const v040 = !currentVersion || isNewerVersion("0.4.0", currentVersion);
 
-  let newData = {
-    exitCode: 1
-  };
   let v030Data = {
     actors: [],
     items: [],
     tokens: []
   };
   let v040Data = {
+    actors: [],
+    items: [],
+    tokens: []
+  };
+  let newData = {
     actors: [],
     items: [],
     tokens: []
@@ -32,12 +34,8 @@ export default async function MigrateWorld(currentVersion) {
      * as well makes it necessary to change all this.
      */
     console.log("==== CD10 | Beginning v0.3.0 migration! ====");
-    newData = await v030Migrate();
-    if (newData.exitCode !== 0) {
-      console.warn("==== CD10 | v0.3.0 migration failed! Aborting!");
-      ui.notifications.error("Migration failed! Check logs and try again!");
-      return;
-    } else {
+    try {
+      newData = await v030Migrate();
       if (newData.actors !== undefined) {
         v030Data.actors = newData.actors;
       }
@@ -48,6 +46,10 @@ export default async function MigrateWorld(currentVersion) {
         v030Data.tokens = newData.tokens;
       }
       console.log("==== CD10 | v0.3.0 migration completed! ====");
+    } catch(err) {
+      console.error("==== CD10 | v0.3.0 migration failed! Aborting!");
+      ui.notifications.error("v0.3.0 Migration failed! Check logs and try again!");
+      return;
     }
   }
 
@@ -60,12 +62,8 @@ export default async function MigrateWorld(currentVersion) {
      * This also simplifies roll calculations.
      */
     console.log("==== CD10 | Beginning v0.4.0 migration! ====");
-    newData = await v040Migrate();
-    if (newData.exitCode !== 0) {
-      console.warn("==== CD10 | v0.4.0 migration failed! Aborting!");
-      ui.notifications.error("Migration failed! Check logs and try again!");
-      return;
-    } else {
+    try {
+      newData = await v040Migrate();
       if (newData.actors !== undefined) {
         v040Data.actors = newData.actors;
       }
@@ -76,137 +74,65 @@ export default async function MigrateWorld(currentVersion) {
         v040Data.tokens = newData.tokens;
       }
       console.log("==== CD10 | v0.4.0 migration completed! ====");
+    } catch(err) {
+      console.error("==== CD10 | v0.4.0 migration failed! Aborting!");
+      ui.notifications.error("v0.4.0 Migration failed! Check logs and try again!");
+      return;
     }
   }
 
-  const updateData = _joinUpdates(v030Data, v040Data);
-
-  console.log("the finalized UpdateData:", updateData);
-
-  if (updateData.items.length > 0) {
-    _performMigration("items", updateData.items);
-  }
-  if (updateData.actors.length > 0) {
-    game.actors.forEach(a => {
-      updateData.actors.forEach(ac => {
-        if (a.id === ac._id) {
-          _performMigration("actors", ac);
-        }
-      });
-    });
-  }
-/**
-  If (updateData.tokens.length > 0) {
-    _performMigration("tokens", updateData.tokens);
-  }
- */
-}
-
-/**
- * A function to join all updates into one object.
- * @param {object} updateObjectOne
- * @param {object} updateObjectTwo
- * @returns {object} Joined updateobject, with all needed updates.
- */
-async function _joinUpdates(updateObjectOne, updateObjectTwo) {
-  let updateData = {
-    actors: [],
-    items: [],
-    tokens: []
+  /**
+   * Perform the actual migration of data by calling Foundry's update functions.
+   * @param {string} type  The type of migration to be made. Actor, item or token.
+   * @param {Array} updateData  Contains the data to apply to the update.
+   */
+  const _performMigration = async (type, updateData) => {
+    /* Do things with the data */
+    if (type === "items") {
+      console.log("Migrating world items.");
+      await Item.updateDocuments(updateData);
+    } else if (type === "actors") {
+      const actor = game.actors.get(updateData._id);
+      console.log(`Migrating items belonging to ${actor.name}`);
+      await actor.updateEmbeddedDocuments("Item", updateData.itemArray);
+    }
   };
 
-  const joinedItems = _joinItems(updateObjectOne.items, updateObjectTwo.items);
-  const joinedActors = _joinActors(updateObjectOne.actors, updateObjectTwo.actors);
-
-  updateData.items = joinedItems;
-  updateData.actors = joinedActors;
-
   /**
-   * Joins two arrays, updating contents as necessary for updating.
-   * @param {Array} firstArray
-   * @param {Array} secondArray
-   * @returns {Array} Returns the joined array.
+   * Arrays need to be joined before the updates can be applied.
    */
-  function _joinItems(firstArray, secondArray) {
-    let joinedData = [];
 
+  console.log("v0.3.0 Data", v030Data);
+  console.log("v0.4.0 Data", v040Data);
+  /**
+   * Call the functions to finalize updates.
+   */
+  if (v030Data.items.length > 0) {
+    await _performMigration("items", v030Data.items);
+  }
 
-    firstArray.forEach(one => {
-      secondArray.forEach(two => {
-        if (one._id === two._id) {
-          joinedData.push({ ...one, ...two });
-        }
-      });
-    });
-
-    joinedData.forEach(a => {
-      firstArray.forEach(b => {
-        if (joinedData.indexOf(b) === -1) {
-          joinedData.push(b);
-        }
-      });
-    });
-    joinedData.forEach(a => {
-      secondArray.forEach(b => {
-        if (joinedData.indexOf(b) === -1) {
-          joinedData.push(b);
-        }
-      });
-    });
-    console.log("ARRAYS:", firstArray, secondArray, joinedData);
-    return joinedData;
+  if (Object.keys(v030Data.actors).length > 0) {
+    for (const a of v030Data.actors) {
+      await _performMigration("actors", a);
+    }
   }
   /**
-   * Joins two update objects, updating contents as necessary for updating.
-   * @param {Object} firstObject
-   * @param {Object} secondObject
-   * @returns {Object} Returns the joined object.
+  If (v030Data.tokens.length > 0) {
+    _performMigration("tokens", v030Data.tokens);
+  }
    */
-  function _joinActors(firstObject, secondObject) {
-    let joinedActorData = [];
-    let joinedData = {};
+  if (v040Data.items.length > 0) {
+    await _performMigration("items", v040Data.items);
+  }
 
-    firstObject.forEach(one => {
-      secondObject.forEach(two => {
-        if (one._id === two._id) {
-          joinedData = _joinItems(one.itemArray, two.itemArray);
-          let updateData = {
-            _id: one._id,
-            itemArray: joinedData
-          };
-          if (joinedActorData.indexOf(updateData) === -1) {
-            joinedActorData.push(updateData);
-          }
-        }
-      });
-    });
-
-    console.log("OBJECTS", firstObject, secondObject, joinedActorData);
-    return joinedActorData;
+  if (Object.keys(v040Data.actors).length > 0) {
+    for (const a of v040Data.actors) {
+      await _performMigration("actors", a);
+    }
   }
   /**
-   *
+  If (v040Data.tokens.length > 0) {
+    _performMigration("tokens", v040Data.tokens);
+  }
    */
-  function _joinTokens() {
-    let joinedData = [];
-
-    return joinedData;
-  }
-
-  return updateData;
-}
-
-/**
- * Perform the actual migration of data by calling Foundry's update functions.
- * @param {string} type  The type of migration to be made. Actor, item or token.
- * @param {Array} updateData  Contains the data to apply to the update.
- */
-async function _performMigration(type, updateData) {
-  /* Do things with the data */
-  if (type === "items") {
-    // Await Item.updateDocuments(updateData);
-  } else if (type === "actors") {
-    const actor = game.actors.get(updateData._id);
-    // Await actor.updateEmbeddedDocuments("Item", updateData.itemArray);
-  }
 }
