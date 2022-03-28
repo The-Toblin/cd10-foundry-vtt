@@ -21,16 +21,6 @@
     <div class="stat-element">
         <label>
             <h3 class="stattitle">
-                {{localize "cd10.injuries.morale"}}
-            </h3>
-        </label>
-        <div class="morale-icons flex-row flex-center">
-            <input class="set-morale" id="set-morale" data-field="data.morale.value" data-dtype="Number" value="{{data.morale.value}}" placeholder="{{localize "cd10.injuries.morale"}}" />
-        </div>
-    <!--</div>
-    <div class="stat-element">
-        <label>
-            <h3 class="stattitle">
                 {{localize "cd10.injuries.shock"}} {{data.shock.value}}
             </h3>
         </label>
@@ -42,13 +32,12 @@
             {{/times}}
         </div>
     </div>
-    -->
     <div class="stat-element"> <label>
             <h3 class="stattitle">{{localize "cd10.injuries.wounds"}} {{data.wounds.value}}
             </h3>
         </label>
         <div class="wounds-icons">
-            {{#times 5}}
+            {{#times 15}}
             <div class="dot-container {{#if (gte ../data.wounds.value 15)}}red{{else if (gte ../data.wounds.value @index)}}crossed{{/if}}">
                 <i class="fas fa-circle fa-xs"></i>
             </div>
