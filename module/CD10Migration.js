@@ -90,11 +90,11 @@ export default async function MigrateWorld(currentVersion) {
     /* Do things with the data */
     if (type === "items") {
       console.log("Migrating world items.");
-      await Item.updateDocuments(updateData);
+      // Await Item.updateDocuments(updateData);
     } else if (type === "actors") {
       const actor = game.actors.get(updateData._id);
       console.log(`Migrating items belonging to ${actor.name}`);
-      await actor.updateEmbeddedDocuments("Item", updateData.itemArray);
+      // Await actor.updateEmbeddedDocuments("Item", updateData.itemArray);
     }
   };
 
@@ -116,6 +116,7 @@ export default async function MigrateWorld(currentVersion) {
       await _performMigration("actors", a);
     }
   }
+  // TODO: Finish token migration for v030.
   /**
   If (v030Data.tokens.length > 0) {
     _performMigration("tokens", v030Data.tokens);
@@ -130,9 +131,12 @@ export default async function MigrateWorld(currentVersion) {
       await _performMigration("actors", a);
     }
   }
+  // TODO: Finish token migration for v040.
   /**
   If (v040Data.tokens.length > 0) {
     _performMigration("tokens", v040Data.tokens);
   }
    */
+
+
 }

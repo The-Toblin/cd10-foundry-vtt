@@ -30,10 +30,9 @@ export const v040Migrate = async () => {
    */
   const _migrateWeapon = async (weapon, updateData) => {
     let newData = {};
-    // BUG: Something is awry with how weapons and skills are treated. Why are SKILLS getting "Attackskill" properties?
-    if (weapon.id === "I15ryJqxzuRgHOVd") {
-      console.error("THIS IS NOT SUPPOSED TO BE HERE!");
-      return;
+    if (weapon.type === "skill") {
+      console.log("SKILL IN WEAPONS!");
+      throw new Error("SKILL IN WEAPONS!");
     }
     for (const i of updateData) {
       const skill = game.items.get(i._id);
@@ -106,7 +105,8 @@ export const v040Migrate = async () => {
           newData = await _migrateWeapon(actorItem, items);
         }
         if (itemArray.indexOf(newData) === -1 && Object.keys(newData).length > 0) {
-          itemArray.push(newData);
+          itemArray.push(newData); // BUG: This is where things get buggered.
+          console.warn(itemArray, newData);
         }
       } catch(err) {
         console.error(`Item migration failed for actor item ${actorItem.name}`, err);
@@ -118,7 +118,6 @@ export const v040Migrate = async () => {
         itemArray: itemArray
       };
     }
-
     return actorUpdate;
   };
 
