@@ -1,3 +1,93 @@
+/* Variables */
+:root {
+  --font-color: #dfbb61;
+  --accent-color: #6b6c65;
+  --font-main: "Signika", sans-serif;
+}
+/* Containers for content */
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+.flex-start {
+  justify-content: flex-start;
+  align-content: flex-start;
+}
+.flex-even {
+  justify-content: space-evenly;
+  align-content: flex-start;
+}
+.flex-between {
+  justify-content: space-between;
+  align-content: flex-start;
+}
+.flex-center {
+  justify-content: center;
+  align-content: flex-start;
+}
+/* Overall styling classes */
+.sheet-background {
+  background: url(assets/backgrounds/sheet_background.jpg);
+  color: var(--font-color);
+}
+.sheet-card {
+  background: url(assets/backgrounds/card_background.jpg);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, var(--font-color)) 1;
+  padding: 5px;
+  box-shadow: 5px 10px 10px #000000;
+  margin: 0 5px 10px 5px;
+  color: var(--font-color);
+}
+.dark-background {
+  background: url(assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  padding: 4px;
+  margin: 0 5px 10px 5px;
+}
+.item-roll img {
+  max-width: 15px;
+  margin-top: 5px;
+  margin-right: 5px;
+  border: none;
+}
+.pad-8 {
+  padding: 8px;
+}
+.pad-4 {
+  padding: 4px;
+}
+.pad-2 {
+  padding: 2px;
+}
+.sheet-body .tab .editor {
+  height: 100%;
+}
+.sheet-body,
+.sheet-body .tab {
+  height: 100%;
+}
+.button {
+  background: url(assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 3px;
+  border-color: var(--accent-color);
+  border-radius: 10px;
+  padding: 4px;
+  margin: 0 5px 10px 5px;
+  box-shadow: 5px 10px 10px #000000;
+}
+.button:hover {
+  box-shadow: inset 2px 2px 10px 5px black;
+}
 /* Hidden class for mouse-over elements */
 .cd10.sheet .hidden {
   display: none;
@@ -19,7 +109,7 @@
   color: var(--font-color);
 }
 .cd10.sheet.namedCharacter .window-content {
-  background: url(./assets/backgrounds/sheet_background.jpg);
+  background: url(assets/backgrounds/sheet_background.jpg);
 }
 .cd10.sheet.namedCharacter form {
   color: var(--font-color);
@@ -28,24 +118,11 @@
   border: none;
   color: inherit;
   font-family: var(--font-main);
-  background: url(./assets/backgrounds/card_detail_background.jpg);
+  background: url(assets/backgrounds/card_detail_background.jpg);
 }
 .cd10.sheet.namedCharacter form select option {
   background-color: black;
   font-family: var(--font-main);
-}
-.cd10.sheet.namedCharacter form .button {
-  background: url(./assets/backgrounds/card_detail_background.jpg);
-  border-style: solid;
-  border-width: 3px;
-  border-color: var(--accent-color);
-  border-radius: 10px;
-  padding: 4px;
-  margin: 0 5px 10px 5px;
-  box-shadow: 5px 10px 10px #000000;
-}
-.cd10.sheet.namedCharacter form .button:hover {
-  box-shadow: inset 2px 2px 10px 5px black;
 }
 .cd10.sheet.namedCharacter form .editor {
   height: 100%;
@@ -60,6 +137,10 @@
   background: none;
   color: inherit;
 }
+.cd10.sheet.namedCharacter form .center-table {
+  margin-left: auto;
+  margin-right: auto;
+}
 .cd10.sheet.namedCharacter form table {
   border: none;
   border-collapse: separate;
@@ -71,7 +152,7 @@
 }
 .cd10.sheet.namedCharacter form table th,
 .cd10.sheet.namedCharacter form table td {
-  background: url(./assets/backgrounds/card_detail_background.jpg);
+  background: url(assets/backgrounds/card_detail_background.jpg);
   border-style: solid;
   border-width: 1px;
   border-image: radial-gradient(black, var(--accent-color)) 1;
@@ -123,6 +204,9 @@
 }
 .cd10.sheet.namedCharacter form .ammo-select .far {
   padding-right: 8px;
+}
+.cd10.sheet.namedCharacter form .display-inline {
+  display: inline;
 }
 .cd10.sheet.namedCharacter form .sheet-sidebar {
   padding: 10px;
@@ -243,7 +327,6 @@
 }
 .weapon-card .item-img {
   display: block;
-  margin: 0 10px 0 3px;
   max-width: 100px;
   max-height: 100px;
 }
@@ -254,16 +337,19 @@
 }
 .weapon-card .weapon-name {
   text-align: left;
-  font-size: 1.25em;
+  font-size: 1em;
   vertical-align: middle;
   text-align: center;
-  margin-bottom: 10px;
 }
 .weapon-card .description-box,
 .weapon-card .ammo-box {
   width: 100%;
   max-height: 150px;
   overflow: auto;
+}
+.weapon-card .center-table {
+  margin-left: auto;
+  margin-right: auto;
 }
 .weapon-card .weapon-box {
   display: flex;
@@ -297,7 +383,7 @@
 }
 .skill-list .attribute-pair,
 .traits-list .attribute-pair {
-  background: url(./assets/backgrounds/card_detail_background.jpg);
+  background: url(assets/backgrounds/card_detail_background.jpg);
   border-style: solid;
   border-width: 1px;
   border-image: radial-gradient(black, var(--accent-color)) 1;
@@ -341,7 +427,7 @@
 }
 .spell-list .spell-description,
 .spell-list .spell-reagents {
-  background: url(./assets/backgrounds/card_detail_background.jpg);
+  background: url(assets/backgrounds/card_detail_background.jpg);
   border-style: solid;
   border-width: 1px;
   border-image: radial-gradient(black, var(--accent-color)) 1;
@@ -351,7 +437,7 @@
   margin: 12px 0 5px 0;
 }
 .spell-list .attribute-pair {
-  background: url(./assets/backgrounds/card_detail_background.jpg);
+  background: url(assets/backgrounds/card_detail_background.jpg);
   border-style: solid;
   border-width: 1px;
   border-image: radial-gradient(black, var(--accent-color)) 1;
@@ -435,7 +521,7 @@
   text-align: right !important;
 }
 .health-info .stat-element {
-  background: url(./assets/backgrounds/card_detail_background.jpg);
+  background: url(assets/backgrounds/card_detail_background.jpg);
   border-style: solid;
   border-width: 1px;
   border-image: radial-gradient(black, var(--accent-color)) 1;
@@ -470,7 +556,7 @@
   width: 150px;
   height: 150px;
   box-shadow: 5px 10px 10px #000000;
-  background: url(./assets/backgrounds/card_detail_background.jpg);
+  background: url(assets/backgrounds/card_detail_background.jpg);
 }
 .cd10.sheet.item input {
   border: none;
@@ -483,7 +569,7 @@
   color: var(--font-color);
   background-color: black;
   font-family: var(--font-main);
-  background: url(./assets/backgrounds/card_detail_background.jpg);
+  background: url(assets/backgrounds/card_detail_background.jpg);
 }
 .cd10.sheet.item select option {
   background-color: black;
@@ -500,7 +586,7 @@
 }
 .cd10.sheet.item table th,
 .cd10.sheet.item table td {
-  background: url(./assets/backgrounds/card_detail_background.jpg);
+  background: url(assets/backgrounds/card_detail_background.jpg);
   border-style: solid;
   border-width: 1px;
   border-image: radial-gradient(black, var(--accent-color)) 1;
@@ -510,7 +596,7 @@
   padding: 4px 5px 4px 5px;
 }
 .cd10.sheet.item .window-content {
-  background: url(./assets/backgrounds/card_background.jpg);
+  background: url(assets/backgrounds/card_background.jpg);
   border-style: solid;
   border-width: 3px;
   border-image: radial-gradient(black, var(--font-color)) 1;
@@ -588,7 +674,7 @@
   color: var(--font-color);
 }
 .cd10.sheet.mookCharacter .window-content {
-  background: url(./assets/backgrounds/sheet_background.jpg);
+  background: url(assets/backgrounds/sheet_background.jpg);
 }
 .cd10.sheet.mookCharacter form {
   display: flex;
@@ -601,7 +687,7 @@
   color: var(--font-color);
   background-color: black;
   font-family: var(--font-main);
-  background: url(./assets/backgrounds/card_detail_background.jpg);
+  background: url(assets/backgrounds/card_detail_background.jpg);
 }
 .cd10.sheet.mookCharacter form select option {
   font-family: var(--font-main);
@@ -633,6 +719,27 @@
   margin-bottom: 5px;
   border-color: var(--font-color);
 }
+.cd10.sheet.mookCharacter form table {
+  border: none;
+  border-collapse: separate;
+  border-spacing: 5px;
+}
+.cd10.sheet.mookCharacter form table tr {
+  background: unset;
+  background-color: unset;
+}
+.cd10.sheet.mookCharacter form table th,
+.cd10.sheet.mookCharacter form table td {
+  background: url(assets/backgrounds/card_detail_background.jpg);
+  border-style: solid;
+  border-width: 1px;
+  border-image: radial-gradient(black, var(--accent-color)) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  vertical-align: middle;
+  text-align: center;
+  padding: 4px 5px 4px 5px;
+  color: inherit;
+}
 .cd10.sheet.mookCharacter form .header-box,
 .cd10.sheet.mookCharacter form .title-box,
 .cd10.sheet.mookCharacter form .equipment-list {
@@ -657,11 +764,20 @@
   background: none;
   font-family: var(--font-main);
 }
+.cd10.sheet.mookCharacter form .display-inline {
+  display: inline;
+}
 .cd10.sheet.mookCharacter form .weapon-item {
   margin-right: 5px;
 }
 .cd10.sheet.mookCharacter form .ammo-select .far {
   padding-right: 8px;
+}
+.cd10.sheet.mookCharacter form .d10-roll-icon img {
+  padding-top: 4px;
+  margin-left: 5px;
+  width: 15px;
+  border: none;
 }
 .cd10.sheet.mookCharacter form .item-delete .fas {
   text-align: right;
@@ -670,7 +786,7 @@
   width: fit-content !important;
   height: fit-content !important;
   padding: 10px;
-  background: url(./assets/backgrounds/card_detail_background.jpg);
+  background: url(assets/backgrounds/card_detail_background.jpg);
   border-style: solid;
   border-width: 3px;
   border-image: radial-gradient(black, var(--accent-color)) 1;
@@ -683,14 +799,14 @@
 .cd10-dialog .window-content {
   color: var(--font-color) !important;
   font-family: var(--font-main);
-  background: url(./assets/backgrounds/card_background.jpg);
+  background: url(assets/backgrounds/card_background.jpg);
 }
 .cd10-dialog .window-content select,
 .cd10-dialog .window-content input {
   border: none;
   color: var(--font-color);
   font-family: var(--font-main);
-  background: url(./assets/backgrounds/card_detail_background.jpg);
+  background: url(assets/backgrounds/card_detail_background.jpg);
 }
 .cd10-dialog .window-content select option {
   background-color: black;
@@ -723,14 +839,19 @@
   height: auto;
 }
 .attack-roll-card .centered,
-.attack-roll-card .value-box {
+.skill-roll-card .centered,
+.attack-roll-card .value-box,
+.skill-roll-card .value-box {
   text-align: center;
 }
-.attack-roll-card .value-box {
+.attack-roll-card .value-box,
+.skill-roll-card .value-box {
   width: 25%;
 }
 .attack-roll-card .value-box,
-.attack-roll-card .stat-box {
+.skill-roll-card .value-box,
+.attack-roll-card .stat-box,
+.skill-roll-card .stat-box {
   margin: 0;
   line-height: 24px;
   background: rgba(0, 0, 0, 0.1);
@@ -741,94 +862,31 @@
   margin-bottom: 5px;
   padding: 4px;
 }
-.attack-roll-card .stat-box {
+.attack-roll-card .stat-box,
+.skill-roll-card .stat-box {
   text-align: left;
   width: 70%;
 }
-.attack-roll-card .spacer {
+.attack-roll-card .spacer,
+.skill-roll-card .spacer {
   margin-top: 5px;
 }
-.attack-roll-card .bold {
+.attack-roll-card .bold,
+.skill-roll-card .bold {
   font-weight: 700;
 }
-.attack-roll-card img {
+.attack-roll-card img,
+.skill-roll-card img {
   width: 100%;
   height: auto;
 }
-/* Variables */
-:root {
-  --font-color: #dfbb61;
-  --accent-color: #6b6c65;
-  --font-main: "Signika", sans-serif;
-}
-/* Containers for content */
-.flex-row {
-  display: flex;
-  flex-direction: row;
-}
-.flex-column {
-  display: flex;
-  flex-direction: column;
-}
-.flex-start {
-  justify-content: flex-start;
-  align-content: flex-start;
-}
-.flex-even {
-  justify-content: space-evenly;
-  align-content: flex-start;
-}
-.flex-between {
-  justify-content: space-between;
-  align-content: flex-start;
-}
-.flex-center {
-  justify-content: center;
-  align-content: flex-start;
-}
-/* Overall styling classes */
-.sheet-background {
-  background: url(./assets/backgrounds/sheet_background.jpg);
-  color: var(--font-color);
-}
-.sheet-card {
-  background: url(./assets/backgrounds/card_background.jpg);
-  border-style: solid;
-  border-width: 3px;
-  border-image: radial-gradient(black, var(--font-color)) 1;
-  padding: 5px;
-  box-shadow: 5px 10px 10px #000000;
-  margin: 0 5px 10px 5px;
-  color: var(--font-color);
-}
-.dark-background {
-  background: url(./assets/backgrounds/card_detail_background.jpg);
-  border-style: solid;
-  border-width: 3px;
-  border-image: radial-gradient(black, var(--accent-color)) 1;
-  box-shadow: inset 2px 2px 10px 5px black;
-  padding: 4px;
-  margin: 0 5px 10px 5px;
-}
-.item-roll img {
-  max-width: 15px;
-  margin-top: 5px;
-  margin-right: 5px;
-  border: none;
-}
-.pad-8 {
-  padding: 8px;
-}
-.pad-4 {
-  padding: 4px;
-}
-.pad-2 {
+.tox.tox-tinymce {
+  background: url(assets/backgrounds/sheet_background.jpg);
   padding: 2px;
 }
-.sheet-body .tab .editor {
-  height: 100%;
+.tox .tox-edit-area__iframe {
+  background: url(assets/backgrounds/card_background.jpg);
 }
-.sheet-body,
-.sheet-body .tab {
-  height: 100%;
+.tox .tox-toolbar__primary {
+  background: url(assets/backgrounds/card_detail_background.jpg);
 }

@@ -25,6 +25,11 @@
                     "max": 15,
                     "min": 0
                 },
+                "morale": {
+                    "value": 25,
+                    "max": 25,
+                    "min": 0
+                },
                 "quote": {
                     "type": "string",
                     "label": "Quote",
@@ -288,11 +293,6 @@
                     "label": "Shock Protection",
                     "value": 0
                 }
-            },
-            "blockValue": {
-                "type": "number",
-                "label": "Blockvalue",
-                "value": 0
             }
         },
         "shield": {
@@ -339,11 +339,6 @@
                 "skillsTraits",
                 "itemDescription"
             ],
-            "teacher": {
-                "type": "boolean",
-                "label": "Teacher required",
-                "value": false
-            },
             "levelUp": {
                 "type": "boolean",
                 "label": "Eligable for levelup",

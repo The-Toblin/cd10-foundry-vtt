@@ -40,7 +40,7 @@
                         </tr>
                         <tr>
                             <td><input name="data.exp.total" type="text" value="{{data.exp.total}}"
-                                data-dtype="{{data.exp.type}}" placeholder="{{localize " cd10.stats.exp"}}" />
+                                    data-dtype="{{data.exp.type}}" placeholder="{{localize " cd10.stats.exp"}}" />
                             </td>
                             <td>{{data.posTraits.value}}</td>
                             <td>{{data.negTraits.value}}</td>
@@ -52,7 +52,6 @@
                     {{> "systems/cd10/templates/partials/sheet-tabs/skill-list.hbs"}}
                 </div>
             </div>
-
             {{!-- Combat Tab --}}
             <div class="tab sheet-combat" data-group="primary" data-tab="combat">
                 {{> "systems/cd10/templates/partials/sheet-tabs/combat-tab.hbs"}}
@@ -91,8 +90,7 @@
             {{> "systems/cd10/templates/partials/sheet-tabs/character-stat-block.hbs"}}
         </div>
         <div class="button">
-            <a class="physical-save flex-row flex-even pad-top" data-type="text"
-                data-action-value="{{skill.data.skillLevel.value}}" title={{localize "cd10.sheet.roll" }}>
+            <a class="physical-save flex-row flex-even pad-top" title={{localize "cd10.sheet.roll" }}>
                 <div class="d10-roll-icon">
                     <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
                 </div>
@@ -102,6 +100,16 @@
                     </h3>
                 </div>
             </a>
+        </div>
+        <div class="button stressBox stressBoxContainer flex-even flex-row pad-8">
+            <div class="stressBoxSelect">
+                <i class="far fa-{{#if this.actor.data.data.stressing.value}}check-{{/if}}square"></i>
+            </div>
+            <div>
+                <h3 class="sheet-header">
+                    {{localize "cd10.sheet.stress"}}
+                </h3>
+            </div>
         </div>
     </div>
 </form>

@@ -3,7 +3,7 @@ export default class CD10ItemSheet extends ItemSheet {
     return mergeObject(super.defaultOptions, {
       width: 725,
       height: 600,
-      classes: ["cd10", "sheet", "item"],
+      classes: ["cd10", "sheet", "item"]
     });
   }
 
@@ -18,7 +18,7 @@ export default class CD10ItemSheet extends ItemSheet {
       editable: this.isEditable,
       item: baseData.item,
       data: baseData.item.data.data,
-      config: CONFIG.cd10,
+      config: CONFIG.cd10
     };
 
     /* Make system settings available for sheets to use for rendering */
@@ -29,17 +29,17 @@ export default class CD10ItemSheet extends ItemSheet {
     sheetData.barterSetting = game.settings.get("cd10", "systemBarter");
     sheetData.modernity = game.settings.get("cd10", "systemModernity");
 
-    let worldSkillList = game.items.filter((p) => {
+    let worldSkillList = game.items.filter(p => {
       if (p.type === "skill") {
         return p;
       }
     });
     sheetData.worldSkills = [];
 
-    worldSkillList.forEach((s) => {
+    worldSkillList.forEach(s => {
       let object = {
         matchID: s.data.data.matchID,
-        name: s.name,
+        name: s.name
       };
       sheetData.worldSkills.push(object);
     });
@@ -60,22 +60,22 @@ export default class CD10ItemSheet extends ItemSheet {
     await this.item.update({
       "data.damage": {
         slash: {
-          selected: false,
+          selected: false
         },
         pierce: {
-          selected: false,
+          selected: false
         },
         blunt: {
-          selected: false,
+          selected: false
         },
         energy: {
-          selected: false,
-        },
-      },
+          selected: false
+        }
+      }
     });
 
     await this.item.update({
-      [`data.damage.${damageType}.selected`]: true,
+      [`data.damage.${damageType}.selected`]: true
     });
   }
 }

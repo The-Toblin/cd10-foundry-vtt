@@ -36,9 +36,11 @@
                 "failure": "Failure",
                 "statusQuo": "Status Quo",
                 "success": "Success",
-                "perfection": "Perfection"
+                "perfection": "Perfection",
+                "final": "Final"
             },
             "roll": {
+                "roll": "Roll",
                 "check": "Check",
                 "skill": "Skill",
                 "trait": "Trait",
@@ -48,6 +50,7 @@
         "sheet": {
             "add": "Add",
             "armor": "Armor",
+            "armors": "Armors",
             "attack": "Attack check",
             "bio": "Biography",
             "block": "Block",
@@ -62,6 +65,7 @@
             "equipShort": "Eq.",
             "health": "Health",
             "heroPoint": "Use heropoint",
+            "initiative": "Initiative",
             "inventory": "Inventory",
             "levelUp": "Toggle levelUp",
             "max": "Maximum",
@@ -72,13 +76,19 @@
             "negative": "Negative",
             "newItem": "Name",
             "notes": "Notes",
+            "other": "Other",
             "positive": "Positive",
+            "rangedWeapon": "Ranged weapon",
+            "rangedWeapons": "Ranged weapons",
             "remove": "Remove",
             "removeShort": "Rem.",
             "reverse": "Reverse",
             "roll": "Roll",
             "save": "Physical save",
             "select": "Select",
+            "selected": "Selected",
+            "shield": "Shield",
+            "shields": "Shields",
             "skill": "Skill",
             "skills": "Skills",
             "spells": "Spells",
@@ -90,6 +100,7 @@
             "traitCheck": "Skillcheck with trait",
             "traits": "Traits",
             "type": "Type",
+            "weapon": "Weapon",
             "weapons": "Weapons",
             "weight": "Weight"
         },
@@ -180,7 +191,8 @@
             "shockProtection": "Shock",
             "blockValue": "Block",
             "defenseValue": "Defensive Value",
-            "defenseValueShort": "DV"
+            "defenseValueShort": "DV",
+            "shield": "Shield"
         },
         "item": {
             "image": "Image",
@@ -202,6 +214,7 @@
         "injuries": {
             "shock": "Shock",
             "wounds": "Wounds",
+            "morale": "Morale",
             "scratch": "Scratch",
             "linjury": "Light Injury",
             "sinjury": "Serious Injury",

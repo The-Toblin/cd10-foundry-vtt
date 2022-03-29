@@ -1,68 +1,35 @@
-<div class="armor-card sheet-card flex-column item" data-item-id="{{_id}}">
-    <div class="armor-info armor-name dark-background pad-8">
-        <p>{{name}}</p>
-    </div>
-    <div class="flex-row flex-start image-stats-box">
-        <div class="item-img">
-            <img class="item-img" src="{{img}}" title="{{name}}" />
-        </div>
-        <div class="armor-box dark-background pad-8">
-            {{#if (eq @root.damageTypeSetting "simple")}}
-                <div class="armor-stats reveal-rollable">
-                    <div class="stat-name">
-                        {{localize "cd10.armor.protection"}}
-                    </div>
-                     <div class="armor-statvalue">
-                        {{#highest data.protection.slash.value data.protection.blunt.value data.protection.pierce.value data.protection.energy.value}}{{/highest}}
-                    </div>
-                </div>
-            {{else}}
-                <div class="armor-stats reveal-rollable">
-                    <div class="stat-name">
-                        {{localize "cd10.armor.slashProtection"}}
-                    </div>
-                    <div class="armor-statvalue">
-                        {{data.protection.slash.value}}
-                    </div>
-                </div>
-                <div class="armor-stats reveal-rollable">
-                    <div class="stat-name">
-                        {{localize "cd10.armor.pierceProtection"}}
-                    </div>
-                    <div class="armor-statvalue">
-                        {{data.protection.pierce.value}}
-                    </div>
-                </div>
-                <div class="armor-stats reveal-rollable">
-                    <div class="stat-name">
-                        {{localize "cd10.armor.bluntProtection"}}
-                    </div>
-                    <div class="armor-statvalue">
-                        {{data.protection.blunt.value}}
-                    </div>
-                </div>
-                {{#if (eq @root.damageTypeSetting "complex")}}
-                <div class="armor-stats reveal-rollable">
-                    <div class="stat-name">
-                        {{localize "cd10.armor.energyProtection"}}
-                    </div>
-                    <div class="armor-statvalue">
-                        {{data.protection.energy.value}}
-                    </div>
-                </div>
-                {{/if}}
-            {{/if}}
-            <div class="armor-stats">
-                <div class="stat-name">
-                    {{localize "cd10.armor.shockProtection"}}
-                </div>
-                <div class="armor-statvalue">
-                    {{data.protection.shock.value}}
-                </div>
-            </div>
-        </div>
-        <div class="description-box dark-background">
-            {{{data.description.value}}}
-        </div>
-    </div>
-</div>
+<td class="item equippable-inventory-item" data-item-id="{{_id}}">
+    <img class="item-img display-inline" src="{{img}}" title="{{name}}" height="15" width="15" />
+</td>
+<td class="item equippable-inventory-item" data-item-id="{{_id}}">
+    {{name}}
+</td>
+{{#if (eq @root.damageTypeSetting "simple")}}
+<td class="item equippable-inventory-item" data-item-id="{{_id}}">
+    {{#highest data.protection.slash.value data.protection.blunt.value data.protection.pierce.value
+    data.protection.energy.value}}{{/highest}}
+</td>
+{{else}}
+<td class="item equippable-inventory-item" data-item-id="{{_id}}">
+    {{data.protection.slash.value}}
+</td>
+<td class="item equippable-inventory-item" data-item-id="{{_id}}">
+    {{data.protection.pierce.value}}
+</td>
+<td class="item equippable-inventory-item" data-item-id="{{_id}}">
+    {{data.protection.blunt.value}}
+</td>
+{{/if}}
+{{#if (eq @root.damageTypeSetting "complex")}}
+<td class="item equippable-inventory-item" data-item-id="{{_id}}">
+    {{data.protection.energy.value}}
+</td>
+{{/if}}
+<td class="item equippable-inventory-item" data-item-id="{{_id}}">
+    {{data.protection.shock.value}}
+</td>
+<td class="item equippable-inventory-item" data-item-id="{{_id}}">
+    <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
+        <i class="far fa-{{#if data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
+    </a>
+</td>

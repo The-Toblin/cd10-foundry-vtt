@@ -1,214 +1,147 @@
-/* TODO: Rewrite necessary. For each grand step, gather the necessary item updates in an updateData object array.
-Keep adding to said array until ALL updates necessary have been gathered.
-Then send the whole thing to an update function that performs the actual updates. */
+import { v030Migrate } from "./migrationscripts/v030Migrate.js";
+import { v040Migrate } from "./migrationscripts/v040Migrate.js";
 
-/* Check necessary upgrades that need to be done, then trigger world migration */
+/**
+ * Once cd10.js has determined migration needs to be done at all
+ * this takes the version number and checks what kind of migration
+ * is necessary based on the version of the world.
+ * @param {string} currentVersion The current system version
+ */
 export default async function MigrateWorld(currentVersion) {
-  console.log("==== CD10 | Migration needed! Starting migration. ====");
-  /* Check how old the system is and determine which update routines need to be ran. */
-  let v040 = !currentVersion || isNewerVersion("0.4.0", currentVersion);
+  const v030 = !currentVersion || isNewerVersion("0.3.9", currentVersion);
+  const v040 = !currentVersion || isNewerVersion("0.4.0", currentVersion);
 
-  if (v040) {
-    console.log("==== CD10 | Beginning v0.4.0 migration!");
-    v040Migrate();
-    console.log("==== CD10 | v0.4.0 migration completed!");
-  }
+  let v030Data = {
+    actors: [],
+    items: [],
+    tokens: []
+  };
+  let v040Data = {
+    actors: [],
+    items: [],
+    tokens: []
+  };
+  let newData = {
+    actors: [],
+    items: [],
+    tokens: []
+  };
 
-  return;
-}
-
-/* Version 0.4.x migration, adding MatchID to skills and weapons */
-async function v040Migrate() {
-  const updateData = _migrateV040Skills();
-  /*_migrateV040Weapons();*/
-  _performMigration("Item", updateData.itemUpdateData, "world");
-  game.actors.forEach((gameActor) => {
-    updateData.listOfActors.forEach((listActor) => {
-      if (gameActor.id === listActor._id) {
-        _performMigration("Item", listActor, "actor");
+  if (v030) {
+    /*
+     * Version 0.3.0 mostly brought with it small changes, but the template change
+     * from `weapon` to `meleeWeapon` and `rangedWeapon` and `armor` into `shield`
+     * as well makes it necessary to change all this.
+     */
+    console.log("==== CD10 | Beginning v0.3.0 data collection! ====");
+    try {
+      newData = await v030Migrate();
+      if (newData.actors !== undefined) {
+        v030Data.actors = newData.actors;
       }
-    });
-  });
-
-  function _migrateV040Skills() {
-    /* World-residing skills */
-    let listOfActors = [],
-      itemUpdateData = [];
-
-    for (let item of game.items.contents) {
-      if (item.type === "skill") {
-        console.log(`==== CD10 | Migrating Item entity ${item.name}`);
-        itemUpdateData.push(_addMatchIDtoSkill(item));
+      if (newData.items !== undefined) {
+        v030Data.items = newData.items;
       }
-    }
-
-    /* Character-residing skills */
-    for (let actor of game.actors.contents) {
-      let actorItems = [];
-      actor.items.forEach((item) => {
-        if (item.type === "skill") {
-          console.log(
-            `==== CD10 | Migrating Item entity ${item.name} belonging to ${actor.name}`
-          );
-          let actorItemUpdateData = _copyMatchIDtoEmbeddedSkill(
-            item,
-            itemUpdateData
-          );
-          if (Object.keys(actorItemUpdateData).length > 1) {
-            actorItems.push(actorItemUpdateData);
-          }
-        }
-      });
-      let actorObj = { _id: actor.id, itemsArray: actorItems };
-      listOfActors.push(actorObj);
-    }
-
-    function _addMatchIDtoSkill(item) {
-      /* Add a randomized, persistent ID to all skills so they can be matched against weapons. */
-      let itemUpdateData = {};
-      if (
-        typeof item.data.data.matchID === "undefined" ||
-        item.data.data.matchID === ""
-      ) {
-        itemUpdateData = {
-          _id: item.id,
-          data: {
-            matchID: randomID(),
-          },
-        };
-      } else {
-        let setMatchID = item.data.data.matchID;
-        itemUpdateData = { _id: item.id, data: { matchID: setMatchID } };
+      if (newData.tokens !== undefined) {
+        v030Data.tokens = newData.tokens;
       }
-
-      return itemUpdateData;
-    }
-
-    function _copyMatchIDtoEmbeddedSkill(item, worldSkillList) {
-      /* Find skills on the character that has a world-residing 'master' and copy its matchID to the character's skill. */
-      let actorItemUpdateData = {},
-        skillName = item.name
-          .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
-          .replace(/\s+/g, "")
-          .toLowerCase();
-
-      worldSkillList.forEach((skill) => {
-        let s = game.items.get(skill._id);
-        if (s.type === "skill") {
-          let compareName = s.name
-            .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
-            .replace(/\s+/g, "")
-            .toLowerCase();
-          if (skillName === compareName) {
-            if (typeof s.data.data.matchID === "undefined") {
-              ui.notifications.error(
-                `CRITICAL FAILURE! MatchID for skill ${s.name} is undefined!`
-              );
-              return;
-            } else {
-              if (item.data.data.matchID != s.data.data.matchID) {
-                actorItemUpdateData = {
-                  _id: item.id,
-                  data: {
-                    matchID: s.data.data.matchID,
-                  },
-                };
-              }
-              return;
-            }
-          }
-        }
-      });
-      return actorItemUpdateData;
-    }
-
-    let updateData = {
-      itemUpdateData: itemUpdateData,
-      listOfActors: listOfActors,
-    };
-
-    return updateData;
-  }
-
-  function _migrateV040Weapons() {
-    /* Migrate weapons, adding the proper matchID from the skills used to their `attackskill` property. */
-    /* World-residing weapons */
-    for (let item of game.items.contents) {
-      if (item.type === "meleeWeapon" || item.type === "rangedWeapon") {
-        console.log(`==== CD10 | Migrating Item entity ${item.name}`);
-        _copyMatchIDtoWeapon(item);
-      }
-    }
-
-    /* Character-residing weapons */
-    for (let actor of game.actors.contents) {
-      actor.items.forEach((item) => {
-        if (item.type === "meleeWeapon" || item.type === "rangedWeapon") {
-          console.log(
-            `==== CD10 | Migrating Item entity ${item.name} belonging to ${actor.name}`
-          );
-          _copyMatchIDtoWeapon(item);
-        }
-      });
-    }
-
-    async function _copyMatchIDtoWeapon(item) {
-      /* Find the weapon's 'attackSkill' property and compare it to skills on the character. Copy the matchID from the character's skill. */
-      let actorItemUpdateData = {},
-        itemUpdateData = {};
-
-      let attackSkillName = item.data.data.attackSkill.value
-        .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
-        .replace(/\s+/g, "")
-        .toLowerCase();
-
-      if (item.isEmbedded) {
-        let actor = item.parent;
-        actor.items.forEach((i) => {
-          if (
-            i.name
-              .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
-              .replace(/\s+/g, "")
-              .toLowerCase() === attackSkillName
-          ) {
-            item.update({
-              "data.attackSkill.value": i.data.data.matchID,
-            });
-            console.log(
-              `Copied matchID to`,
-              item.name,
-              `belonging to ${item.parent.name}`
-            );
-          }
-        });
-      } else {
-        game.items.forEach((i) => {
-          if (
-            i.name
-              .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
-              .replace(/\s+/g, "")
-              .toLowerCase() === attackSkillName
-          ) {
-            item.update({
-              "data.attackSkill.value": i.data.data.matchID,
-            });
-          }
-        });
-      }
-
+      console.log("==== CD10 | v0.3.0 data collection completed! ====");
+    } catch(err) {
+      console.error("==== CD10 | v0.3.0 data collection failed! Aborting!", err);
+      ui.notifications.error("v0.3.0 data collection failed! Check logs and try again!");
       return;
     }
-
-    return;
   }
 
-  async function _performMigration(documentType, updateData, updateType) {
-    if (updateType === "world") {
-      await Item.updateDocuments(updateData);
-    } else if (updateType === "actor") {
-      const actor = game.actors.get(updateData._id);
-      console.log(actor.name, updateData.itemsArray);
-      await actor.updateEmbeddedDocuments(documentType, updateData.itemsArray);
+  if (v040) {
+    /*
+     * Version 0.4 removes a lot of excess in preparation for the re-design. Following Beyond Reality's
+     * design blog, we're removing hit location settings as well as all the `coverage` data from armors.
+     * In addition, we're introducing equipment restrictions in line with the re-design, in preparation
+     * for the re-design transfer. Only one weapon, armor and shield can be equipped at any time.
+     * This also simplifies roll calculations.
+     */
+    console.log("==== CD10 | Beginning v0.4.0 data collection! ====");
+    try {
+      newData = await v040Migrate();
+      if (newData.actors !== undefined) {
+        v040Data.actors = newData.actors;
+      }
+      if (newData.items !== undefined) {
+        v040Data.items = newData.items;
+      }
+      if (newData.tokens !== undefined) {
+        v040Data.tokens = newData.tokens;
+      }
+      console.log("==== CD10 | v0.4.0 data collection completed! ====");
+    } catch(err) {
+      console.error("==== CD10 | v0.4.0 data collection failed! Aborting!", err);
+      ui.notifications.error("v0.4.0 data collection failed! Check logs and try again!");
+      return;
     }
+  }
+
+  /**
+   * Perform the actual migration of data by calling Foundry's update functions.
+   * @param {string} type  The type of migration to be made. Actor, item or token.
+   * @param {Array} updateData  Contains the data to apply to the update.
+   */
+  const _performMigration = async (type, updateData) => {
+    /* Do things with the data */
+    if (type === "items") {
+      console.log("Migrating world items.");
+      await Item.updateDocuments(updateData);
+    } else if (type === "actors") {
+      const actor = game.actors.get(updateData._id);
+      console.log(`Migrating items belonging to actor ${actor.name}`);
+      await actor.updateEmbeddedDocuments("Item", updateData.itemArray);
+      await actor.unequipItems("meleeWeapon");
+      await actor.unequipItems("armor");
+    } else if (type === "tokens") {
+      console.log("Migrating items belonging to unlinked tokens");
+      for (const scene of game.scenes.contents) {
+        await scene.update(updateData);
+      }
+    }
+  };
+
+  console.log(v030Data, v040Data);
+  /**
+   * Call the functions to finalize updates.
+   */
+
+  try {
+    console.log("==== CD10 | Beginning migration! ====");
+    if (v030Data.items.length > 0) {
+      await _performMigration("items", v030Data.items);
+    }
+
+    if (Object.keys(v030Data.actors).length > 0) {
+      for (const a of v030Data.actors) {
+        await _performMigration("actors", a);
+      }
+    }
+    if (Object.keys(v030Data.tokens).length > 0) {
+      _performMigration("tokens", v030Data.tokens);
+    }
+  } catch(err) {
+    console.error("MIGRATIONS FAILED!", err);
+  }
+  try {
+    console.log("==== CD10 | Beginning migration! ====");
+    if (v040Data.items.length > 0) {
+      await _performMigration("items", v040Data.items);
+    }
+
+    if (Object.keys(v040Data.actors).length > 0) {
+      for (const a of v040Data.actors) {
+        await _performMigration("actors", a);
+      }
+    }
+    if (Object.keys(v040Data.tokens).length > 0) {
+      _performMigration("tokens", v040Data.tokens);
+    }
+  } catch(err) {
+    console.error("MIGRATIONS FAILED!", err);
   }
 }

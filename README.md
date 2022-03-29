@@ -21,16 +21,6 @@ The entire system is based around this horizontal progression, where a character
 # In development
 CD10 RPG is currently in development and CD10 Core, the free portion, is considered to be in an alpha state. Things are likely to change as the system develops. It is fully useable for gameplay, but because it is still going through gameplay tests, core mechanics can change. Hence the Alpha status. Otherwise, it would be considered Beta.
 
-# CD10 Core vs CD10 Advanced
-CD10 Advanced, which includes several optional, advanced modules, such as bleeding, poison, disease and magic, is also in alpha, but in a less robust state. Some modules are completed, while others are still in the draft stage. 
-
-CD10 Advanced is the paid-for version of the system and is currently only available to supporters (see below).
-
-# Foundry VTT Development Status
-The Foundry VTT system of CD10 is based on CD10 Core and until that hits 1.0, no CD10A features will be added.
-
-Character and item sheets are fully implemented with internal mechanics, but no auto-calculations are included yet.
-
 The system does not come with any content packs (such as items, skills, traits etc) at present. Because of the alpha-state of the system outside of Foundry, there's still too much in fluctuation to nail down any content packs.
 
 If you intend to run this system, either wait until it hits 1.0 and the content packs will be developed, or create your own using the provided sheets. Lists and descriptions of skills, traits etc is available in the SRD.
