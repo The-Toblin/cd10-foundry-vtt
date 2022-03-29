@@ -352,18 +352,34 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     let attackSkill = weaponObj.data.attackSkill.value;
 
     let attackSkillObj = null;
-    this.actor.items.forEach(i => {
-      if (i.type === "skill") {
-        if (i.data.data.matchID === weaponObj.data.attackSkill.value) {
-          attackSkillObj = i;
+    for (const item of this.actor.items) {
+      if (item.type === "skill") {
+        if (item.data.data.matchID === weaponObj.data.attackSkill.value) {
+          attackSkillObj = item;
         }
       }
-    });
+    }
 
+    /**
+     * Catch if weapon doesn't have a skill set.
+     */
     if (attackSkill === "None") {
       ui.notifications.error(`Error! ${weaponObj.name} does not have an assigned skill!`);
       return;
     }
+    /**
+     * Catch if character does not have the correct skill for said weapon.
+     */
+    if (attackSkillObj === null) {
+      let correctSkill = null;
+      for (const skill of game.items.contents) {
+        if (skill.data.data.matchID === weaponObj.data.attackSkill.value) {
+          correctSkill = skill.name;
+        }
+      }
+      ui.notifications.info(`You do not have the prerequisite skill for ${weaponObj.name}, which is ${correctSkill}. Making blank check.`);
+    }
+
     /* Check if it's a ranged weapon */
     if (weaponObj.type === "rangedWeapon") {
       let ammo = this.actor.items.get(weaponObj.data.selectedAmmo.id);

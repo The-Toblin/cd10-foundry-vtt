@@ -9,42 +9,39 @@ export const v040Migrate = async () => {
 
   /**
    * Function to migrate a single item document to 0.4.0 data structure. Returns the updateData.
-   * @param {object} item Item to check for migration.
+   * @param {string} itemId The ID of the item being checked.
+   * @param {object} itemData ItemData to check for migration.
    * @returns {Promise}
    */
-  const _migrateSkill = async item => {
+  const _migrateSkill = async (itemId, itemData) => {
     let newData = {};
-    if (item.type === "skill") {
-      if (item.data.data.matchID === undefined || item.data.data.matchID === "") {
-        newData._id = item.id;
-        newData["data.matchID"] = randomID();
-      }
+    if (itemData.matchID === undefined || itemData.matchID === "") {
+      newData._id = itemId;
+      newData["data.matchID"] = randomID();
     }
     return newData;
   };
 
   /**
    *  Function to migrate single data to 0.4.0 data structure. Returns the updateData.
-   * @param {object} weapon The weapon object to check for migration.
-   * @param {object} updateData The already present skilldata, for copying MatchIDs from.
+   * @param {string} weaponId The ID of the weapon to check.
+   * @param {object} weaponData The weapon data to check for migration.
+   * @param {object} worldItemData The already present skilldata, for copying MatchIDs from.
    */
-  const _migrateWeapon = async (weapon, updateData) => {
+  const _migrateWeapon = async (weaponId, weaponData, worldItemData) => {
     let newData = {};
-    if (weapon.type === "skill") {
-      console.log("SKILL IN WEAPONS!");
-      throw new Error("SKILL IN WEAPONS!");
-    }
-    for (const i of updateData) {
-      const skill = game.items.get(i._id);
-      const nameComparison = await _compareNames(weapon.data.data.attackSkill.value, skill.name);
+    for (const worldItem of worldItemData) {
+      const skill = game.items.get(worldItem._id);
+      if (weaponData.attackSkill?.value === undefined) {
+        console.warn(`Weapon ${weaponData.name} does not have an attackskill value!`, weaponData);
+        return;
+      }
+      const nameComparison = await _compareNames(weaponData.attackSkill.value, skill.name);
 
       if (nameComparison) {
-        for (const s of updateData) {
-          if (s._id === skill.id) {
-
-            newData._id = weapon.id;
-            newData["data.attackSkill.value"] = s["data.matchID"];
-          }
+        if (worldItem._id === skill.id) {
+          newData._id = weaponId;
+          newData["data.attackSkill.value"] = worldItem["data.matchID"];
         }
       }
     }
@@ -75,46 +72,44 @@ export const v040Migrate = async () => {
 
   /**
    * Helper function for the Actor migration process. Migrates a single actor document.
-   * @param {object} actor The actor to be migrated.
-   * @param {Array} items An array of world-level updates to perform. Used to copy matchID from.
+   * @param {string} actorId The actorId to be migrated.
+   * @param {Array} actorItems An array of the actor's owned items, with ids.
+   * @param {Array} worldItems An array of world-level updates to perform. Used to copy matchID from.
    * @returns {Promise} Returns updateData to be applied.
    */
-  const _migrateActor = async (actor, items) => {
-    let newData = {};
+  const _migrateActor = async (actorId, actorItems, worldItems) => {
     let itemArray = [];
     let actorUpdate = {};
-    for (const actorItem of actor.items.contents) {
+    for (const item of actorItems) {
+      let newData = {};
       try {
-
-        if (actorItem.type === "skill") {
-          for (const i of items) {
-            let skill = game.items.get(i._id);
-            if (skill.type === "skill") {
-              const nameComparison = await _compareNames(actorItem.name, skill.name);
+        if (item.data.hasOwnProperty("teachable")) { // BUG: hasOwnProperty not working on token data.
+          for (const worldSkill of worldItems) {
+            const worldSkillObject = game.items.get(worldSkill._id);
+            if (worldSkillObject.type === "skill") {
+              const nameComparison = await _compareNames(game.actors.get(actorId).items.get((item.id)).name,
+                worldSkillObject.name);
               if (nameComparison) {
-                for (const s of items) {
-                  if (s._id === skill.id) {
-                    newData._id = actorItem.id;
-                    newData["data.matchID"] = s["data.matchID"];
-                  }
+                if (worldSkill._id === worldSkillObject.id) {
+                  newData._id = item.id;
+                  newData["data.matchID"] = worldSkill["data.matchID"];
                 }
               }
             }
           }
-        } else if (actorItem.type === "meleeWeapon" || actorItem.type === "rangedWeapon") {
-          newData = await _migrateWeapon(actorItem, items);
+        } else if (item.data.hasOwnProperty("attackSkill")) {
+          newData = await _migrateWeapon(item.id, item.data, worldItems);
         }
         if (itemArray.indexOf(newData) === -1 && Object.keys(newData).length > 0) {
-          itemArray.push(newData); // BUG: This is where things get buggered.
-          console.warn(itemArray, newData);
+          itemArray.push(newData);
         }
       } catch(err) {
-        console.error(`Item migration failed for actor item ${actorItem.name}`, err);
+        console.error(`Item migration failed for actor item ${item.name}`, err);
       }
     }
     if (itemArray.length > 0) {
       actorUpdate = {
-        _id: actor.id,
+        _id: actorId,
         itemArray: itemArray
       };
     }
@@ -135,7 +130,7 @@ export const v040Migrate = async () => {
     for (const item of game.items.contents) {
       try {
         if (item.type === "skill") {
-          const newData = await _migrateSkill(item);
+          const newData = await _migrateSkill(item.id, item.data.data);
 
           if (!isObjectEmpty(newData)) {
             updateData.push(newData);
@@ -151,7 +146,7 @@ export const v040Migrate = async () => {
     for (const item of game.items.contents) {
       try {
         if (item.type === "meleeWeapon" || item.type === "rangedWeapon") {
-          const newData = await _migrateWeapon(item, updateData);
+          const newData = await _migrateWeapon(item.id, item.data.data, updateData);
 
           if (!isObjectEmpty(newData)) {
             updateData.push(newData);
@@ -166,16 +161,19 @@ export const v040Migrate = async () => {
 
   /**
    * Function to migrate actor-residing items, using data from the world-residing item update.
-   * @param {object} items Updatedata from the items update.
+   * @param {object} worldItems Updatedata from the items update.
    * @returns {Promise} Returns updateData to be applied.
    */
-  const _migrateV040Actors = async items => {
+  const _migrateV040Actors = async worldItems => {
     let updateData = [];
 
     for (const actor of game.actors.contents) {
+      let actorItemArray = [];
       try {
-        let actorUpdateData = await _migrateActor(actor, items);
-
+        for (const actorItem of actor.items) {
+          actorItemArray.push({id: actorItem.id, data: actorItem.data.data});
+        }
+        let actorUpdateData = await _migrateActor(actor.id, actorItemArray, worldItems);
         if (!isObjectEmpty(actorUpdateData)) {
           updateData.push(actorUpdateData);
         }
@@ -189,18 +187,44 @@ export const v040Migrate = async () => {
 
   /**
    Function to migrate token-residing items, using data from the world-residing item update.
-   * @param {object} items Updatedata from the items update.
+   * @param {object} worldItems Updatedata from the items update.
    * @returns {Promise} Returns updateData to be applied.
    */
-  const _migrateV040Tokens = async function(items) {
+  const _migrateV040Tokens = async worldItems => {
     let updateData = [];
+    for (const scene of game.scenes.contents) {
+      for (const token of scene.tokens) {
+        if (!token.isLinked) {
+          try {
+            if (token.data.actorData?.items !== undefined) {
+              let tokenItemArray=[];
+              for (const tokenItem of token.data.actorData.items) {
+                tokenItemArray.push({id: tokenItem.id, data: tokenItem.data.data});
+              }
+              if (tokenItemArray.length > 0) {
+                let newData = await _migrateActor(token.id, tokenItemArray, worldItems);
+                console.log(`${token.name} newData: `, newData);
 
+              }
+            }
+
+            // Let tokenUpdateData = await _migrateActor(tokenActorData, items);
+            // if (!isObjectEmpty(tokenUpdateData)) {
+            // updateData.push(tokenUpdateData);
+            // }
+          } catch(err) {
+            console.error(`Item migration failed for token ${token.name}`, err);
+          }
+        }
+      }
+    }
+    // Return actor array for all actors via promise.
     return updateData;
   };
 
   items = await _migrateV040Items();
   actors = await _migrateV040Actors(items);
-  // Tokens = await _migrateV040Tokens(items);
+  tokens = await _migrateV040Tokens(items);
 
   const newData = {
     items,

@@ -33,7 +33,7 @@ export default async function MigrateWorld(currentVersion) {
      * from `weapon` to `meleeWeapon` and `rangedWeapon` and `armor` into `shield`
      * as well makes it necessary to change all this.
      */
-    console.log("==== CD10 | Beginning v0.3.0 migration! ====");
+    console.log("==== CD10 | Beginning v0.3.0 data collection! ====");
     try {
       newData = await v030Migrate();
       if (newData.actors !== undefined) {
@@ -45,10 +45,10 @@ export default async function MigrateWorld(currentVersion) {
       if (newData.tokens !== undefined) {
         v030Data.tokens = newData.tokens;
       }
-      console.log("==== CD10 | v0.3.0 migration completed! ====");
+      console.log("==== CD10 | v0.3.0 data collection completed! ====");
     } catch(err) {
-      console.error("==== CD10 | v0.3.0 migration failed! Aborting!");
-      ui.notifications.error("v0.3.0 Migration failed! Check logs and try again!");
+      console.error("==== CD10 | v0.3.0 data collection failed! Aborting!", err);
+      ui.notifications.error("v0.3.0 data collection failed! Check logs and try again!");
       return;
     }
   }
@@ -61,7 +61,7 @@ export default async function MigrateWorld(currentVersion) {
      * for the re-design transfer. Only one weapon, armor and shield can be equipped at any time.
      * This also simplifies roll calculations.
      */
-    console.log("==== CD10 | Beginning v0.4.0 migration! ====");
+    console.log("==== CD10 | Beginning v0.4.0 data collection! ====");
     try {
       newData = await v040Migrate();
       if (newData.actors !== undefined) {
@@ -73,10 +73,10 @@ export default async function MigrateWorld(currentVersion) {
       if (newData.tokens !== undefined) {
         v040Data.tokens = newData.tokens;
       }
-      console.log("==== CD10 | v0.4.0 migration completed! ====");
+      console.log("==== CD10 | v0.4.0 data collection completed! ====");
     } catch(err) {
-      console.error("==== CD10 | v0.4.0 migration failed! Aborting!");
-      ui.notifications.error("v0.4.0 Migration failed! Check logs and try again!");
+      console.error("==== CD10 | v0.4.0 data collection failed! Aborting!", err);
+      ui.notifications.error("v0.4.0 data collection failed! Check logs and try again!");
       return;
     }
   }
@@ -93,50 +93,37 @@ export default async function MigrateWorld(currentVersion) {
       // Await Item.updateDocuments(updateData);
     } else if (type === "actors") {
       const actor = game.actors.get(updateData._id);
-      console.log(`Migrating items belonging to ${actor.name}`);
+      console.log(`Migrating items belonging to actor ${actor.name}`);
       // Await actor.updateEmbeddedDocuments("Item", updateData.itemArray);
+    } else if (type === "tokens") {
+      const tokenActor = game.actors.get(updateData._id);
+      console.log(`Migrating items belonging to unlinked token ${tokenActor.name}`);
+      if (tokenActor.name === "Davek") {
+        console.log(updateData);
+      }
+      // Await tokenActor.updateEmbeddedDocuments("Item", updateData.itemArray);
     }
   };
 
   /**
-   * Arrays need to be joined before the updates can be applied.
-   */
-
-  console.log("v0.3.0 Data", v030Data);
-  console.log("v0.4.0 Data", v040Data);
-  /**
    * Call the functions to finalize updates.
    */
-  if (v030Data.items.length > 0) {
-    await _performMigration("items", v030Data.items);
-  }
-
-  if (Object.keys(v030Data.actors).length > 0) {
-    for (const a of v030Data.actors) {
-      await _performMigration("actors", a);
+  const finalUpdateData = mergeObject(v030Data, v040Data);
+  try {
+    console.log("==== CD10 | Beginning migration! ====");
+    if (finalUpdateData.items.length > 0) {
+      await _performMigration("items", finalUpdateData.items);
     }
-  }
-  // TODO: Finish token migration for v030.
-  /**
-  If (v030Data.tokens.length > 0) {
-    _performMigration("tokens", v030Data.tokens);
-  }
-   */
-  if (v040Data.items.length > 0) {
-    await _performMigration("items", v040Data.items);
-  }
 
-  if (Object.keys(v040Data.actors).length > 0) {
-    for (const a of v040Data.actors) {
-      await _performMigration("actors", a);
+    if (Object.keys(finalUpdateData.actors).length > 0) {
+      for (const a of finalUpdateData.actors) {
+        await _performMigration("actors", a);
+      }
     }
+    if (Object.keys(finalUpdateData.tokens).length > 0) {
+      _performMigration("tokens", finalUpdateData.tokens);
+    }
+  } catch(err) {
+    console.error("MIGRATIONS FAILED!", err);
   }
-  // TODO: Finish token migration for v040.
-  /**
-  If (v040Data.tokens.length > 0) {
-    _performMigration("tokens", v040Data.tokens);
-  }
-   */
-
-
 }

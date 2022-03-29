@@ -116,28 +116,28 @@ export const v030Migrate = async () => {
     let itemUpdateData;
     let updateData;
 
-    for (const s of game.scenes.contents) {
-      for (const t of s.tokens) {
+    for (const scene of game.scenes.contents) {
+      for (const token of scene.tokens) {
         let actorUpdates = {};
-        if (!t.isLinked) {
-          if (t.actor === null) {
+        if (!token.isLinked) {
+          if (token.actor === null) {
             return;
           }
-          for (const i of t.actor.items.contents) {
+          for (const item of token.actor.items.contents) {
             try {
               let itemArray = [];
-              itemUpdateData = await _migrateItem(i);
+              itemUpdateData = await _migrateItem(item);
               if (Object.keys(itemUpdateData).length > 0) {
                 itemArray.push(itemUpdateData);
               }
               if (itemArray.length > 0) {
                 actorUpdates = {
-                  _id: t.id,
+                  _id: token.id,
                   itemArray: itemArray
                 };
               }
             } catch(err) {
-              console.error(`Item migration failed for token item ${i.name}`, err);
+              console.error(`Item migration failed for token item ${item.name}`, err);
             }
           }
         }
@@ -152,7 +152,7 @@ export const v030Migrate = async () => {
 
   items = await _migrateV030Items();
   actors = await _migrateV030Actors();
-  // Tokens = await _migrateV030Tokens();
+  tokens = await _migrateV030Tokens();
 
   const newData = {
     items,

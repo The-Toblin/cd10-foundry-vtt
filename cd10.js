@@ -171,18 +171,18 @@ Hooks.once("ready", async () => {
   console.log("==== CD10 | Checking versions ====");
 
   const currentVersion = game.settings.get("cd10", "systemMigrationVersion");
-  const NEEDS_MIGRATION_VERSION = "0.4.0";
+  const NEEDS_MIGRATION_VERSION = "0.4.7";
   let needsMigration =
     !currentVersion || isNewerVersion(NEEDS_MIGRATION_VERSION, currentVersion);
 
   if (needsMigration) {
+    console.log("==== CD10 | System out of date! Migration needed! ====");
+
     try {
       await CD10Migration(currentVersion);
 
-      // Console.log("==== CD10 | Migrations complete. Updating settings version to",
-      // game.system.data.version, "from", currentVersion, "====");
-
-      // Game.settings.set("cd10", "systemMigrationVersion", game.system.data.version);
+      console.log("==== CD10 | All migrations finished successfully. Updating settings version to", game.system.data.version, "from", currentVersion, "====");
+      game.settings.set("cd10", "systemMigrationVersion", game.system.data.version);
 
     } catch(err) {
       console.error("MIGRATION FAILED!", err);
