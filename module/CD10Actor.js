@@ -47,7 +47,7 @@ export default class CD10Actor extends Actor {
     templateData.debilitationType = {
       type: "string",
       label: "Debilitation",
-      value: debilitation.types
+      value: debilitation.type
     };
   }
 

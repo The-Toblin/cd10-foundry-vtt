@@ -90,38 +90,56 @@ export default async function MigrateWorld(currentVersion) {
     /* Do things with the data */
     if (type === "items") {
       console.log("Migrating world items.");
-      // Await Item.updateDocuments(updateData);
+      await Item.updateDocuments(updateData);
     } else if (type === "actors") {
       const actor = game.actors.get(updateData._id);
       console.log(`Migrating items belonging to actor ${actor.name}`);
-      // Await actor.updateEmbeddedDocuments("Item", updateData.itemArray);
+      await actor.updateEmbeddedDocuments("Item", updateData.itemArray);
+      await actor.unequipItems("meleeWeapon");
+      await actor.unequipItems("armor");
     } else if (type === "tokens") {
-      const tokenActor = game.actors.get(updateData._id);
-      console.log(`Migrating items belonging to unlinked token ${tokenActor.name}`);
-      if (tokenActor.name === "Davek") {
-        console.log(updateData);
+      console.log("Migrating items belonging to unlinked tokens");
+      for (const scene of game.scenes.contents) {
+        await scene.update(updateData);
       }
-      // Await tokenActor.updateEmbeddedDocuments("Item", updateData.itemArray);
     }
   };
 
+  console.log(v030Data, v040Data);
   /**
    * Call the functions to finalize updates.
    */
-  const finalUpdateData = mergeObject(v030Data, v040Data);
+
   try {
     console.log("==== CD10 | Beginning migration! ====");
-    if (finalUpdateData.items.length > 0) {
-      await _performMigration("items", finalUpdateData.items);
+    if (v030Data.items.length > 0) {
+      await _performMigration("items", v030Data.items);
     }
 
-    if (Object.keys(finalUpdateData.actors).length > 0) {
-      for (const a of finalUpdateData.actors) {
+    if (Object.keys(v030Data.actors).length > 0) {
+      for (const a of v030Data.actors) {
         await _performMigration("actors", a);
       }
     }
-    if (Object.keys(finalUpdateData.tokens).length > 0) {
-      _performMigration("tokens", finalUpdateData.tokens);
+    if (Object.keys(v030Data.tokens).length > 0) {
+      _performMigration("tokens", v030Data.tokens);
+    }
+  } catch(err) {
+    console.error("MIGRATIONS FAILED!", err);
+  }
+  try {
+    console.log("==== CD10 | Beginning migration! ====");
+    if (v040Data.items.length > 0) {
+      await _performMigration("items", v040Data.items);
+    }
+
+    if (Object.keys(v040Data.actors).length > 0) {
+      for (const a of v040Data.actors) {
+        await _performMigration("actors", a);
+      }
+    }
+    if (Object.keys(v040Data.tokens).length > 0) {
+      _performMigration("tokens", v040Data.tokens);
     }
   } catch(err) {
     console.error("MIGRATIONS FAILED!", err);

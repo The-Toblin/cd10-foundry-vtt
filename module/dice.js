@@ -322,9 +322,6 @@ function _handleSave(
   let lethalityValue = lethality;
   let shockValue = shock;
 
-  console.log(
-    `We have an incoming attack with Lethality of ${lethalityValue} and Shock of ${shockValue}`
-  );
   /* This is where we calculate the outcome of the save, based
     on input factors. */
 
@@ -332,29 +329,20 @@ function _handleSave(
   if (usingShield) {
     lethalityValue -= shieldObj.data.protection[damageType].value;
     shockValue -= shieldObj.data.protection.shock.value;
-    console.log(
-      `After Shield, Lethality is  ${lethalityValue} and Shock is ${shockValue}`
-    );
   }
 
   /* Then we account for armor. */
   if (armorObj !== null) {
     lethalityValue -= armorObj.data.protection[damageType].value;
     shockValue -= armorObj.data.protection.shock.value;
-    console.log(
-      `After Armor, Lethality is  ${lethalityValue} and Shock is ${shockValue}`
-    );
+
   }
 
   if (lethalityValue < 0) {
-    console.log("Setting lethalityValue to 0");
     lethalityValue = 0;
   }
 
   let totalRoll = roll + traitValue;
-  console.log(
-    `After calcs, totalRoll is ${totalRoll}, with roll of ${roll} and Lethality of ${lethalityValue}`
-  );
 
   /* Set up limits for fumble and perfection */
   let fumbleLimit = parseInt(lethalityValue) - 10;
@@ -396,10 +384,6 @@ function _handleSave(
     wounds = 2;
   }
 
-  console.log(
-    `Outcome is ${outcome} because roll was ${totalRoll} versus a Lethality of ${lethalityValue}`
-  );
-
   /* Update the actor with the values from the save. */
   let actorObj = game.actors.get(actor);
 
@@ -410,10 +394,6 @@ function _handleSave(
   if (wounds > 0) {
     actorObj.modifyWounds(wounds);
   }
-
-  console.log(
-    `Because of ${outcome}, attack causes ${shockValue} shock and inflicting ${wounds} wounds.`
-  );
 
   return {
     shockResult: shockValue,

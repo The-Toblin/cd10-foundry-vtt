@@ -29,12 +29,12 @@
     "system": [],
     "dependencies": [],
     "socket": false,
-    "manifest": "https://raw.githubusercontent.com/The-Toblin/cd10-foundry-vtt/v04stable/system.json",
-    "download": "https://github.com/The-Toblin/cd10-foundry-vtt/archive/refs/heads/v04stable.zip",
+    "manifest": "https://raw.githubusercontent.com/The-Toblin/cd10-foundry-vtt/main/system.json",
+    "download": "https://github.com/The-Toblin/cd10-foundry-vtt/archive/refs/heads/main.zip",
     "protected": false,
     "gridDistance": 1.5,
     "gridUnits": "m",
     "initiative": "1d10x9",
-    "primaryTokenAttribute": "morale",
+    "primaryTokenAttribute": "shock",
     "secondaryTokenAttribute": "wounds"
 }

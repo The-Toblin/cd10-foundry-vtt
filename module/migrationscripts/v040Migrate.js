@@ -83,12 +83,32 @@ export const v040Migrate = async () => {
     for (const item of actorItems) {
       let newData = {};
       try {
-        if (item.data.hasOwnProperty("teachable")) { // BUG: hasOwnProperty not working on token data.
+        if (item.data.hasOwnProperty("teachable")) {
           for (const worldSkill of worldItems) {
             const worldSkillObject = game.items.get(worldSkill._id);
             if (worldSkillObject.type === "skill") {
-              const nameComparison = await _compareNames(game.actors.get(actorId).items.get((item.id)).name,
-                worldSkillObject.name);
+              let itemName = null;
+              // Fetch the item from the actor or token. Since we don't know if it's an actor
+              // or token, we have to test.
+              for (const actor of game.actors.contents) {
+                if (actorId === actor.id) {
+                  itemName = actor.items.get(item.id).name;
+                }
+              }
+              if (itemName === null) {
+                for (const scene of game.scenes.contents) {
+                  for (const token of scene.tokens.contents) {
+                    if (actorId === token.data._id) {
+                      for (const tokenItem of token.data.actorData.items) {
+                        if (item.id === tokenItem._id) {
+                          itemName = tokenItem.name;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              const nameComparison = await _compareNames(itemName, worldSkillObject.name);
               if (nameComparison) {
                 if (worldSkill._id === worldSkillObject.id) {
                   newData._id = item.id;
@@ -171,7 +191,7 @@ export const v040Migrate = async () => {
       let actorItemArray = [];
       try {
         for (const actorItem of actor.items) {
-          actorItemArray.push({id: actorItem.id, data: actorItem.data.data});
+          actorItemArray.push({ id: actorItem.id, data: actorItem.data.data });
         }
         let actorUpdateData = await _migrateActor(actor.id, actorItemArray, worldItems);
         if (!isObjectEmpty(actorUpdateData)) {
@@ -194,24 +214,21 @@ export const v040Migrate = async () => {
     let updateData = [];
     for (const scene of game.scenes.contents) {
       for (const token of scene.tokens) {
+        let newData = [];
+        let tokenItemArray = [];
         if (!token.isLinked) {
           try {
             if (token.data.actorData?.items !== undefined) {
-              let tokenItemArray=[];
               for (const tokenItem of token.data.actorData.items) {
-                tokenItemArray.push({id: tokenItem.id, data: tokenItem.data.data});
+                tokenItemArray.push({ id: tokenItem._id, data: tokenItem.data });
               }
               if (tokenItemArray.length > 0) {
-                let newData = await _migrateActor(token.id, tokenItemArray, worldItems);
-                console.log(`${token.name} newData: `, newData);
-
+                newData = await _migrateActor(token.id, tokenItemArray, worldItems);
+              }
+              if (!isObjectEmpty(newData)) {
+                updateData.push(newData);
               }
             }
-
-            // Let tokenUpdateData = await _migrateActor(tokenActorData, items);
-            // if (!isObjectEmpty(tokenUpdateData)) {
-            // updateData.push(tokenUpdateData);
-            // }
           } catch(err) {
             console.error(`Item migration failed for token ${token.name}`, err);
           }
