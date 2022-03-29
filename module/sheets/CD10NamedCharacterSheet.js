@@ -219,7 +219,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
       html.find(".physical-save").click(this._onPhysicalSave.bind(this));
       html.find(".reveal-rollable").on("mouseover mouseout", this._onToggleRollable.bind(this));
       html.find(".stressBox").click(this._stressBoxClicked.bind(this));
-      html.find(".initiative-select").click(this._initiativeClicked.bind(this));
       html.find(".inline-edit").change(this._onSkillEdit.bind(this));
       html.find(".set-morale").change(this._onMoraleEdit.bind(this));
       html.find(".item-delete").click(this._onItemDelete.bind(this));

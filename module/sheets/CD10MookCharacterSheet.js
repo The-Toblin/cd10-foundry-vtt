@@ -227,7 +227,6 @@ export default class CD10MookCharacterSheet extends ActorSheet {
         .find(".reveal-rollable")
         .on("mouseover mouseout", this._onToggleRollable.bind(this));
       html.find(".stressBox").click(this._stressBoxClicked.bind(this));
-      html.find(".initiative-select").click(this._initiativeClicked.bind(this));
       html.find(".inline-edit").change(this._onSkillEdit.bind(this));
       html.find(".item-delete").click(this._onItemDelete.bind(this));
       html.find(".item-equip").click(this._onItemEquip.bind(this));
