@@ -1,10 +1,9 @@
-#Version 0.3.8
-Legacy release. Only bugfixes will be released after this.
-CD10 is being redesigned as a system, and the changes are too vast to use a migration script to fix. For this reason, 
-we're retiring this branch of the system and re-releasing it under a new System package. Keep your eyes open for that system. 
-This one will be renamed "Legacy", to distinguish it from the new system. 
+#Version 0.4.0
+This is a platform release. This is the version this system will stay on until the CD10 redesign is done. We
+will release bugfixes as necessary to this version, but expect a massive change when v0.5.0 is released, which
+will include the redesign changes.
 
-== Minor changes ==
+== Major changes ==
 - Removed Hitlocation
 - Removed Encumbrance
 - Removed complex checks button and dialog.
@@ -12,11 +11,12 @@ This one will be renamed "Legacy", to distinguish it from the new system.
     Right click to reverse the trait. This also works for attacks.
 - Cleaned up unimplemented mechanics, simplified code.
 - Remove shield check and defaulting to base combat skills instead of trying to work with "+shield" skills.
+- "Weapon+shield" skills are deprecated and you have to remove them manually from your characters.
 - Removed "Weapon" type from template.json. (Split into "meleeWeapon" and "rangedWeapon").
 - Fixed a MAJOR bug in how injuries were calculated.
 
-== MAJOR CHANGE ==
+== Internal change ==
 Weapons no longer match against the NAME of a skill, but a unique MatchID of the skill. This is evident when creating new weapons 
-in the items-drawer. It will pick from all the world-residing skills to populate the list of skills it can use. So if a character 
-has a unique skill for a unique weapon, you need to create said skill in the items drawer, then give the skill to the character, 
+in the items-drawer. It will pick from all the skills in the item directory to populate the list of skills it can use. So if a character 
+has a unique skill for a unique weapon, you need to create said skill in the items directory first, 
 otherwise you won't be able to select it.
