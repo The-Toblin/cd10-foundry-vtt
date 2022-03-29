@@ -604,20 +604,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     if (!boolValue) {
       this.actor.unequipItems(type);
     }
-    /* Roll the actual check. */
-    Dice.TaskCheck({
-      checkType: "Save",
-      traitObj: traitObj,
-      heroPoint: heroPointChecked,
-      traitReversed: reverseTraitChecked,
-      armorObj: armor,
-      shieldObj: shield,
-      usingShield: usingShield,
-      damageType: damageType,
-      lethality: lethality,
-      shock: shock,
-      actor: this.actor.id
-    });
 
     await item.update({
       "data.isEquipped.value": !boolValue
@@ -645,9 +631,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
   }
 
   async _onMoraleEdit(event) {
-    /* Somewhat overengineered function, remnant from when skills and traits
-        could be created directly on the character sheet. Now just used to update
-        the actual skillLevel. */
     event.preventDefault();
 
     if (!this.isEditable) {
