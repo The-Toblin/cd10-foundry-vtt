@@ -12,7 +12,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
 
   /* Define which template to be used by this actor type. */
   get template() {
-    return `systems/cd10/templates/sheets/mookCharacter-sheet.hbs`;
+    return "systems/cd10/templates/sheets/mookCharacter-sheet.hbs";
   }
 
   /** ********************
@@ -507,7 +507,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     let shock = parseInt(html.find("input#shock").val()) || 0;
     let damageType = html.find("select#damage-type").val() || "slash";
 
-    if (!lethality > 0) {
+    if (lethality < 1) {
       ui.notifications.error("Please select a non-zero value for Lethality!");
       return;
     }
@@ -681,115 +681,6 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     this.actor.update({
       "data.stressing.value": !value
     });
-  }
-
-  _checkHeroPoints() {
-    if (this.actor.getExp > 0) {
-      this.actor.modifyExp(-1);
-      return true;
-    } else {
-      ui.notifications.error(
-        `${this.actor.name} does not have enough experience.`
-      );
-      return false;
-    }
-  }
-
-  async _toggleSkillUp(event) {
-    event.preventDefault();
-    let element = event.currentTarget;
-    let itemId = element.closest(".item").dataset.itemId;
-    let item = this.actor.items.get(itemId);
-
-    let levelUpValue = item.data.data.levelUp.value;
-
-    await item.update({
-      "data.levelUp.value": !levelUpValue
-    });
-  }
-
-  async _onClickTrait(event) {
-    event.preventDefault();
-    let element = event.currentTarget;
-    let itemId = element.closest(".item").dataset.itemId;
-    let item = this.actor.items.get(itemId);
-
-    if (item.getSelectionStatus === 1 || item.getSelectionStatus === 2) {
-      item.setSelectionStatus(0);
-      return;
-    }
-
-    await this.actor.resetTraitSelection();
-
-    if (event.type === "click") {
-      item.setSelectionStatus(1);
-    } else {
-      item.setSelectionStatus(2);
-    }
-
-  }
-
-  async _initiativeClicked(event) {
-    event.preventDefault();
-    /* Rolling initative manually */
-    let skillValue;
-    let skillName;
-    let modifier = this.actor.getModifier;
-    this.getData().meleeWeapons.forEach(w => {
-      if (w.data.isEquipped.value) {
-        let weapon = w;
-
-        this.getData().skills.forEach(s => {
-          if (s.data.matchID === w.data.attackSkill.value) {
-            skillValue = s.data.skillLevel.value;
-            skillName = s.name;
-          }
-        });
-      }
-    });
-
-    let rollFormula = "1d10x9 + @actionValue";
-    if (modifier > 0) {
-      rollFormula += " - @modifier";
-    }
-    let rollData = {
-      actionValue: skillValue,
-      modifier: modifier
-    };
-
-    let rollD10 = await new Roll(rollFormula, rollData).roll({
-      async: true
-    });
-
-    /* Catch the dreaded 0 */
-    for (let i = 0; i < rollD10.terms[0].results.length; i++) {
-      if (rollD10.terms[0].results[i].result === 10) {
-        rollD10._total -= 10;
-      }
-    }
-
-    let renderedRoll = await rollD10.render();
-    let templateContext = null;
-    let chatData = null;
-    let messageTemplate =
-      "systems/cd10/templates/partials/chat-messages/skill-roll.hbs";
-
-    templateContext = {
-      initiative: true,
-      skillName: skillName,
-      skillLevel: skillValue,
-      roll: renderedRoll
-    };
-
-    chatData = {
-      speaker: ChatMessage.getSpeaker(),
-      roll: rollD10,
-      content: await renderTemplate(messageTemplate, templateContext),
-      sound: CONFIG.sounds.dice,
-      type: CONST.CHAT_MESSAGE_TYPES.ROLL
-    };
-
-    ChatMessage.create(chatData);
   }
 
   _checkHeroPoints() {
