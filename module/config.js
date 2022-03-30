@@ -9,21 +9,6 @@ cd10.ammunitionTypes = {
   rockets: "cd10.ammunition.rockets",
   shells: "cd10.ammunition.shells"
 };
-cd10.combatSkills = {
-  none: "cd10.attack.none",
-  archery: "cd10.attack.archery",
-  brawl: "cd10.attack.brawl",
-  crossbow: "cd10.attack.crossbow",
-  energyWeapons: "cd10.attack.energyWeapons",
-  handguns: "cd10.attack.handguns",
-  heavyWeapons: "cd10.attack.heavyWeapons",
-  oneHandedWeapons: "cd10.attack.oneHandedWeapons",
-  polearms: "cd10.attack.polearms",
-  rifles: "cd10.attack.rifles",
-  sling: "cd10.attack.sling",
-  throwing: "cd10.attack.throwing",
-  twoHandedWeapons: "cd10.attack.twoHandedWeapons"
-};
 cd10.simpleDamageTypes = {
   lethality: "cd10.chat.attack.lethality"
 };

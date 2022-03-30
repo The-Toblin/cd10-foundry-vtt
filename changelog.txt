@@ -1,3 +1,6 @@
+#Version 0.4.1
+Removed erroneously placed roll function in the itemEquip function on the named character sheet.
+
 #Version 0.4.0
 This is a platform release. This is the version this system will stay on until the CD10 redesign is done. We
 will release bugfixes as necessary to this version, but expect a massive change when v0.5.0 is released, which

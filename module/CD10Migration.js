@@ -60,6 +60,9 @@ export default async function MigrateWorld(currentVersion) {
      * In addition, we're introducing equipment restrictions in line with the re-design, in preparation
      * for the re-design transfer. Only one weapon, armor and shield can be equipped at any time.
      * This also simplifies roll calculations.
+     * 
+     * The biggest change is adding MatchID to skills and having weapons match against that, rather than
+     * skill name when performing checks.
      */
     console.log("==== CD10 | Beginning v0.4.0 data collection! ====");
     try {
