@@ -212,6 +212,12 @@
   padding: 10px;
   min-width: 225px;
 }
+.cd10.sheet.namedCharacter form .sheet-sidebar .stressBoxSelect {
+  padding-top: 2px;
+}
+.cd10.sheet.namedCharacter form .sheet-sidebar .stressBox {
+  padding: 8px 0 2px 0;
+}
 .cd10.sheet.namedCharacter form .sheet-sidebar .pad-top {
   padding-top: 4px;
 }
