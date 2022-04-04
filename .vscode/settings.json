@@ -1,0 +1,7 @@
+{
+  "less.compile": {
+    "main": "cd10.less",
+    "out": "../",
+    "compress": false
+  }
+}
