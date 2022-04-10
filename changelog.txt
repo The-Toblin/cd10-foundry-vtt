@@ -1,3 +1,9 @@
+#Version 0.4.3
+Fixed a mismatch in the initiative roll. It would erroneously grab the actor, not the token, leading to a mismatch of items, skills and modifiers and sometimes failing entirely.
+
+#Version 0.4.2
+Stable release.
+
 #Version 0.4.1
 Removed erroneously placed roll function in the itemEquip function on the named character sheet.
 

@@ -1,23 +1,30 @@
 export default class CD10Combatant extends Combatant {
   _getInitiativeFormula(combatant) {
     let baseFormula = super._getInitiativeFormula(combatant);
-    const actor = game.actors.get(this.data.actorId);
-    let skillValue;
-    let modifier = actor.getModifier;
+    console.log("Combatant:", this);
+    const scene = game.scenes.get(this.data.sceneId);
+    const token = scene.tokens.get(this.data.tokenId);
 
-    actor.items.forEach(w => {
-      if (w.type === "meleeWeapon" || w.type === "rangedWeapon") {
-        if (w.data.data.isEquipped.value) {
-          actor.items.forEach(s => {
-            if (s.type === "skill") {
-              if (s.data.data.matchID === w.data.data.attackSkill.value) {
-                skillValue = s.data.data.skillLevel.value;
-              }
-            }
-          });
+    let weapon = null;
+    let skill = null;
+    let skillValue = 0;
+    let modifier = token._actor.data.data.modifier.value;
+
+    for (const item of token._actor.data.items) {
+      if (item.type === "meleeWeapon" || (item.type === "rangedWeapon" && item.data.data.isEquipped?.value)) {
+        weapon = item;
+      }
+    }
+
+    for (const item of token._actor.data.items) {
+      if (item.type === "skill") {
+        if (item.data.data.matchID === weapon.data.data.attackSkill.value) {
+          skill = item;
         }
       }
-    });
+    }
+
+    skillValue = skill.data.data.skillLevel.value;
 
     if (skillValue !== null) {
       baseFormula += ` + ${skillValue}`;
