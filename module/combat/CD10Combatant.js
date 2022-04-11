@@ -1,7 +1,6 @@
 export default class CD10Combatant extends Combatant {
   _getInitiativeFormula(combatant) {
     let baseFormula = super._getInitiativeFormula(combatant);
-    console.log("Combatant:", this);
     const scene = game.scenes.get(this.data.sceneId);
     const token = scene.tokens.get(this.data.tokenId);
 
