@@ -1,3 +1,169 @@
+/**
+ * Core Dice roller class for handling all types of checks.
+ * Contains helper functions for resolving things necessary for checks.
+ *
+ * Exports three functions for handling basic skill checks, attack checks
+ * and physical saves.
+ */
+
+/**
+ * Creates the RollFormula for use in dicerolls, based on the data delivered to it.
+ * @param {number} skillLevel (opt)
+ * @param {number} traitLevel (opt)
+ * @param {number} modifier (opt)
+ * @param {boolean} save (opt)
+ * @param {boolean} heroPoint (opt)
+ * @returns {Promise/String}
+ */
+const createDiceFormula = async (skillLevel = 0, traitLevel = 0, modifier = 0, save = false, heroPoint = false) => {
+  const baseDice = heroPoint === true ? "2d10x9" : "1d10x9";
+  let rollFormula = `${baseDice}`;
+
+  if (skillLevel > 0) rollFormula += " + @skillLevel";
+
+  rollFormula += traitLevel > 0 ? " + @traitLevel" : " @traitLevel";
+
+  if (modifier > 0 && !save) rollFormula += " - @modifier";
+
+  return rollFormula;
+};
+
+const createRollData = async (skillLevel = null, traitLevel = null, modifier = null) => {
+  return {
+    skillLevel: skillLevel,
+    traitLevel: traitLevel,
+    modifier: modifier
+  };
+};
+
+const doCD10Roll = async (rollFormula, rollData) => {
+  const cd10Roll = new Roll(rollFormula, rollData);
+  await cd10Roll.evaluate({async: true});
+
+  // Turn the 1-10 d10s into a 0-9 d10s
+  for (let i = 0; i < cd10Roll.terms[0].results.length; i++) {
+    cd10Roll.terms[0].results[i].result -= 1;
+  }
+
+  return cd10Roll;
+};
+
+/**
+ * Evaluator function. Evaluates the rolldata delivered to it. It adds the total together,
+ * rerolls any zeroes and returns the object holding the evaluated data.
+ * @param {Array} rollResults Holds the rolled results.
+ * @returns {Promise/Object} The finished evaluation object.
+ */
+const evaluateRoll = async rollResults => {
+  let totalResult = 0;
+  let rolledZero = false;
+
+  if (rollResults[0] === 0) {
+    const reRoll = await doCD10Roll("1d10x9");
+    rolledZero = true;
+
+    for (const reRollObj of reRoll.terms[0].results) {
+      rollResults.push(reRollObj.result);
+    }
+  }
+
+  for (const diceResult of rollResults) {
+    totalResult += diceResult;
+  }
+
+  return {
+    rollResults: rollResults,
+    total: totalResult,
+    rolledZero: rolledZero
+  };
+};
+
+/**
+ * Helper function for the roll renderer. Creates a list of rolled dice
+ * marking 0's as failures (red) and 9's as successes (green).
+ * @param {Array} diceRolls The object holding all the rolls.
+ * @returns {Promise/HTML} HTML list segment for use in chatdata.
+ */
+const diceList = async diceRolls => {
+  const results = {
+    0: '<li class="roll die d10 failure">',
+    9: '<li class="roll die d10 success">'
+  };
+
+  let rolledList = "";
+
+  for (const roll of diceRolls ) {
+    rolledList += `${results[roll.result] || '<li class="roll die d10">'} ${roll.result} </li>`;
+  }
+  return rolledList;
+};
+
+const renderskillCheckRoll = async cd10Roll => {
+
+};
+
+const renderAttackRoll = async cd10Roll => {
+
+};
+
+const renderSaveRoll = async cd10Roll => {
+
+};
+
+const createRollRenderTemplate = async () => {
+  const renderTemplate = "";
+
+  return rollTemplate;
+};
+
+const getSkillData = async (actorId = null, skillId = null) => {
+  if (skillId !== null && actorId !== null) {
+    const skill = game.actors.get(actorId).items.get(skillId);
+    return {
+      skillLevel: parseInt(skill.data.data.skillLevel.value),
+      skillName: skill.name
+    };
+  } else {
+    return {
+      skillLevel: 0,
+      skillName: "No skill!"
+    };
+  }
+};
+
+const getTraitData = async (actorId = null, traitId = null) => {
+  if (traitId !== null && actorId !== null) {
+    const trait = game.actors.get(actorId).items.get(skillId);
+    const traitLevel = parseInt(trait.data.data.skillLevel.value);
+    const reversed = trait.data.data.reversed.value;
+    return {
+      traitLevel: reversed ? (traitLevel * -1) : traitLevel,
+      traitName: trait.name
+    };
+  } else {
+    return {
+      traitLevel: 0,
+      traitName: null
+    };
+  }
+};
+
+
+export const SkillCheck = async (actorId = null, skillId = null, traitId = null, heroPoint = false) => {
+  const messageTemplate = "systems/cd10/templates/partials/chat-messages/skill-check.hbs";
+
+};
+
+export const AttackCheck = async (actorId = null, skillId = null, traitId = null, heroPoint = false) => {
+  const messageTemplate = "systems/cd10/templates/partials/chat-messages/attack-check.hbs";
+
+};
+
+export const Save = async (actorId = null, traitId = null, heroPoint = false, lethality = 0, damageType = "slash") => {
+  const messageTemplate = "systems/cd10/templates/partials/chat-messages/save.hbs";
+};
+
+
 /* Core dice roll functions for making skillchecks, attacks and saves. The variable checkType determines
 how this class functions. */
 /**
@@ -13,12 +179,11 @@ how this class functions. */
  * @param root0.weaponObj
  * @param root0.armorObj
  * @param root0.lethality
- * @param root0.shock
  * @param root0.damageType
  * @param root0.heroPoint
  * @param root0.modifier
  */
-export async function TaskCheck({
+export async function simplecheck({
   actor = null,
   checkType = null,
   skillObj = null,
@@ -29,7 +194,6 @@ export async function TaskCheck({
   weaponObj = null,
   armorObj = null,
   lethality = 0,
-  shock = 0,
   damageType = "slash",
   heroPoint = false,
   modifier = 0
@@ -48,8 +212,8 @@ export async function TaskCheck({
   let rollData = null;
   let skillName = null;
   let traitName = null;
-  let actionValue = null;
-  let traitValue = null;
+  let skillLevel = null;
+  let traitLevel = null;
 
   /* Set up correct chat message template */
   let messageTemplate = null;
@@ -66,33 +230,33 @@ export async function TaskCheck({
 
   /* Fetch skill level */
   if (skillObj !== null) {
-    actionValue = parseInt(skillObj.data.data.skillLevel.value);
+    skillLevel = parseInt(skillObj.data.data.skillLevel.value);
     skillName = skillObj.name;
   } else {
     skillName = null;
   }
 
-  /* Set up traitvalue for the roll */
+  /* Set up traitLevel for the roll */
   if (traitObj !== null) {
     traitName = traitObj.name;
-    traitValue = parseInt(traitObj.data.data.skillLevel.value);
+    traitLevel = parseInt(traitObj.data.data.skillLevel.value);
 
     if (traitReversed) {
-      traitValue *= -1;
+      traitLevel *= -1;
     }
   }
 
   /* Set up the rollformula */
   rollFormula = `${baseDice}`;
 
-  if (actionValue > 0) {
-    rollFormula += " + @actionValue";
+  if (skillLevel > 0) {
+    rollFormula += " + @skillLevel";
   }
 
-  if (traitValue > 0) {
-    rollFormula += " + @traitValue";
-  } else if (traitValue < 0) {
-    rollFormula += " @traitValue";
+  if (traitLevel > 0) {
+    rollFormula += " + @traitLevel";
+  } else if (traitLevel < 0) {
+    rollFormula += " @traitLevel";
   }
 
   if (modifier > 0 && checkType !== "Save") {
@@ -104,14 +268,14 @@ export async function TaskCheck({
     if (skillObj === null && traitObj !== null) {
       skillName = traitObj.name;
     } else if (skillObj === null && traitObj === null) {
-      actionValue = 0;
+      skillLevel = 0;
       skillName = "No Skill!";
     }
   }
 
   rollData = {
-    actionValue: actionValue,
-    traitValue: traitValue,
+    skillLevel: skillLevel,
+    traitLevel: traitLevel,
     modifier: modifier
   };
 
@@ -136,7 +300,7 @@ export async function TaskCheck({
     templateContext = {
       skillName: skillName,
       traitName: traitName,
-      traitValue: traitValue,
+      traitLevel: traitLevel,
       roll: renderedRoll
     };
   } else if (checkType === "Complex") {
@@ -144,7 +308,7 @@ export async function TaskCheck({
       skillName: skillName,
       traitName: traitName,
       roll: renderedRoll,
-      traitValue: traitValue
+      traitLevel: traitLevel
     };
   } else if (checkType === "SimpleAttack") {
     let attackOutcome = _handleAttack(
@@ -157,13 +321,12 @@ export async function TaskCheck({
     templateContext = {
       weapon: weaponObj,
       weaponDamage: attackOutcome.weaponDamage,
-      weaponShock: attackOutcome.weaponShock,
       roll: renderedRoll,
       lethality: attackOutcome.lethality,
       excess: attackOutcome.excess,
       type: damageType,
       skillName: attackOutcome.skillName,
-      actionValue: attackOutcome.actionValue
+      skillLevel: attackOutcome.skillLevel
     };
   } else if (checkType === "Attack") {
     let attackOutcome = _handleAttack(
@@ -176,15 +339,14 @@ export async function TaskCheck({
     templateContext = {
       weapon: weaponObj,
       weaponDamage: attackOutcome.weaponDamage,
-      weaponShock: attackOutcome.weaponShock,
       roll: renderedRoll,
       lethality: attackOutcome.lethality,
       excess: attackOutcome.excess,
       type: damageType,
       skillName: attackOutcome.skillName,
       traitName: traitName,
-      actionValue: attackOutcome.actionValue,
-      traitValue: traitValue
+      skillLevel: attackOutcome.skillLevel,
+      traitLevel: traitLevel
     };
   } else if (checkType === "Save") {
     let shieldDamageProtection = 0;
@@ -204,7 +366,7 @@ export async function TaskCheck({
 
     let outcome = _handleSave(
       rollD10._total,
-      traitValue,
+      traitLevel,
       damageType,
       armorObj,
       shieldObj,
@@ -255,7 +417,7 @@ export async function TaskCheck({
  */
 function _handleAttack(rollTotal, skillObj, weaponObj, damageType, actorId) {
   /* Calculate details of the attack, such as Lethality and Excess. */
-  let excess; let lethality; let actionValue; let skillName; let weaponDamage; let weaponShock;
+  let excess; let lethality; let skillLevel; let skillName; let weaponDamage; let weaponShock;
 
   excess = parseInt(rollTotal) - 9;
 
@@ -277,14 +439,14 @@ function _handleAttack(rollTotal, skillObj, weaponObj, damageType, actorId) {
 
   if (skillObj === null) {
     skillName = "No skill!";
-    actionValue = 0;
+    skillLevel = 0;
   } else {
-    actionValue = skillObj.data.data.skillLevel.value;
+    skillLevel = skillObj.data.data.skillLevel.value;
     skillName = skillObj.name;
   }
 
   return {
-    actionValue,
+    skillLevel,
     skillName,
     lethality,
     excess,
@@ -297,7 +459,7 @@ function _handleAttack(rollTotal, skillObj, weaponObj, damageType, actorId) {
 /**
  *
  * @param roll
- * @param traitValue
+ * @param traitLevel
  * @param damageType
  * @param armorObj
  * @param shieldObj
@@ -308,7 +470,7 @@ function _handleAttack(rollTotal, skillObj, weaponObj, damageType, actorId) {
  */
 function _handleSave(
   roll,
-  traitValue,
+  traitLevel,
   damageType,
   armorObj,
   shieldObj,
@@ -342,7 +504,7 @@ function _handleSave(
     lethalityValue = 0;
   }
 
-  let totalRoll = roll + traitValue;
+  let totalRoll = roll + traitLevel;
 
   /* Set up limits for fumble and perfection */
   let fumbleLimit = parseInt(lethalityValue) - 10;
