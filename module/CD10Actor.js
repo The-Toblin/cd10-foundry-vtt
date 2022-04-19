@@ -34,9 +34,7 @@ export default class CD10Actor extends Actor {
     let debilitation = this._prepareDebilitation(templateData);
 
     /* Check stress and apply to modifier */
-    if (templateData.stressing.value) {
-      debilitation.modifier += 3;
-    }
+    if (templateData.stressing.value) debilitation.modifier += 3;
 
     templateData.modifier = {
       type: "number",
@@ -143,7 +141,7 @@ export default class CD10Actor extends Actor {
   _prepareDebilitation(data) {
     /* This function calculates the proper modifier and debilitation type for a character */
     let debilitationType;
-    let wounds = data.wounds.value;
+    const wounds = data.wounds.value;
     let woundsModifier;
 
     if (wounds === 2) {
@@ -262,14 +260,16 @@ export default class CD10Actor extends Actor {
     await this.updateEmbeddedDocuments("Item", traitArray);
   }
 
-  async unequipItems(item) {
+  async unequipItems(type) {
     let itemArray = [];
     let itemUpdate = {};
 
-    if (item !== "meleeWeapon" && item !== "rangedWeapon" && item !== "armor" && item !== "shield") {
+    // TODO Add hasOwnProperty test instead of this pile of if-statements.
+
+    if (type !== "meleeWeapon" && type !== "rangedWeapon" && type !== "armor" && type !== "shield") {
     } else {
       this.items.forEach(i => {
-        if (item === "meleeWeapon" || item === "rangedWeapon") {
+        if (type === "meleeWeapon" || type === "rangedWeapon") {
           if (i.type === "meleeWeapon" || i.type === "rangedWeapon") {
             itemUpdate = {
               _id: i.id,
@@ -283,7 +283,7 @@ export default class CD10Actor extends Actor {
               itemArray.push(itemUpdate);
             }
           }
-        } else if (i.type === item) {
+        } else if (i.type === type) {
           itemUpdate = {
             _id: i.id,
             data: {

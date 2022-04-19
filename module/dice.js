@@ -89,11 +89,7 @@ export async function TaskCheck({
     rollFormula += " + @actionValue";
   }
 
-  if (traitValue > 0) {
-    rollFormula += " + @traitValue";
-  } else if (traitValue < 0) {
-    rollFormula += " @traitValue";
-  }
+  rollFormula += traitValue > 0 ? " + @traitValue" : " @traitValue";
 
   if (modifier > 0 && checkType !== "Save") {
     rollFormula += " - @modifier";

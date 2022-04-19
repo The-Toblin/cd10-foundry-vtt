@@ -128,35 +128,17 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     });
 
     /* Create subproperties for item types */
-    sheetData.ammunition = sheetData.items.filter(
-      p => p.type === "ammunition"
-    );
-    sheetData.allArmors = sheetData.items.filter(
-      p => p.type === "armor" || p.type === "shield"
-    );
+    sheetData.ammunition = sheetData.items.filter(p => p.type === "ammunition");
+    sheetData.allArmors = sheetData.items.filter(p => p.type === "armor" || p.type === "shield");
     sheetData.armors = sheetData.items.filter(p => p.type === "armor");
     sheetData.shields = sheetData.items.filter(p => p.type === "shield");
-    sheetData.allWeapons = sheetData.items.filter(
-      p => p.type === "meleeWeapon" || p.type === "rangedWeapon"
-    );
-    sheetData.meleeWeapons = sheetData.items.filter(
-      p => p.type === "meleeWeapon"
-    );
-    sheetData.rangedWeapons = sheetData.items.filter(
-      p => p.type === "rangedWeapon"
-    );
+    sheetData.allWeapons = sheetData.items.filter(p => p.type === "meleeWeapon" || p.type === "rangedWeapon");
+    sheetData.meleeWeapons = sheetData.items.filter(p => p.type === "meleeWeapon");
+    sheetData.rangedWeapons = sheetData.items.filter(p => p.type === "rangedWeapon");
     sheetData.skills = sheetData.items.filter(p => p.type === "skill");
     sheetData.traits = sheetData.items.filter(p => p.type === "trait");
-    sheetData.posTraits = sheetData.traits.filter(p => {
-      if (p.data.skillLevel.value > 0) {
-        return p;
-      }
-    });
-    sheetData.negTraits = sheetData.traits.filter(p => {
-      if (p.data.skillLevel.value < 0) {
-        return p;
-      }
-    });
+    sheetData.posTraits = sheetData.traits.filter(p => p.data.skillLevel.value > 0);
+    sheetData.negTraits = sheetData.traits.filter(p => p.data.skillLevel.value < 0);
     sheetData.spells = sheetData.items.filter(p => p.type === "spell");
     sheetData.normalItems = sheetData.items.filter(
       p =>
@@ -170,46 +152,31 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     );
 
     /* Used for selecting skills for weapons. */
-    sheetData.worldSkills = game.items.filter(p => {
-      if (p.type === "skill") {
-        return p.name;
-      }
-    });
+    sheetData.worldSkills = game.items.filter(p => p.type === "skill");
 
-    /* The following is to detect if certain things are equipped, and thus toggle certain parts of the sheet on or off. */
+    // The following is to detect if certain things are equipped, and thus toggle certain parts of the sheet on or off.
     sheetData.equippedMeleeWeapon = false;
-    sheetData.meleeWeapons.forEach(w => {
-      if (w.data.isEquipped.value) {
-        sheetData.equippedMeleeWeapon = true;
-      }
-    });
+    for (const weapon of sheetData.meleeWeapons) {
+      if (weapon.data.isEquipped.value) sheetData.equippedMeleeWeapon = true;
+    }
 
     sheetData.equippedRangedWeapon = false;
-    sheetData.rangedWeapons.forEach(w => {
-      if (w.data.isEquipped.value) {
-        sheetData.equippedRangedWeapon = true;
-      }
-    });
+    for (const weapon of sheetData.rangedWeapons) {
+      if (weapon.data.isEquipped.value) sheetData.equippedRangedWeapon = true;
+    }
 
     sheetData.equippedArmor = false;
-    sheetData.armors.forEach(a => {
-      if (a.data.isEquipped.value) {
-        sheetData.equippedArmor = true;
-      }
-    });
+    for (const armor of sheetData.armors) {
+      if (armor.data.isEquipped.value) sheetData.equippedArmor = true;
+    }
 
     sheetData.equippedShield = false;
-    sheetData.shields.forEach(s => {
-      if (s.data.isEquipped.value) {
-        sheetData.equippedShield = true;
-      }
-    });
+    for (const shield of sheetData.meleeWeapons) {
+      if (shield.data.isEquipped.value) sheetData.equippedShield = true;
+    }
 
     /* Make system settings available for sheets to use for rendering */
-    sheetData.damageTypeSetting = game.settings.get(
-      "cd10",
-      "systemDamageTypes"
-    );
+    sheetData.damageTypeSetting = game.settings.get("cd10", "systemDamageTypes");
     sheetData.barterSetting = game.settings.get("cd10", "systemBarter");
     sheetData.modernity = game.settings.get("cd10", "systemModernity");
 
@@ -223,39 +190,25 @@ export default class CD10MookCharacterSheet extends ActorSheet {
       html.find(".task-check").click(this._onTaskCheck.bind(this));
       html.find(".attack-check").click(this._simpleAttackCheck.bind(this));
       html.find(".physical-save").click(this._onPhysicalSave.bind(this));
-      html
-        .find(".reveal-rollable")
-        .on("mouseover mouseout", this._onToggleRollable.bind(this));
+      html.find(".reveal-rollable").on("mouseover mouseout", this._onToggleRollable.bind(this));
       html.find(".stressBox").click(this._stressBoxClicked.bind(this));
       html.find(".inline-edit").change(this._onSkillEdit.bind(this));
+      html.find(".set-morale").change(this._onMoraleEdit.bind(this));
       html.find(".item-delete").click(this._onItemDelete.bind(this));
       html.find(".item-equip").click(this._onItemEquip.bind(this));
       html.find(".ammo-select").click(this._onAmmoSelect.bind(this));
       html.find(".skill-item").click(this._toggleSkillUp.bind(this));
-      html
-        .find(".shock-icons")
-        .on("click contextmenu", this._onShockMarkChange.bind(this));
-      html
-        .find(".wounds-icons")
-        .on("click contextmenu", this._onWoundsMarkChange.bind(this));
-      html
-        .find(".select-trait")
-        .on("click contextmenu", this._onClickTrait.bind(this));
+      html.find(".shock-icons").on("click contextmenu", this._onShockMarkChange.bind(this));
+      html.find(".wounds-icons").on("click contextmenu", this._onWoundsMarkChange.bind(this));
+      html.find(".select-trait").on("click contextmenu", this._onClickTrait.bind(this));
 
       /* ContextMenu listeners */
       new ContextMenu(html, ".weapon-card", this.equippableItemContextMenu);
       new ContextMenu(html, ".armor-card", this.equippableItemContextMenu);
-      new ContextMenu(
-        html,
-        ".equippable-inventory-item",
-        this.equippableItemContextMenu
-      );
+      new ContextMenu(html, ".equippable-inventory-item", this.equippableItemContextMenu);
       new ContextMenu(html, ".inventory-item", this.itemContextMenu);
       new ContextMenu(html, ".skill-item", this.itemSkillContextMenu);
     }
-
-    /* General listeners */
-    /* html.find(".item-create").click(this._onItemCreate.bind(this));*/
 
     super.activateListeners(html);
   }

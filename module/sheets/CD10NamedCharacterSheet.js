@@ -144,16 +144,8 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     sheetData.rangedWeapons = sheetData.items.filter(p => p.type === "rangedWeapon");
     sheetData.skills = sheetData.items.filter(p => p.type === "skill");
     sheetData.traits = sheetData.items.filter(p => p.type === "trait");
-    sheetData.posTraits = sheetData.traits.filter(p => {
-      if (p.data.skillLevel.value > 0) {
-        return p;
-      }
-    });
-    sheetData.negTraits = sheetData.traits.filter(p => {
-      if (p.data.skillLevel.value < 0) {
-        return p;
-      }
-    });
+    sheetData.posTraits = sheetData.traits.filter(p => p.data.skillLevel.value > 0);
+    sheetData.negTraits = sheetData.traits.filter(p => p.data.skillLevel.value < 0);
     sheetData.spells = sheetData.items.filter(p => p.type === "spell");
     sheetData.normalItems = sheetData.items.filter(
       p =>
@@ -167,40 +159,28 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     );
 
     /* Used for selecting skills for weapons. */
-    sheetData.worldSkills = game.items.filter(p => {
-      if (p.type === "skill") {
-        return p.name;
-      }
-    });
+    sheetData.worldSkills = game.items.filter(p => p.type === "skill");
 
     // The following is to detect if certain things are equipped, and thus toggle certain parts of the sheet on or off.
     sheetData.equippedMeleeWeapon = false;
-    sheetData.meleeWeapons.forEach(w => {
-      if (w.data.isEquipped.value) {
-        sheetData.equippedMeleeWeapon = true;
-      }
-    });
+    for (const weapon of sheetData.meleeWeapons) {
+      if (weapon.data.isEquipped.value) sheetData.equippedMeleeWeapon = true;
+    }
 
     sheetData.equippedRangedWeapon = false;
-    sheetData.rangedWeapons.forEach(w => {
-      if (w.data.isEquipped.value) {
-        sheetData.equippedRangedWeapon = true;
-      }
-    });
+    for (const weapon of sheetData.rangedWeapons) {
+      if (weapon.data.isEquipped.value) sheetData.equippedRangedWeapon = true;
+    }
 
     sheetData.equippedArmor = false;
-    sheetData.armors.forEach(a => {
-      if (a.data.isEquipped.value) {
-        sheetData.equippedArmor = true;
-      }
-    });
+    for (const armor of sheetData.armors) {
+      if (armor.data.isEquipped.value) sheetData.equippedArmor = true;
+    }
 
     sheetData.equippedShield = false;
-    sheetData.shields.forEach(s => {
-      if (s.data.isEquipped.value) {
-        sheetData.equippedShield = true;
-      }
-    });
+    for (const shield of sheetData.meleeWeapons) {
+      if (shield.data.isEquipped.value) sheetData.equippedShield = true;
+    }
 
     /* Make system settings available for sheets to use for rendering */
     sheetData.damageTypeSetting = game.settings.get("cd10", "systemDamageTypes");
@@ -236,8 +216,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
       new ContextMenu(html, ".inventory-item", this.itemContextMenu);
       new ContextMenu(html, ".skill-item", this.itemSkillContextMenu);
     }
-    /* General listeners */
-    /* html.find(".item-create").click(this._onItemCreate.bind(this));*/
 
     super.activateListeners(html);
   }
@@ -274,9 +252,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     /* If a hero point is spent, check if there's enough points.
         Otherwise cancel the check. */
     if (event.shiftKey) {
-      if (this._checkHeroPoints() === false) {
-        return;
-      }
+      if (this._checkHeroPoints() === false) return;
     }
 
     let traitObj = null;
@@ -375,7 +351,9 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
           correctSkill = skill.name;
         }
       }
-      ui.notifications.info(`You do not have the prerequisite skill for ${weaponObj.name}, which is ${correctSkill}. Making blank check.`);
+      ui.notifications.info(
+        `You do not have the prerequisite skill for ${weaponObj.name}, which is ${correctSkill}. Making blank check.`
+      );
     }
 
     /* Check if it's a ranged weapon */
@@ -648,7 +626,8 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     this.actor.update({
       data: {
         morale: {
-          value: inputVal }
+          value: inputVal
+        }
       }
     });
   }
