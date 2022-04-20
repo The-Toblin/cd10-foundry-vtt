@@ -1,4 +1,4 @@
-<div class="weapon-card sheet-card flex-column item" data-item-id="{{_id}}">
+<div class="weapon-card sheet-card flex-col item" data-item-id="{{_id}}">
     <div class="weapon-info weapon-name dark-background pad-8">
         <p><a class="item-equip" data-type="text">
                 <i class="far fa-{{#if data.isEquipped.value}}check-{{/if}}square"></i>
@@ -9,7 +9,7 @@
         <div class="ammo-box dark-background pad-8">
             {{localize "cd10.rangedWeapon.ammunition"}}
             <hr>
-            <div class="flex-column">
+            <div class="flex-col">
                 {{#each @root.ammunition as |ammo|}}
                     <div class="flex-row ammo-selector item" data-item-id="{{ammo._id}}" data-weapon-id="{{../_id}}">
                         <a class="ammo-select" data-type="text" >

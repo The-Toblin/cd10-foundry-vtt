@@ -1,11 +1,35 @@
 // Variables
 @main-color: rgb(223, 187, 97);
 @accent-color: rgb(107, 108, 101);
+@black: rgb(0, 0, 0);
 @font-main: "Signika", sans-serif;
 
 @sheetbkg: "./assets/backgrounds/sheet_background.webp";
 @sheetcard: "./assets/backgrounds/card_background.webp";
 @sheetcarddetail: "./assets/backgrounds/card_detail_background.webp";
+
+
+// Usable functions
+.box-shadow {
+  box-shadow: 5px 10px 10px fade(@black, 50%);
+}
+
+.inset-box-shadow {
+  box-shadow: inset 2px 2px 10px 5px fade(@black, 50%);
+}
+
+.pad-8 {
+  padding: 8px;
+}
+
+.pad-4 {
+  padding: 4px;
+}
+
+.pad-2 {
+  padding: 2px;
+}
+
 
 // Containers for content
 .flex-row {
@@ -13,7 +37,7 @@
   flex-direction: row;
 }
 
-.flex-column {
+.flex-col {
   display: flex;
   flex-direction: column;
 }
@@ -48,9 +72,9 @@
   background: url("@{sheetcard}");
   border-style: solid;
   border-width: 3px;
-  border-image: radial-gradient(black, @main-color) 1;
+  border-image: radial-gradient(@black, @main-color) 1;
   padding: 5px;
-  box-shadow: 5px 10px 10px rgb(0, 0, 0, 0.5);
+  .box-shadow();
   margin: 0 5px 10px 5px;
   color: @main-color;
 }
@@ -59,8 +83,8 @@
   background: url("@{sheetcarddetail}");
   border-style: solid;
   border-width: 3px;
-  border-image: radial-gradient(black, @accent-color) 1;
-  box-shadow: inset 2px 2px 10px 5px black;
+  border-image: radial-gradient(@black, @accent-color) 1;
+  .inset-box-shadow();
   .pad-4();
   margin: 0 5px 10px 5px;
 }
@@ -72,18 +96,6 @@
     margin-right: 5px;
     border: none;
   }
-}
-
-.pad-8 {
-  padding: 8px;
-}
-
-.pad-4 {
-  padding: 4px;
-}
-
-.pad-2 {
-  padding: 2px;
 }
 
 .sheet-body .tab .editor {
@@ -103,7 +115,7 @@
   border-radius: 10px;
   .pad-4();
   margin: 0 5px 10px 5px;
-  box-shadow: 5px 10px 10px rgb(0, 0, 0, 0.5);
+  .box-shadow();
 }
 
 .button:hover {

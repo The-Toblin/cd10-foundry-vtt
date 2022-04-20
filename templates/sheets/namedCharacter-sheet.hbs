@@ -1,6 +1,6 @@
 <form class="{{cssClass}} flex-row flex-between" autocomplete="off">
     {{!-- Main Content Box --}}
-    <div class="sheet-main-content flex-column flex-start">
+    <div class="sheet-main-content flex-col flex-start">
         <div class="head-contentbox">
             <h1>
                 <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize " cd10.stats.name"}}" />
@@ -78,7 +78,7 @@
         </section>
     </div>
     {{!-- Main Sidebar --}}
-    <div class="sheet-sidebar flex-column flex-start">
+    <div class="sheet-sidebar flex-col flex-start">
         <div class="image-box">
             <img class="actor-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="200"
                 width="200" />

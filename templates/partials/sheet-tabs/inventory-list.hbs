@@ -1,5 +1,5 @@
-<section class="inventory-list sheet-card flex-column flex-start">
-    <div class="armor-list flex-column">
+<section class="inventory-list sheet-card flex-col flex-start">
+    <div class="armor-list flex-col">
         <h3>{{localize "cd10.sheet.currency"}}</h3>
     </div>
     <hr>
@@ -15,7 +15,7 @@
         </tr>
     </table>
     {{#if allArmors}}
-    <div class="armor-list flex-column">
+    <div class="armor-list flex-col">
         <h3>{{localize "cd10.sheet.armors"}}</h3>
         <hr>
         <div class="item-table-data" data-item-id="{{item._id}}">
@@ -89,7 +89,7 @@
     </div>
     {{/if}}
     {{#if allWeapons}}
-    <div class="weapon-list flex-column">
+    <div class="weapon-list flex-col">
         <h3>{{localize "cd10.sheet.weapons"}}</h3>
         <hr>
         <div class="item-table-data" data-item-id="{{item._id}}">
@@ -163,7 +163,7 @@
     </div>
     {{/if}}
     {{#if normalItems}}
-    <div class="otherItems-list flex-column">
+    <div class="otherItems-list flex-col">
         <h3>{{localize "cd10.sheet.other"}}</h3>
         <hr>
         <div class="item-table-data" data-item-id="{{item._id}}">

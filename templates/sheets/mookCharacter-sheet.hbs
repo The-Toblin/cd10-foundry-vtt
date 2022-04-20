@@ -1,7 +1,7 @@
 <form class="{{cssClass}}" autocomplete="off">
-    <div class="cd10-sheet flex-column flex-start">
+    <div class="cd10-sheet flex-col flex-start">
         <div class="flex-row flex-between header-box">
-            <div class="flex-column flex-center title-box">
+            <div class="flex-col flex-center title-box">
                 <h1>
                     <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "
                         cd10.stats.name"}}" />
@@ -12,7 +12,7 @@
                     {{> "systems/cd10/templates/partials/sheet-tabs/character-stat-block.hbs"}}
                 </div>
             </div>
-            <div class="flex-column flex-center pad-4">
+            <div class="flex-col flex-center pad-4">
                 <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" class="actor-image" />
                 <div class="button">
                     <a class="physical-save flex-row flex-even pad-top" title={{localize "cd10.sheet.roll" }}>
@@ -43,7 +43,7 @@
             <textarea name="data.quote.value">{{data.quote.value}}</textarea>
         </div>
         <hr>
-        <div class="body-box flex-column flex-start">
+        <div class="body-box flex-col flex-start">
             <div class="sheet-card flex-row flex-even">
                 <div>{{localize "cd10.sheet.positive"}}: {{data.posTraits.value}}</div>
                 <div>{{localize "cd10.sheet.negative"}}: {{data.negTraits.value}}</div>
