@@ -85,10 +85,6 @@ export default class CD10Actor extends Actor {
     return this.data.items.filter(p => p.data.type === "rangedWeapon");
   }
 
-  get getShock() {
-    return parseInt(this.data.data.shock.value);
-  }
-
   get getWounds() {
     return parseInt(this.data.data.wounds.value);
   }
@@ -142,55 +138,32 @@ export default class CD10Actor extends Actor {
 
   _prepareDebilitation(data) {
     /* This function calculates the proper modifier and debilitation type for a character */
-    let debilitationType;
-    let wounds = data.wounds.value;
-    let woundsModifier;
+    const wounds = data.wounds.value;
+    const woundsModifier = Math.floor(wounds / 2);
 
-    if (wounds === 2) {
-      woundsModifier = 1;
-      debilitationType = "on physical checks";
-    } else if (wounds === 3) {
-      woundsModifier = 2;
-      debilitationType = "on physical checks";
-    } else if (wounds > 3 && wounds < 6) {
-      woundsModifier = 3;
-      debilitationType = "on physical checks";
-    } else if (wounds > 5 && wounds < 8) {
-      woundsModifier = 4;
-      debilitationType = "on all checks";
-    } else if (wounds > 6 && wounds < 10) {
-      woundsModifier = 5;
-      debilitationType = "on all checks";
-    } else if (wounds === 10) {
-      woundsModifier = 6;
-      debilitationType = "on all checks";
-    } else if (wounds === 11) {
-      woundsModifier = 7;
-      debilitationType = "on all checks. DC 3.";
-    } else if (wounds === 12) {
-      woundsModifier = 7;
-      debilitationType = "on all checks. DC 6.";
-    } else if (wounds === 13) {
-      woundsModifier = 8;
-      debilitationType = "on all checks. DC 9.";
-    } else if (wounds === 14) {
-      woundsModifier = 8;
-      debilitationType = "on all checks. DC 12.";
-    } else if (wounds === 15) {
-      woundsModifier = 8;
-      debilitationType = "You are dead!";
-    } else {
-      woundsModifier = 0;
-      debilitationType = "on physical checks";
-    }
+    const physChecks = "on physical checks.";
+    const allChecks = "on all checks.";
+    const options = {
+      2: `${physChecks}`,
+      3: `${physChecks}`,
+      4: `${physChecks}`,
+      5: `${physChecks}`,
+      6: `${allChecks}`,
+      7: `${allChecks}`,
+      8: `${allChecks}`,
+      9: `${allChecks}`,
+      10: `${allChecks}`,
+      11: `${allChecks} DC 3.`,
+      12: `${allChecks} DC 6.`,
+      13: `${allChecks} DC 9.`,
+      14: `${allChecks} DC 12.`,
+      15: "You are dead!"
+    };
 
-    if (data.shock.value === 0 && wounds < 2) {
-      woundsModifier = 0;
-      debilitationType = "";
-    }
+    let debilitationType = `${options[wounds] || ""}`;
 
     return {
-      modifier: data.shock.value + woundsModifier,
+      modifier: woundsModifier,
       type: debilitationType
     };
   }
@@ -227,25 +200,6 @@ export default class CD10Actor extends Actor {
     });
   }
 
-  async modifyShock(amount) {
-    if (typeof amount !== "number") {
-      ui.notifications.error("Not a number for shock update!");
-      return;
-    }
-    let currentShock = this.getShock;
-    let newShock;
-
-    if (amount > 0) {
-      newShock = Math.min(currentShock + amount, this.data.data.shock.max);
-    } else if (amount < 0) {
-      newShock = Math.max(currentShock - 1, 0);
-    }
-
-    await this.update({
-      "data.shock.value": newShock
-    });
-  }
-
   async resetTraitSelection() {
     let traitArray = [];
 
@@ -265,39 +219,32 @@ export default class CD10Actor extends Actor {
   async unequipItems(item) {
     let itemArray = [];
     let itemUpdate = {};
+    let itemtype = item.match(/Weapon/) ? "weapon" : "armor";
 
-    if (item !== "meleeWeapon" && item !== "rangedWeapon" && item !== "armor" && item !== "shield") {
-    } else {
-      this.items.forEach(i => {
-        if (item === "meleeWeapon" || item === "rangedWeapon") {
-          if (i.type === "meleeWeapon" || i.type === "rangedWeapon") {
-            itemUpdate = {
-              _id: i.id,
-              data: {
-                isEquipped: {
-                  value: false
-                }
-              }
-            };
-            if (Object.keys(itemUpdate).length > 1) {
-              itemArray.push(itemUpdate);
+    for (const i of this.items) {
+      if (i.type.match(/Weapon/) && itemtype === "weapon") {
+        itemUpdate = {
+          _id: i.id,
+          data: {
+            isEquipped: {
+              value: false
             }
           }
-        } else if (i.type === item) {
-          itemUpdate = {
-            _id: i.id,
-            data: {
-              isEquipped: {
-                value: false
-              }
+        };
+        if (Object.keys(itemUpdate).length > 1) itemArray.push(itemUpdate);
+      } else if (i.type === item) {
+        itemUpdate = {
+          _id: i.id,
+          data: {
+            isEquipped: {
+              value: false
             }
-          };
-          if (Object.keys(itemUpdate).length > 1) {
-            itemArray.push(itemUpdate);
           }
+        };
+        if (Object.keys(itemUpdate).length > 1) {
+          itemArray.push(itemUpdate);
         }
-      });
-
+      }
       await this.updateEmbeddedDocuments("Item", itemArray);
     }
   }

@@ -1,4 +1,4 @@
-import * as Dice from "../dice.js";
+import * as Dice from "../CD10Dice.js";
 
 export default class CD10NamedCharacterSheet extends ActorSheet {
   static get defaultOptions() {
@@ -125,7 +125,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
 
   getData() {
     /* Override default getData() function */
-    let sheetData = super.getData();
+    const sheetData = super.getData();
     sheetData.config = CONFIG.cd10;
     sheetData.data = sheetData.data.data;
 
@@ -139,21 +139,13 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     sheetData.allArmors = sheetData.items.filter(p => p.type === "armor" || p.type === "shield");
     sheetData.armors = sheetData.items.filter(p => p.type === "armor");
     sheetData.shields = sheetData.items.filter(p => p.type === "shield");
-    sheetData.allWeapons = sheetData.items.filter(p => p.type === "meleeWeapon" || p.type === "rangedWeapon");
+    sheetData.allWeapons = sheetData.items.filter(p => p.type.match(/Weapon/));
     sheetData.meleeWeapons = sheetData.items.filter(p => p.type === "meleeWeapon");
     sheetData.rangedWeapons = sheetData.items.filter(p => p.type === "rangedWeapon");
     sheetData.skills = sheetData.items.filter(p => p.type === "skill");
     sheetData.traits = sheetData.items.filter(p => p.type === "trait");
-    sheetData.posTraits = sheetData.traits.filter(p => {
-      if (p.data.skillLevel.value > 0) {
-        return p;
-      }
-    });
-    sheetData.negTraits = sheetData.traits.filter(p => {
-      if (p.data.skillLevel.value < 0) {
-        return p;
-      }
-    });
+    sheetData.posTraits = sheetData.traits.filter(p => p.data.skillLevel.value > 0);
+    sheetData.negTraits = sheetData.traits.filter(p => p.data.skillLevel.value < 0);
     sheetData.spells = sheetData.items.filter(p => p.type === "spell");
     sheetData.normalItems = sheetData.items.filter(
       p =>
@@ -165,13 +157,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         && p.type !== "rangedWeapon"
         && p.type !== "shield"
     );
-
-    /* Used for selecting skills for weapons. */
-    sheetData.worldSkills = game.items.filter(p => {
-      if (p.type === "skill") {
-        return p.name;
-      }
-    });
 
     // The following is to detect if certain things are equipped, and thus toggle certain parts of the sheet on or off.
     sheetData.equippedMeleeWeapon = false;
@@ -214,18 +199,15 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     /* Owner-only listeners */
     if (this.actor.isOwner) {
       /* Html.find(".item-roll").click(this._onItemRoll.bind(this));*/
-      html.find(".task-check").click(this._onTaskCheck.bind(this));
+      html.find(".task-check").click(this._onSkillCheck.bind(this));
       html.find(".attack-check").click(this._simpleAttackCheck.bind(this));
       html.find(".physical-save").click(this._onPhysicalSave.bind(this));
       html.find(".reveal-rollable").on("mouseover mouseout", this._onToggleRollable.bind(this));
       html.find(".stressBox").click(this._stressBoxClicked.bind(this));
-      html.find(".inline-edit").change(this._onSkillEdit.bind(this));
-      html.find(".set-morale").change(this._onMoraleEdit.bind(this));
       html.find(".item-delete").click(this._onItemDelete.bind(this));
       html.find(".item-equip").click(this._onItemEquip.bind(this));
       html.find(".ammo-select").click(this._onAmmoSelect.bind(this));
       html.find(".skill-item").click(this._toggleSkillUp.bind(this));
-      html.find(".shock-icons").on("click contextmenu", this._onShockMarkChange.bind(this));
       html.find(".wounds-icons").on("click contextmenu", this._onWoundsMarkChange.bind(this));
       html.find(".select-trait").on("click contextmenu", this._onClickTrait.bind(this));
 
@@ -267,12 +249,16 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     }
   }
 
-  async _onTaskCheck(event) {
-    /* Method to handle a simple skill check. */
+  /**
+   * Function called when a skill check is performed from the sheet.
+   * @param {HTML} event  HTML context for fetching IDs.
+   */
+  async _onSkillCheck(event) {
     event.preventDefault();
 
-    /* If a hero point is spent, check if there's enough points.
-        Otherwise cancel the check. */
+    /**
+     * If a hero point is spent, check if there's enough points. Otherwise cancel the check.
+     */
     if (event.shiftKey) {
       if (this._checkHeroPoints() === false) {
         return;
@@ -289,9 +275,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     if (rollObj.type === "skill") {
       skillObj = rollObj;
       /* Dump the skill description to chat. */
-      if (game.settings.get("cd10", "systemDumpDescriptions")) {
-        skillObj.roll();
-      }
+      if (game.settings.get("cd10", "systemDumpDescriptions")) skillObj.roll();
     } else if (rollObj.type === "trait") {
       traitObj = rollObj;
       /* Dump the trait description to chat. */
@@ -466,7 +450,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     /* Perform a physical save, called from the physical save dialog.
         This function is complex and deals with gathering the data for
         the roll, as well as responding to the result and doing the
-        actor updates for wounds and shock. */
+        actor updates for wounds. */
 
     let traitObj;
     let armor = null;
@@ -484,7 +468,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     let heroPointChecked = html.find("input#heroPoint")[0].checked;
     let reverseTraitChecked = html.find("input#reverseTrait")[0].checked;
     let lethality = parseInt(html.find("input#lethality").val()) || 0;
-    let shock = parseInt(html.find("input#shock").val()) || 0;
     let damageType = html.find("select#damage-type").val() || "slash";
 
     if (lethality <= 0) {
@@ -528,7 +511,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
       usingShield: usingShield,
       damageType: damageType,
       lethality: lethality,
-      shock: shock,
       actor: this.actor.id
     });
 
@@ -602,66 +584,12 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
 
     let boolValue = item.data.data.isEquipped.value;
     if (!boolValue) {
-      this.actor.unequipItems(type);
+      await this.actor.unequipItems(type);
     }
 
     await item.update({
       "data.isEquipped.value": !boolValue
     });
-  }
-
-  async _onSkillEdit(event) {
-    /* Somewhat overengineered function, remnant from when skills and traits
-        could be created directly on the character sheet. Now just used to update
-        the actual skillLevel. */
-    event.preventDefault();
-
-    if (!this.isEditable) {
-      return;
-    }
-
-    const element = event.currentTarget;
-    const itemId = element.closest(".item").dataset.itemId;
-    const item = this.actor.items.get(itemId);
-    const field = element.dataset.field;
-
-    await item.update({
-      [field]: element.value
-    });
-  }
-
-  async _onMoraleEdit(event) {
-    event.preventDefault();
-
-    if (!this.isEditable) {
-      return;
-    }
-
-    let inputVal = document.getElementsByClassName("set-morale")[0].value;
-
-    if (inputVal > 25) {
-      inputVal = 25;
-    } else if (inputVal < 0) {
-      inputVal = 0;
-    }
-
-    this.actor.update({
-      data: {
-        morale: {
-          value: inputVal }
-      }
-    });
-  }
-
-  _onShockMarkChange(event) {
-    /* Listen for changes to Shock and update the value accordingly. */
-    event.preventDefault();
-
-    if (event.type === "click") {
-      this.actor.modifyShock(1);
-    } else {
-      this.actor.modifyShock(-1);
-    }
   }
 
   _onWoundsMarkChange(event) {

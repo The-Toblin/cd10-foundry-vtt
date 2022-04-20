@@ -5,6 +5,10 @@ export default class CD10Item extends Item {
     );
   }
 
+  get getSelectionStatus() {
+    return this.data.data.selected;
+  }
+
   chatTemplate = {
     weapon: "systems/cd10/templates/partials/weapon-card.hbs",
     armor: "systems/cd10/templates/partials/armor-card.hbs",
@@ -75,9 +79,5 @@ export default class CD10Item extends Item {
     await this.update({
       "data.selected": status
     });
-  }
-
-  get getSelectionStatus() {
-    return this.data.selected;
   }
 }

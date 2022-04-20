@@ -1,12 +1,12 @@
 <div class="armor-card sheet-card flex-col item" data-item-id="{{_id}}">
-    <div class="armor-info armor-name dark-background pad-8">
+    <div class="armor-info armor-name sheet-card-detail pad-8">
         <p><a class="item-equip" data-type="text">
                 <i class="far fa-{{#if this.data.isEquipped.value}}check-{{/if}}square"></i>
             </a>
             {{name}}</p>
     </div>
     <div class="flex-row flex-start image-stats-box">
-        <div class="armor-box dark-background pad-8">
+        <div class="armor-box sheet-card-detail pad-8">
             {{#if (eq @root.damageTypeSetting "simple")}}
                 <div class="armor-stats reveal-rollable">
                     <div class="stat-name">

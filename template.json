@@ -11,23 +11,11 @@
                     "label": "Species",
                     "value": ""
                 },
-                "shock": {
-                    "type": "number",
-                    "label": "Shock",
-                    "value": 0,
-                    "max": 15,
-                    "min": 0
-                },
                 "wounds": {
                     "type": "number",
                     "label": "Wounds",
                     "value": 0,
                     "max": 15,
-                    "min": 0
-                },
-                "morale": {
-                    "value": 25,
-                    "max": 25,
                     "min": 0
                 },
                 "quote": {
@@ -248,11 +236,6 @@
                     "label": "Energy damage",
                     "value": 0,
                     "selected": false
-                },
-                "shock": {
-                    "type": "number",
-                    "label": "Shock",
-                    "value": 0
                 }
             }
         },
@@ -262,11 +245,6 @@
                 "itemDescription",
                 "equipment"
             ],
-            "isShield": {
-                "type": "boolean",
-                "label": "Shield?",
-                "value": false
-            },
             "protection": {
                 "slash": {
                     "type": "number",
@@ -286,11 +264,6 @@
                 "energy": {
                     "type": "number",
                     "label": "Energy Protection",
-                    "value": 0
-                },
-                "shock": {
-                    "type": "number",
-                    "label": "Shock Protection",
                     "value": 0
                 }
             }
@@ -321,11 +294,6 @@
                     "type": "number",
                     "label": "Energy Protection",
                     "value": 0
-                },
-                "shock": {
-                    "type": "number",
-                    "label": "Shock Protection",
-                    "value": 0
                 }
             },
             "defenseValue": {
@@ -347,11 +315,6 @@
             "teachable": {
                 "type": "boolean",
                 "label": "Recuires teacher",
-                "value": false
-            },
-            "mustBeUsedWithShield": {
-                "type": "boolean",
-                "label": "Must be used with shield",
                 "value": false
             },
             "isPhysical": {
@@ -408,22 +371,12 @@
                     "type": "number",
                     "label": "Energy Damage",
                     "value": 0
-                },
-                "shock": {
-                    "type": "number",
-                    "label": "Shock Damage",
-                    "value": 0
                 }
             },
             "reach": {
                 "type": "string",
                 "label": "Reach",
                 "value": "Normal"
-            },
-            "blockValue": {
-                "type": "number",
-                "label": "Block",
-                "value": 0
             }
         },
         "rangedWeapon": {

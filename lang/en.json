@@ -72,6 +72,7 @@
             "min": "Minimum",
             "modifier": "Modifier",
             "name": "Name",
+            "no": "No",
             "none": "None",
             "negative": "Negative",
             "newItem": "Name",
@@ -100,6 +101,7 @@
             "traitCheck": "Skillcheck with trait",
             "traits": "Traits",
             "type": "Type",
+            "yes": "Yes",
             "weapon": "Weapon",
             "weapons": "Weapons",
             "weight": "Weight"

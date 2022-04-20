@@ -29,21 +29,14 @@ export default class CD10ItemSheet extends ItemSheet {
     sheetData.barterSetting = game.settings.get("cd10", "systemBarter");
     sheetData.modernity = game.settings.get("cd10", "systemModernity");
 
-    let worldSkillList = game.items.filter(p => {
-      if (p.type === "skill") {
-        return p;
-      }
-    });
+    /* Used for selecting skills for weapons. */
     sheetData.worldSkills = [];
-
-    worldSkillList.forEach(s => {
-      let object = {
-        matchID: s.data.data.matchID,
-        name: s.name
-      };
-      sheetData.worldSkills.push(object);
-    });
-
+    for (const skill of game.items) {
+      if (skill.type === "skill") sheetData.worldSkills.push({
+        matchID: skill.data.data.matchID,
+        name: skill.name
+      });
+    }
     return sheetData;
   }
 

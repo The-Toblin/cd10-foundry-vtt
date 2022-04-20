@@ -1,12 +1,12 @@
 <div class="weapon-card sheet-card flex-col item" data-item-id="{{_id}}">
-    <div class="weapon-info weapon-name dark-background pad-8">
+    <div class="weapon-info weapon-name sheet-card-detail pad-8">
         <p><a class="item-equip" data-type="text">
                 <i class="far fa-{{#if data.isEquipped.value}}check-{{/if}}square"></i>
             </a>
             {{name}}</p>
     </div>
     <div class="flex-row flex-start">
-        <div class="ammo-box dark-background pad-8">
+        <div class="ammo-box sheet-card-detail pad-8">
             {{localize "cd10.rangedWeapon.ammunition"}}
             <hr>
             <div class="flex-col">
@@ -23,7 +23,7 @@
                 {{/each}}
             </div>
         </div>
-        <div class="weapon-box dark-background pad-8">
+        <div class="weapon-box sheet-card-detail pad-8">
             <div class="weapon-stats reveal-rollable">
                 <div class="stat-name">
                     {{localize "cd10.chat.attack.attack"}}
@@ -31,7 +31,7 @@
                 <div class="weapon-statvalue">
                     <a class="attack-check item-roll item-roll hidden rollable" data-damage-type="slash"
                         title={{localize "cd10.sheet.roll" }}>
-                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
+                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
                     </a>
                 </div>
             </div>

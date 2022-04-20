@@ -1,12 +1,12 @@
 <div class="weapon-card sheet-card flex-col item" data-item-id="{{_id}}">
-    <div class="weapon-info weapon-name dark-background pad-8">
+    <div class="weapon-info weapon-name sheet-card-detail pad-8">
         <p><a class="item-equip" data-type="text">
                 <i class="far fa-{{#if this.data.isEquipped.value}}check-{{/if}}square"></i>
             </a>
             {{name}}</p>
     </div>
     <div class="flex-row flex-start image-stats-box">
-        <div class="weapon-box dark-background pad-8">
+        <div class="weapon-box sheet-card-detail pad-8">
             {{#if (eq @root.damageTypeSetting "simple")}}
             <div class="weapon-stats reveal-rollable">
                 <div class="stat-name">
@@ -17,7 +17,7 @@
                     data.damage.energy.value}}{{/highest}}
                     <a class="attack-check item-roll item-roll hidden rollable" data-damage-type="slash"
                         title={{localize "cd10.sheet.roll" }}>
-                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
+                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
                     </a>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                     {{data.damage.slash.value}}
                     <a class="attack-check item-roll hidden rollable" data-damage-type="slash"
                         title={{localize "cd10.sheet.roll" }}>
-                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
+                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
                     </a>
                 </div>
             </div>
@@ -42,7 +42,7 @@
                     {{data.damage.pierce.value}}
                     <a class="attack-check item-roll hidden rollable" data-damage-type="pierce"
                         title={{localize "cd10.sheet.roll" }}>
-                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
+                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
                     </a>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                     {{data.damage.blunt.value}}
                     <a class="attack-check item-roll hidden rollable" data-damage-type="blunt"
                         title={{localize "cd10.sheet.roll" }}>
-                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
+                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
                     </a>
                 </div>
             </div>
@@ -67,7 +67,7 @@
                     {{data.damage.energy.value}}
                     <a class="attack-check item-roll item-roll hidden rollable" data-damage-type="energy"
                         title={{localize "cd10.sheet.roll" }}>
-                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
+                        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
                     </a>
                 </div>
             </div>

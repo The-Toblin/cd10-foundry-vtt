@@ -1,3 +1,7 @@
+#Version 0.4.4
+== Bugfixes ==
+Fixed bug in trait selection on the sheet. You couldn't unselect them. Now you can.
+
 #Version 0.4.3
 Fixed a mismatch in the initiative roll. It would erroneously grab the actor, not the token, leading to a mismatch of items, skills and modifiers and sometimes failing entirely.
 
