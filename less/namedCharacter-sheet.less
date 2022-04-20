@@ -1,11 +1,11 @@
-/* Hidden class for mouse-over elements */
+// Hidden class for mouse-over elements
 .cd10.sheet {
   .hidden {
     display: none;
   }
 }
 
-/* Main sheet definitions */
+// Main sheet definitions
 .cd10.sheet.namedCharacter {
   min-height: 250px;
   min-width: 510px;
@@ -19,26 +19,26 @@
   input,
   textarea,
   .stat-element {
-    color: var(--font-color);
+    color: @main-color;
   }
 
   .window-content {
-    background: url(./assets/backgrounds/sheet_background.jpg);
+    background: url("@{sheetbkg}");
   }
 
   form {
-    color: var(--font-color);
+    color: @main-color;
 
     select {
       border: none;
       color: inherit;
-      font-family: var(--font-main);
-      background: url(./assets/backgrounds/card_detail_background.jpg);
+      font-family: @font-main;
+      background: url("@{sheetcarddetail}");
     }
 
     select option {
       background-color: black;
-      font-family: var(--font-main);
+      font-family: @font-main;
     }
 
     .editor {
@@ -74,10 +74,10 @@
 
       th,
       td {
-        background: url(./assets/backgrounds/card_detail_background.jpg);
+        background: url("@{sheetcarddetail}");
         border-style: solid;
         border-width: 1px;
-        border-image: radial-gradient(black, var(--accent-color)) 1;
+        border-image: radial-gradient(black, @accent-color) 1;
         box-shadow: inset 2px 2px 10px 5px black;
         vertical-align: middle;
         text-align: center;
@@ -102,7 +102,7 @@
     }
 
     hr {
-      border-color: var(--font-color);
+      border-color: @main-color;
       width: 150px;
       margin-bottom: 20px;
     }

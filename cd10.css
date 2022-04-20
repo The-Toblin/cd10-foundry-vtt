@@ -1,10 +1,3 @@
-/* Variables */
-:root {
-  --font-color: #dfbb61;
-  --accent-color: #6b6c65;
-  --font-main: "Signika", sans-serif;
-}
-/* Containers for content */
 .flex-row {
   display: flex;
   flex-direction: row;
@@ -29,26 +22,25 @@
   justify-content: center;
   align-content: flex-start;
 }
-/* Overall styling classes */
 .sheet-background {
-  background: url(assets/backgrounds/sheet_background.jpg);
-  color: var(--font-color);
+  background: url("assets/backgrounds/sheet_background.webp");
+  color: #dfbb61;
 }
 .sheet-card {
-  background: url(assets/backgrounds/card_background.jpg);
+  background: url("assets/backgrounds/card_background.webp");
   border-style: solid;
   border-width: 3px;
-  border-image: radial-gradient(black, var(--font-color)) 1;
+  border-image: radial-gradient(black, #dfbb61) 1;
   padding: 5px;
   box-shadow: 5px 10px 10px #000000;
   margin: 0 5px 10px 5px;
-  color: var(--font-color);
+  color: #dfbb61;
 }
 .dark-background {
-  background: url(assets/backgrounds/card_detail_background.jpg);
+  background: url("assets/backgrounds/card_detail_background.webp");
   border-style: solid;
   border-width: 3px;
-  border-image: radial-gradient(black, var(--accent-color)) 1;
+  border-image: radial-gradient(black, #6b6c65) 1;
   box-shadow: inset 2px 2px 10px 5px black;
   padding: 4px;
   margin: 0 5px 10px 5px;
@@ -76,10 +68,10 @@
   height: 100%;
 }
 .button {
-  background: url(assets/backgrounds/card_detail_background.jpg);
+  background: url("assets/backgrounds/card_detail_background.webp");
   border-style: solid;
   border-width: 3px;
-  border-color: var(--accent-color);
+  border-color: #6b6c65;
   border-radius: 10px;
   padding: 4px;
   margin: 0 5px 10px 5px;
@@ -88,11 +80,9 @@
 .button:hover {
   box-shadow: inset 2px 2px 10px 5px black;
 }
-/* Hidden class for mouse-over elements */
 .cd10.sheet .hidden {
   display: none;
 }
-/* Main sheet definitions */
 .cd10.sheet.namedCharacter {
   min-height: 250px;
   min-width: 510px;
@@ -106,23 +96,23 @@
 .cd10.sheet.namedCharacter input,
 .cd10.sheet.namedCharacter textarea,
 .cd10.sheet.namedCharacter .stat-element {
-  color: var(--font-color);
+  color: #dfbb61;
 }
 .cd10.sheet.namedCharacter .window-content {
-  background: url(assets/backgrounds/sheet_background.jpg);
+  background: url("assets/backgrounds/sheet_background.webp");
 }
 .cd10.sheet.namedCharacter form {
-  color: var(--font-color);
+  color: #dfbb61;
 }
 .cd10.sheet.namedCharacter form select {
   border: none;
   color: inherit;
-  font-family: var(--font-main);
-  background: url(assets/backgrounds/card_detail_background.jpg);
+  font-family: "Signika", sans-serif;
+  background: url("assets/backgrounds/card_detail_background.webp");
 }
 .cd10.sheet.namedCharacter form select option {
   background-color: black;
-  font-family: var(--font-main);
+  font-family: "Signika", sans-serif;
 }
 .cd10.sheet.namedCharacter form .editor {
   height: 100%;
@@ -152,10 +142,10 @@
 }
 .cd10.sheet.namedCharacter form table th,
 .cd10.sheet.namedCharacter form table td {
-  background: url(assets/backgrounds/card_detail_background.jpg);
+  background: url("assets/backgrounds/card_detail_background.webp");
   border-style: solid;
   border-width: 1px;
-  border-image: radial-gradient(black, var(--accent-color)) 1;
+  border-image: radial-gradient(black, #6b6c65) 1;
   box-shadow: inset 2px 2px 10px 5px black;
   vertical-align: middle;
   text-align: center;
@@ -175,7 +165,7 @@
   text-align: center;
 }
 .cd10.sheet.namedCharacter form hr {
-  border-color: var(--font-color);
+  border-color: #dfbb61;
   width: 150px;
   margin-bottom: 20px;
 }
@@ -240,7 +230,7 @@
 }
 .skill-card {
   margin-bottom: 10px;
-  color: var(--font-color);
+  color: #dfbb61;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -385,14 +375,14 @@
 .skill-list,
 .traits-list {
   width: 49%;
-  color: var(--font-color);
+  color: #dfbb61;
 }
 .skill-list .attribute-pair,
 .traits-list .attribute-pair {
-  background: url(assets/backgrounds/card_detail_background.jpg);
+  background: url("assets/backgrounds/card_detail_background.webp");
   border-style: solid;
   border-width: 1px;
-  border-image: radial-gradient(black, var(--accent-color)) 1;
+  border-image: radial-gradient(black, #6b6c65) 1;
   box-shadow: inset 2px 2px 10px 5px black;
   padding: 2px 5px 2px 5px;
   width: 100%;
@@ -433,20 +423,20 @@
 }
 .spell-list .spell-description,
 .spell-list .spell-reagents {
-  background: url(assets/backgrounds/card_detail_background.jpg);
+  background: url("assets/backgrounds/card_detail_background.webp");
   border-style: solid;
   border-width: 1px;
-  border-image: radial-gradient(black, var(--accent-color)) 1;
+  border-image: radial-gradient(black, #6b6c65) 1;
   box-shadow: inset 2px 2px 10px 5px black;
   padding: 2px 5px 2px 5px;
   width: 100%;
   margin: 12px 0 5px 0;
 }
 .spell-list .attribute-pair {
-  background: url(assets/backgrounds/card_detail_background.jpg);
+  background: url("assets/backgrounds/card_detail_background.webp");
   border-style: solid;
   border-width: 1px;
-  border-image: radial-gradient(black, var(--accent-color)) 1;
+  border-image: radial-gradient(black, #6b6c65) 1;
   box-shadow: inset 2px 2px 10px 5px black;
   padding: 2px 5px 2px 5px;
   width: 100%;
@@ -527,10 +517,10 @@
   text-align: right !important;
 }
 .health-info .stat-element {
-  background: url(assets/backgrounds/card_detail_background.jpg);
+  background: url("assets/backgrounds/card_detail_background.webp");
   border-style: solid;
   border-width: 1px;
-  border-image: radial-gradient(black, var(--accent-color)) 1;
+  border-image: radial-gradient(black, #6b6c65) 1;
   box-shadow: inset 2px 2px 10px 5px black;
   padding: 2px 5px 2px 5px;
   width: 100%;
@@ -547,7 +537,7 @@
 }
 .health-info .stat-element .shock-icons .dot-container,
 .health-info .stat-element .wounds-icons .dot-container {
-  color: var(--font-color);
+  color: #dfbb61;
 }
 .health-info .stat-element .shock-icons .crossed,
 .health-info .stat-element .wounds-icons .crossed {
@@ -562,24 +552,24 @@
   width: 150px;
   height: 150px;
   box-shadow: 5px 10px 10px #000000;
-  background: url(assets/backgrounds/card_detail_background.jpg);
+  background: url("assets/backgrounds/card_detail_background.webp");
 }
 .cd10.sheet.item input {
   border: none;
   background: none;
-  color: var(--font-color);
+  color: #dfbb61;
   width: 50%;
 }
 .cd10.sheet.item select {
   border: none;
-  color: var(--font-color);
+  color: #dfbb61;
   background-color: black;
-  font-family: var(--font-main);
-  background: url(assets/backgrounds/card_detail_background.jpg);
+  font-family: "Signika", sans-serif;
+  background: url("assets/backgrounds/card_detail_background.webp");
 }
 .cd10.sheet.item select option {
   background-color: black;
-  font-family: var(--font-main);
+  font-family: "Signika", sans-serif;
 }
 .cd10.sheet.item table {
   border: none;
@@ -592,26 +582,26 @@
 }
 .cd10.sheet.item table th,
 .cd10.sheet.item table td {
-  background: url(assets/backgrounds/card_detail_background.jpg);
+  background: url("assets/backgrounds/card_detail_background.webp");
   border-style: solid;
   border-width: 1px;
-  border-image: radial-gradient(black, var(--accent-color)) 1;
+  border-image: radial-gradient(black, #6b6c65) 1;
   box-shadow: inset 2px 2px 10px 5px black;
   vertical-align: middle;
   text-align: center;
   padding: 4px 5px 4px 5px;
 }
 .cd10.sheet.item .window-content {
-  background: url(assets/backgrounds/card_background.jpg);
+  background: url("assets/backgrounds/card_background.webp");
   border-style: solid;
   border-width: 3px;
-  border-image: radial-gradient(black, var(--font-color)) 1;
+  border-image: radial-gradient(black, #dfbb61) 1;
   padding: 5px;
-  color: var(--font-color);
+  color: #dfbb61;
 }
 .cd10.sheet.item .window-content form select {
   border: none;
-  color: var(--font-color);
+  color: #dfbb61;
 }
 .cd10.sheet.item .window-content form h1 {
   border: none;
@@ -621,7 +611,7 @@
   height: fit-content;
 }
 .cd10.sheet.item .window-content form hr {
-  border-color: var(--font-color);
+  border-color: #dfbb61;
   width: 150px;
 }
 .cd10.sheet.item .window-content form .generic-info-box,
@@ -677,26 +667,24 @@
 .cd10.sheet.mookCharacter .fa,
 .cd10.sheet.mookCharacter .far,
 .cd10.sheet.mookCharacter .fas {
-  color: var(--font-color);
+  color: #dfbb61;
 }
 .cd10.sheet.mookCharacter .window-content {
-  background: url(assets/backgrounds/sheet_background.jpg);
+  background: url("assets/backgrounds/sheet_background.webp");
 }
 .cd10.sheet.mookCharacter form {
   display: flex;
   flex-direction: column;
-  /* Headers */
-  /* General settings */
 }
 .cd10.sheet.mookCharacter form select {
   border: none;
-  color: var(--font-color);
+  color: #dfbb61;
   background-color: black;
-  font-family: var(--font-main);
-  background: url(assets/backgrounds/card_detail_background.jpg);
+  font-family: "Signika", sans-serif;
+  background: url("assets/backgrounds/card_detail_background.webp");
 }
 .cd10.sheet.mookCharacter form select option {
-  font-family: var(--font-main);
+  font-family: "Signika", sans-serif;
 }
 .cd10.sheet.mookCharacter form h1 {
   font-size: 2em;
@@ -723,7 +711,7 @@
   width: 150px;
   margin-top: 5px;
   margin-bottom: 5px;
-  border-color: var(--font-color);
+  border-color: #dfbb61;
 }
 .cd10.sheet.mookCharacter form table {
   border: none;
@@ -736,10 +724,10 @@
 }
 .cd10.sheet.mookCharacter form table th,
 .cd10.sheet.mookCharacter form table td {
-  background: url(assets/backgrounds/card_detail_background.jpg);
+  background: url("assets/backgrounds/card_detail_background.webp");
   border-style: solid;
   border-width: 1px;
-  border-image: radial-gradient(black, var(--accent-color)) 1;
+  border-image: radial-gradient(black, #6b6c65) 1;
   box-shadow: inset 2px 2px 10px 5px black;
   vertical-align: middle;
   text-align: center;
@@ -768,7 +756,7 @@
   font-style: italic;
   border: none;
   background: none;
-  font-family: var(--font-main);
+  font-family: "Signika", sans-serif;
 }
 .cd10.sheet.mookCharacter form .display-inline {
   display: inline;
@@ -792,31 +780,31 @@
   width: fit-content !important;
   height: fit-content !important;
   padding: 10px;
-  background: url(assets/backgrounds/card_detail_background.jpg);
+  background: url("assets/backgrounds/card_detail_background.webp");
   border-style: solid;
   border-width: 3px;
-  border-image: radial-gradient(black, var(--accent-color)) 1;
+  border-image: radial-gradient(black, #6b6c65) 1;
   box-shadow: inset 2px 2px 10px 5px black;
-  color: var(--font-color);
+  color: #dfbb61;
 }
 .cd10-dialog h3 {
   text-align: center;
 }
 .cd10-dialog .window-content {
-  color: var(--font-color) !important;
-  font-family: var(--font-main);
-  background: url(assets/backgrounds/card_background.jpg);
+  color: #dfbb61 !important;
+  font-family: "Signika", sans-serif;
+  background: url("assets/backgrounds/card_background.webp");
 }
 .cd10-dialog .window-content select,
 .cd10-dialog .window-content input {
   border: none;
-  color: var(--font-color);
-  font-family: var(--font-main);
-  background: url(assets/backgrounds/card_detail_background.jpg);
+  color: #dfbb61;
+  font-family: "Signika", sans-serif;
+  background: url("assets/backgrounds/card_detail_background.webp");
 }
 .cd10-dialog .window-content select option {
   background-color: black;
-  font-family: var(--font-main);
+  font-family: "Signika", sans-serif;
 }
 .physical-save-card .centered,
 .physical-save-card .value-box {
@@ -887,12 +875,12 @@
   height: auto;
 }
 .tox.tox-tinymce {
-  background: url(assets/backgrounds/sheet_background.jpg);
+  background: url("assets/backgrounds/sheet_background.webp");
   padding: 2px;
 }
 .tox .tox-edit-area__iframe {
-  background: url(assets/backgrounds/card_background.jpg);
+  background: url("assets/backgrounds/card_background.webp");
 }
 .tox .tox-toolbar__primary {
-  background: url(assets/backgrounds/card_detail_background.jpg);
+  background: url("assets/backgrounds/card_detail_background.webp");
 }

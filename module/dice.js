@@ -8,12 +8,12 @@
 
 /**
  * Creates the RollFormula for use in dicerolls, based on the data delivered to it.
- * @param {number} skillLevel (opt)
- * @param {number} traitLevel (opt)
- * @param {number} modifier (opt)
- * @param {boolean} save (opt)
- * @param {boolean} heroPoint (opt)
- * @returns {Promise/String}
+ * @param {number} skillLevel   (opt) The skill's level to use for the formula.
+ * @param {number} traitLevel   (opt) If a trait is provided, add it's number to the formula.
+ * @param {number} modifier     (opt) The actor's modifier, if provided.
+ * @param {boolean} save        (opt) If the roll is a save, omit the modifier.
+ * @param {boolean} heroPoint   (opt) If a hero point is spent, double the basedice (2d10).
+ * @returns {Promise<string>}
  */
 const createDiceFormula = async (skillLevel = 0, traitLevel = 0, modifier = 0, save = false, heroPoint = false) => {
   const baseDice = heroPoint === true ? "2d10x9" : "1d10x9";
