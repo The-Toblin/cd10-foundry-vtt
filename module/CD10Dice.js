@@ -99,18 +99,19 @@ const diceList = async diceRolls => {
 };
 
 const renderskillCheckRoll = async cd10Roll => {
-
+// TODO: Finish function
 };
 
 const renderAttackRoll = async cd10Roll => {
-
+// TODO: Finish function
 };
 
 const renderSaveRoll = async cd10Roll => {
-
+// TODO: Finish function
 };
 
 const createRollRenderTemplate = async () => {
+  // TODO: Finish function
   const renderTemplate = "";
 
   return rollTemplate;
@@ -151,16 +152,17 @@ const getTraitData = async (actorId = null, traitId = null) => {
 
 export const SkillCheck = async (actorId = null, skillId = null, traitId = null, heroPoint = false) => {
   const messageTemplate = "systems/cd10/templates/partials/chat-messages/skill-check.hbs";
-
+  // TODO: Finish function and update the template
 };
 
 export const AttackCheck = async (actorId = null, skillId = null, traitId = null, heroPoint = false) => {
   const messageTemplate = "systems/cd10/templates/partials/chat-messages/attack-check.hbs";
-
+  // TODO: Finish function and update the template
 };
 
 export const Save = async (actorId = null, traitId = null, heroPoint = false, lethality = 0, damageType = "slash") => {
   const messageTemplate = "systems/cd10/templates/partials/chat-messages/save.hbs";
+  // TODO: Finish function and update the template
 };
 
 
