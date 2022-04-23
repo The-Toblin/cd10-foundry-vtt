@@ -7,27 +7,27 @@
     width: 150px;
     height: 150px;
     box-shadow: 5px 10px 10px rgb(0, 0, 0, 0.5);
-    background: url(./assets/backgrounds/card_detail_background.jpg);
+    background: url(./assets/backgrounds/card_detail_background.webp);
   }
 
   input {
     border: none;
     background: none;
-    color: @colors[font-main];
+    color: @colors[main-color];
     width: 50%;
   }
 
   select {
     border: none;
-    color: @colors[font-main];
+    color: @colors[main-color];
     background-color: black;
-    font-family: var(--font-main);
-    background: url(./assets/backgrounds/card_detail_background.jpg);
+    font-family: @font-base;
+    background: url(./assets/backgrounds/card_detail_background.webp);
   }
 
   select option {
     background-color: black;
-    font-family: var(--font-main);
+    font-family: @font-base;
   }
 
   table {
@@ -42,10 +42,10 @@
 
     th,
     td {
-      background: url(./assets/backgrounds/card_detail_background.jpg);
+      background: url(./assets/backgrounds/card_detail_background.webp);
       border-style: solid;
       border-width: 1px;
-      border-image: radial-gradient(black, var(--accent-color)) 1;
+      border-image: radial-gradient(black, @colors[accent-color]) 1;
       box-shadow: inset 2px 2px 10px 5px black;
       vertical-align: middle;
       text-align: center;
@@ -54,17 +54,17 @@
   }
 
   .window-content {
-    background: url(./assets/backgrounds/card_background.jpg);
+    background: url(./assets/backgrounds/card_background.webp);
     border-style: solid;
     border-width: 3px;
-    border-image: radial-gradient(black, @colors[font-main]) 1;
+    border-image: radial-gradient(black, @colors[main-color]) 1;
     padding: 5px;
-    color: @colors[font-main];
+    color: @colors[main-color];
 
     form {
       select {
         border: none;
-        color: @colors[font-main];
+        color: @colors[main-color];
       }
 
       h1 {
@@ -77,7 +77,7 @@
       }
 
       hr {
-        border-color: @colors[font-main];
+        border-color: @colors[main-color];
         width: 150px;
       }
 

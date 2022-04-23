@@ -1,7 +1,7 @@
 <form class="{{cssClass}}" autocomplete="off">
-    <div class="cd10-sheet flex-column flex-start">
+    <div class="cd10-sheet flex-col flex-start">
         <div class="flex-row flex-between header-box">
-            <div class="flex-column flex-start title-box">
+            <div class="flex-col flex-start title-box">
                 <h1>
                     <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "
                         cd10.stats.name"}}" />
@@ -12,12 +12,12 @@
                     {{> "systems/cd10/templates/partials/sheet-tabs/character-stat-block.hbs"}}
                 </div>
             </div>
-            <div class="flex-column flex-center pad-4">
+            <div class="flex-col flex-center pad-4">
                 <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" class="actor-image" />
-                <div class="button">
+                <div class="cd10-button">
                     <a class="physical-save flex-row flex-even pad-top" title={{localize "cd10.sheet.roll" }}>
                         <div class="d10-roll-icon">
-                            <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
+                            <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
                         </div>
                         <div>
                             <h3 class="sheet-header">
@@ -26,10 +26,10 @@
                         </div>
                     </a>
                 </div>
-                <div class="button">
+                <div class="cd10-button">
                     <a class="cd10-roll-initiative flex-row flex-even pad-top" title={{localize "cd10.sheet.roll" }}>
                         <div class="d10-roll-icon">
-                            <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
+                            <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
                         </div>
                         <div>
                             <h3 class="sheet-header">
@@ -38,7 +38,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="button stressBox stressBoxContainer flex-even flex-row pad-8">
+                <div class="cd10-button stressBox stressBoxContainer flex-even flex-row pad-8">
                     <div class="stressBoxSelect">
                         <i class="far fa-{{#if this.actor.data.data.stressing.value}}check-{{/if}}square"></i>
                     </div>
@@ -48,7 +48,7 @@
                         </h3>
                     </div>
                 </div>
-                <div class="button">
+                <div class="cd10-button">
                     <ul class="flex-col flex-start pad-4">
                         {{#each meleeWeapons as |weapon|}}
                         <li class="item equippable-inventory-item flex-row flex-between" data-item-id="{{_id}}">
@@ -91,7 +91,7 @@
             <textarea name="data.quote.value">{{data.quote.value}}</textarea>
         </div>
         <hr>
-        <div class="body-box flex-column flex-start">
+        <div class="body-box flex-col flex-start">
             <div class="sheet-card flex-row flex-even">
                 <div>{{localize "cd10.sheet.positive"}}: {{data.posTraits.value}}</div>
                 <div>{{localize "cd10.sheet.negative"}}: {{data.negTraits.value}}</div>

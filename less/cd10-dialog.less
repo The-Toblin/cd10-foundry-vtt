@@ -3,33 +3,33 @@
   height: fit-content !important;
   padding: 10px;
 
-  background: url(./assets/backgrounds/card_detail_background.jpg);
+  background: url(./assets/backgrounds/card_detail_background.webp);
   border-style: solid;
   border-width: 3px;
-  border-image: radial-gradient(black, var(--accent-color)) 1;
+  border-image: radial-gradient(black, @colors[accent-color]) 1;
   box-shadow: inset 2px 2px 10px 5px black;
-  color: @colors[font-main];
+  color: @colors[main-color];
 
   h3 {
       text-align: center;
   }
   
   .window-content {
-    color: @colors[font-main] !important;
-    font-family: var(--font-main);
-    background: url(./assets/backgrounds/card_background.jpg);
+    color: @colors[main-color] !important;
+    font-family: @font-base;
+    background: url(./assets/backgrounds/card_background.webp);
 
     select,
     input {
       border: none;
-      color: @colors[font-main];
-      font-family: var(--font-main);
-      background: url(./assets/backgrounds/card_detail_background.jpg);
+      color: @colors[main-color];
+      font-family: @font-base;
+      background: url(./assets/backgrounds/card_detail_background.webp);
     }
 
     select option {
       background-color: black;
-      font-family: var(--font-main);
+      font-family: @font-base;
     }
   }
 }

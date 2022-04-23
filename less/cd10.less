@@ -1,24 +1,29 @@
-/* Variables */
-:root {
-  --font-color: rgb(223, 187, 97);
-  --accent-color: rgb(107, 108, 101);
-  --font-main: "Signika", sans-serif;
-}
-@colors: {
-  font-main:rgb(223, 187, 97);
+@import "./config.less";
+
+.cd10-text {
+  font-family: @font-base;
+  color: @colors[main-color] !important;
 }
 
-.editor-content {
-  @import "./mce.less";
+p,
+b,
+i,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  .cd10-text();
 }
 
-/* Containers for content */
+// Containers for content
 .flex-row {
   display: flex;
   flex-direction: row;
 }
 
-.flex-column {
+.flex-col {
   display: flex;
   flex-direction: column;
 }
@@ -43,28 +48,28 @@
   align-content: flex-start;
 }
 
-/* Overall styling classes */
+// Overall styling classes
 .sheet-background {
-  background: url(./assets/backgrounds/sheet_background.jpg);
-  color: @colors[font-main];
+  background: url(./assets/backgrounds/sheet_background.webp);
+  color: @colors[main-color];
 }
 
 .sheet-card {
-  background: url(./assets/backgrounds/card_background.jpg);
+  background: url(./assets/backgrounds/card_background.webp);
   border-style: solid;
   border-width: 3px;
-  border-image: radial-gradient(black, @colors[font-main]) 1;
+  border-image: radial-gradient(black, @colors[main-color]) 1;
   padding: 5px;
   box-shadow: 5px 10px 10px rgb(0, 0, 0, 0.5);
   margin: 0 5px 10px 5px;
-  color: @colors[font-main];
+  color: @colors[main-color];
 }
 
-.dark-background {
-  background: url(./assets/backgrounds/card_detail_background.jpg);
+.card-detail {
+  background: url(./assets/backgrounds/card_detail_background.webp);
   border-style: solid;
   border-width: 3px;
-  border-image: radial-gradient(black, var(--accent-color)) 1;
+  border-image: radial-gradient(black, @colors[accent-color]) 1;
   box-shadow: inset 2px 2px 10px 5px black;
   padding: 4px;
   margin: 0 5px 10px 5px;
@@ -91,6 +96,10 @@
   padding: 2px;
 }
 
+.sheet .editor-content {
+  .sheet-card();
+}
+
 .sheet-body .tab .editor {
   height: 100%;
 }
@@ -100,20 +109,105 @@
   height: 100%;
 }
 
-.button {
-  background: url(./assets/backgrounds/card_detail_background.jpg);
-  color: @colors[font-main];
+.cd10-button {
+  background: url(./assets/backgrounds/card_detail_background.webp);
+  color: @colors[main-color];
   border-style: solid;
   border-width: 3px;
-  border-color: var(--accent-color);
+  border-image: radial-gradient(black, @colors[accent-color]) 1;
   border-radius: 10px;
   padding: 4px;
   margin: 0 5px 10px 5px;
   box-shadow: 5px 10px 10px rgb(0, 0, 0, 0.5);
 }
 
-.button:hover {
+.cd10-button:hover {
   box-shadow: inset 2px 2px 10px 5px black;
+}
+
+.window-content {
+  .sheet-background() !important;
+}
+
+a.entity-link,
+a.content-link,
+a.inline-roll {
+  background-color: @colors[dark-bkg];
+  color: @colors[main-color];
+}
+
+button {
+  background: url(./assets/backgrounds/card_detail_background.webp) !important;
+  color: @colors[main-color];
+  border-style: solid;
+  border-width: 2px;
+  border-image: radial-gradient(black, @colors[accent-color]) 1 !important;
+  border-radius: 3px !important;
+  box-shadow: 5px 10px 10px rgb(0, 0, 0, 0.5);
+  padding: 2px;
+  margin: 4px;
+}
+
+select {
+  .cd10-text();
+  option {
+    background-color: @colors[dark-bkg];
+  }
+}
+
+input,
+textarea {
+  .cd10-text();
+}
+
+#navigation {
+  #nav-toggle {
+    .card-detail();
+  }
+  #scene-list {
+    .scene {
+      .card-detail();
+
+      .scene-name {
+        .cd10-text();
+      }
+    }
+    .active {
+      .card-detail() !important;
+    }
+
+    .view {
+      .sheet-card() !important;
+    }
+
+    .gm {
+      .card-detail() !important;
+      filter: grayscale();
+    }
+  }
+}
+
+.tox {
+  &.tox-tinymce {
+    background: url(./assets/backgrounds/sheet_background.webp) !important;
+    padding: 2px;
+  }
+
+  .tox-edit-area__iframe {
+    background: url(./assets/backgrounds/card_background.webp) !important;
+  }
+
+  .tox-toolbar__primary {
+    background: url(./assets/backgrounds/card_detail_background.webp) !important;
+  }
+
+  .tox-tbtn {
+    background-color: @colors[accent-color] !important;
+    color: var(--font-color) !important;
+  }
+  .tox-icon {
+    color: var(--font-color) !important;
+  }
 }
 
 @import "./namedCharacter-sheet.less";
@@ -132,5 +226,4 @@
 @import "./cd10-dialog.less";
 @import "./chat-physical-save.less";
 @import "./chat-attack-roll.less";
-@import "./cd10-tinymce.less";
-
+@import "./chat.less";

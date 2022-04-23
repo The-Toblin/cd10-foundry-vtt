@@ -1,6 +1,6 @@
 <form class="{{cssClass}} flex-row flex-between" autocomplete="off">
     {{!-- Main Content Box --}}
-    <div class="sheet-main-content flex-column flex-start">
+    <div class="sheet-main-content flex-col flex-start">
         <div class="head-contentbox">
             <h1>
                 <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize " cd10.stats.name"}}" />
@@ -78,7 +78,7 @@
         </section>
     </div>
     {{!-- Main Sidebar --}}
-    <div class="sheet-sidebar flex-column flex-start">
+    <div class="sheet-sidebar flex-col flex-start">
         <div class="image-box">
             <img class="actor-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="200"
                 width="200" />
@@ -89,10 +89,10 @@
             </h3>
             {{> "systems/cd10/templates/partials/sheet-tabs/character-stat-block.hbs"}}
         </div>
-        <div class="button">
+        <div class="cd10-button">
             <a class="physical-save flex-row flex-even pad-top" title={{localize "cd10.sheet.roll" }}>
                 <div class="d10-roll-icon">
-                    <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
+                    <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
                 </div>
                 <div>
                     <h3 class="sheet-header">
@@ -101,10 +101,10 @@
                 </div>
             </a>
         </div>
-        <div class="button">
+        <div class="cd10-button">
             <a class="cd10-roll-initiative flex-row flex-even pad-top" title={{localize "cd10.sheet.roll" }}>
                 <div class="d10-roll-icon">
-                    <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.png" />
+                    <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
                 </div>
                 <div>
                     <h3 class="sheet-header">
@@ -113,7 +113,7 @@
                 </div>
             </a>
         </div>
-        <div class="button stressBox stressBoxContainer flex-even flex-row">
+        <div class="cd10-button stressBox stressBoxContainer flex-even flex-row">
             <div class="stressBoxSelect">
                 <i class="far fa-{{#if this.actor.data.data.stressing.value}}check-{{/if}}square"></i>
             </div>

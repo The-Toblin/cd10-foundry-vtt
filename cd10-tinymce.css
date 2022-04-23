@@ -1,24 +1,14 @@
-.tox.tox-tinymce {
-  background: url(assets/backgrounds/sheet_background.jpg);
-  padding: 2px;
-}
-.tox .tox-edit-area__iframe {
-  background: url(assets/backgrounds/card_background.jpg);
-}
-.tox .tox-toolbar__primary {
-  background: url(assets/backgrounds/card_detail_background.jpg);
-}
-.tox .editor-content body p,
-.tox .editor-content p,
-.tox .editor-content b,
-.tox .editor-content a,
-.tox .editor-content ul,
-.tox .editor-content ol,
-.tox .editor-content li,
-.tox .editor-content h1,
-.tox .editor-content h2,
-.tox .editor-content h3,
-.tox .editor-content h4,
-.tox .editor-content h5 {
+body p,
+p,
+b,
+a,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5 {
   color: #dfbb61 !important;
 }
