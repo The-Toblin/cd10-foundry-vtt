@@ -180,6 +180,7 @@ textarea {
   box-shadow: 5px 10px 10px #000000 !important;
   margin: 0 5px 10px 5px !important;
   color: #dfbb61 !important;
+  filter: none !important;
 }
 #navigation #scene-list .gm {
   background: url(assets/backgrounds/card_detail_background.webp) !important;
