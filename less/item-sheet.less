@@ -13,13 +13,13 @@
   input {
     border: none;
     background: none;
-    color: var(--font-color);
+    color: @colors[font-main];
     width: 50%;
   }
 
   select {
     border: none;
-    color: var(--font-color);
+    color: @colors[font-main];
     background-color: black;
     font-family: var(--font-main);
     background: url(./assets/backgrounds/card_detail_background.jpg);
@@ -57,14 +57,14 @@
     background: url(./assets/backgrounds/card_background.jpg);
     border-style: solid;
     border-width: 3px;
-    border-image: radial-gradient(black, var(--font-color)) 1;
+    border-image: radial-gradient(black, @colors[font-main]) 1;
     padding: 5px;
-    color: var(--font-color);
+    color: @colors[font-main];
 
     form {
       select {
         border: none;
-        color: var(--font-color);
+        color: @colors[font-main];
       }
 
       h1 {
@@ -77,7 +77,7 @@
       }
 
       hr {
-        border-color: var(--font-color);
+        border-color: @colors[font-main];
         width: 150px;
       }
 

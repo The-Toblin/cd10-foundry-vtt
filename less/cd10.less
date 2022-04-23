@@ -4,6 +4,9 @@
   --accent-color: rgb(107, 108, 101);
   --font-main: "Signika", sans-serif;
 }
+@colors: {
+  font-main:rgb(223, 187, 97);
+}
 
 /* Containers for content */
 .flex-row {
@@ -39,18 +42,18 @@
 /* Overall styling classes */
 .sheet-background {
   background: url(./assets/backgrounds/sheet_background.jpg);
-  color: var(--font-color);
+  color: @colors[font-main];
 }
 
 .sheet-card {
   background: url(./assets/backgrounds/card_background.jpg);
   border-style: solid;
   border-width: 3px;
-  border-image: radial-gradient(black, var(--font-color)) 1;
+  border-image: radial-gradient(black, @colors[font-main]) 1;
   padding: 5px;
   box-shadow: 5px 10px 10px rgb(0, 0, 0, 0.5);
   margin: 0 5px 10px 5px;
-  color: var(--font-color);
+  color: @colors[font-main];
 }
 
 .dark-background {

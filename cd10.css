@@ -4,7 +4,6 @@
   --accent-color: #6b6c65;
   --font-main: "Signika", sans-serif;
 }
-/* Containers for content */
 .flex-row {
   display: flex;
   flex-direction: row;
@@ -32,17 +31,17 @@
 /* Overall styling classes */
 .sheet-background {
   background: url(assets/backgrounds/sheet_background.jpg);
-  color: var(--font-color);
+  color: #dfbb61;
 }
 .sheet-card {
   background: url(assets/backgrounds/card_background.jpg);
   border-style: solid;
   border-width: 3px;
-  border-image: radial-gradient(black, var(--font-color)) 1;
+  border-image: radial-gradient(black, #dfbb61) 1;
   padding: 5px;
   box-shadow: 5px 10px 10px #000000;
   margin: 0 5px 10px 5px;
-  color: var(--font-color);
+  color: #dfbb61;
 }
 .dark-background {
   background: url(assets/backgrounds/card_detail_background.jpg);
@@ -106,13 +105,13 @@
 .cd10.sheet.namedCharacter input,
 .cd10.sheet.namedCharacter textarea,
 .cd10.sheet.namedCharacter .stat-element {
-  color: var(--font-color);
+  color: #dfbb61;
 }
 .cd10.sheet.namedCharacter .window-content {
   background: url(assets/backgrounds/sheet_background.jpg);
 }
 .cd10.sheet.namedCharacter form {
-  color: var(--font-color);
+  color: #dfbb61;
 }
 .cd10.sheet.namedCharacter form select {
   border: none;
@@ -175,7 +174,7 @@
   text-align: center;
 }
 .cd10.sheet.namedCharacter form hr {
-  border-color: var(--font-color);
+  border-color: #dfbb61;
   width: 150px;
   margin-bottom: 20px;
 }
@@ -240,7 +239,7 @@
 }
 .skill-card {
   margin-bottom: 10px;
-  color: var(--font-color);
+  color: #dfbb61;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -385,7 +384,7 @@
 .skill-list,
 .traits-list {
   width: 49%;
-  color: var(--font-color);
+  color: #dfbb61;
 }
 .skill-list .attribute-pair,
 .traits-list .attribute-pair {
@@ -547,7 +546,7 @@
 }
 .health-info .stat-element .shock-icons .dot-container,
 .health-info .stat-element .wounds-icons .dot-container {
-  color: var(--font-color);
+  color: #dfbb61;
 }
 .health-info .stat-element .shock-icons .crossed,
 .health-info .stat-element .wounds-icons .crossed {
@@ -567,12 +566,12 @@
 .cd10.sheet.item input {
   border: none;
   background: none;
-  color: var(--font-color);
+  color: #dfbb61;
   width: 50%;
 }
 .cd10.sheet.item select {
   border: none;
-  color: var(--font-color);
+  color: #dfbb61;
   background-color: black;
   font-family: var(--font-main);
   background: url(assets/backgrounds/card_detail_background.jpg);
@@ -605,13 +604,13 @@
   background: url(assets/backgrounds/card_background.jpg);
   border-style: solid;
   border-width: 3px;
-  border-image: radial-gradient(black, var(--font-color)) 1;
+  border-image: radial-gradient(black, #dfbb61) 1;
   padding: 5px;
-  color: var(--font-color);
+  color: #dfbb61;
 }
 .cd10.sheet.item .window-content form select {
   border: none;
-  color: var(--font-color);
+  color: #dfbb61;
 }
 .cd10.sheet.item .window-content form h1 {
   border: none;
@@ -621,7 +620,7 @@
   height: fit-content;
 }
 .cd10.sheet.item .window-content form hr {
-  border-color: var(--font-color);
+  border-color: #dfbb61;
   width: 150px;
 }
 .cd10.sheet.item .window-content form .generic-info-box,
@@ -677,7 +676,7 @@
 .cd10.sheet.mookCharacter .fa,
 .cd10.sheet.mookCharacter .far,
 .cd10.sheet.mookCharacter .fas {
-  color: var(--font-color);
+  color: #dfbb61;
 }
 .cd10.sheet.mookCharacter .window-content {
   background: url(assets/backgrounds/sheet_background.jpg);
@@ -690,7 +689,7 @@
 }
 .cd10.sheet.mookCharacter form select {
   border: none;
-  color: var(--font-color);
+  color: #dfbb61;
   background-color: black;
   font-family: var(--font-main);
   background: url(assets/backgrounds/card_detail_background.jpg);
@@ -723,7 +722,7 @@
   width: 150px;
   margin-top: 5px;
   margin-bottom: 5px;
-  border-color: var(--font-color);
+  border-color: #dfbb61;
 }
 .cd10.sheet.mookCharacter form table {
   border: none;
@@ -797,20 +796,20 @@
   border-width: 3px;
   border-image: radial-gradient(black, var(--accent-color)) 1;
   box-shadow: inset 2px 2px 10px 5px black;
-  color: var(--font-color);
+  color: #dfbb61;
 }
 .cd10-dialog h3 {
   text-align: center;
 }
 .cd10-dialog .window-content {
-  color: var(--font-color) !important;
+  color: #dfbb61 !important;
   font-family: var(--font-main);
   background: url(assets/backgrounds/card_background.jpg);
 }
 .cd10-dialog .window-content select,
 .cd10-dialog .window-content input {
   border: none;
-  color: var(--font-color);
+  color: #dfbb61;
   font-family: var(--font-main);
   background: url(assets/backgrounds/card_detail_background.jpg);
 }
