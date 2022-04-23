@@ -197,6 +197,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
       html.find(".task-check").click(this._onTaskCheck.bind(this));
       html.find(".attack-check").click(this._simpleAttackCheck.bind(this));
       html.find(".physical-save").click(this._onPhysicalSave.bind(this));
+      html.find(".cd10-roll-initiative").click(this._onRollInitiative.bind(this));
       html.find(".reveal-rollable").on("mouseover mouseout", this._onToggleRollable.bind(this));
       html.find(".stressBox").click(this._stressBoxClicked.bind(this));
       html.find(".inline-edit").change(this._onSkillEdit.bind(this));
@@ -638,6 +639,12 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     this.actor.update({
       "data.stressing.value": !value
     });
+  }
+
+  _onRollInitiative(event) {
+    event.preventDefault();
+
+    this.actor.rollInitiative();
   }
 
   _checkHeroPoints() {
