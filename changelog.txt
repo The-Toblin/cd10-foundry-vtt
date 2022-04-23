@@ -1,3 +1,6 @@
+#Version 0.4.4.1
+Big whoopsie in dice.js. Rollformula was incorrectly evaluated.
+
 #Version 0.4.4
 Minor bugfixes to CSS and Mook sheet. Mook sheet's equip panel is temporary and will be updated shortly.
 

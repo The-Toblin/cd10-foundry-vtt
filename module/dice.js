@@ -1,5 +1,6 @@
 /* Core dice roll functions for making skillchecks, attacks and saves. The variable checkType determines
 how this class functions. */
+
 /**
  *
  * @param root0
@@ -89,7 +90,11 @@ export async function TaskCheck({
     rollFormula += " + @actionValue";
   }
 
-  rollFormula += traitValue > 0 ? " + @traitValue" : " @traitValue";
+  if (traitValue >0 ) {
+    rollFormula += "+ @traitValue";
+  } else if (traitValue <0) {
+    rollFormula += " @traitValue";
+  }
 
   if (modifier > 0 && checkType !== "Save") {
     rollFormula += " - @modifier";
@@ -110,6 +115,8 @@ export async function TaskCheck({
     traitValue: traitValue,
     modifier: modifier
   };
+
+  console.log("Rollinfo:", rollFormula, rollData);
 
   /* Roll the dice. Save as object for manipulation. */
   let rollD10 = await new Roll(rollFormula, rollData).roll({
