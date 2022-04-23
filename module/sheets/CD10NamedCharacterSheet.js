@@ -178,7 +178,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     }
 
     sheetData.equippedShield = false;
-    for (const shield of sheetData.meleeWeapons) {
+    for (const shield of sheetData.shields) {
       if (shield.data.isEquipped.value) sheetData.equippedShield = true;
     }
 
