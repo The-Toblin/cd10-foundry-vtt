@@ -4,6 +4,21 @@
   --accent-color: #6b6c65;
   --font-main: "Signika", sans-serif;
 }
+.editor-content body p,
+.editor-content p,
+.editor-content b,
+.editor-content a,
+.editor-content ul,
+.editor-content ol,
+.editor-content li,
+.editor-content h1,
+.editor-content h2,
+.editor-content h3,
+.editor-content h4,
+.editor-content h5 {
+  color: #dfbb61 !important;
+}
+/* Containers for content */
 .flex-row {
   display: flex;
   flex-direction: row;
