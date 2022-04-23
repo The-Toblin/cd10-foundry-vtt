@@ -1,3 +1,6 @@
+#Version 0.4.4
+Minor bugfixes to CSS and Mook sheet. Mook sheet's equip panel is temporary and will be updated shortly.
+
 #Version 0.4.3
 Fixed a mismatch in the initiative roll. It would erroneously grab the actor, not the token, leading to a mismatch of items, skills and modifiers and sometimes failing entirely.
 
