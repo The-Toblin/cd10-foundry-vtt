@@ -56,6 +56,7 @@
     </div>
     <hr>
     <section class="sheet-combat-tab">
+        {{#if equippedMeleeWeapon}}
         <div class="weapon-card sheet-card">
             <h3>{{localize "cd10.sheet.weapon"}}</h3>
             <table>
@@ -101,6 +102,8 @@
                 {{/each}}
             </table>
         </div>
+        {{/if}}
+        {{#if equippedRangedWeapon}}
         <div class="weapon-card sheet-card">
             <h3>{{localize "cd10.sheet.rangedWeapon"}}</h3>
             <table>
@@ -145,6 +148,8 @@
                 {{/each}}
             </table>
         </div>
+        {{/if}}
+        {{#if equippedArmor}}
         <div class="weapon-card sheet-card">
             <h3>{{localize "cd10.sheet.armor"}}</h3>
             <table>
@@ -187,6 +192,8 @@
                 {{/each}}
             </table>
         </div>
+        {{/if}}
+        {{#if equippedShield}}
         <div class="weapon-card sheet-card">
             <h3>{{localize "cd10.sheet.shield"}}</h3>
             <table>
@@ -232,5 +239,6 @@
                 {{/each}}
             </table>
         </div>
+        {{/if}}
     </section>
 </form>
