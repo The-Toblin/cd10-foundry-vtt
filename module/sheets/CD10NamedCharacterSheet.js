@@ -200,7 +200,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
       html.find(".reveal-rollable").on("mouseover mouseout", this._onToggleRollable.bind(this));
       html.find(".stressBox").click(this._stressBoxClicked.bind(this));
       html.find(".inline-edit").change(this._onSkillEdit.bind(this));
-      html.find(".set-morale").change(this._onMoraleEdit.bind(this));
       html.find(".item-delete").click(this._onItemDelete.bind(this));
       html.find(".item-equip").click(this._onItemEquip.bind(this));
       html.find(".ammo-select").click(this._onAmmoSelect.bind(this));
@@ -605,30 +604,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
 
     await item.update({
       [field]: element.value
-    });
-  }
-
-  async _onMoraleEdit(event) {
-    event.preventDefault();
-
-    if (!this.isEditable) {
-      return;
-    }
-
-    let inputVal = document.getElementsByClassName("set-morale")[0].value;
-
-    if (inputVal > 25) {
-      inputVal = 25;
-    } else if (inputVal < 0) {
-      inputVal = 0;
-    }
-
-    this.actor.update({
-      data: {
-        morale: {
-          value: inputVal
-        }
-      }
     });
   }
 

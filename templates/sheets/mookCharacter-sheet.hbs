@@ -1,7 +1,7 @@
 <form class="{{cssClass}}" autocomplete="off">
     <div class="cd10-sheet flex-column flex-start">
         <div class="flex-row flex-between header-box">
-            <div class="flex-column flex-center title-box">
+            <div class="flex-column flex-start title-box">
                 <h1>
                     <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "
                         cd10.stats.name"}}" />
@@ -35,6 +35,42 @@
                             {{localize "cd10.sheet.stress"}}
                         </h3>
                     </div>
+                </div>
+                <div class="button">
+                    <ul class="flex-col flex-start pad-4">
+                        {{#each meleeWeapons as |weapon|}}
+                        <li class="item equippable-inventory-item flex-row flex-between" data-item-id="{{_id}}">
+                            {{weapon.name}}
+                            <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
+                                <i class="far fa-{{#if data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
+                            </a>
+                        </li>
+                        {{/each}}
+                        {{#each rangedWeapons as |weapon|}}
+                        <li class="item equippable-inventory-item flex-row flex-between" data-item-id="{{_id}}">
+                            {{weapon.name}}
+                            <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
+                                <i class="far fa-{{#if data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
+                            </a>
+                        </li>
+                        {{/each}}
+                        {{#each armors as |armor|}}
+                        <li class="item equippable-inventory-item flex-row flex-between" data-item-id="{{_id}}">
+                            {{armor.name}}
+                            <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
+                                <i class="far fa-{{#if data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
+                            </a>
+                        </li>
+                        {{/each}}
+                        {{#each shields as |shield|}}
+                        <li class="item equippable-inventory-item flex-row flex-between" data-item-id="{{_id}}">
+                            {{shield.name}}
+                            <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
+                                <i class="far fa-{{#if data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
+                            </a>
+                        </li>
+                        {{/each}}
+                    </ul>
                 </div>
             </div>
         </div>
@@ -96,9 +132,11 @@
                     </th>
                 </tr>
                 {{#each meleeWeapons as |weapon|}}
+                {{#if weapon.data.isEquipped.value}}
                 <tr>
                     {{> "systems/cd10/templates/partials/equipment-cards/weapon-card.hbs"}}
                 </tr>
+                {{/if}}
                 {{/each}}
             </table>
         </div>
@@ -142,9 +180,11 @@
                     {{/if}}
                 </tr>
                 {{#each rangedWeapons as |weapon|}}
+                {{#if weapon.data.isEquipped.value}}
                 <tr>
                     {{> "systems/cd10/templates/partials/equipment-cards/rangedWeapon-card.hbs"}}
                 </tr>
+                {{/if}}
                 {{/each}}
             </table>
         </div>
@@ -186,9 +226,11 @@
                     </th>
                 </tr>
                 {{#each armors as |armor|}}
+                {{#if armor.data.isEquipped.value}}
                 <tr>
                     {{> "systems/cd10/templates/partials/equipment-cards/armor-card.hbs"}}
                 </tr>
+                {{/if}}
                 {{/each}}
             </table>
         </div>
@@ -233,9 +275,11 @@
                     </th>
                 </tr>
                 {{#each shields as |shield|}}
+                {{#if shield.data.isEquipped.value}}
                 <tr>
                     {{> "systems/cd10/templates/partials/equipment-cards/shield-card.hbs"}}
                 </tr>
+                {{/if}}
                 {{/each}}
             </table>
         </div>

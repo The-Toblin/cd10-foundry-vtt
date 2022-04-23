@@ -214,7 +214,6 @@
         "injuries": {
             "shock": "Shock",
             "wounds": "Wounds",
-            "morale": "Morale",
             "scratch": "Scratch",
             "linjury": "Light Injury",
             "sinjury": "Serious Injury",

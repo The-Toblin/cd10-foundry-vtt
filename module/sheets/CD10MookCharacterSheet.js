@@ -171,7 +171,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     }
 
     sheetData.equippedShield = false;
-    for (const shield of sheetData.meleeWeapons) {
+    for (const shield of sheetData.shields) {
       if (shield.data.isEquipped.value) sheetData.equippedShield = true;
     }
 
@@ -193,7 +193,6 @@ export default class CD10MookCharacterSheet extends ActorSheet {
       html.find(".reveal-rollable").on("mouseover mouseout", this._onToggleRollable.bind(this));
       html.find(".stressBox").click(this._stressBoxClicked.bind(this));
       html.find(".inline-edit").change(this._onSkillEdit.bind(this));
-      html.find(".set-morale").change(this._onMoraleEdit.bind(this));
       html.find(".item-delete").click(this._onItemDelete.bind(this));
       html.find(".item-equip").click(this._onItemEquip.bind(this));
       html.find(".ammo-select").click(this._onAmmoSelect.bind(this));

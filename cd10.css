@@ -91,6 +91,7 @@
 }
 .button {
   background: url(assets/backgrounds/card_detail_background.jpg);
+  color: #dfbb61;
   border-style: solid;
   border-width: 3px;
   border-color: var(--accent-color);
