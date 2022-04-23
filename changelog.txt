@@ -1,3 +1,6 @@
+#Version 0.4.4.2
+Added initiative roll button to sheet.
+
 #Version 0.4.4.1
 Big whoopsie in dice.js. Rollformula was incorrectly evaluated.
 
