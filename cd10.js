@@ -35,7 +35,7 @@ async function preloadHandlebarsTemplates() {
     "systems/cd10/templates/partials/item-sheet-components/small-skill-stats.hbs",
     "systems/cd10/templates/partials/item-sheet-components/small-trait-stats.hbs",
     "systems/cd10/templates/partials/item-sheet-components/small-spell-stats.hbs",
-    "systems/cd10/templates/partials/spell-card.hbs"
+    "systems/cd10/templates/partials/skill-card.hbs"
   ];
 
   return loadTemplates(templatePaths);
@@ -147,7 +147,8 @@ Hooks.once("init", function() {
 
   Handlebars.registerHelper("highest", function(slash, blunt, pierce, energy) {
   // Helper for converting a 4 damage type weapon into a simple, single type weapon if simple damage model is set.
-    return Math.max(slash, blunt, pierce, energy);
+    let highest = Math.max(slash, blunt, pierce, energy);
+    return highest;
   });
 
   Handlebars.registerHelper("skills", function() {
@@ -159,7 +160,7 @@ Hooks.once("init", function() {
   });
 
   console.log("==== CD10 | Pushing TinyMCE CSS ====");
-  CONFIG.TinyMCE.content_css.push("systems/cd10/cd10-mce.css");
+  CONFIG.TinyMCE.content_css.push("systems/cd10/cd10-tinymce.css");
 });
 
 Hooks.once("ready", async () => {

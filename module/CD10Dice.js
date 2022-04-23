@@ -352,18 +352,14 @@ export async function simplecheck({
     };
   } else if (checkType === "Save") {
     let shieldDamageProtection = 0;
-    let shieldShockProtection = 0;
     let armorDamageProtection = 0;
-    let armorShockProtection = 0;
 
     if (armorObj !== null) {
       armorDamageProtection = armorObj.data.protection[damageType].value;
-      armorShockProtection = armorObj.data.protection.shock.value;
     }
 
     if (usingShield) {
       shieldDamageProtection = shieldObj.data.protection[damageType].value;
-      shieldShockProtection = shieldObj.data.protection.shock.value;
     }
 
     let outcome = _handleSave(
@@ -374,7 +370,6 @@ export async function simplecheck({
       shieldObj,
       usingShield,
       lethality,
-      shock,
       actor
     );
     templateContext = {
@@ -383,13 +378,9 @@ export async function simplecheck({
       roll: renderedRoll,
       usingShield: usingShield,
       lethality: lethality,
-      shock: shock,
       type: damageType,
       shieldDamageProtection: shieldDamageProtection,
-      shieldShockProtection: shieldShockProtection,
       armorDamageProtection: armorDamageProtection,
-      armorShockProtection: armorShockProtection,
-      shockResult: outcome.shockResult,
       saveOutcome: outcome.saveOutcome,
       wounds: outcome.wounds,
       DC: lethality - armorDamageProtection - shieldDamageProtection
@@ -419,7 +410,7 @@ export async function simplecheck({
  */
 function _handleAttack(rollTotal, skillObj, weaponObj, damageType, actorId) {
   /* Calculate details of the attack, such as Lethality and Excess. */
-  let excess; let lethality; let skillLevel; let skillName; let weaponDamage; let weaponShock;
+  let excess; let lethality; let skillLevel; let skillName; let weaponDamage;
 
   excess = parseInt(rollTotal) - 9;
 
@@ -432,11 +423,9 @@ function _handleAttack(rollTotal, skillObj, weaponObj, damageType, actorId) {
     let ammo = a.items.get(weaponObj.data.selectedAmmo.id);
     lethality = parseInt(ammo.data.data.damage[damageType].value) + excess;
     weaponDamage = parseInt(ammo.data.data.damage[damageType].value);
-    weaponShock = parseInt(ammo.data.data.damage.shock.value);
   } else {
     lethality = parseInt(weaponObj.data.damage[damageType].value) + excess;
     weaponDamage = parseInt(weaponObj.data.damage[damageType].value);
-    weaponShock = parseInt(weaponObj.data.damage.shock.value);
   }
 
   if (skillObj === null) {
@@ -452,8 +441,7 @@ function _handleAttack(rollTotal, skillObj, weaponObj, damageType, actorId) {
     skillName,
     lethality,
     excess,
-    weaponDamage,
-    weaponShock
+    weaponDamage
   };
 }
 
@@ -467,7 +455,6 @@ function _handleAttack(rollTotal, skillObj, weaponObj, damageType, actorId) {
  * @param shieldObj
  * @param usingShield
  * @param lethality
- * @param shock
  * @param actor
  */
 function _handleSave(
@@ -478,7 +465,6 @@ function _handleSave(
   shieldObj,
   usingShield,
   lethality,
-  shock,
   actor
 ) {
   let outcome = "";

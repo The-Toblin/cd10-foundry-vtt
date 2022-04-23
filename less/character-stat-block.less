@@ -1,9 +1,9 @@
 .health-info {
   .stat-element {
-    background: url("@{sheetcarddetail}");
+    background: url(./assets/backgrounds/card_detail_background.webp);
     border-style: solid;
     border-width: 1px;
-    border-image: radial-gradient(black, @accent-color) 1;
+    border-image: radial-gradient(black, @colors[accent-color]) 1;
     box-shadow: inset 2px 2px 10px 5px black;
     padding: 2px 5px 2px 5px;
     width: 100%;
@@ -13,14 +13,13 @@
         text-align: center;
       }
 
-    .shock-icons,
     .wounds-icons {
       display: flex;
       flex-direction: row;
       justify-content: center;
 
       .dot-container {
-        color: @main-color;
+        color: @colors[main-color];
       }
 
       .crossed {

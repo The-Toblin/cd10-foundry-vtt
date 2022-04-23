@@ -89,7 +89,7 @@
             </h3>
             {{> "systems/cd10/templates/partials/sheet-tabs/character-stat-block.hbs"}}
         </div>
-        <div class="button">
+        <div class="cd10-button">
             <a class="physical-save flex-row flex-even pad-top" title={{localize "cd10.sheet.roll" }}>
                 <div class="d10-roll-icon">
                     <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
@@ -101,7 +101,19 @@
                 </div>
             </a>
         </div>
-        <div class="button stressBox stressBoxContainer flex-even flex-row">
+        <div class="cd10-button">
+            <a class="cd10-roll-initiative flex-row flex-even pad-top" title={{localize "cd10.sheet.roll" }}>
+                <div class="d10-roll-icon">
+                    <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
+                </div>
+                <div>
+                    <h3 class="sheet-header">
+                        {{localize "cd10.sheet.initiative"}}
+                    </h3>
+                </div>
+            </a>
+        </div>
+        <div class="cd10-button stressBox stressBoxContainer flex-even flex-row">
             <div class="stressBoxSelect">
                 <i class="far fa-{{#if this.actor.data.data.stressing.value}}check-{{/if}}square"></i>
             </div>

@@ -9,7 +9,7 @@
             {{#if (gte data.wounds.value 15)}}
             {{data.debilitationType.value}}
             {{else if (eq data.modifier.value 0)}}
-            {{localize "cd10.sheet.none"}}
+            0
             {{else}}
             -{{data.modifier.value}} {{data.debilitationType.value}}
             {{/if}}
@@ -19,14 +19,7 @@
         </div>
     </div>
     <div class="stat-element"> <label>
-            <h3 class="stattitle">
-                {{#if (eq data.wounds.value 0)}}
-                    {{localize "cd10.sheet.no"}}
-                {{/if}}
-                {{localize "cd10.injuries.wounds"}}
-                {{#unless (eq data.wounds.value 0)}}
-                    {{data.wounds.value}}
-                {{/unless}}
+            <h3 class="stattitle">{{localize "cd10.injuries.wounds"}} {{data.wounds.value}}
             </h3>
         </label>
         <div class="wounds-icons">

@@ -1,7 +1,7 @@
 <form class="{{cssClass}}" autocomplete="off">
     <div class="cd10-sheet flex-col flex-start">
         <div class="flex-row flex-between header-box">
-            <div class="flex-col flex-center title-box">
+            <div class="flex-col flex-start title-box">
                 <h1>
                     <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "
                         cd10.stats.name"}}" />
@@ -14,7 +14,7 @@
             </div>
             <div class="flex-col flex-center pad-4">
                 <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" class="actor-image" />
-                <div class="button">
+                <div class="cd10-button">
                     <a class="physical-save flex-row flex-even pad-top" title={{localize "cd10.sheet.roll" }}>
                         <div class="d10-roll-icon">
                             <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
@@ -26,7 +26,19 @@
                         </div>
                     </a>
                 </div>
-                <div class="button stressBox stressBoxContainer flex-even flex-row pad-8">
+                <div class="cd10-button">
+                    <a class="cd10-roll-initiative flex-row flex-even pad-top" title={{localize "cd10.sheet.roll" }}>
+                        <div class="d10-roll-icon">
+                            <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
+                        </div>
+                        <div>
+                            <h3 class="sheet-header">
+                                {{localize "cd10.sheet.initiative"}}
+                            </h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="cd10-button stressBox stressBoxContainer flex-even flex-row pad-8">
                     <div class="stressBoxSelect">
                         <i class="far fa-{{#if this.actor.data.data.stressing.value}}check-{{/if}}square"></i>
                     </div>
@@ -35,6 +47,42 @@
                             {{localize "cd10.sheet.stress"}}
                         </h3>
                     </div>
+                </div>
+                <div class="cd10-button">
+                    <ul class="flex-col flex-start pad-4">
+                        {{#each meleeWeapons as |weapon|}}
+                        <li class="item equippable-inventory-item flex-row flex-between" data-item-id="{{_id}}">
+                            {{weapon.name}}
+                            <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
+                                <i class="far fa-{{#if data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
+                            </a>
+                        </li>
+                        {{/each}}
+                        {{#each rangedWeapons as |weapon|}}
+                        <li class="item equippable-inventory-item flex-row flex-between" data-item-id="{{_id}}">
+                            {{weapon.name}}
+                            <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
+                                <i class="far fa-{{#if data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
+                            </a>
+                        </li>
+                        {{/each}}
+                        {{#each armors as |armor|}}
+                        <li class="item equippable-inventory-item flex-row flex-between" data-item-id="{{_id}}">
+                            {{armor.name}}
+                            <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
+                                <i class="far fa-{{#if data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
+                            </a>
+                        </li>
+                        {{/each}}
+                        {{#each shields as |shield|}}
+                        <li class="item equippable-inventory-item flex-row flex-between" data-item-id="{{_id}}">
+                            {{shield.name}}
+                            <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
+                                <i class="far fa-{{#if data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
+                            </a>
+                        </li>
+                        {{/each}}
+                    </ul>
                 </div>
             </div>
         </div>
@@ -56,6 +104,7 @@
     </div>
     <hr>
     <section class="sheet-combat-tab">
+        {{#if equippedMeleeWeapon}}
         <div class="weapon-card sheet-card">
             <h3>{{localize "cd10.sheet.weapon"}}</h3>
             <table>
@@ -88,19 +137,20 @@
                     </th>
                     {{/if}}
                     <th>
-                        {{localize "cd10.weapon.shockDamage"}}
-                    </th>
-                    <th>
                         {{localize "cd10.sheet.equipShort"}}
                     </th>
                 </tr>
                 {{#each meleeWeapons as |weapon|}}
+                {{#if weapon.data.isEquipped.value}}
                 <tr>
                     {{> "systems/cd10/templates/partials/equipment-cards/weapon-card.hbs"}}
                 </tr>
+                {{/if}}
                 {{/each}}
             </table>
         </div>
+        {{/if}}
+        {{#if equippedRangedWeapon}}
         <div class="weapon-card sheet-card">
             <h3>{{localize "cd10.sheet.rangedWeapon"}}</h3>
             <table>
@@ -131,20 +181,21 @@
                         {{localize "cd10.weapon.energyDamage"}}
                     </th>
                     <th>
-                        {{localize "cd10.weapon.shockDamage"}}
-                    </th>
-                    <th>
                         {{localize "cd10.sheet.equipShort"}}
                     </th>
                     {{/if}}
                 </tr>
                 {{#each rangedWeapons as |weapon|}}
+                {{#if weapon.data.isEquipped.value}}
                 <tr>
                     {{> "systems/cd10/templates/partials/equipment-cards/rangedWeapon-card.hbs"}}
                 </tr>
+                {{/if}}
                 {{/each}}
             </table>
         </div>
+        {{/if}}
+        {{#if equippedArmor}}
         <div class="weapon-card sheet-card">
             <h3>{{localize "cd10.sheet.armor"}}</h3>
             <table>
@@ -174,19 +225,20 @@
                     </th>
                     {{/if}}
                     <th>
-                        {{localize "cd10.armor.shockProtection"}}
-                    </th>
-                    <th>
                         {{localize "cd10.sheet.equipShort"}}
                     </th>
                 </tr>
                 {{#each armors as |armor|}}
+                {{#if armor.data.isEquipped.value}}
                 <tr>
                     {{> "systems/cd10/templates/partials/equipment-cards/armor-card.hbs"}}
                 </tr>
+                {{/if}}
                 {{/each}}
             </table>
         </div>
+        {{/if}}
+        {{#if equippedShield}}
         <div class="weapon-card sheet-card">
             <h3>{{localize "cd10.sheet.shield"}}</h3>
             <table>
@@ -219,18 +271,18 @@
                     </th>
                     {{/if}}
                     <th>
-                        {{localize "cd10.armor.shockProtection"}}
-                    </th>
-                    <th>
                         {{localize "cd10.sheet.equipShort"}}
                     </th>
                 </tr>
                 {{#each shields as |shield|}}
+                {{#if shield.data.isEquipped.value}}
                 <tr>
                     {{> "systems/cd10/templates/partials/equipment-cards/shield-card.hbs"}}
                 </tr>
+                {{/if}}
                 {{/each}}
             </table>
         </div>
+        {{/if}}
     </section>
 </form>

@@ -7,7 +7,7 @@
     <hr>
     <div class="item-sheet-main-content flex-row flex-evenly">
         <img src="{{item.img}}" data-edit="img" title="{{item.name}}" />
-        <div class="generic-info-box sheet-card-detail pad-8">
+        <div class="generic-info-box card-detail pad-8">
             <div class="editor-box">
                 {{editor
                 content=data.description.value
@@ -24,7 +24,7 @@
     </div>
     <div>
         {{localize "cd10.spell.reagents"}}
-        <div class="editor-box sheet-card-detail">
+        <div class="editor-box card-detail">
             {{editor
             content=data.reagents.value
             target="data.reagents.value"

@@ -1,10 +1,8 @@
-<section class="skill-card sheet-card">
-    <div class="skill-name sheet-card-detail">
-      <label>
+<form class="{{cssClass}}" autocomplete="off">
+    <h3>
         {{name}}
-      </label>
+    </h3>
+    <div class="card-detail pad-8">
+        {{{data.description.value}}}
     </div>
-    <div class="skill-value sheet-card-detail">
-      {{data.skillLevel.value}}
-    </div>
-</section>
+</form>

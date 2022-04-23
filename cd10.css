@@ -1,35 +1,18 @@
-.base-text {
-  color: #dfbb61;
+.cd10-text {
   font-family: "Signika", sans-serif;
+  color: #dfbb61 !important;
 }
-.box-shadow {
-  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.5);
-}
-.inset-box-shadow {
-  box-shadow: inset 2px 2px 10px 5px rgba(0, 0, 0, 0.5);
-}
-.card-margin {
-  margin: 0 5px 10px 5px;
-}
-.card-border {
-  border-style: solid;
-  border-width: 3px;
-}
-.card {
-  padding: 4px;
-  margin: 0 5px 10px 5px;
-  border-style: solid;
-  border-width: 3px;
-  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.5);
-}
-.pad-8 {
-  padding: 8px;
-}
-.pad-4 {
-  padding: 4px;
-}
-.pad-2 {
-  padding: 2px;
+p,
+b,
+i,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Signika", sans-serif;
+  color: #dfbb61 !important;
 }
 .flex-row {
   display: flex;
@@ -55,39 +38,53 @@
   justify-content: center;
   align-content: flex-start;
 }
-.sheet {
-  background: url("assets/backgrounds/sheet_background.webp");
+.sheet-background {
+  background: url(assets/backgrounds/sheet_background.webp);
   color: #dfbb61;
-  font-family: "Signika", sans-serif;
 }
 .sheet-card {
-  padding: 4px;
-  margin: 0 5px 10px 5px;
+  background: url(assets/backgrounds/card_background.webp);
   border-style: solid;
   border-width: 3px;
-  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.5);
+  border-image: radial-gradient(black, #dfbb61) 1;
+  padding: 5px;
+  box-shadow: 5px 10px 10px #000000;
+  margin: 0 5px 10px 5px;
   color: #dfbb61;
-  font-family: "Signika", sans-serif;
-  background: url("assets/backgrounds/card_background.webp");
-  border-image: radial-gradient(#000000, #dfbb61) 1;
 }
-.sheet-card-detail {
-  padding: 4px;
-  margin: 0 5px 10px 5px;
+.card-detail {
+  background: url(assets/backgrounds/card_detail_background.webp);
   border-style: solid;
   border-width: 3px;
-  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 2px 2px 10px 5px rgba(0, 0, 0, 0.5);
-  color: #dfbb61;
-  font-family: "Signika", sans-serif;
-  background: url("assets/backgrounds/card_detail_background.webp");
-  border-image: radial-gradient(#000000, #6b6c65) 1;
+  border-image: radial-gradient(black, #6b6c65) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  padding: 4px;
+  margin: 0 5px 10px 5px;
 }
 .item-roll img {
   max-width: 15px;
   margin-top: 5px;
   margin-right: 5px;
   border: none;
+}
+.pad-8 {
+  padding: 8px;
+}
+.pad-4 {
+  padding: 4px;
+}
+.pad-2 {
+  padding: 2px;
+}
+.sheet .editor-content {
+  background: url(assets/backgrounds/card_background.webp);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, #dfbb61) 1;
+  padding: 5px;
+  box-shadow: 5px 10px 10px #000000;
+  margin: 0 5px 10px 5px;
+  color: #dfbb61;
 }
 .sheet-body .tab .editor {
   height: 100%;
@@ -96,18 +93,121 @@
 .sheet-body .tab {
   height: 100%;
 }
-.button {
-  padding: 4px;
-  margin: 0 5px 10px 5px;
+.cd10-button {
+  background: url(assets/backgrounds/card_detail_background.webp);
+  color: #dfbb61;
   border-style: solid;
   border-width: 3px;
-  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.5);
-  background: url("assets/backgrounds/card_detail_background.webp");
-  border-image: radial-gradient(#000000, #6b6c65) 1;
+  border-image: radial-gradient(black, #6b6c65) 1;
   border-radius: 10px;
+  padding: 4px;
+  margin: 0 5px 10px 5px;
+  box-shadow: 5px 10px 10px #000000;
 }
-.button:hover {
-  box-shadow: inset 2px 2px 10px 5px rgba(0, 0, 0, 0.5);
+.cd10-button:hover {
+  box-shadow: inset 2px 2px 10px 5px black;
+}
+.window-content {
+  background: url(assets/backgrounds/sheet_background.webp) !important;
+  color: #dfbb61 !important;
+}
+a.entity-link,
+a.content-link,
+a.inline-roll {
+  background-color: #06151d;
+  color: #dfbb61;
+}
+button {
+  background: url(assets/backgrounds/card_detail_background.webp) !important;
+  color: #dfbb61;
+  border-style: solid;
+  border-width: 2px;
+  border-image: radial-gradient(black, #6b6c65) 1 !important;
+  border-radius: 3px !important;
+  box-shadow: 5px 10px 10px #000000;
+  padding: 2px;
+  margin: 4px;
+}
+select {
+  font-family: "Signika", sans-serif;
+  color: #dfbb61 !important;
+}
+select option {
+  background-color: #06151d;
+}
+input,
+textarea {
+  font-family: "Signika", sans-serif;
+  color: #dfbb61 !important;
+}
+#navigation #nav-toggle {
+  background: url(assets/backgrounds/card_detail_background.webp);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, #6b6c65) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  padding: 4px;
+  margin: 0 5px 10px 5px;
+}
+#navigation #scene-list .scene {
+  background: url(assets/backgrounds/card_detail_background.webp);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, #6b6c65) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  padding: 4px;
+  margin: 0 5px 10px 5px;
+}
+#navigation #scene-list .scene .scene-name {
+  font-family: "Signika", sans-serif;
+  color: #dfbb61 !important;
+}
+#navigation #scene-list .active {
+  background: url(assets/backgrounds/card_detail_background.webp) !important;
+  border-style: solid !important;
+  border-width: 3px !important;
+  border-image: radial-gradient(black, #6b6c65) 1 !important;
+  box-shadow: inset 2px 2px 10px 5px black !important;
+  padding: 4px !important;
+  margin: 0 5px 10px 5px !important;
+}
+#navigation #scene-list .view {
+  background: url(assets/backgrounds/card_background.webp) !important;
+  border-style: solid !important;
+  border-width: 3px !important;
+  border-image: radial-gradient(black, #dfbb61) 1 !important;
+  padding: 5px !important;
+  box-shadow: 5px 10px 10px #000000 !important;
+  margin: 0 5px 10px 5px !important;
+  color: #dfbb61 !important;
+  filter: none !important;
+}
+#navigation #scene-list .gm {
+  background: url(assets/backgrounds/card_detail_background.webp) !important;
+  border-style: solid !important;
+  border-width: 3px !important;
+  border-image: radial-gradient(black, #6b6c65) 1 !important;
+  box-shadow: inset 2px 2px 10px 5px black !important;
+  padding: 4px !important;
+  margin: 0 5px 10px 5px !important;
+  filter: grayscale();
+}
+.tox.tox-tinymce {
+  background: url(assets/backgrounds/sheet_background.webp) !important;
+  padding: 2px;
+}
+.tox .tox-edit-area__iframe {
+  background: url(assets/backgrounds/card_background.webp) !important;
+}
+.tox .tox-toolbar__primary {
+  background: url(assets/backgrounds/card_detail_background.webp) !important;
+}
+.tox .tox-tbtn {
+  background-color: #6b6c65 !important;
+  color: var(--font-color) !important;
+}
+.tox .tox-icon {
+  color: var(--font-color) !important;
 }
 .cd10.sheet .hidden {
   display: none;
@@ -128,7 +228,7 @@
   color: #dfbb61;
 }
 .cd10.sheet.namedCharacter .window-content {
-  background: url("assets/backgrounds/sheet_background.webp");
+  background: url(assets/backgrounds/sheet_background.webp);
 }
 .cd10.sheet.namedCharacter form {
   color: #dfbb61;
@@ -137,7 +237,7 @@
   border: none;
   color: inherit;
   font-family: "Signika", sans-serif;
-  background: url("assets/backgrounds/card_detail_background.webp");
+  background: url(assets/backgrounds/card_detail_background.webp);
 }
 .cd10.sheet.namedCharacter form select option {
   background-color: black;
@@ -171,7 +271,7 @@
 }
 .cd10.sheet.namedCharacter form table th,
 .cd10.sheet.namedCharacter form table td {
-  background: url("assets/backgrounds/card_detail_background.webp");
+  background: url(assets/backgrounds/card_detail_background.webp);
   border-style: solid;
   border-width: 1px;
   border-image: radial-gradient(black, #6b6c65) 1;
@@ -408,7 +508,7 @@
 }
 .skill-list .attribute-pair,
 .traits-list .attribute-pair {
-  background: url("assets/backgrounds/card_detail_background.webp");
+  background: url(assets/backgrounds/card_detail_background.webp);
   border-style: solid;
   border-width: 1px;
   border-image: radial-gradient(black, #6b6c65) 1;
@@ -452,7 +552,7 @@
 }
 .spell-list .spell-description,
 .spell-list .spell-reagents {
-  background: url("assets/backgrounds/card_detail_background.webp");
+  background: url(assets/backgrounds/card_detail_background.webp);
   border-style: solid;
   border-width: 1px;
   border-image: radial-gradient(black, #6b6c65) 1;
@@ -462,7 +562,7 @@
   margin: 12px 0 5px 0;
 }
 .spell-list .attribute-pair {
-  background: url("assets/backgrounds/card_detail_background.webp");
+  background: url(assets/backgrounds/card_detail_background.webp);
   border-style: solid;
   border-width: 1px;
   border-image: radial-gradient(black, #6b6c65) 1;
@@ -546,7 +646,7 @@
   text-align: right !important;
 }
 .health-info .stat-element {
-  background: url("assets/backgrounds/card_detail_background.webp");
+  background: url(assets/backgrounds/card_detail_background.webp);
   border-style: solid;
   border-width: 1px;
   border-image: radial-gradient(black, #6b6c65) 1;
@@ -558,17 +658,14 @@
 .health-info .stat-element .stat-value {
   text-align: center;
 }
-.health-info .stat-element .shock-icons,
 .health-info .stat-element .wounds-icons {
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
-.health-info .stat-element .shock-icons .dot-container,
 .health-info .stat-element .wounds-icons .dot-container {
   color: #dfbb61;
 }
-.health-info .stat-element .shock-icons .crossed,
 .health-info .stat-element .wounds-icons .crossed {
   filter: invert();
 }
@@ -581,7 +678,7 @@
   width: 150px;
   height: 150px;
   box-shadow: 5px 10px 10px #000000;
-  background: url("assets/backgrounds/card_detail_background.webp");
+  background: url(assets/backgrounds/card_detail_background.webp);
 }
 .cd10.sheet.item input {
   border: none;
@@ -594,7 +691,7 @@
   color: #dfbb61;
   background-color: black;
   font-family: "Signika", sans-serif;
-  background: url("assets/backgrounds/card_detail_background.webp");
+  background: url(assets/backgrounds/card_detail_background.webp);
 }
 .cd10.sheet.item select option {
   background-color: black;
@@ -611,7 +708,7 @@
 }
 .cd10.sheet.item table th,
 .cd10.sheet.item table td {
-  background: url("assets/backgrounds/card_detail_background.webp");
+  background: url(assets/backgrounds/card_detail_background.webp);
   border-style: solid;
   border-width: 1px;
   border-image: radial-gradient(black, #6b6c65) 1;
@@ -621,7 +718,7 @@
   padding: 4px 5px 4px 5px;
 }
 .cd10.sheet.item .window-content {
-  background: url("assets/backgrounds/card_background.webp");
+  background: url(assets/backgrounds/card_background.webp);
   border-style: solid;
   border-width: 3px;
   border-image: radial-gradient(black, #dfbb61) 1;
@@ -699,7 +796,7 @@
   color: #dfbb61;
 }
 .cd10.sheet.mookCharacter .window-content {
-  background: url("assets/backgrounds/sheet_background.webp");
+  background: url(assets/backgrounds/sheet_background.webp);
 }
 .cd10.sheet.mookCharacter form {
   display: flex;
@@ -710,7 +807,7 @@
   color: #dfbb61;
   background-color: black;
   font-family: "Signika", sans-serif;
-  background: url("assets/backgrounds/card_detail_background.webp");
+  background: url(assets/backgrounds/card_detail_background.webp);
 }
 .cd10.sheet.mookCharacter form select option {
   font-family: "Signika", sans-serif;
@@ -753,7 +850,7 @@
 }
 .cd10.sheet.mookCharacter form table th,
 .cd10.sheet.mookCharacter form table td {
-  background: url("assets/backgrounds/card_detail_background.webp");
+  background: url(assets/backgrounds/card_detail_background.webp);
   border-style: solid;
   border-width: 1px;
   border-image: radial-gradient(black, #6b6c65) 1;
@@ -809,7 +906,7 @@
   width: fit-content !important;
   height: fit-content !important;
   padding: 10px;
-  background: url("assets/backgrounds/card_detail_background.webp");
+  background: url(assets/backgrounds/card_detail_background.webp);
   border-style: solid;
   border-width: 3px;
   border-image: radial-gradient(black, #6b6c65) 1;
@@ -822,14 +919,14 @@
 .cd10-dialog .window-content {
   color: #dfbb61 !important;
   font-family: "Signika", sans-serif;
-  background: url("assets/backgrounds/card_background.webp");
+  background: url(assets/backgrounds/card_background.webp);
 }
 .cd10-dialog .window-content select,
 .cd10-dialog .window-content input {
   border: none;
   color: #dfbb61;
   font-family: "Signika", sans-serif;
-  background: url("assets/backgrounds/card_detail_background.webp");
+  background: url(assets/backgrounds/card_detail_background.webp);
 }
 .cd10-dialog .window-content select option {
   background-color: black;
@@ -903,13 +1000,45 @@
   width: 100%;
   height: auto;
 }
-.tox.tox-tinymce {
-  background: url("assets/backgrounds/sheet_background.webp");
-  padding: 2px;
+.chat-message {
+  background: url(assets/backgrounds/card_background.webp);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, #dfbb61) 1;
+  padding: 5px;
+  box-shadow: 5px 10px 10px #000000;
+  margin: 0 5px 10px 5px;
+  color: #dfbb61;
+  border-radius: 5px;
 }
-.tox .tox-edit-area__iframe {
-  background: url("assets/backgrounds/card_background.webp");
+.dice-roll,
+.dice-total,
+.statbox,
+.valuebox {
+  background: url(assets/backgrounds/card_detail_background.webp);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, #6b6c65) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  padding: 4px;
+  margin: 0 5px 10px 5px;
 }
-.tox .tox-toolbar__primary {
-  background: url("assets/backgrounds/card_detail_background.webp");
+#chat-controls .roll-type-select {
+  background: url(assets/backgrounds/card_detail_background.webp);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, #6b6c65) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  padding: 4px;
+  margin: 0 5px 10px 5px;
+  padding: 0px;
+}
+#chat-form textarea {
+  background: url(assets/backgrounds/card_detail_background.webp);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, #6b6c65) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  padding: 4px;
+  margin: 0 5px 10px 5px;
 }

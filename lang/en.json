@@ -14,7 +14,6 @@
                 "attack": "Attack",
                 "title": "Attack ({weapon})",
                 "lethality": "Lethality",
-                "shock": "Shock",
                 "weapon": "Weapon",
                 "excess": "Excess",
                 "total": "Total",
@@ -23,7 +22,6 @@
             "defense": {
                 "title": "Defense ({armor})",
                 "protection": "Protection",
-                "shock": "Shock",
                 "armor": "Armor",
                 "excess": "Excess",
                 "total": "Total",
@@ -72,7 +70,6 @@
             "min": "Minimum",
             "modifier": "Modifier",
             "name": "Name",
-            "no": "No",
             "none": "None",
             "negative": "Negative",
             "newItem": "Name",
@@ -101,7 +98,6 @@
             "traitCheck": "Skillcheck with trait",
             "traits": "Traits",
             "type": "Type",
-            "yes": "Yes",
             "weapon": "Weapon",
             "weapons": "Weapons",
             "weight": "Weight"
@@ -125,8 +121,7 @@
             "slash": "Slash",
             "pierce": "Pierce",
             "blunt": "Blunt",
-            "energy": "Energy",
-            "shock": "Shock"
+            "energy": "Energy"
         },
         "skill": {
             "teachableYes": "Requires a teacher.",
@@ -164,7 +159,6 @@
             "pierceDamage": "Pierce",
             "bluntDamage": "Blunt",
             "energyDamage": "Energy",
-            "shockDamage": "Shock",
             "lethality": "Lethality",
             "reach": "Reach",
             "blockValue": "Block",
@@ -190,7 +184,6 @@
             "pierceProtection": "Pierce",
             "bluntProtection": "Blunt",
             "energyProtection": "Energy",
-            "shockProtection": "Shock",
             "blockValue": "Block",
             "defenseValue": "Defensive Value",
             "defenseValueShort": "DV",
@@ -216,7 +209,6 @@
         "injuries": {
             "shock": "Shock",
             "wounds": "Wounds",
-            "morale": "Morale",
             "scratch": "Scratch",
             "linjury": "Light Injury",
             "sinjury": "Serious Injury",
