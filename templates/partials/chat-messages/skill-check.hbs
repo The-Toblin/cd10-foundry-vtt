@@ -1,27 +1,62 @@
-<div class="task-check skill skill-roll-card flex-col flex-start">
-    {{#unless initiative}}
-    {{#unless (eq skillName null)}}
+<div class="skill-check skill skill-roll-card flex-col flex-start">
+  {{#unless (eq skillName null)}}
     <div>
-        <h3>{{skillName}} {{localize "cd10.chat.roll.check"}}</h3>
+      <h3>
+        {{skillName}}
+        {{skillLevel}}
+        {{localize "cd10.chat.roll.check"}}
+      </h3>
+      <div class="trait-box">
+      {{#if traitName}} {{traitName}} ({{traitLevel}}) {{/if}}
+      </div>
     </div>
-    {{else}}
-    <h3>{{localize "cd10.chat.roll.trait"}} {{localize "cd10.chat.roll.check"}}</h3>
-    {{/unless}}
-    {{#if traitName}}
-    {{traitName}} ({{traitValue}})
-    {{/if}}
-    {{else}}
-    <div>
-        <h3>{{localize "cd10.sheet.initiative"}} {{localize "cd10.chat.roll.check"}}</h3>
-    </div>
+  {{else}}
+    <h3>
+      {{localize "cd10.chat.roll.trait"}}
+      {{localize "cd10.chat.roll.check"}}
+    </h3>
+    {{traitName}}
+    (
+    {{traitValue}}
+    )
     <div class="flex-row flex-between">
-        <div class="stat-box">
-            {{skillName}}
-        </div>
-        <div class="value-box">
-            {{skillLevel}}
-        </div>
+      <div class="stat-box">
+        {{skillName}}
+      </div>
+      <div class="value-box">
+        {{skillLevel}}
+      </div>
     </div>
-    {{/unless}}
-    {{{roll}}}
+  {{/unless}}
+  {{{roll}}}
+  {{#unless (eq nines 0) }}
+  <div class="flex-row flex-between">
+    <div class="stat-box">
+      {{localize "cd10.chat.roll.nines"}}
+    </div>
+    <div class="value-box">
+      {{nines}}
+    </div>
+  </div>
+  {{/unless}}
+  {{#unless (eq zeroes 0) }}
+  <div class="flex-row flex-between">
+    <div class="stat-box">
+      {{localize "cd10.chat.roll.zeroes"}}
+    </div>
+    <div class="value-box">
+      {{zeroes}}
+    </div>
+  </div>
+  {{/unless}}
+  <div class="flex-col flex-start">
+    <div class="flex-row flex-between">
+      <div class="stat-box">
+        {{localize "cd10.chat.roll.total"}}
+      </div>
+      <div class="value-box">
+        {{total}}
+      </div>
+    </div>
+  </div>
 </div>

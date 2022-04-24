@@ -18,13 +18,13 @@
         </nav>
         <section id="tabs" class="sheet-body">
             {{!-- Biography Tab --}}
-            <div class="tab sheet-bio sheet-card" data-group="primary" data-tab="biography">
+            <div class="tab sheet-bio cd10-card " data-group="primary" data-tab="biography">
                 {{> "systems/cd10/templates/partials/sheet-tabs/character-description-block.hbs"}}
             </div>
 
             {{!-- Skills Tab --}}
             <div class="tab sheet-skills" data-group="primary" data-tab="skills">
-                <div class="sheet-card">
+                <div class="cd10-card ">
                     <table>
                         <colgroup>
                             <col class="fifty">
@@ -57,23 +57,23 @@
                 {{> "systems/cd10/templates/partials/sheet-tabs/combat-tab.hbs"}}
             </div>
             {{!-- Spells Tab --}}
+            {{#if spells}}
             <div class="tab sheet-spells" data-group="primary" data-tab="spells">
                 {{> "systems/cd10/templates/partials/sheet-tabs/spell-list.hbs"}}
             </div>
+            {{/if}}
             {{!-- Inventory Tab --}}
             <div class="tab sheet-inventory" data-group="primary" data-tab="inventory">
                 {{> "systems/cd10/templates/partials/sheet-tabs/inventory-list.hbs"}}
             </div>
             {{!-- Notes Tab --}}
             <div class="tab sheet-notes" data-group="primary" data-tab="notes">
-                <div class="sheet-card">
-                    {{editor
-                    content=data.notes.value
-                    target="data.notes.value"
-                    button=true
-                    owner=owner
-                    editable=editable}}
-                </div>
+                {{editor
+                content=data.notes.value
+                target="data.notes.value"
+                button=true
+                owner=owner
+                editable=editable}}
             </div>
         </section>
     </div>
@@ -83,7 +83,7 @@
             <img class="actor-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="200"
                 width="200" />
         </div>
-        <div class="sheet-health sheet-card">
+        <div class="sheet-health cd10-card ">
             <h3>
                 {{localize "cd10.sheet.health"}}
             </h3>

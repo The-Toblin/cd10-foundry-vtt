@@ -1,4 +1,4 @@
-<div class="task-check physical-save-card save flex-col flex-start">
+<div class="skill-check physical-save-card save flex-col flex-start">
     <div>
         <h3>{{localize "cd10.chat.defense.title" armor=armor.name}}</h3>
     </div>
@@ -20,14 +20,6 @@
         </div>
         <div class="value-box">
             {{armorDamageProtection}}
-        </div>
-    </div>
-    <div class="flex-row flex-between">
-        <div class="stat-box pad-4">
-            {{localize "cd10.injuries.shock"}} {{localize "cd10.armor.protection"}}
-        </div>
-        <div class="value-box">
-            {{armorShockProtection}}
         </div>
     </div>
     {{#if usingShield}}
@@ -53,14 +45,6 @@
             {{shieldDamageProtection}}
         </div>
     </div>
-    <div class="flex-row flex-between">
-        <div class="stat-box pad-4">
-            {{localize "cd10.injuries.shock"}} {{localize "cd10.armor.protection"}}
-        </div>
-        <div class="value-box">
-            {{shieldShockProtection}}
-        </div>
-    </div>
     {{/if}}
     <div class="flex-row flex-between">
         <h3>
@@ -73,14 +57,6 @@
         </div>
         <div class="value-box pad-4">
             {{lethality}}
-        </div>
-    </div>
-    <div class="flex-row flex-between">
-        <div class="stat-box pad-4">
-            {{localize "cd10.injuries.shock"}}
-        </div>
-        <div class="value-box">
-            {{shock}}
         </div>
     </div>
     <div class="flex-row flex-between">
@@ -126,14 +102,7 @@
             </h3>
             {{/if}}
         </div>
-        <div class="flex-row flex-between">
-            <div class="stat-box pad-4">
-                {{localize "cd10.chat.outcomes.final"}} {{localize "cd10.injuries.shock"}}
-            </div>
-            <div class="value-box pad-4">
-                {{shockResult}}
-            </div>
-        </div>
+
         {{#unless (eq saveOutcome "Perfection")}}
         <div class="flex-row flex-between">
             <div class="stat-box pad-4">

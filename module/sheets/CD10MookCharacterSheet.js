@@ -193,7 +193,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     /* Owner-only listeners */
     if (this.actor.isOwner) {
       /* Html.find(".item-roll").click(this._onItemRoll.bind(this));*/
-      html.find(".task-check").click(this._onTaskCheck.bind(this));
+      html.find(".skill-check").click(this._onTaskCheck.bind(this));
       html.find(".attack-check").click(this._simpleAttackCheck.bind(this));
       html.find(".physical-save").click(this._onPhysicalSave.bind(this));
       html.find(".reveal-rollable").on("mouseover mouseout", this._onToggleRollable.bind(this));
@@ -419,14 +419,14 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     event.preventDefault();
 
     let dialogOptions = {
-      classes: ["cd10-dialog", "physical-save-dialog"],
+      classes: ["cd10-dialog", "save-dialog"],
       top: 300,
       left: 400
     };
     new Dialog(
       {
         title: "Physical Save",
-        content: await renderTemplate("systems/cd10/templates/partials/physical-save-dialog.hbs", this.getData()),
+        content: await renderTemplate("systems/cd10/templates/partials/save-dialog.hbs", this.getData()),
         buttons: {
           roll: {
             label: "Save!",

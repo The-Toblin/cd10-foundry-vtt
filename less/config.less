@@ -6,4 +6,85 @@
   dark-bkg: rgb(6, 21, 29);
 };
 // Fonts
+@import url("https://fonts.googleapis.com/css2?family=Russo+One&display=swap");
 @font-base: "Signika", sans-serif;
+@font-header: "Russo One", sans-serif;
+
+// Overall sheet card classes
+.cd10-sheet {
+  background: url(./assets/backgrounds/sheet_background.webp);
+}
+
+.cd10-card {
+  background: url(./assets/backgrounds/card_background.webp);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, @colors[main-color]) 1;
+  box-shadow: 5px 10px 10px rgb(0, 0, 0, 0.5);
+  margin: 0 5px 10px 5px;
+  padding: 4px;
+}
+
+.cd10-card-detail {
+  background: url(./assets/backgrounds/card_detail_background.webp);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, @colors[accent-color]) 1;
+  box-shadow: inset 2px 2px 10px 5px black;
+  margin: 0 5px 5px 5px;
+  padding: 4px;
+}
+
+.cd10-button {
+  background: url(./assets/backgrounds/card_detail_background.webp);
+  color: @colors[main-color];
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, @colors[accent-color]) 1;
+  border-radius: 10px;
+  padding: 4px;
+  margin: 0 5px 10px 5px;
+  box-shadow: 5px 10px 10px rgb(0, 0, 0, 0.5);
+}
+
+.cd10-button:hover {
+  box-shadow: inset 2px 2px 10px 5px black;
+}
+
+.item-roll {
+  img {
+    max-width: 15px;
+    margin-top: 5px;
+    margin-right: 5px;
+    border: none;
+  }
+}
+
+.cd10-text {
+  color: @colors[main-color] !important;
+}
+
+.cd10-base-text {
+  .cd10-text();
+  font-family: @font-base;
+}
+
+.cd10-header {
+  .cd10-text();
+  font-family: @font-header;
+}
+
+p,
+b,
+i {
+  .cd10-base-text();
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  .cd10-header();
+}

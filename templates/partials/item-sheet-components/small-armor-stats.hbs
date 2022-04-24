@@ -19,9 +19,6 @@
                         </th>
                     {{/each}}
                 {{/if}}
-                <th>
-                    {{localize "cd10.armor.shockProtection"}}
-                </th>
                 {{#if (eq this.item.data.type "shield")}}
                 <th>
                     {{localize "cd10.armor.defenseValueShort"}}
@@ -66,10 +63,6 @@
                             data-dtype="{{data.protection.energy.type}}" />
                     </td>
                 {{/if}}
-                <td>
-                    <input name="data.protection.shock.value" type="text" value="{{data.protection.shock.value}}"
-                        data-dtype="{{data.protection.shock.type}}" />
-                </td>
                 {{#if (eq this.item.data.type "shield")}}
                     <td>
                         <input name="data.defenseValue.value" type="text" value="{{data.defenseValue.value}}"

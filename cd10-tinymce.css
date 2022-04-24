@@ -1,14 +1,15 @@
-body p,
 p,
 b,
-a,
-ul,
-ol,
-li,
+i {
+  color: #dfbb61 !important;
+  font-family: "Signika", sans-serif !important;
+}
 h1,
 h2,
 h3,
 h4,
-h5 {
-  color: #dfbb61 !important;
+h5,
+h6 {
+  color: #dfbb61;
+  font-family: "Russo One", sans-serif !important;
 }
