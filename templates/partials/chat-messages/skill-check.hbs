@@ -6,9 +6,11 @@
         {{skillLevel}}
         {{localize "cd10.chat.roll.check"}}
       </h3>
+      {{#if traitName}} 
       <div class="trait-box">
-      {{#if traitName}} {{traitName}} ({{traitLevel}}) {{/if}}
+      {{traitName}} ({{traitLevel}})
       </div>
+       {{/if}}
     </div>
   {{else}}
     <h3>

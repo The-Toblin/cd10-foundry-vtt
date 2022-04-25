@@ -1,5 +1,6 @@
 import { v030Migrate } from "./migrationscripts/v030Migrate.js";
 import { v040Migrate } from "./migrationscripts/v040Migrate.js";
+import { v050Migrate } from "./migrationscripts/v050Migrate.js";
 
 /**
  * Once cd10.js has determined migration needs to be done at all
@@ -10,6 +11,7 @@ import { v040Migrate } from "./migrationscripts/v040Migrate.js";
 export default async function MigrateWorld(currentVersion) {
   const v030 = !currentVersion || isNewerVersion("0.3.9", currentVersion);
   const v040 = !currentVersion || isNewerVersion("0.4.0", currentVersion);
+  const v050 = !currentVersion || isNewerVersion("0.5.0", currentVersion);
 
   let v030Data = {
     actors: [],
@@ -21,10 +23,11 @@ export default async function MigrateWorld(currentVersion) {
     items: [],
     tokens: []
   };
-  let newData = {
+  let v050Data = {
     actors: [],
-    items: [],
     tokens: []
+  };
+  let newData = {
   };
 
   if (v030) {
@@ -84,6 +87,27 @@ export default async function MigrateWorld(currentVersion) {
     }
   }
 
+  if (v050) {
+    console.log("==== CD10 | Beginning v0.5.0 data collection! ====");
+    try {
+      newData = await v050Migrate();
+      if (newData.actors !== undefined) {
+        v050Data.actors = newData.actors;
+      }
+      if (newData.tokens !== undefined) {
+        v050Data.tokens = newData.tokens;
+      }
+      if (newData.updateData !== undefined) {
+        v050Data.updateData = newData.updateData;
+      }
+      console.log("==== CD10 | v0.5.0 data collection completed! ====");
+    } catch(err) {
+      console.error("==== CD10 | v0.5.0 data collection failed! Aborting!", err);
+      ui.notifications.error("v0.5.0 data collection failed! Check logs and try again!");
+      return;
+    }
+  }
+
   /**
    * Perform the actual migration of data by calling Foundry's update functions.
    * @param {string} type  The type of migration to be made. Actor, item or token.
@@ -94,7 +118,7 @@ export default async function MigrateWorld(currentVersion) {
     if (type === "items") {
       console.log("Migrating world items.");
       await Item.updateDocuments(updateData);
-    } else if (type === "actors") {
+    } else if (type === "actorItems") {
       const actor = game.actors.get(updateData._id);
       console.log(`Migrating items belonging to actor ${actor.name}`);
       await actor.updateEmbeddedDocuments("Item", updateData.itemArray);
@@ -105,43 +129,74 @@ export default async function MigrateWorld(currentVersion) {
       for (const scene of game.scenes.contents) {
         await scene.update(updateData);
       }
+    } else if (type === "actors") {
+      let actorId;
+      if (!updateData[0].actor && !updateData[0]._actor) {
+        return;
+      } else if (updateData[0].actor) {
+        actorId = updateData[0].actor.id;
+      } else if (updateData[0]._actor) {
+        actorId = updateData[0]._actor.id;
+      } else {
+        actorId = updateData[0].id;
+      }
+
+      const actor = game.actors.get(actorId);
+      await actor.update(updateData[1]);
     }
   };
+
 
   /**
    * Call the functions to finalize updates.
    */
 
   try {
-    console.log("==== CD10 | Beginning migration! ====");
+    console.log("==== CD10 | Beginning v030 migration! ====");
     if (v030Data.items.length > 0) {
       await _performMigration("items", v030Data.items);
     }
 
     if (Object.keys(v030Data.actors).length > 0) {
       for (const a of v030Data.actors) {
-        await _performMigration("actors", a);
+        await _performMigration("actorItems", a);
       }
     }
     if (Object.keys(v030Data.tokens).length > 0) {
-      _performMigration("tokens", v030Data.tokens);
+      await _performMigration("tokens", v030Data.tokens);
     }
   } catch(err) {
     console.error("MIGRATIONS FAILED!", err);
   }
   try {
-    console.log("==== CD10 | Beginning migration! ====");
+    console.log("==== CD10 | Beginning v040 migration! ====");
     if (v040Data.items.length > 0) {
       await _performMigration("items", v040Data.items);
     }
 
     if (Object.keys(v040Data.actors).length > 0) {
       for (const a of v040Data.actors) {
-        await _performMigration("actors", a);
+        await _performMigration("actorItems", a);
       }
     }
     if (Object.keys(v040Data.tokens).length > 0) {
-      _performMigration("tokens", v040Data.tokens);
+      await _performMigration("tokens", v040Data.tokens);
+    }
+  } catch(err) {
+    console.error("MIGRATIONS FAILED!", err);
+  }
+  try {
+    console.log("==== CD10 | Beginning v050 migration! ====");
+
+    if (Object.keys(v050Data.actors).length > 0) {
+      for (const a of v050Data.actors) {
+        await _performMigration("actors", [a, v050Data.updateData]);
+      }
+    }
+    if (Object.keys(v050Data.tokens).length > 0) {
+      for (const t of v050Data.tokens) {
+        await _performMigration("actors", [t, v050Data.updateData]);
+      }
     }
   } catch(err) {
     console.error("MIGRATIONS FAILED!", err);

@@ -977,6 +977,10 @@ textarea {
   padding: 4px;
   border-radius: 5px;
 }
+.message-content {
+  color: #dfbb61 !important;
+  font-family: "Signika", sans-serif;
+}
 .cd10-image-container {
   display: flex;
   align-items: center;
@@ -1035,12 +1039,12 @@ textarea {
 }
 .stat-box {
   text-align: left;
-  width: 63%;
+  width: 60%;
   font-size: 0.8em;
 }
 .value-box {
   text-align: center;
-  width: 35%;
+  width: 38%;
 }
 .bold {
   font-weight: 700;

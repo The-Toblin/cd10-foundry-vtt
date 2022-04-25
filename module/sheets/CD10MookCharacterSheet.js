@@ -15,12 +15,11 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     return "systems/cd10/templates/sheets/mookCharacter-sheet.hbs";
   }
 
-  /** *********************
-   * Define ContextMenus *
-   **********************/
+  /**
+   * Define ContextMenus
+   */
 
-  /* This menu applies to equipment that can be put on a character.
-    It allows you to edit, equip/unequip or delete an item. */
+  // TODO: Create doc description.
   equippableItemContextMenu = [
     {
       name: game.i18n.localize("cd10.sheet.edit"),
@@ -59,9 +58,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     }
   ];
 
-  /* This menu is applied to only skills in the skill-menu.
-      It allows you to edit, toggle the levelup indicator
-      or remove a skill. */
+  // TODO: Create doc description.
   itemSkillContextMenu = [
     {
       name: game.i18n.localize("cd10.sheet.edit"),
@@ -96,6 +93,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     }
   ];
 
+  // TODO: Create doc description.
   itemContextMenu = [
     {
       name: game.i18n.localize("cd10.sheet.edit"),
@@ -116,9 +114,10 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     }
   ];
 
+  // TODO: Create doc description.
   getData() {
     /* Override default getData() function */
-    let sheetData = super.getData();
+    const sheetData = super.getData();
     sheetData.config = CONFIG.cd10;
     sheetData.data = sheetData.data.data;
 
@@ -132,7 +131,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     sheetData.allArmors = sheetData.items.filter(p => p.type === "armor" || p.type === "shield");
     sheetData.armors = sheetData.items.filter(p => p.type === "armor");
     sheetData.shields = sheetData.items.filter(p => p.type === "shield");
-    sheetData.allWeapons = sheetData.items.filter(p => p.type === "meleeWeapon" || p.type === "rangedWeapon");
+    sheetData.allWeapons = sheetData.items.filter(p => p.type.match(/Weapon/));
     sheetData.meleeWeapons = sheetData.items.filter(p => p.type === "meleeWeapon");
     sheetData.rangedWeapons = sheetData.items.filter(p => p.type === "rangedWeapon");
     sheetData.skills = sheetData.items.filter(p => p.type === "skill");
@@ -143,14 +142,13 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     sheetData.normalItems = sheetData.items.filter(
       p =>
         p.type !== "spell"
-          && p.type !== "skill"
-          && p.type !== "trait"
-          && p.type !== "meleeWeapon"
-          && p.type !== "armor"
-          && p.type !== "rangedWeapon"
-          && p.type !== "shield"
+        && p.type !== "skill"
+        && p.type !== "trait"
+        && p.type !== "meleeWeapon"
+        && p.type !== "armor"
+        && p.type !== "rangedWeapon"
+        && p.type !== "shield"
     );
-
 
     // The following is to detect if certain things are equipped, and thus toggle certain parts of the sheet on or off.
     sheetData.equippedMeleeWeapon = false;
@@ -189,17 +187,19 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     return sheetData;
   }
 
+  // TODO: Create doc description.
   activateListeners(html) {
     /* Owner-only listeners */
     if (this.actor.isOwner) {
       /* Html.find(".item-roll").click(this._onItemRoll.bind(this));*/
-      html.find(".skill-check").click(this._onTaskCheck.bind(this));
-      html.find(".attack-check").click(this._simpleAttackCheck.bind(this));
-      html.find(".physical-save").click(this._onPhysicalSave.bind(this));
+      html.find(".skill-check").click(this._onSkillCheck.bind(this));
+      html.find(".attack-check").click(this._attackCheck.bind(this));
+      html.find(".physical-save").click(this._onSave.bind(this));
       html.find(".reveal-rollable").on("mouseover mouseout", this._onToggleRollable.bind(this));
       html.find(".stressBox").click(this._stressBoxClicked.bind(this));
       html.find(".item-delete").click(this._onItemDelete.bind(this));
       html.find(".item-equip").click(this._onItemEquip.bind(this));
+      html.find(".inline-edit").change(this._onSkillEdit.bind(this));
       html.find(".ammo-select").click(this._onAmmoSelect.bind(this));
       html.find(".skill-item").click(this._toggleSkillUp.bind(this));
       html.find(".wounds-icons").on("click contextmenu", this._onWoundsMarkChange.bind(this));
@@ -218,10 +218,79 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     super.activateListeners(html);
   }
 
-  /** **************************
-   * Various checks and saves *
-   ***************************/
 
+  /**
+   * Helper functions. These functions are used by other functions on the sheet.
+   */
+
+
+  // TODO: Create doc description.
+  _checkHeroPoints() {
+    if (this.actor.getExp > 0) {
+      this.actor.modifyExp(-1);
+      return true;
+    } else {
+      ui.notifications.error(`${this.actor.name} does not have enough experience.`);
+      return false;
+    }
+  }
+
+  /**
+   * A helper function for fetching objects from game or actor.
+   * @param {string} id         The itemId to fetch.
+   * @param {boolean} actor     (opt) Default: true. If fetching is to be performed on an actor.
+   * @returns {Promise<Object>} The fetched object.
+   */
+  async _fetchObject(id, actor = true) {
+    const fetchedObject = actor ? this.actor.items.get(id) : game.items.get(id);
+    return fetchedObject;
+  }
+
+  /**
+   * A helper function that cleans up necessary data to perform a check, attack or save.
+   * It determines if the clicked object is a skill or a trait, and sets the proper values.
+   * @param {Object} event The clicked event-data, used to fetch the itemId.
+   * @returns {Promise<Object>} An object holding the necessary skill and trait data.
+   */
+  async _fetchRollData(event) {
+    const rollObj = await this._fetchObject(event.currentTarget.closest(".item").dataset.itemId, true);
+    let trait = {};
+    let skill = {};
+
+    if (rollObj.type !== "trait") {
+      for (const item of this.getData().traits) {
+        if (item.data.selected > 0) {
+          trait.id = item._id;
+        }
+      }
+      skill.id = rollObj.id;
+    } else if (rollObj.type === "trait") {
+      trait.id = item._id;
+    }
+
+    return {
+      trait: trait,
+      skill: skill
+    };
+  }
+
+  /**
+   * Checks if the system is set to dump descriptions to chat, and then does so.
+   * @param {Object} item The item-object with which to show the description.
+   */
+  _rollItem(item) {
+    if (game.settings.get("cd10", "systemDumpDescriptions")) item.roll();
+  }
+
+  /**
+   * Calls the rollitem function for the clicked item. Dumps description to chat.
+   * @param {object} item The item in question that needs to be dumped to chat.
+   */
+  _onItemRoll(item) {
+    this._rollItem(item);
+  }
+
+  // TODO: Create doc description.
   async _onAmmoSelect(event) {
     let ammoObj = this.actor.items.get(event.currentTarget.closest(".ammo-selector").dataset.itemId);
     let weaponObj = this.actor.items.get(event.currentTarget.closest(".ammo-selector").dataset.weaponId);
@@ -243,78 +312,183 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     }
   }
 
-  async _onTaskCheck(event) {
-    /* Method to handle a simple skill check. */
+
+  /**
+   * Sheet functions. These are clickable somewhere on the sheet and perform a function based on what was clicked.
+   */
+
+
+  // TODO: Create doc description.
+  _onToggleRollable(event) {
+    // JS to reveal 'hidden' CSS classes that are marked 'rollable'
     event.preventDefault();
 
-    /* If a hero point is spent, check if there's enough points.
-          Otherwise cancel the check. */
+    const rollables = event.currentTarget.getElementsByClassName("rollable");
+    $.each(rollables, function(index, value) {
+      $(value).toggleClass("hidden");
+    });
+  }
+
+  // TODO: Create doc description.
+  _onItemEdit(event) {
+    event.preventDefault();
+
+    let element = event.currentTarget;
+    let itemId = element.closest(".item").dataset.itemId;
+    let item = this.actor.items.get(itemId);
+
+    item.sheet.render(true);
+  }
+
+  async _onSkillEdit(event) {
+    event.preventDefault();
+
+    if (!this.isEditable) return;
+
+    const element = event.currentTarget;
+    const itemId = element.closest(".item").dataset.itemId;
+    const item = this.actor.items.get(itemId);
+    const field = element.dataset.field;
+
+    await item.update({
+      [field]: element.value
+    });
+  }
+
+  // TODO: Create doc description.
+  async _onItemDelete(event) {
+    event.preventDefault();
+
+    let element = event.currentTarget;
+    let itemId = element.closest(".item").dataset.itemId;
+    const item = this.actor.items.get(itemId);
+
+    await this.actor.deleteEmbeddedDocuments("Item", [itemId]);
+  }
+
+  // TODO: Create doc description.
+  async _onItemEquip(event) {
+    event.preventDefault();
+
+    let element = event.currentTarget;
+    let itemId = element.closest(".item").dataset.itemId;
+    const item = this.actor.items.get(itemId);
+    const type = item.type;
+
+    let boolValue = item.data.data.isEquipped.value;
+    if (!boolValue) {
+      await this.actor.unequipItems(type);
+    }
+
+    await item.update({
+      "data.isEquipped.value": !boolValue
+    });
+  }
+
+  // TODO: Create doc description.
+  _onWoundsMarkChange(event) {
+    event.preventDefault();
+
+    if (event.type === "click") {
+      this.actor.modifyWounds(1);
+    } else {
+      this.actor.modifyWounds(-1);
+    }
+  }
+
+  // TODO: Create doc description.
+  _stressBoxClicked(event) {
+    event.preventDefault();
+
+    let value = this.actor.data.data.stressing.value;
+
+    this.actor.update({
+      "data.stressing.value": !value
+    });
+  }
+
+  // TODO: Create doc description.
+  async _toggleSkillUp(event) {
+    event.preventDefault();
+    let element = event.currentTarget;
+    let itemId = element.closest(".item").dataset.itemId;
+    let item = this.actor.items.get(itemId);
+
+    let levelUpValue = item.data.data.levelUp.value;
+
+    await item.update({
+      "data.levelUp.value": !levelUpValue
+    });
+  }
+
+  // TODO: Create doc description.
+  async _onClickTrait(event) {
+    event.preventDefault();
+    let element = event.currentTarget;
+    let itemId = element.closest(".item").dataset.itemId;
+    let item = this.actor.items.get(itemId);
+
+    if (item.getSelectionStatus === 1 || item.getSelectionStatus === 2) {
+      item.setSelectionStatus(0);
+      return;
+    }
+
+    await this.actor.resetTraitSelection();
+
+    if (event.type === "click") {
+      item.setSelectionStatus(1);
+    } else {
+      item.setSelectionStatus(2);
+    }
+  }
+
+
+  /**
+   * Roll functions. These functions perform skill checks, attack rolls and saves.
+   */
+
+
+  /**
+   * Function called when a skill check is performed from the sheet.
+   * @param {HTML} event  HTML context for fetching IDs.
+   */
+  async _onSkillCheck(event) {
+    event.preventDefault();
+
+    // If a hero point is spent, check if there's enough points. Otherwise cancel the check.
     if (event.shiftKey) {
       if (this._checkHeroPoints() === false) {
         return;
       }
     }
 
-    let traitObj = null;
-    let traitReversed = false;
-    let skillObj = null;
+    const rollData = await this._fetchRollData(event);
 
-    /* Fetch the skill, based on ItemId. */
-    let rollObj = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId);
-
-    if (rollObj.type === "skill") {
-      skillObj = rollObj;
-      /* Dump the skill description to chat. */
-      if (game.settings.get("cd10", "systemDumpDescriptions")) {
-        skillObj.roll();
-      }
-    } else if (rollObj.type === "trait") {
-      traitObj = rollObj;
-      /* Dump the trait description to chat. */
-      if (game.settings.get("cd10", "systemDumpDescriptions")) {
-        traitObj.roll();
-      }
-    }
-
-    if (rollObj.type !== "trait") {
-      this.actor.items.forEach(t => {
-        if (t.type === "trait") {
-          if (t.data.data.selected === 1) {
-            traitObj = t;
-            traitReversed = false;
-          } else if (t.data.data.selected === 2) {
-            traitObj = t;
-            traitReversed = true;
-          }
-        }
+    try {
+      await Dice.SkillCheck({
+        actorId: this.actor.id,
+        skillId: rollData.skill.id,
+        traitId: rollData.trait.id,
+        heroPoint: event.shiftKey
       });
-    } else if (rollObj.type === "trait") {
-      if (rollObj.data.data.selected === 1) {
-        traitReversed = false;
-      } else if (rollObj.data.data.selected === 2) {
-        traitReversed = true;
-      }
-    }
 
-    /* Perform the check */
-    Dice.TaskCheck({
-      checkType: "Simple",
-      skillObj: skillObj,
-      traitObj: traitObj,
-      traitReversed: traitReversed,
-      modifier: this.actor.getModifier,
-      heroPoint: event.shiftKey,
-      actor: this.actor.id
-    });
-    /* Reset traits. */
-    this.actor.resetTraitSelection();
+      // Reset traits selection.
+      this.actor.resetTraitSelection();
+
+    } catch(err) {
+      ui.notifications.error("Roll failed. See logs!");
+      console.error(err);
+    }
   }
 
-  async _simpleAttackCheck(event) {
-    /* Attack check performed by left-clicking a damage value on a weapon card */
+  /**
+   * Function called when an attack check is performed from the sheet.
+   * @param {HTML} event  HTML context for fetching IDs.
+   */
+  async _attackCheck(event) {
     event.preventDefault();
 
-    /* If a hero point is spent, check if there's enough points. */
+    // If a hero point is spent, check if there's enough points.
     if (event.shiftKey) {
       if (this._checkHeroPoints() === false) {
         return;
@@ -322,29 +496,25 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     }
 
     let damageType = event.currentTarget.dataset.damageType;
-    let weaponObj = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId).data;
+    const weaponObj = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId).data;
     let attackSkill = weaponObj.data.attackSkill.value;
 
-    let attackSkillObj = null;
-    for (const item of this.actor.items) {
-      if (item.type === "skill") {
-        if (item.data.data.matchID === weaponObj.data.attackSkill.value) {
-          attackSkillObj = item;
-        }
+    const skill = {};
+    for (const item of this.getData().skills) {
+      if (item.data.matchID === weaponObj.data.attackSkill.value) {
+        skill.id = item._id;
+        skill.level = item.data.skillLevel.value;
       }
     }
 
-    /**
-     * Catch if weapon doesn't have a skill set.
-     */
+    // Catch if weapon doesn't have a skill set.
     if (attackSkill === "None") {
       ui.notifications.error(`Error! ${weaponObj.name} does not have an assigned skill!`);
       return;
     }
-    /**
-     * Catch if character does not have the correct skill for said weapon.
-     */
-    if (attackSkillObj === null) {
+
+    // Catch if character does not have the correct skill for said weapon.
+    if (skill.id === undefined) {
       let correctSkill = null;
       for (const skill of game.items.contents) {
         if (skill.data.data.matchID === weaponObj.data.attackSkill.value) {
@@ -354,7 +524,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
       ui.notifications.info(`You do not have the prerequisite skill for ${weaponObj.name}, which is ${correctSkill}. Making blank check.`);
     }
 
-    /* Check if it's a ranged weapon */
+    // Check if it's a ranged weapon and pick the correct, selected ammunition.
     if (weaponObj.type === "rangedWeapon") {
       let ammo = this.actor.items.get(weaponObj.data.selectedAmmo.id);
       if (ammo.data.data.damage.slash.selected) {
@@ -383,39 +553,33 @@ export default class CD10MookCharacterSheet extends ActorSheet {
       }
     }
 
-    let traitObj = null;
-    let traitReversed = false;
-    this.actor.items.forEach(t => {
-      if (t.type === "trait") {
-        if (t.data.data.selected === 1) {
-          traitObj = t;
-          traitReversed = false;
-        } else if (t.data.data.selected === 2) {
-          traitObj = t;
-          traitReversed = true;
-        }
-      }
-    });
+    // Finally, check if a trait is checked and if so include it in the data.
+    const trait = {};
+    for (const item of this.getData().traits) {
+      if (item.data.selected > 0) trait.id = item.id;
+    }
 
     /* Perform the attack check */
-    Dice.TaskCheck({
-      actor: this.actor.id,
-      checkType: "SimpleAttack",
-      skillObj: attackSkillObj,
-      traitObj: traitObj,
-      traitReversed: traitReversed,
-      weaponObj: weaponObj,
-      damageType: damageType,
-      heroPoint: event.shiftKey,
-      modifier: this.actor.getModifier
-    });
+    try {
+      await Dice.AttackCheck({
+        actor: this.actor,
+        skillId: skill.id,
+        traitId: trait.id,
+        heroPoint: event.shiftKey,
+        damageType: damageType
+      });
 
-    /* Reset traits. */
-    this.actor.resetTraitSelection();
+      // Reset traits selection.
+      this.actor.resetTraitSelection();
+
+    } catch(err) {
+      ui.notifications.error("Roll failed. See logs!");
+      console.error(err);
+    }
   }
 
-  async _onPhysicalSave(event) {
-    /* Open the physical saves dialog */
+  // TODO: Create doc description.
+  async _onSave(event) {
     event.preventDefault();
 
     let dialogOptions = {
@@ -425,7 +589,7 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     };
     new Dialog(
       {
-        title: "Physical Save",
+        title: "Save",
         content: await renderTemplate("systems/cd10/templates/partials/save-dialog.hbs", this.getData()),
         buttons: {
           roll: {
@@ -438,215 +602,57 @@ export default class CD10MookCharacterSheet extends ActorSheet {
     ).render(true);
   }
 
+  /**
+   * Following dialog choices, collects the data from the dialog, processes the data
+   * and performs the save.
+   * @param {HTML} html The data from the dialog.
+   */
   async _doSaveStuff(html) {
-    /* Perform a physical save, called from the physical save dialog.
-          This function is complex and deals with gathering the data for
-          the roll, as well as responding to the result and doing the
-          actor updates for wounds. */
+    // FIXME: Check to see if this actually works.
 
-    let traitObj;
-    let armor = null;
-    let shield = null;
-    let usingShield = false;
+    // Fetch the necessary save data from the dialog.
+    const saveData = {};
 
-    /* First, we check if traits were selected in the dialog or not and
-          if so, fetch the relevant objects. */
+    // Check if a trait was selected, if it was reversed, and set the proper values.
     if (html.find("select#trait-selected").val() !== "None") {
-      traitObj = this.actor.items.get(this.getData().traits[html.find("select#trait-selected").val()]._id);
+      saveData.trait.id = html.find("select#trait-selected").val()._id;
+      const selectValue = html.find("input#reverseTrait")[0].checked ? 2 : 1;
+      await this.actor.items.get(saveData.trait.id).update({
+        "data.selected": selectValue
+      });
     }
+    saveData.heroPoint = html.find("input#heroPoint")[0].checked;
+    saveData.lethality = parseInt(html.find("input#lethality").val()) || 0;
+    saveData.damageType = html.find("select#damage-type").val() || "slash";
 
-    /* Check if any of the checkboxes were ticked, as well as gather
-          the necessary data for the check. */
-    let heroPointChecked = html.find("input#heroPoint")[0].checked;
-    let reverseTraitChecked = html.find("input#reverseTrait")[0].checked;
-    let lethality = parseInt(html.find("input#lethality").val()) || 0;
-    let damageType = html.find("select#damage-type").val() || "slash";
-
-    if (lethality <= 0) {
+    if (saveData.lethality <= 0) {
       ui.notifications.error("Please select a non-zero value for Lethality!");
       return;
     }
 
-    /* If a hero point is spent, check if there's enough points.
-          Otherwise cancel the check. */
+    // Check if a heropoint is spent.
     if (heroPointChecked) {
       if (this._checkHeroPoints() === false) {
         return;
       }
     }
 
-    /* Check which armor is being worn on the applicable body part,
-          if so, fetch the relevant object. */
-    this.getData().armors.forEach(a => {
-      if (a.data.isEquipped.value) {
-        armor = a;
-      }
-    });
-
-    /* Check if a shield is equipped, if so, fetch the relevant object. */
-    if (html.find("input#parried")[0].checked) {
-      this.getData().shields.forEach(s => {
-        if (s.data.isEquipped.value) {
-          shield = s;
-          usingShield = true;
-        }
+    // Roll the save.
+    try {
+      await Dice.Save({
+        actorId: this.actor.id,
+        traitId: saveData.trait.id,
+        heroPoint: saveData.heroPoint,
+        lethality: saveData.lethality,
+        damageType: saveData.damageType
       });
-    }
-    /* Roll the actual check. */
-    Dice.TaskCheck({
-      checkType: "Save",
-      traitObj: traitObj,
-      heroPoint: heroPointChecked,
-      traitReversed: reverseTraitChecked,
-      armorObj: armor,
-      shieldObj: shield,
-      usingShield: usingShield,
-      damageType: damageType,
-      lethality: lethality,
-      actor: this.actor.id
-    });
 
-    /* Reset traits. */
-    this.actor.resetTraitSelection();
-  }
+      // Reset traits selection.
+      this.actor.resetTraitSelection();
 
-  _onItemRoll(item) {
-    if (game.settings.get("cd10", "systemDumpDescriptions")) {
-      item.roll();
-    }
-  }
-
-  /** ****************
-   * Sheet functions *
-   ******************/
-
-  _onToggleRollable(event) {
-    /* JS to reveal 'hidden' CSS classes that are marked 'rollable' */
-    event.preventDefault();
-
-    const rollables = event.currentTarget.getElementsByClassName("rollable");
-    $.each(rollables, function(index, value) {
-      $(value).toggleClass("hidden");
-    });
-  }
-
-  _onItemCreate(event) {
-    /* Remnant function for creating items directly on the sheet. Not actively used anymore. */
-    event.preventDefault();
-    let element = event.currentTarget;
-
-    let itemData = {
-      name: game.i18n.localize("cd10.sheet.newItem"),
-      type: element.dataset.type
-    };
-
-    return this.actor.createEmbeddedDocuments("Item", [itemData]);
-  }
-
-  _onItemEdit(event) {
-    /* Called when updating items on the sheet */
-    event.preventDefault();
-
-    let element = event.currentTarget;
-    let itemId = element.closest(".item").dataset.itemId;
-    let item = this.actor.items.get(itemId);
-
-    item.sheet.render(true);
-  }
-
-  async _onItemDelete(event) {
-    /* Enable item deletion from the sheet. */
-    event.preventDefault();
-
-    let element = event.currentTarget;
-    let itemId = element.closest(".item").dataset.itemId;
-    const item = this.actor.items.get(itemId);
-
-    await this.actor.deleteEmbeddedDocuments("Item", [itemId]);
-  }
-
-  async _onItemEquip(event) {
-    /* Functionality for toggling the isEquipped state of an item */
-    event.preventDefault();
-
-    let element = event.currentTarget;
-    let itemId = element.closest(".item").dataset.itemId;
-    const item = this.actor.items.get(itemId);
-    const type = item.type;
-
-    let boolValue = item.data.data.isEquipped.value;
-    if (!boolValue) {
-      await this.actor.unequipItems(type);
-    }
-
-    await item.update({
-      "data.isEquipped.value": !boolValue
-    });
-  }
-
-  _onWoundsMarkChange(event) {
-    /* Listen for changes to Wounds and update the value accordingly. */
-    event.preventDefault();
-
-    if (event.type === "click") {
-      this.actor.modifyWounds(1);
-    } else {
-      this.actor.modifyWounds(-1);
-    }
-  }
-
-  _stressBoxClicked(event) {
-    /* Monitor the stress button and set the stressed status accordingly. */
-    event.preventDefault();
-
-    let value = this.actor.data.data.stressing.value;
-
-    this.actor.update({
-      "data.stressing.value": !value
-    });
-  }
-
-  _checkHeroPoints() {
-    if (this.actor.getExp > 0) {
-      this.actor.modifyExp(-1);
-      return true;
-    } else {
-      ui.notifications.error(`${this.actor.name} does not have enough experience.`);
-      return false;
-    }
-  }
-
-  async _toggleSkillUp(event) {
-    event.preventDefault();
-    let element = event.currentTarget;
-    let itemId = element.closest(".item").dataset.itemId;
-    let item = this.actor.items.get(itemId);
-
-    let levelUpValue = item.data.data.levelUp.value;
-
-    await item.update({
-      "data.levelUp.value": !levelUpValue
-    });
-  }
-
-  async _onClickTrait(event) {
-    event.preventDefault();
-    let element = event.currentTarget;
-    let itemId = element.closest(".item").dataset.itemId;
-    let item = this.actor.items.get(itemId);
-
-    if (item.getSelectionStatus === 1 || item.getSelectionStatus === 2) {
-      item.setSelectionStatus(0);
-      return;
-    }
-
-    await this.actor.resetTraitSelection();
-
-    if (event.type === "click") {
-      item.setSelectionStatus(1);
-    } else {
-      item.setSelectionStatus(2);
+    } catch(err) {
+      ui.notifications.error("Save failed. See logs!");
+      console.error(err);
     }
   }
 }
-

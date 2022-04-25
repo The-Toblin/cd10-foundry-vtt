@@ -171,7 +171,7 @@ Hooks.once("ready", async () => {
   console.log("==== CD10 | Checking versions ====");
 
   const currentVersion = game.settings.get("cd10", "systemMigrationVersion");
-  const NEEDS_MIGRATION_VERSION = "0.3.9";
+  const NEEDS_MIGRATION_VERSION = "0.4.5";
   let needsMigration =
     !currentVersion || isNewerVersion(NEEDS_MIGRATION_VERSION, currentVersion);
 

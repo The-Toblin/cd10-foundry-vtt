@@ -6,16 +6,20 @@
  * and physical saves.
  */
 
+
 /**
- * Creates the RollFormula for use in dicerolls, based on the data delivered to it.
- * @param {number} skillLevel   (opt) The skill's level to use for the formula.
- * @param {number} traitLevel   (opt) If a trait is provided, add it's number to the formula.
- * @param {number} modifier     (opt) The actor's modifier, if provided.
- * @param {boolean} save        (opt) If the roll is a save, omit the modifier.
- * @param {boolean} heroPoint   (opt) If a hero point is spent, double the basedice (2d10).
- * @returns {Promise<string>}
+ * * Creates the RollFormula for use in dicerolls, based on the data delivered to it.
+ * @param {Object} param0               An object parameter, holding the date necessary to creat the rollformula.
+ * @param {number} param0.skillLevel    (opt) The skill's level to use for the formula.
+ * @param {number} param0.traitLevel    (opt) If a trait is provided, add it's number to the formula.
+ * @param {number} param0.modifier      (opt) The actor's modifier, if provided.
+ * @param {boolean} param0.save         (opt) If the roll is a save, omit the modifier.
+ * @param {boolean} param0.heroPoint    (opt) If a hero point is spent, double the basedice (2d10).
+ * @returns {Promise<string>}           The rollformula as a string.
  */
-const _createDiceFormula = async (skillLevel, traitLevel, modifier, save, heroPoint) => {
+const _createDiceFormula = async ({skillLevel = 0, traitLevel = 0, modifier = 0,
+  save = false, heroPoint = false} = {}) => {
+
   const baseDice = heroPoint === true ? "2d10" : "1d10";
   let rollFormula = `${baseDice}`;
 
@@ -27,16 +31,30 @@ const _createDiceFormula = async (skillLevel, traitLevel, modifier, save, heroPo
     rollFormula += " @traitLevel";
   }
 
-  if (modifier > 0 && !save) rollFormula += " - @modifier";
+  if (modifier > 0 && !save) rollFormula += " @modifier";
   return rollFormula;
 };
 
-const _createRollData = async (skillLevel = null, traitLevel = null, modifier = null) => {
-  return {
-    skillLevel: skillLevel,
-    traitLevel: traitLevel,
-    modifier: modifier
-  };
+/**
+ * Creates the rollData necessary to perform a roll. It first checks to see if the roll
+ * performed is a save, and if so, simplifies the data.
+ * @param {number} skillLevel The skill level to apply to the data.
+ * @param {number} traitLevel The trait level, if any to apply to the data.
+ * @param {number} modifier   The character's modifier to apply to the data.
+ * @param {boolean} save      A boolean telling the function it's save to simplify the data.
+ * @returns {Promise<Object>} An object holding the finished rollData.
+ */
+const _createRollData = async (skillLevel, traitLevel, modifier, save) => {
+  if (save) {
+    return {
+      traitLevel: parseInt(traitLevel)
+    };} else {
+    return {
+      skillLevel: parseInt(skillLevel),
+      traitLevel: parseInt(traitLevel),
+      modifier: parseInt(modifier *= -1)
+    };
+  }
 };
 
 /**
@@ -69,9 +87,10 @@ const _rollD10 = async (rollFormula, rollData) => {
   const CD10Roll = new Roll(rollFormula, rollData);
   await CD10Roll.evaluate({async: true});
 
-  /* Shift die to 0-9 */
+  // Shift die to 0-9 and remove the equal amount from the total sum.
   for (let i = 0; i < CD10Roll.terms[0].results.length; i++) {
     CD10Roll.terms[0].results[i].result -= 1;
+    CD10Roll._total -= 1;
   }
 
   return CD10Roll;
@@ -85,43 +104,51 @@ const _rollD10 = async (rollFormula, rollData) => {
  * @returns {Promise<Object>} A object holding the roll, the total and any number of nines and zeroes.
  */
 const _doCD10Roll = async (rollFormula, rollData) => {
+  // Define all the variables we'll need.
   let stopValue = false;
-  let rollTotal = 0;
   let nines = 0;
   let zeroes = 0;
   let iterator = 0;
   let reroll;
 
+  // Perform a roll
   const roll = await _rollD10(rollFormula, rollData);
 
+  /* This loop checks the roll if it's 9 or 0 and makes a new roll. The reroll is added to the results of the roll,
+  * and rechecked in this loop. It ends when the result is either double zeroes or the reroll is not a 9. */
   while (!stopValue) {
-    if (roll.terms[0].results[iterator].result === 9) {
+    let result = roll.terms[0].results[iterator].result;
+
+    if (result === 9) {
       nines += 1;
+      roll._total -= 5;
       roll.terms[0].results[iterator].rerolled = true;
       reroll = await _rollD10("1d10");
-    } else if (roll.terms[0].results[iterator].result === 0 && zeroes === 0 && nines === 0) {
+
+    } else if (result === 0 && zeroes === 0 && nines === 0) {
       zeroes += 1;
       roll.terms[0].results[iterator].rerolled = true;
       reroll = await _rollD10("1d10");
-    } else {
-      stopValue = true;
     }
+
     if (reroll) {
       roll.terms[0].results.push({
         result: reroll.terms[0].results[0].result,
         active: true
       });
+      roll._total += reroll.terms[0].results[0].result;
       reroll = null;
     }
-    ++iterator;
-  }
 
-  rollTotal += roll.terms[0].results[iterator - 1].result;
-  if (nines > 0) rollTotal += nines * 4;
+    ++iterator;
+
+    if (result === 0) {
+      stopValue = zeroes === 1;
+    } else if (result !== 9) stopValue = true;
+  }
 
   return {
     roll: roll,
-    rollTotal: rollTotal,
     nines: nines,
     zeroes: zeroes
   };
@@ -155,8 +182,14 @@ const _renderCD10Roll = async (formula, diceRolls) => {
   return renderedRoll;
 };
 
-const _getSkillData = async (actor, skillId = null) => {
-  if (skillId !== null) {
+/**
+ * Helper function to find the data from the skill used and return it as an object.
+ * @param {Object} actor      The actor that performs the roll.
+ * @param {string} skillId    An id for the skill being used.
+ * @returns {Promise<Object>} An object holding the skillLevel and name.
+ */
+const _getSkillData = async (actor, skillId) => {
+  if (skillId) {
     const skill = actor.items.get(skillId);
     return {
       level: parseInt(skill.data.data.skillLevel.value),
@@ -170,11 +203,19 @@ const _getSkillData = async (actor, skillId = null) => {
   }
 };
 
-const _getTraitData = async (actor, traitId = null) => {
-  if (traitId !== null) {
+/**
+ * Helper function to find the data from the trait used and return it as an object.
+ * @param {Object} actor      The actor that performs the roll.
+ * @param {string} traitId    An id for the trait being used.
+ * @returns {Promise<Object>} An object holding the traitLevel and name.
+ */
+const _getTraitData = async (actor, traitId) => {
+  if (traitId) {
+    console.log(traitId);
     const trait = actor.items.get(traitId);
     const traitLevel = parseInt(trait.data.data.skillLevel.value);
-    const reversed = trait.data.data.reversed.value;
+    const reversed = trait.data.data.selected === 2;
+
     return {
       level: reversed ? (traitLevel * -1) : traitLevel,
       name: trait.name
@@ -188,23 +229,74 @@ const _getTraitData = async (actor, traitId = null) => {
 };
 
 /**
+ * Helper function that returns a list of all equipped items of an actor.
+ * @param {Object} actor      The actor whose items you want to check.
+ * @returns {Promise<Object>} An object holding the equipped items.
+ */
+const _getEquipment = async actor => {
+  const equipmentList = {
+    armor: null,
+    shield: null,
+    meleeWeapon: null,
+    rangedWeapon: null
+  };
+  for (const item of actor.items.contents) {
+    if (item.type === "armor" && item.data.data.isEquipped?.value) {
+      equipmentList.armor = item;
+    } else if (item.type === "shield" && item.data.data.isEquipped?.value) {
+      equipmentList.shield = item;
+    } else if (item.type === "meleeWeapon" && item.data.data.isEquipped?.value) {
+      equipmentList.meleeWeapon = item;
+    } else if (item.type === "rangedWeapon" && item.data.data.isEquipped?.value) {
+      equipmentList.rangedWeapon = item;
+    }
+  }
+
+  return equipmentList;
+
+};
+
+/**
+ * Determines the lethality caused by a weapon being used.
+ * @param {Object} actor           The Actor object. Required for finding the ammunition for ranged weapons.
+ * @param {Object} equipmentList  An object holding the actor's equipped items.
+ * @param {string} damageType     The damage type, pulled from the click on the sheet.
+ * @returns {Promise<number>}     Returns a number for the lethality.
+ */
+const _getLethality = async (actor, equipmentList, damageType) => {
+  if (equipmentList.meleeWeapon !== null) {
+    return parseInt(equipmentList.meleeWeapon.data.data.damage[damageType].value);
+  } else if (equipmentList.rangedWeapon !== null) {
+    const ammo = actor.items.get(equipmentList.rangedWeapon.data.data.selectedAmmo.id);
+    const ammoProperties = Object.entries(ammo.data.data.damage);
+
+    // Loop through the properties of the ammo to find the selected ammo type and fetch its lethality value.
+    for (const entry of ammoProperties) {
+      if (entry[1].selected) return parseInt(entry[1].value);
+    }
+  }
+
+};
+
+/**
  * Gathers up the necessary data to proceed with the check. It will define which actor is performing the check,
  * what skill is being used, if a trait is being used and if it's reversed, the outcome of the rolls, as well
  * as the HTML template used to render the chatmessage.
- * @param {string} actorId    The actor's Id.
+ * @param {Object} actor      The Actor object.
  * @param {string} skillId    (opt) The skill's Id.
  * @param {string} traitId    (opt) The trait's Id.
+ * @param {boolean} save      (opt) If the check is a save.
  * @param {boolean} heroPoint (opt) If a hero point is spent.
  * @returns {Promise<Object>} An object containing the objects of the actor, skill, trait and the roll results.
  */
-const _performBaseCheck = async (actorId = null, skillId = null, traitId = null, heroPoint = false) => {
-  const actor = await game.actors.get(actorId);
+const _performBaseCheck = async (actor, skillId, traitId, save, heroPoint) => {
   const skill = await _getSkillData(actor, skillId);
   const trait = await _getTraitData(actor, traitId);
 
   // Construct the rollformula and rolldata required for the roll.
-  const rollformula = await _createDiceFormula(skill.level, trait.level, actor.getModifier, false, heroPoint);
-  const rollData = await _createRollData(skill.level, trait.level, actor.getModifier);
+  const rollformula = await _createDiceFormula({skillLevel: skill.level, traitLevel: trait.level,
+    modifier: actor.getModifier, save: save, heropoint: heroPoint});
+  const rollData = await _createRollData(skill.level, trait.level, actor.getModifier, save);
 
   // Perform and render the roll.
   const rollResults = await _doCD10Roll(rollformula, rollData);
@@ -222,427 +314,99 @@ const _performBaseCheck = async (actorId = null, skillId = null, traitId = null,
 /**
  * Perform a standard skill check.
  * @param {Object} param0             An object holding the necessary data.
- * @param {string} param0.actorId     The ID of the actor performing the skill check.
+ * @param {Object} param0.actor       The actor object performing the skill check.
  * @param {string} param0.skillId     (opt) The ID of the skill the actor is using.
  * @param {string} param0.traitId     (opt) The ID of the trait the actor is using.
  * @param {boolean} param0.heroPoint  (opt) Whether or not the Actor is spending a hero point on this check.
  */
-export const SkillCheck = async ({actorId = null, skillId = null, traitId = null, heroPoint = false} = {}) => {
+export const SkillCheck = async ({actor = null, skillId = null, traitId = null, heroPoint = false} = {}) => {
   const messageTemplate = "systems/cd10/templates/partials/chat-messages/skill-check.hbs";
-  const checkResults = await _performBaseCheck(actorId, skillId, traitId, heroPoint);
-  console.log(checkResults);
+  const checkResults = await _performBaseCheck(actor, skillId, traitId, false, heroPoint);
 
-  // TODO: Finish function
-};
-
-/**
- * Perform an attack check.
- * @param {Object} param0             An object holding the necessary data.
- * @param {string} param0.actorId     The ID of the actor performing the attack.
- * @param {string} param0.skillId     (opt) The ID of the skill the actor is using.
- * @param {string} param0.traitId     (opt) The ID of the trait the actor is using.
- * @param {boolean} param0.heroPoint  (opt) Whether or not the Actor is spending a hero point on this check.
- * @param {string} param0.damageType  (opt) The damagetype of the attack. Defaults to "slash".
- */
-export const AttackCheck = async ({actorId = null, skillId = null, traitId = null, heroPoint = false, damageType = "slash"} = {}) => {
-  const messageTemplate = "systems/cd10/templates/partials/chat-messages/attack-check.hbs";
-  const checkResults = await _performBaseCheck(actorId, skillId, traitId, heroPoint);
-  checkResults.damageType = damageType;
-  console.log(checkResults);
-
-  // TODO: Finish function
-};
-/**
- * Perform a wound save.
- * @param {Object} param0             An object holding the necessary data.
- * @param {string} param0.actorId     The ID of the actor performing the skill check.
- * @param {string} param0.traitId     (opt) The ID of the trait the actor is using.
- * @param {boolean} param0.heroPoint  (opt) Whether or not the Actor is spending a hero point on this check.
- * @param {number} param0.lethality   The Lethality the save is performed against.
- * @param {string} param0.damageType  (opt) The damagetype of the attack. Defaults to "slash".
- */
-export const Save = async ({actorId = null, traitId = null, heroPoint = false, lethality = 0, damageType = "slash"} = {}) => {
-  const messageTemplate = "systems/cd10/templates/partials/chat-messages/save.hbs";
-  const checkResults = await _performBaseCheck(actorId, traitId, heroPoint);
-  console.log(checkResults);
-
-  // TODO: Finish function and update the template
-};
-
-/* Core dice roll functions for making skillchecks, attacks and saves. The variable checkType determines
-how this class functions. */
-/**
- *
- * @param root0
- * @param root0.actor
- * @param root0.checkType
- * @param root0.skillObj
- * @param root0.traitObj
- * @param root0.traitReversed
- * @param root0.usingShield
- * @param root0.shieldObj
- * @param root0.weaponObj
- * @param root0.armorObj
- * @param root0.lethality
- * @param root0.damageType
- * @param root0.heroPoint
- * @param root0.modifier
- */
-export async function TaskCheck({
-  actor = null,
-  checkType = null,
-  skillObj = null,
-  traitObj = null,
-  traitReversed = false,
-  usingShield = false,
-  shieldObj = null,
-  weaponObj = null,
-  armorObj = null,
-  lethality = 0,
-  damageType = "slash",
-  heroPoint = false,
-  modifier = 0
-} = {}) {
-  /* Basic error checking */
-  if (checkType === null) {
-    ui.notifications.error("FATAL ERROR! CheckType not set!");
-    return;
-  }
-
-  /* Set up base dice formula based on if it's a hero point check or not.
-    Also set up required variables. */
-
-  let baseDice = heroPoint === true ? "2d10" : "1d10";
-  let rollFormula = null;
-  let rollData = null;
-  let skillName = null;
-  let traitName = null;
-  let skillLevel = null;
-  let traitLevel = null;
-
-  /* Set up correct chat message template */
-  let messageTemplate = null;
-  if (checkType === "Simple" || checkType === "Complex") {
-    messageTemplate =
-      "systems/cd10/templates/partials/chat-messages/skill-check.hbs";
-  } else if (checkType === "Attack" || checkType === "SimpleAttack") {
-    messageTemplate =
-      "systems/cd10/templates/partials/chat-messages/attack-check.hbs";
-  } else if (checkType === "Save") {
-    messageTemplate =
-      "systems/cd10/templates/partials/chat-messages/physical-save.hbs";
-  }
-
-  /* Fetch skill level */
-  if (skillObj !== null) {
-    skillLevel = parseInt(skillObj.data.data.skillLevel.value);
-    skillName = skillObj.name;
-  } else {
-    skillName = null;
-  }
-
-  /* Set up traitLevel for the roll */
-  if (traitObj !== null) {
-    traitName = traitObj.name;
-    traitLevel = parseInt(traitObj.data.data.skillLevel.value);
-
-    if (traitReversed) {
-      traitLevel *= -1;
-    }
-  }
-
-  /* Set up the rollformula */
-  rollFormula = `${baseDice}`;
-
-  if (skillLevel > 0) {
-    rollFormula += " + @skillLevel";
-  }
-
-  if (traitLevel > 0) {
-    rollFormula += " + @traitLevel";
-  } else if (traitLevel < 0) {
-    rollFormula += " @traitLevel";
-  }
-
-  if (modifier > 0 && checkType !== "Save") {
-    rollFormula += " - @modifier";
-  }
-
-  /* Check if an attempt is being made without possessing the necessary skill. */
-  if (checkType === "Simple" || checkType === "SimpleAttack") {
-    if (skillObj === null && traitObj !== null) {
-      skillName = traitObj.name;
-    } else if (skillObj === null && traitObj === null) {
-      skillLevel = 0;
-      skillName = "No Skill!";
-    }
-  }
-
-  rollData = {
-    skillLevel: skillLevel,
-    traitLevel: traitLevel,
-    modifier: modifier
+  const templateContext = {
+    skillName: checkResults.skill.name,
+    skillLevel: parseInt(checkResults.skill.level),
+    traitName: checkResults.trait.name,
+    traitLevel: parseInt(checkResults.trait.level),
+    nines: parseInt(checkResults.roll.nines),
+    zeroes: parseInt(checkResults.roll.zeroes),
+    total: parseInt(checkResults.roll.roll._total),
+    roll: checkResults.render
   };
 
-  /* Roll the dice. Save as object for manipulation. */
-  const rollResults = await _doCD10Roll(rollFormula, rollData);
-  const renderedRoll = await _renderCD10Roll(rollResults.roll._formula, rollResults);
-
-  if (skillLevel) rollResults.rollTotal += skillLevel;
-  if (traitLevel) rollResults.rollTotal += traitLevel;
-  if (modifier !== 0) rollResults.rollTotal -= modifier;
-
-  /* Set up the roll message data structures based on checkType. */
-  let templateContext = null;
-  let chatData = null;
-
-  if (checkType === "Simple") {
-    templateContext = {
-      skillName: skillName,
-      skillLevel: skillLevel,
-      traitName: traitName,
-      traitLevel: traitLevel,
-      nines: rollResults.nines,
-      zeroes: rollResults.zeroes,
-      total: rollResults.rollTotal,
-      roll: renderedRoll
-    };
-  } else if (checkType === "Complex") {
-    templateContext = {
-      skillName: skillName,
-      traitName: traitName,
-      roll: renderedRoll,
-      traitLevel: traitLevel
-    };
-  } else if (checkType === "SimpleAttack") {
-    let attackOutcome = _handleAttack(
-      rollResults.rollTotal,
-      skillObj,
-      weaponObj,
-      damageType,
-      actor
-    );
-    templateContext = {
-      traitName: traitName,
-      traitLevel: traitLevel,
-      nines: rollResults.nines,
-      zeroes: rollResults.zeroes,
-      total: rollResults.rollTotal,
-      roll: renderedRoll,
-      weapon: weaponObj,
-      weaponDamage: attackOutcome.weaponDamage,
-      lethality: attackOutcome.lethality,
-      type: damageType,
-      skillName: attackOutcome.skillName,
-      skillLevel: attackOutcome.skillLevel
-    };
-  } else if (checkType === "Attack") {
-    let attackOutcome = _handleAttack(
-      rollResults.rollTotal,
-      skillObj,
-      weaponObj,
-      damageType,
-      actor
-    );
-    templateContext = {
-      weapon: weaponObj,
-      weaponDamage: attackOutcome.weaponDamage,
-      roll: renderedRoll,
-      lethality: attackOutcome.lethality,
-      excess: attackOutcome.excess,
-      type: damageType,
-      skillName: attackOutcome.skillName,
-      traitName: traitName,
-      skillLevel: attackOutcome.skillLevel,
-      traitLevel: traitLevel
-    };
-  } else if (checkType === "Save") {
-    let shieldDamageProtection = 0;
-    let armorDamageProtection = 0;
-
-    if (armorObj !== null) {
-      armorDamageProtection = armorObj.data.protection[damageType].value;
-    }
-
-    if (usingShield) {
-      shieldDamageProtection = shieldObj.data.protection[damageType].value;
-    }
-
-    let outcome = _handleSave(
-      rollResults.rollTotal,
-      traitLevel,
-      damageType,
-      armorObj,
-      shieldObj,
-      usingShield,
-      lethality,
-      actor
-    );
-    templateContext = {
-      armor: armorObj,
-      shield: shieldObj,
-      roll: renderedRoll,
-      usingShield: usingShield,
-      lethality: lethality,
-      type: damageType,
-      shieldDamageProtection: shieldDamageProtection,
-      armorDamageProtection: armorDamageProtection,
-      saveOutcome: outcome.saveOutcome,
-      wounds: outcome.wounds,
-      DC: lethality - armorDamageProtection - shieldDamageProtection
-    };
-  }
-  chatData = {
+  const chatData = {
     speaker: ChatMessage.getSpeaker(),
-    roll: rollResults.roll,
+    roll: checkResults.roll.roll,
     content: await renderTemplate(messageTemplate, templateContext),
     sound: CONFIG.sounds.dice,
     type: CONST.CHAT_MESSAGE_TYPES.ROLL
   };
 
-  /* Print results to chatlog. */
-  ChatMessage.create(chatData);
-
-  game.actors.get(actor).toggleStress(false);
-}
+  ChatMessage.create(chatData, templateContext);
+};
 
 /**
- *
- * @param rollTotal
- * @param skillObj
- * @param weaponObj
- * @param damageType
- * @param actorId
+ * Perform an attack check.
+ * @param {Object} param0             An object holding the necessary data.
+ * @param {string} param0.actor       The actor object performing the skill check.
+ * @param {string} param0.skillId     (opt) The ID of the skill the actor is using.
+ * @param {string} param0.traitId     (opt) The ID of the trait the actor is using.
+ * @param {boolean} param0.heroPoint  (opt) Whether or not the Actor is spending a hero point on this check.
+ * @param {string} param0.damageType  (opt) The damagetype of the attack. Defaults to "slash".
  */
-function _handleAttack(rollTotal, skillObj, weaponObj, damageType, actorId) {
-  /* Calculate details of the attack, such as Lethality and Excess. */
-  let excess; let lethality; let skillLevel; let skillName; let weaponDamage;
+export const AttackCheck = async ({actor = null, skillId = null, traitId = null, heroPoint = false, damageType = "slash"} = {}) => {
+  const messageTemplate = "systems/cd10/templates/partials/chat-messages/attack-check.hbs";
+  const checkResults = await _performBaseCheck(actor, skillId, traitId, false, heroPoint);
+  checkResults.damageType = damageType;
 
-  excess = parseInt(rollTotal) - 9;
+  // Get a list of equipped items.
+  checkResults.equipmentList = await _getEquipment(checkResults.actor);
 
-  if (excess < 1) {
-    excess = 0;
-  }
+  // Determine the lethality of the weapon used and add any bonus damage from rolling 9's.
+  checkResults.lethality = await _getLethality(checkResults.actor, checkResults.equipmentList, checkResults.damageType);
+  checkResults.bonusDamage = parseInt(checkResults.roll.nines * 4);
 
-  if (weaponObj.type === "rangedWeapon") {
-    let a = game.actors.get(actorId);
-    let ammo = a.items.get(weaponObj.data.selectedAmmo.id);
-    lethality = parseInt(ammo.data.data.damage[damageType].value) + excess;
-    weaponDamage = parseInt(ammo.data.data.damage[damageType].value);
-  } else {
-    lethality = parseInt(weaponObj.data.damage[damageType].value) + excess;
-    weaponDamage = parseInt(weaponObj.data.damage[damageType].value);
-  }
-
-  if (skillObj === null) {
-    skillName = "No skill!";
-    skillLevel = 0;
-  } else {
-    skillLevel = skillObj.data.data.skillLevel.value;
-    skillName = skillObj.name;
-  }
-
-  return {
-    skillLevel,
-    skillName,
-    lethality,
-    excess,
-    weaponDamage
+  const templateContext = {
+    skillName: checkResults.skill.name,
+    skillLevel: parseInt(checkResults.skill.level),
+    traitName: checkResults.trait.name,
+    traitLevel: parseInt(checkResults.trait.level),
+    weapon: checkResults.equipmentList.meleeWeapon || checkResults.equipmentList.rangedWeapon,
+    weaponDamage: parseInt(checkResults.lethality),
+    lethality: parseInt(checkResults.lethality) + parseInt(checkResults.bonusDamage),
+    bonusDamage: parseInt(checkResults.bonusDamage),
+    type: checkResults.damageType,
+    nines: parseInt(checkResults.roll.nines),
+    zeroes: parseInt(checkResults.roll.zeroes),
+    total: parseInt(checkResults.roll.roll._total),
+    roll: checkResults.render
   };
-}
 
-/* Perform a physical save. For details, see TaskCheck above. */
+  const chatData = {
+    speaker: ChatMessage.getSpeaker(),
+    roll: checkResults.roll.roll,
+    content: await renderTemplate(messageTemplate, templateContext),
+    sound: CONFIG.sounds.dice,
+    type: CONST.CHAT_MESSAGE_TYPES.ROLL
+  };
+
+  ChatMessage.create(chatData, templateContext);
+};
 /**
- *
- * @param roll
- * @param traitLevel
- * @param damageType
- * @param armorObj
- * @param shieldObj
- * @param usingShield
- * @param lethality
- * @param actor
+ * Perform a wound save.
+ * @param {Object} param0             An object holding the necessary data.
+ * @param {string} param0.actor       The actor object performing the skill check.
+ * @param {string} param0.traitId     (opt) The ID of the trait the actor is using.
+ * @param {boolean} param0.heroPoint  (opt) Whether or not the Actor is spending a hero point on this check.
+ * @param {number} param0.lethality   The Lethality the save is performed against.
+ * @param {string} param0.damageType  (opt) The damagetype of the attack. Defaults to "slash".
  */
-function _handleSave(
-  roll,
-  traitLevel,
-  damageType,
-  armorObj,
-  shieldObj,
-  usingShield,
-  lethality,
-  actor
-) {
-  let outcome = "";
-  let wounds = 0;
-  let lethalityValue = lethality;
+export const Save = async ({actor = null, traitId = null, heroPoint = false, lethality = 0, damageType = "slash"} = {}) => {
+  const messageTemplate = "systems/cd10/templates/partials/chat-messages/save.hbs";
+  const checkResults = await _performBaseCheck(actor, null, traitId, true, heroPoint);
+  checkResults.damageType = damageType;
+  console.warn(checkResults);
 
-  /* This is where we calculate the outcome of the save, based
-    on input factors. */
 
-  /* First we check to see if there is a block or parry to account for. */
-  if (usingShield) {
-    lethalityValue -= shieldObj.data.protection[damageType].value;
-  }
-
-  /* Then we account for armor. */
-  if (armorObj !== null) {
-    lethalityValue -= armorObj.data.protection[damageType].value;
-
-  }
-
-  if (lethalityValue < 0) {
-    lethalityValue = 0;
-  }
-
-  let totalRoll = roll + traitLevel;
-
-  /* Set up limits for fumble and perfection */
-  let fumbleLimit = parseInt(lethalityValue) - 10;
-  let perfectionLimit = parseInt(lethalityValue) + 10;
-
-  /* Calculate outcome and adjust Shock values accordingly*/
-  if (lethalityValue < 1) {
-    outcome = "Perfection";
-    wounds = 0;
-  } else if (totalRoll >= perfectionLimit) {
-    outcome = "Perfection";
-    wounds = 0;
-  } else if (totalRoll > lethalityValue) {
-    outcome = "Success";
-    wounds = 1;
-  } else if (totalRoll < fumbleLimit && fumbleLimit > 0) {
-    outcome = "Fumble";
-    wounds = 6;
-  } else if (totalRoll < lethalityValue) {
-    outcome = "Failure";
-    wounds = 2;
-  } else if (totalRoll === lethalityValue) {
-    outcome = "StatusQuo";
-    wounds = 2;
-  }
-
-  /* Catch automatic failure. */
-  if (!outcome === "Fumble" && roll === 0) {
-    outcome = "Failure";
-    shockValue *= 2;
-    wounds = 2;
-  }
-
-  /* Update the actor with the values from the save. */
-  let actorObj = game.actors.get(actor);
-
-  if (shockValue > 0) {
-    actorObj.modifyShock(shockValue);
-  }
-
-  if (wounds > 0) {
-    actorObj.modifyWounds(wounds);
-  }
-
-  return {
-    shockResult: shockValue,
-    saveOutcome: outcome,
-    wounds: wounds
-  };
-}
+  // TODO: Finish function and update the template
+};

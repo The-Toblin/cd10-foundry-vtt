@@ -40,6 +40,9 @@
     <div class="flex-row flex-between">
       <div class="stat-box">
         {{localize "cd10.chat.roll.nines"}}
+        (+4
+        {{localize "cd10.chat.roll.each"}}
+        )
       </div>
       <div class="value-box">
         {{nines}}
@@ -59,7 +62,7 @@
   <div class="flex-col flex-start">
     <div class="flex-row flex-between">
       <div class="stat-box">
-        {{localize "cd10.chat.roll.total"}}
+        {{localize "cd10.chat.attack.toHit"}}
       </div>
       <div class="value-box">
         {{total}}
@@ -69,7 +72,9 @@
   <div class="flex-row flex-between">
     <div class="stat-box">
       {{localize "cd10.chat.attack.lethality"}}
-      (
+    </div>
+    <div class="value-box">
+      {{lethality}}
       {{#if (eq type "slash")}}
         {{localize "cd10.attack.slash"}}
       {{else if (eq type "pierce")}}
@@ -79,10 +84,6 @@
       {{else if (eq type "energy")}}
         {{localize "cd10.attack.energy"}}
       {{/if}}
-      )
-    </div>
-    <div class="value-box bold">
-      {{lethality}}
     </div>
   </div>
 </div>

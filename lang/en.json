@@ -20,7 +20,8 @@
         "title": "Attack ({weapon})",
         "lethality": "Lethality",
         "weapon": "Weapon",
-        "miss": "Whiff"
+        "miss": "Whiff",
+        "toHit": "To hit"
       },
       "defense": {
         "title": "Defense ({armor})",
@@ -43,6 +44,7 @@
         "trait": "Trait",
         "total": "Total",
         "nines": "Nines",
+        "each": "Each", 
         "fail": "Fail",
         "failure": "Failure",
         "reroll": "Reroll",

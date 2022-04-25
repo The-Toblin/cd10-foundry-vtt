@@ -23,11 +23,6 @@
                     "label": "Quote",
                     "value": ""
                 },
-                "downAndOut": {
-                    "type": "boolean",
-                    "label": "Down and out",
-                    "value": false
-                },
                 "stressing": {
                     "type": "boolean",
                     "label": "Stressing",
@@ -107,11 +102,6 @@
                 "type": "string",
                 "label": "Notes",
                 "value": "Notes"
-            },
-            "money": {
-                "type": "number",
-                "label": "Money",
-                "value": 0
             }
         },
         "mook": {
@@ -273,29 +263,7 @@
                 "commonStats",
                 "itemDescription",
                 "equipment"
-            ],
-            "protection": {
-                "slash": {
-                    "type": "number",
-                    "label": "Slash Protection",
-                    "value": 0
-                },
-                "pierce": {
-                    "type": "number",
-                    "label": "Pierce Protection",
-                    "value": 0
-                },
-                "blunt": {
-                    "type": "number",
-                    "label": "Blunt Protection",
-                    "value": 0
-                },
-                "energy": {
-                    "type": "number",
-                    "label": "Energy Protection",
-                    "value": 0
-                }
-            },
+            ],            
             "defenseValue": {
                 "type": "number",
                 "label": "Defense Value",
@@ -333,12 +301,7 @@
                 "max": 4,
                 "value": 0
             },
-            "selected": 0,
-            "reversed": {
-                "type": "boolean",
-                "label": "Reversed",
-                "value": false
-            }
+            "selected": 0
         },
         "meleeWeapon": {
             "templates": [

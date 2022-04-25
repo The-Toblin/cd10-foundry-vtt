@@ -206,6 +206,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
       html.find(".stressBox").click(this._stressBoxClicked.bind(this));
       html.find(".item-delete").click(this._onItemDelete.bind(this));
       html.find(".item-equip").click(this._onItemEquip.bind(this));
+      html.find(".inline-edit").change(this._onSkillEdit.bind(this));
       html.find(".ammo-select").click(this._onAmmoSelect.bind(this));
       html.find(".skill-item").click(this._toggleSkillUp.bind(this));
       html.find(".wounds-icons").on("click contextmenu", this._onWoundsMarkChange.bind(this));
@@ -265,11 +266,13 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
 
     if (rollObj.type !== "trait") {
       for (const item of this.getData().traits) {
-        if (item.data.selected > 0) trait.id = item.id;
+        if (item.data.selected > 0) {
+          trait.id = item._id;
+        }
       }
       skill.id = rollObj.id;
     } else if (rollObj.type === "trait") {
-      trait.id = item.id;
+      trait.id = item._id;
     }
 
     return {
@@ -342,6 +345,21 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     let item = this.actor.items.get(itemId);
 
     item.sheet.render(true);
+  }
+
+  async _onSkillEdit(event) {
+    event.preventDefault();
+
+    if (!this.isEditable) return;
+
+    const element = event.currentTarget;
+    const itemId = element.closest(".item").dataset.itemId;
+    const item = this.actor.items.get(itemId);
+    const field = element.dataset.field;
+
+    await item.update({
+      [field]: element.value
+    });
   }
 
   // TODO: Create doc description.
@@ -551,7 +569,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     /* Perform the attack check */
     try {
       await Dice.AttackCheck({
-        actorId: this.actor.id,
+        actor: this.actor,
         skillId: skill.id,
         traitId: trait.id,
         heroPoint: event.shiftKey,
@@ -604,9 +622,9 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
 
     // Check if a trait was selected, if it was reversed, and set the proper values.
     if (html.find("select#trait-selected").val() !== "None") {
-      saveData.trait.id = html.find("select#trait-selected").val()._id;
+      saveData.traitId = this.getData().traits[html.find("select#trait-selected").val()]._id;
       const selectValue = html.find("input#reverseTrait")[0].checked ? 2 : 1;
-      await this.actor.items.get(saveData.trait.id).update({
+      await this.actor.items.get(saveData.traitId).update({
         "data.selected": selectValue
       });
     }
@@ -620,17 +638,18 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     }
 
     // Check if a heropoint is spent.
-    if (heroPointChecked) {
+    if (saveData.heroPoint) {
       if (this._checkHeroPoints() === false) {
         return;
       }
     }
 
+    console.log("Sheet TraitId: ", saveData.traitId);
     // Roll the save.
     try {
       Dice.Save({
-        actorId: this.actor.id,
-        traitId: saveData.trait.id,
+        actor: this.actor,
+        traitId: saveData.traitId,
         heroPoint: saveData.heroPoint,
         lethality: saveData.lethality,
         damageType: saveData.damageType
