@@ -58,12 +58,12 @@ export default class CD10BaseSheet extends ActorSheet {
     },
     {
       name: game.i18n.localize("cd10.sheet.description"),
-      icon: '<i class="fa-solid fa-message"></i>',
+      icon: '<i class="fas fa-sticky-note"></i>',
       callback: element => {
         const itemId = element.data("item-id");
         const item = this.actor.items.get(itemId);
 
-        this._onItemRoll.bind(this);
+        item.roll();
       }
     },
     {
@@ -103,12 +103,12 @@ export default class CD10BaseSheet extends ActorSheet {
     },
     {
       name: game.i18n.localize("cd10.sheet.description"),
-      icon: '<i class="fa-solid fa-message"></i>',
+      icon: '<i class="fas fa-sticky-note"></i>',
       callback: element => {
         const itemId = element.data("item-id");
         const item = this.actor.items.get(itemId);
 
-        this._onItemRoll.bind(this);
+        item.roll();
       }
     },
     {
@@ -134,12 +134,12 @@ export default class CD10BaseSheet extends ActorSheet {
     },
     {
       name: game.i18n.localize("cd10.sheet.description"),
-      icon: '<i class="fa-solid fa-message"></i>',
+      icon: '<i class="fas fa-sticky-note"></i>',
       callback: element => {
         const itemId = element.data("item-id");
         const item = this.actor.items.get(itemId);
 
-        this._onItemRoll.bind(this);
+        item.roll();
       }
     },
     {
@@ -300,18 +300,10 @@ export default class CD10BaseSheet extends ActorSheet {
 
   /**
    * Checks if the system is set to dump descriptions to chat, and then does so.
-   * @param {object} item The item-object with which to show the description.
+   * @param {object}  item         The item-object with which to show the description.
    */
   _rollItem(item) {
     if (game.settings.get("cd10", "systemDumpDescriptions")) item.roll();
-  }
-
-  /**
-   * Calls the rollitem function for the clicked item. Dumps description to chat.
-   * @param {object} item The item in question that needs to be dumped to chat.
-   */
-  _onItemRoll(item) {
-    this._rollItem(item);
   }
 
   // TODO: Create doc description.
@@ -692,7 +684,6 @@ export default class CD10BaseSheet extends ActorSheet {
       }
     }
 
-    console.log("Sheet TraitId: ", saveData.traitId);
     // Roll the save.
     try {
       Dice.Save({

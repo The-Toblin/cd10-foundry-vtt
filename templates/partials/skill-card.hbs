@@ -1,6 +1,15 @@
 <form class="{{cssClass}}" autocomplete="off">
     <h3>
-        {{name}}
+        {{name}} 
+    </h3>
+    <h3>
+        (
+            {{#if (eq type "skill")}}
+            {{localize "cd10.skill.skillLevel"}} {{data.skillLevel.value}}
+            {{else if (eq type "trait")}}
+            {{localize "cd10.trait.skillLevel"}} {{data.skillLevel.value}}
+            {{/if}}
+        )
     </h3>
     <div class="cd10-card-detail pad-8">
         {{{data.description.value}}}
