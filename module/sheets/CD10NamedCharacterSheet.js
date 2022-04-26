@@ -121,19 +121,21 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     }
   ];
 
-  // TODO: Create doc description.
+  /**
+   * Override the default getData function from Foundry and create data structures for handlebars.
+   * @returns {object} sheetData The created data inside.
+   */
   getData() {
-    /* Override default getData() function */
     const sheetData = super.getData();
     sheetData.config = CONFIG.cd10;
     sheetData.data = sheetData.data.data;
 
-    /* Sort items alphabetically */
+    // Sort items alphabetically
     sheetData.items.sort(function(a, b) {
       return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
     });
 
-    /* Create subproperties for item types */
+    // Create properties for Handlebars templates to access.
     sheetData.ammunition = sheetData.items.filter(p => p.type === "ammunition");
     sheetData.allArmors = sheetData.items.filter(p => p.type === "armor" || p.type === "shield");
     sheetData.armors = sheetData.items.filter(p => p.type === "armor");
@@ -157,7 +159,8 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
         && p.type !== "shield"
     );
 
-    // The following is to detect if certain things are equipped, and thus toggle certain parts of the sheet on or off.
+    // The following is to detect if certain things are equipped, and thus toggle parts of the sheet on or off.
+    // FIXME: Remove forEach, use for. Also check the possibility to ternary operator on these.
     sheetData.equippedMeleeWeapon = false;
     sheetData.meleeWeapons.forEach(w => {
       if (w.data.isEquipped.value) {
@@ -194,11 +197,14 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     return sheetData;
   }
 
-  // TODO: Create doc description.
+  /**
+   * Makes sure the listeners are active on the sheet. They monitor mouse-movements and clicks on the sheet
+   * and trigger the necessary functions.
+   * @param {html} html The sheet HTML.
+   */
   activateListeners(html) {
-    /* Owner-only listeners */
+    // Owner-only listeners
     if (this.actor.isOwner) {
-      /* Html.find(".item-roll").click(this._onItemRoll.bind(this));*/
       html.find(".skill-check").click(this._onSkillCheck.bind(this));
       html.find(".attack-check").click(this._attackCheck.bind(this));
       html.find(".physical-save").click(this._onSave.bind(this));
@@ -219,8 +225,9 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
       new ContextMenu(html, ".inventory-item", this.itemContextMenu);
       new ContextMenu(html, ".skill-item", this.itemSkillContextMenu);
     }
-    /* General listeners */
-    /* html.find(".item-create").click(this._onItemCreate.bind(this));*/
+    // General listeners
+    // Html.find(".item-roll").click(this._onItemRoll.bind(this)); // FIXME: Find a way to implement this.
+    // html.find(".item-create").click(this._onItemCreate.bind(this)); // FIXME: Either delete or implement.
 
     super.activateListeners(html);
   }
@@ -231,7 +238,11 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
    */
 
 
-  // TODO: Create doc description.
+  /**
+   * Checks the actor to see if they have experience to spend as hero points.
+   * Deducts one point and returns whether or not it was successful.
+   * @returns {boolean}
+   */
   _checkHeroPoints() {
     if (this.actor.getExp > 0) {
       this.actor.modifyExp(-1);
@@ -246,7 +257,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
    * A helper function for fetching objects from game or actor.
    * @param {string} id         The itemId to fetch.
    * @param {boolean} actor     (opt) Default: true. If fetching is to be performed on an actor.
-   * @returns {Promise<Object>} The fetched object.
+   * @returns {Promise<object>} The fetched object.
    */
   async _fetchObject(id, actor = true) {
     const fetchedObject = actor ? this.actor.items.get(id) : game.items.get(id);
@@ -256,8 +267,8 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
   /**
    * A helper function that cleans up necessary data to perform a check, attack or save.
    * It determines if the clicked object is a skill or a trait, and sets the proper values.
-   * @param {Object} event The clicked event-data, used to fetch the itemId.
-   * @returns {Promise<Object>} An object holding the necessary skill and trait data.
+   * @param {object} event The clicked event-data, used to fetch the itemId.
+   * @returns {Promise<object>} An object holding the necessary skill and trait data.
    */
   async _fetchRollData(event) {
     const rollObj = await this._fetchObject(event.currentTarget.closest(".item").dataset.itemId, true);
@@ -283,7 +294,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
 
   /**
    * Checks if the system is set to dump descriptions to chat, and then does so.
-   * @param {Object} item The item-object with which to show the description.
+   * @param {object} item The item-object with which to show the description.
    */
   _rollItem(item) {
     if (game.settings.get("cd10", "systemDumpDescriptions")) item.roll();
@@ -336,7 +347,10 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     });
   }
 
-  // TODO: Create doc description.
+  /**
+   * Function to open an item's sheet. Commonly used by context menu "Edit" entries.
+   * @param {object} event The clicked event-data, used to fetch the itemId.
+   */
   _onItemEdit(event) {
     event.preventDefault();
 
@@ -347,6 +361,10 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     item.sheet.render(true);
   }
 
+  /**
+   * Triggered by a change in the value of an inline-edit box and saves the value to the proper data point.
+   * @param {object} event The clicked event-data, used to fetch the itemId.
+   */
   async _onSkillEdit(event) {
     event.preventDefault();
 
@@ -362,7 +380,10 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     });
   }
 
-  // TODO: Create doc description.
+  /**
+   * Sheet function to delete an embedded document (item). Commonly triggered from context menus "Delete" option.
+   * @param {object} event The clicked event-data, used to fetch the itemId.
+   */
   async _onItemDelete(event) {
     event.preventDefault();
 
@@ -373,7 +394,11 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     await this.actor.deleteEmbeddedDocuments("Item", [itemId]);
   }
 
-  // TODO: Create doc description.
+  /**
+   * Function to facilitate equipping and unequipping items. Also makes sure to trigger the actor function for
+   * unequipping all other items of that same type before equipping the new one.
+   * @param {object} event The clicked event-data, used to fetch the itemId.
+   */
   async _onItemEquip(event) {
     event.preventDefault();
 
@@ -392,7 +417,10 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     });
   }
 
-  // TODO: Create doc description.
+  /**
+   * Simple function to increase or decrese wounds. Triggers an actor-resident function to validate.
+   * @param {object} event The clicked event-data.
+   */
   _onWoundsMarkChange(event) {
     event.preventDefault();
 
@@ -403,7 +431,11 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     }
   }
 
-  // TODO: Create doc description.
+  /**
+   * Triggers the state of the actor stressing.
+   * @param {object} event The clicked event-data.
+   */
+  // TODO: Turn into an active effect that clears upon round change, rather than static value.
   _stressBoxClicked(event) {
     event.preventDefault();
 
@@ -414,7 +446,11 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     });
   }
 
-  // TODO: Create doc description.
+  /**
+   * Triggers the double-up chevron, indicating a skill is eligable for level up. This is not automated, and players
+   * must remember to do this on their own when they fail.
+   * @param {object} event The clicked event-data, used to fetch the itemId.
+   */
   async _toggleSkillUp(event) {
     event.preventDefault();
     let element = event.currentTarget;
@@ -428,25 +464,26 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     });
   }
 
-  // TODO: Create doc description.
+  /**
+   * Function to trigger a trait's selection state as either selected (left-click) or reversed (right click).
+   * @param {object} event The clicked event-data, used to fetch the itemId.
+   */
   async _onClickTrait(event) {
     event.preventDefault();
     let element = event.currentTarget;
     let itemId = element.closest(".item").dataset.itemId;
     let item = this.actor.items.get(itemId);
 
-    if (item.getSelectionStatus === 1 || item.getSelectionStatus === 2) {
-      item.setSelectionStatus(0);
+    // TODO: Only deselect if value is identical, otherwise switch selection state. (1->2 for instance)
+    if (item.getSelectionStatus !== 0) {
+      await item.setSelectionStatus(0);
       return;
     }
 
     await this.actor.resetTraitSelection();
 
-    if (event.type === "click") {
-      item.setSelectionStatus(1);
-    } else {
-      item.setSelectionStatus(2);
-    }
+    const selectionStatus = event.type === "click" ? 1 : 2;
+    item.setSelectionStatus(selectionStatus);
   }
 
 
@@ -462,13 +499,14 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
   async _onSkillCheck(event) {
     event.preventDefault();
 
-    // If a hero point is spent, check if there's enough points. Otherwise cancel the check.
+    // If a hero point is spent, check if there's enough points and deduct one. Otherwise cancel the check.
     if (event.shiftKey) {
       if (this._checkHeroPoints() === false) {
         return;
       }
     }
 
+    // Get the rolldata necessary to perform a skillcheck.
     const rollData = await this._fetchRollData(event);
 
     try {
@@ -494,7 +532,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
    */
   async _attackCheck(event) {
     event.preventDefault();
-
+    // TODO: Create a data-gathering object to hold all the rolldata.
     // If a hero point is spent, check if there's enough points.
     if (event.shiftKey) {
       if (this._checkHeroPoints() === false) {
@@ -566,7 +604,7 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
       if (item.data.selected > 0) trait.id = item.id;
     }
 
-    /* Perform the attack check */
+    // Perform the attack check
     try {
       await Dice.AttackCheck({
         actor: this.actor,
@@ -585,8 +623,14 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
     }
   }
 
-  // TODO: Create doc description.
-  async _onSave(event) {
+  /**
+   * Create and open the dialog to configure the wound save.
+   * @param {event} event             The clicked data. Always provided, but not used.
+   * @param {object} data             An object holding provided data to populate the dialog.
+   * @param {number} data.lethality   Default=0 The Lethality value of the inflicted attack.
+   * @param {string} data.damageType  Default="slash" The DamageType of the inflicted attack.
+   */
+  async _onSave(event, {lethality = 0, damageType = "slash"}={}) {
     event.preventDefault();
 
     let dialogOptions = {
@@ -615,8 +659,6 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
    * @param {HTML} html The data from the dialog.
    */
   async _doSaveStuff(html) {
-    // FIXME: Check to see if this actually works.
-
     // Fetch the necessary save data from the dialog.
     const saveData = {};
 
