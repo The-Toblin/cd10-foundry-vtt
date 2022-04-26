@@ -9,29 +9,22 @@
 
 /**
  * * Creates the RollFormula for use in dicerolls, based on the data delivered to it.
- * @param {object} param0               An object parameter, holding the date necessary to creat the rollformula.
- * @param {number} param0.skillLevel    (opt) The skill's level to use for the formula.
- * @param {number} param0.traitLevel    (opt) If a trait is provided, add it's number to the formula.
- * @param {number} param0.modifier      (opt) The actor's modifier, if provided.
- * @param {boolean} param0.save         (opt) If the roll is a save, omit the modifier.
- * @param {boolean} param0.heroPoint    (opt) If a hero point is spent, double the basedice (2d10).
- * @returns {Promise<string>}           The rollformula as a string.
+ * @param {object} rollData               An object parameter, holding the date necessary to create the rollformula.
+ * @param {number} rollData.skillLevel    (opt) The skill's level to use for the formula.
+ * @param {number} rollData.traitLevel    (opt) If a trait is provided, add it's number to the formula.
+ * @param {number} rollData.modifier      (opt) The actor's modifier, if provided.
+ * @param {boolean} rollData.save         (opt) If the roll is a save, omit the modifier.
+ * @param {boolean} rollData.heroPoint    (opt) If a hero point is spent, double the basedice (2d10).
+ * @returns {Promise<string>}             The rollformula as a string.
  */
 const _createDiceFormula = async ({skillLevel = 0, traitLevel = 0, modifier = 0,
   save = false, heroPoint = false} = {}) => {
 
-  const baseDice = heroPoint === true ? "2d10" : "1d10";
-  let rollFormula = `${baseDice}`;
+  let rollFormula = heroPoint === true ? "2d10" : "1d10";
 
   if (skillLevel > 0) rollFormula += " + @skillLevel";
-
-  if (traitLevel > 0) {
-    rollFormula += " + @traitLevel";
-  } else if (traitLevel < 0) {
-    rollFormula += " @traitLevel";
-  }
-
-  if (modifier > 0 && !save) rollFormula += " @modifier";
+  if (traitLevel !== 0) rollFormula += " + @traitLevel";
+  if (modifier > 0 && !save) rollFormula += " @modifier"; // FIXME: Check if this produces weird results with negative values.
   return rollFormula;
 };
 
