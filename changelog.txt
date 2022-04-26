@@ -8,6 +8,8 @@ Roll evaluation updated. Now properly rolls a 0-9 D10 and handles 0's and 9's pr
 Roll presentation updated. 9's and 0's are now presented in chat.
 Migration script for removing old template-data from actors added.
 
+Both Mooksheets and Charactersheets now extend a BaseSheet class to simplify code and make maintenance less of a pain.
+
 #Version 0.4.4
 == Bugfixes ==
 Fixed bug in trait selection on the sheet. You couldn't unselect them. Now you can.

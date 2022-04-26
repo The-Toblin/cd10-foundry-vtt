@@ -11,6 +11,16 @@
                     </h3>
                     {{> "systems/cd10/templates/partials/sheet-tabs/character-stat-block.hbs"}}
                 </div>
+                <div class="body-box flex-col flex-start">
+                    <div class="cd10-card flex-row flex-even">
+                        <div>{{localize "cd10.sheet.positive"}}: {{data.posTraits.value}}</div>
+                        <div>{{localize "cd10.sheet.negative"}}: {{data.negTraits.value}}</div>
+                        <div>{{localize "cd10.sheet.total"}}: {{data.traitsValue.value}}</div>
+                    </div>
+                    <div>
+                        {{> "systems/cd10/templates/partials/sheet-tabs/skill-list.hbs"}}
+                    </div>
+                </div>
             </div>
             <div class="flex-col flex-center pad-4">
                 <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" class="actor-image" />
@@ -91,18 +101,7 @@
             <textarea name="data.quote.value">{{data.quote.value}}</textarea>
         </div>
         <hr>
-        <div class="body-box flex-col flex-start">
-            <div class="cd10-card flex-row flex-even">
-                <div>{{localize "cd10.sheet.positive"}}: {{data.posTraits.value}}</div>
-                <div>{{localize "cd10.sheet.negative"}}: {{data.negTraits.value}}</div>
-                <div>{{localize "cd10.sheet.total"}}: {{data.traitsValue.value}}</div>
-            </div>
-            <div>
-                {{> "systems/cd10/templates/partials/sheet-tabs/skill-list.hbs"}}
-            </div>
-        </div>
     </div>
-    <hr>
     <section class="sheet-combat-tab">
         {{#if equippedMeleeWeapon}}
         <div class="weapon-card cd10-card ">

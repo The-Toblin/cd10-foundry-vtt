@@ -23,8 +23,12 @@ const _createDiceFormula = async ({skillLevel = 0, traitLevel = 0, modifier = 0,
   let rollFormula = heroPoint === true ? "2d10" : "1d10";
 
   if (skillLevel > 0) rollFormula += " + @skillLevel";
-  if (traitLevel !== 0) rollFormula += " + @traitLevel";
-  if (modifier > 0 && !save) rollFormula += " @modifier"; // FIXME: Check if this produces weird results with negative values.
+  if (traitLevel > 0) {
+    rollFormula += " + @traitLevel";
+  } else if (traitLevel < 0) {
+    rollFormula += " @traitLevel";
+  }
+  if (modifier > 0 && !save) rollFormula += " @modifier";
   return rollFormula;
 };
 
@@ -204,7 +208,6 @@ const _getSkillData = async (actor, skillId) => {
  */
 const _getTraitData = async (actor, traitId) => {
   if (traitId) {
-    console.log(traitId);
     const trait = actor.items.get(traitId);
     const traitLevel = parseInt(trait.data.data.skillLevel.value);
     const reversed = trait.data.data.selected === 2;
@@ -306,11 +309,11 @@ const _performBaseCheck = async (actor, skillId, traitId, save, heroPoint) => {
 
 /**
  * Perform a standard skill check.
- * @param {object} param0             An object holding the necessary data.
- * @param {object} param0.actor       The actor object performing the skill check.
- * @param {string} param0.skillId     (opt) The ID of the skill the actor is using.
- * @param {string} param0.traitId     (opt) The ID of the trait the actor is using.
- * @param {boolean} param0.heroPoint  (opt) Whether or not the Actor is spending a hero point on this check.
+ * @param {object} checkData             An object holding the necessary data.
+ * @param {object} checkData.actor       The actor object performing the skill check.
+ * @param {string} checkData.skillId     (opt) The ID of the skill the actor is using.
+ * @param {string} checkData.traitId     (opt) The ID of the trait the actor is using.
+ * @param {boolean} checkData.heroPoint  (opt) Whether or not the Actor is spending a hero point on this check.
  */
 export const SkillCheck = async ({actor = null, skillId = null, traitId = null, heroPoint = false} = {}) => {
   const messageTemplate = "systems/cd10/templates/partials/chat-messages/skill-check.hbs";

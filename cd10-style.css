@@ -314,7 +314,13 @@ textarea {
   width: 20%;
 }
 .cd10.sheet.namedCharacter form .image-box img {
-  min-width: 200px;
+  background: url(assets/backgrounds/card_background.webp);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, #dfbb61) 1;
+  margin: 0 5px 10px 5px;
+  padding: 4px;
+  min-width: 195px;
   min-height: 200px;
   box-shadow: 5px 10px 10px #000000;
 }
@@ -354,10 +360,6 @@ textarea {
   margin-left: 5px;
   width: 15px;
   border: none;
-}
-.cd10.sheet.namedCharacter form .sheet-sidebar .red {
-  color: red !important;
-  font-weight: 700 !important;
 }
 .cd10.sheet.namedCharacter form .sheet-sidebar input {
   width: 45px;
@@ -664,6 +666,12 @@ textarea {
   width: 100%;
   margin: 0 0 10px 0;
 }
+.health-info .stat-element .red {
+  color: red !important;
+}
+.health-info .stat-element .red .fas {
+  color: inherit !important;
+}
 .health-info .stat-element .stat-value {
   text-align: center;
 }
@@ -840,6 +848,13 @@ textarea {
   text-align: center;
 }
 .cd10.sheet.mookCharacter form .actor-image {
+  background: url(assets/backgrounds/card_background.webp);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, #dfbb61) 1;
+  box-shadow: 5px 10px 10px #000000;
+  margin: 0 5px 10px 5px;
+  padding: 4px;
   max-height: 225px;
 }
 .cd10.sheet.mookCharacter form hr {
