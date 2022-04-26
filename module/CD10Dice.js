@@ -9,7 +9,7 @@
 
 /**
  * * Creates the RollFormula for use in dicerolls, based on the data delivered to it.
- * @param {Object} param0               An object parameter, holding the date necessary to creat the rollformula.
+ * @param {object} param0               An object parameter, holding the date necessary to creat the rollformula.
  * @param {number} param0.skillLevel    (opt) The skill's level to use for the formula.
  * @param {number} param0.traitLevel    (opt) If a trait is provided, add it's number to the formula.
  * @param {number} param0.modifier      (opt) The actor's modifier, if provided.
@@ -25,9 +25,9 @@ const _createDiceFormula = async ({skillLevel = 0, traitLevel = 0, modifier = 0,
 
   if (skillLevel > 0) rollFormula += " + @skillLevel";
 
-  if (traitLevel !== null && traitLevel > 0) {
+  if (traitLevel > 0) {
     rollFormula += " + @traitLevel";
-  } else if (traitLevel !== null && traitLevel < 0) {
+  } else if (traitLevel < 0) {
     rollFormula += " @traitLevel";
   }
 
@@ -42,7 +42,7 @@ const _createDiceFormula = async ({skillLevel = 0, traitLevel = 0, modifier = 0,
  * @param {number} traitLevel The trait level, if any to apply to the data.
  * @param {number} modifier   The character's modifier to apply to the data.
  * @param {boolean} save      A boolean telling the function it's save to simplify the data.
- * @returns {Promise<Object>} An object holding the finished rollData.
+ * @returns {Promise<object>} An object holding the finished rollData.
  */
 const _createRollData = async (skillLevel, traitLevel, modifier, save) => {
   if (save) {
@@ -80,8 +80,8 @@ const _diceList = async diceRolls => {
 /**
  * Perform a single CD10 roll.
  * @param {string} rollFormula The rollformula to use for rolls.
- * @param {Object} rollData An object holding the modifiers to use for the roll.
- * @returns {Promise<Object>} A object holding the roll.
+ * @param {object} rollData An object holding the modifiers to use for the roll.
+ * @returns {Promise<object>} A object holding the roll.
  */
 const _rollD10 = async (rollFormula, rollData) => {
   const CD10Roll = new Roll(rollFormula, rollData);
@@ -100,8 +100,8 @@ const _rollD10 = async (rollFormula, rollData) => {
  * Handle the actual roll evaluation, based on rolled 9's and 0's. Will automatically
  * call for rerolls on those results and add those to the array of results.
  * @param {string} rollFormula The rollformula to use for rolls.
- * @param {Object} rollData An object holding the modifiers to use for the roll.
- * @returns {Promise<Object>} A object holding the roll, the total and any number of nines and zeroes.
+ * @param {object} rollData An object holding the modifiers to use for the roll.
+ * @returns {Promise<object>} A object holding the roll, the total and any number of nines and zeroes.
  */
 const _doCD10Roll = async (rollFormula, rollData) => {
   // Define all the variables we'll need.
@@ -157,7 +157,7 @@ const _doCD10Roll = async (rollFormula, rollData) => {
 /**
  * Render the rolled results to HTML for use it templates and chatmessages.
  * @param {string} formula A string holding the rollformula for display.
- * @param {Object} diceRolls An object holding roll results for display.
+ * @param {object} diceRolls An object holding roll results for display.
  * @returns {Promise<HTML>} An HTML snippet holding rendered roll results.
  */
 const _renderCD10Roll = async (formula, diceRolls) => {
@@ -184,9 +184,9 @@ const _renderCD10Roll = async (formula, diceRolls) => {
 
 /**
  * Helper function to find the data from the skill used and return it as an object.
- * @param {Object} actor      The actor that performs the roll.
+ * @param {object} actor      The actor that performs the roll.
  * @param {string} skillId    An id for the skill being used.
- * @returns {Promise<Object>} An object holding the skillLevel and name.
+ * @returns {Promise<object>} An object holding the skillLevel and name.
  */
 const _getSkillData = async (actor, skillId) => {
   if (skillId) {
@@ -205,9 +205,9 @@ const _getSkillData = async (actor, skillId) => {
 
 /**
  * Helper function to find the data from the trait used and return it as an object.
- * @param {Object} actor      The actor that performs the roll.
+ * @param {object} actor      The actor that performs the roll.
  * @param {string} traitId    An id for the trait being used.
- * @returns {Promise<Object>} An object holding the traitLevel and name.
+ * @returns {Promise<object>} An object holding the traitLevel and name.
  */
 const _getTraitData = async (actor, traitId) => {
   if (traitId) {
@@ -230,8 +230,8 @@ const _getTraitData = async (actor, traitId) => {
 
 /**
  * Helper function that returns a list of all equipped items of an actor.
- * @param {Object} actor      The actor whose items you want to check.
- * @returns {Promise<Object>} An object holding the equipped items.
+ * @param {object} actor      The actor whose items you want to check.
+ * @returns {Promise<object>} An object holding the equipped items.
  */
 const _getEquipment = async actor => {
   const equipmentList = {
@@ -258,8 +258,8 @@ const _getEquipment = async actor => {
 
 /**
  * Determines the lethality caused by a weapon being used.
- * @param {Object} actor           The Actor object. Required for finding the ammunition for ranged weapons.
- * @param {Object} equipmentList  An object holding the actor's equipped items.
+ * @param {object} actor           The Actor object. Required for finding the ammunition for ranged weapons.
+ * @param {object} equipmentList  An object holding the actor's equipped items.
  * @param {string} damageType     The damage type, pulled from the click on the sheet.
  * @returns {Promise<number>}     Returns a number for the lethality.
  */
@@ -282,12 +282,12 @@ const _getLethality = async (actor, equipmentList, damageType) => {
  * Gathers up the necessary data to proceed with the check. It will define which actor is performing the check,
  * what skill is being used, if a trait is being used and if it's reversed, the outcome of the rolls, as well
  * as the HTML template used to render the chatmessage.
- * @param {Object} actor      The Actor object.
+ * @param {object} actor      The Actor object.
  * @param {string} skillId    (opt) The skill's Id.
  * @param {string} traitId    (opt) The trait's Id.
  * @param {boolean} save      (opt) If the check is a save.
  * @param {boolean} heroPoint (opt) If a hero point is spent.
- * @returns {Promise<Object>} An object containing the objects of the actor, skill, trait and the roll results.
+ * @returns {Promise<object>} An object containing the objects of the actor, skill, trait and the roll results.
  */
 const _performBaseCheck = async (actor, skillId, traitId, save, heroPoint) => {
   const skill = await _getSkillData(actor, skillId);
@@ -313,8 +313,8 @@ const _performBaseCheck = async (actor, skillId, traitId, save, heroPoint) => {
 
 /**
  * Perform a standard skill check.
- * @param {Object} param0             An object holding the necessary data.
- * @param {Object} param0.actor       The actor object performing the skill check.
+ * @param {object} param0             An object holding the necessary data.
+ * @param {object} param0.actor       The actor object performing the skill check.
  * @param {string} param0.skillId     (opt) The ID of the skill the actor is using.
  * @param {string} param0.traitId     (opt) The ID of the trait the actor is using.
  * @param {boolean} param0.heroPoint  (opt) Whether or not the Actor is spending a hero point on this check.
@@ -347,7 +347,7 @@ export const SkillCheck = async ({actor = null, skillId = null, traitId = null, 
 
 /**
  * Perform an attack check.
- * @param {Object} param0             An object holding the necessary data.
+ * @param {object} param0             An object holding the necessary data.
  * @param {string} param0.actor       The actor object performing the skill check.
  * @param {string} param0.skillId     (opt) The ID of the skill the actor is using.
  * @param {string} param0.traitId     (opt) The ID of the trait the actor is using.
@@ -394,7 +394,7 @@ export const AttackCheck = async ({actor = null, skillId = null, traitId = null,
 };
 /**
  * Perform a wound save.
- * @param {Object} param0             An object holding the necessary data.
+ * @param {object} param0             An object holding the necessary data.
  * @param {string} param0.actor       The actor object performing the skill check.
  * @param {string} param0.traitId     (opt) The ID of the trait the actor is using.
  * @param {boolean} param0.heroPoint  (opt) Whether or not the Actor is spending a hero point on this check.
