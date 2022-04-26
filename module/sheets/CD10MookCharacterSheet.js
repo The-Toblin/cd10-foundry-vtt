@@ -1,5 +1,8 @@
 import CD10BaseSheet from "./CD10BaseSheet.js";
 
+/**
+ * Override parent class with different settings and templates.
+ */
 export default class CD10MookCharacterSheet extends CD10BaseSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
