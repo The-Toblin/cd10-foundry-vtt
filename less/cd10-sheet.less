@@ -19,8 +19,41 @@
     .cd10-text();
   }
 
+  .quote {
+    textarea {
+      padding-top: 10px;
+      border: none;
+      text-align: center;
+      font-style: italic;
+    }
+  }
+
+  input {
+    border: none;
+    background: none;
+  }
+
   .window-content {
     .cd10-sheet();
+  }
+
+  .margin-bottom {
+    margin-bottom: 10px;
+  }
+
+  .header-box,
+  .title-box,
+  .equipment-list {
+    width: 100%;
+  }
+
+  .d10-roll-icon {
+    img {
+      padding-top: 4px;
+      margin-left: 5px;
+      width: 15px;
+      border: none;
+    }
   }
 
   .center-table {
@@ -61,12 +94,10 @@
   }
 
   .image-box {
-    width: 20%;
-
     img {
       .cd10-card();
-      min-width: 195px;
-      min-height: 200px;
+      width: 195px;
+      height: auto;
       box-shadow: 5px 10px 10px rgb(0, 0, 0, 0.5);
     }
   }
@@ -111,15 +142,6 @@
 
     .pad-top {
       padding-top: 4px;
-    }
-
-    .d10-roll-icon {
-      img {
-        padding-top: 4px;
-        margin-left: 5px;
-        width: 15px;
-        border: none;
-      }
     }
 
     input {

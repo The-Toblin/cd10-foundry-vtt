@@ -6,7 +6,7 @@ export default class CD10Item extends Item {
   }
 
   get getSelectionStatus() {
-    return this.data.data.selected;
+    return this.type === "trait" ? this.data.data.selected : false;
   }
 
   chatTemplate = {
@@ -72,13 +72,15 @@ export default class CD10Item extends Item {
   }
 
   async setSelectionStatus(status) {
-    if (typeof status !== "number") {
-      ui.errors.notifications("Not a number!");
-      return;
-    }
+    if (this.type === "trait") {
+      if (typeof status !== "number") {
+        ui.errors.notifications("Not a number!");
+        return;
+      }
 
-    await this.update({
-      "data.selected": status
-    });
+      await this.update({
+        "data.selected": status
+      });
+    }
   }
 }

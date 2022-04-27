@@ -17,10 +17,9 @@
  * @param {boolean} rollData.heroPoint    (opt) If a hero point is spent, double the basedice (2d10).
  * @returns {Promise<string>}             The rollformula as a string.
  */
-const _createDiceFormula = async ({skillLevel = 0, traitLevel = 0, modifier = 0,
-  save = false, heroPoint = false} = {}) => {
+const _createDiceFormula = async ({skillLevel, traitLevel, modifier, save, heroPoint} = {}) => {
 
-  let rollFormula = heroPoint === true ? "2d10" : "1d10";
+  let rollFormula = heroPoint ? "2d10" : "1d10";
 
   if (skillLevel > 0) rollFormula += " + @skillLevel";
   if (traitLevel > 0) {
@@ -291,7 +290,7 @@ const _performBaseCheck = async (actor, skillId, traitId, save, heroPoint) => {
 
   // Construct the rollformula and rolldata required for the roll.
   const rollformula = await _createDiceFormula({skillLevel: skill.level, traitLevel: trait.level,
-    modifier: actor.getModifier, save: save, heropoint: heroPoint});
+    modifier: actor.getModifier, save: save, heroPoint: heroPoint});
   const rollData = await _createRollData(skill.level, trait.level, actor.getModifier, save);
 
   // Perform and render the roll.

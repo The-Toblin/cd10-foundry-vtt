@@ -23,7 +23,9 @@ export default class CD10BaseSheet extends ActorSheet {
    * Define ContextMenus
    */
 
-  // TODO: Create doc description.
+  /**
+   * A context menu for items that are equippable, such as weapons and armor.
+   */
   equippableItemContextMenu = [
     {
       name: game.i18n.localize("cd10.sheet.edit"),
@@ -72,7 +74,9 @@ export default class CD10BaseSheet extends ActorSheet {
     }
   ];
 
-  // TODO: Create doc description.
+  /**
+   * Skill context menu. Allows level up, editing, removing and posting to chat.
+   */
   itemSkillContextMenu = [
     {
       name: game.i18n.localize("cd10.sheet.edit"),
@@ -117,7 +121,9 @@ export default class CD10BaseSheet extends ActorSheet {
     }
   ];
 
-  // TODO: Create doc description.
+  /**
+   * Generic item context menu. Edit, post and remove.
+   */
   itemContextMenu = [
     {
       name: game.i18n.localize("cd10.sheet.edit"),
@@ -270,7 +276,7 @@ export default class CD10BaseSheet extends ActorSheet {
   /**
    * A helper function that cleans up necessary data to perform a check, attack or save.
    * It determines if the clicked object is a skill or a trait, and sets the proper values.
-   * @param {object} event The clicked event-data, used to fetch the itemId.
+   * @param {object} event      The clicked event-data, used to fetch the itemId.
    * @returns {Promise<object>} An object holding the necessary skill and trait data.
    */
   async _fetchRollData(event) {
@@ -278,15 +284,14 @@ export default class CD10BaseSheet extends ActorSheet {
     let trait = {};
     let skill = {};
 
-    if (rollObj.type !== "trait") {
-      for (const item of this.getData().traits) {
-        if (item.data.selected > 0) {
-          trait.id = item._id;
-        }
-      }
+    if (rollObj.type === "skill") {
       skill.id = rollObj.id;
+
+      for (const item of this.getData().traits) {
+        if (item.data.selected > 0) trait.id = item._id;
+      }
     } else if (rollObj.type === "trait") {
-      trait.id = item._id;
+      trait.id = rollObj.id;
     }
 
     return {
@@ -303,7 +308,11 @@ export default class CD10BaseSheet extends ActorSheet {
     if (game.settings.get("cd10", "systemDumpDescriptions")) item.roll();
   }
 
-  // TODO: Create doc description.
+  /**
+   * Triggered from selecting ammo on weapons or in the inventory. Makes sure the proper ammo gets
+   * its selected value set.
+   * @param {HTML} event The HTML event. Only used to access the itemId from the dataset.
+   */
   async _onAmmoSelect(event) {
     let ammoObj = this.actor.items.get(event.currentTarget.closest(".ammo-selector").dataset.itemId);
     let weaponObj = this.actor.items.get(event.currentTarget.closest(".ammo-selector").dataset.weaponId);
@@ -328,10 +337,14 @@ export default class CD10BaseSheet extends ActorSheet {
 
   /**
    * Sheet functions. These are clickable somewhere on the sheet and perform a function based on what was clicked.
+   * Also handles mouse-over events.
    */
 
 
-  // TODO: Create doc description.
+  /**
+   * Monitors mouse-events on the "rollable" CSS class and uses it to reveal hidden stuff on a mouse-over.
+    @param {HTML} event The HTML event. Used to get the element to reveal.
+   */
   _onToggleRollable(event) {
     // JS to reveal 'hidden' CSS classes that are marked 'rollable'
     event.preventDefault();
@@ -465,22 +478,19 @@ export default class CD10BaseSheet extends ActorSheet {
    */
   async _onClickTrait(event) {
     event.preventDefault();
-    let element = event.currentTarget;
-    let itemId = element.closest(".item").dataset.itemId;
-    let item = this.actor.items.get(itemId);
-
-    // TODO: Only deselect if value is identical, otherwise switch selection state. (1->2 for instance)
-    if (item.getSelectionStatus !== 0) {
-      await item.setSelectionStatus(0);
-      return;
-    }
-
-    await this.actor.resetTraitSelection();
+    const element = event.currentTarget;
+    const itemId = element.closest(".item").dataset.itemId;
+    const item = this.actor.items.get(itemId);
+    const selected = item.getSelectionStatus;
 
     const selectionStatus = event.type === "click" ? 1 : 2;
-    item.setSelectionStatus(selectionStatus);
+    if (selected === selectionStatus) {
+      await item.setSelectionStatus(0);
+    } else {
+      await this.actor.resetTraitSelection();
+      await item.setSelectionStatus(selectionStatus);
+    }
   }
-
 
   /**
    * Roll functions. These functions perform skill checks, attack rolls and saves.
@@ -494,12 +504,8 @@ export default class CD10BaseSheet extends ActorSheet {
   async _onSkillCheck(event) {
     event.preventDefault();
 
-    // If a hero point is spent, check if there's enough points and deduct one. Otherwise cancel the check.
-    if (event.shiftKey) {
-      if (this._checkHeroPoints() === false) {
-        return;
-      }
-    }
+    // If a hero point is spent, check if there's enough points.
+    const heroPoint = event.shiftKey ? this._checkHeroPoints() : false;
 
     // Get the rolldata necessary to perform a skillcheck.
     const rollData = await this._fetchRollData(event);
@@ -509,7 +515,7 @@ export default class CD10BaseSheet extends ActorSheet {
         actor: this.actor,
         skillId: rollData.skill.id,
         traitId: rollData.trait.id,
-        heroPoint: event.shiftKey
+        heroPoint: heroPoint
       });
 
       // Reset traits selection.
@@ -527,13 +533,11 @@ export default class CD10BaseSheet extends ActorSheet {
    */
   async _attackCheck(event) {
     event.preventDefault();
-    // TODO: Create a data-gathering object to hold all the rolldata.
+
+    const attackData = {};
+
     // If a hero point is spent, check if there's enough points.
-    if (event.shiftKey) {
-      if (this._checkHeroPoints() === false) {
-        return;
-      }
-    }
+    attackData.heroPoint = event.shiftKey ? this._checkHeroPoints() : false;
 
     let damageType = event.currentTarget.dataset.damageType;
     const weaponObj = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId).data;
@@ -661,9 +665,7 @@ export default class CD10BaseSheet extends ActorSheet {
     if (html.find("select#trait-selected").val() !== "None") {
       saveData.traitId = this.getData().traits[html.find("select#trait-selected").val()]._id;
       const selectValue = html.find("input#reverseTrait")[0].checked ? 2 : 1;
-      await this.actor.items.get(saveData.traitId).update({
-        "data.selected": selectValue
-      });
+      await this.actor.items.get(saveData.traitId).update({"data.selected": selectValue});
     }
     saveData.heroPoint = html.find("input#heroPoint")[0].checked;
     saveData.lethality = parseInt(html.find("input#lethality").val()) || 0;
@@ -675,11 +677,8 @@ export default class CD10BaseSheet extends ActorSheet {
     }
 
     // Check if a heropoint is spent.
-    if (saveData.heroPoint) {
-      if (this._checkHeroPoints() === false) {
-        return;
-      }
-    }
+    // If a hero point is spent, check if there's enough points.
+    saveData.heroPoint = html.find("input#heroPoint")[0].checked ? this._checkHeroPoints() : false;
 
     // Roll the save.
     try {

@@ -558,6 +558,9 @@ textarea {
 .health-info .stat-element .wounds-icons .crossed {
   filter: invert();
 }
+.health-info .mook-health {
+  margin: 5px 5px 10px 5px !important;
+}
 .cd10.sheet.item {
   display: flex;
   flex-direction: column;
@@ -688,8 +691,32 @@ textarea {
 .cd10.sheet .stat-element {
   color: #dfbb61 !important;
 }
+.cd10.sheet .quote textarea {
+  padding-top: 10px;
+  border: none;
+  text-align: center;
+  font-style: italic;
+}
+.cd10.sheet input {
+  border: none;
+  background: none;
+}
 .cd10.sheet .window-content {
   background: url(assets/backgrounds/sheet_background.webp);
+}
+.cd10.sheet .margin-bottom {
+  margin-bottom: 10px;
+}
+.cd10.sheet .header-box,
+.cd10.sheet .title-box,
+.cd10.sheet .equipment-list {
+  width: 100%;
+}
+.cd10.sheet .d10-roll-icon img {
+  padding-top: 4px;
+  margin-left: 5px;
+  width: 15px;
+  border: none;
 }
 .cd10.sheet .center-table {
   margin-left: auto;
@@ -722,9 +749,6 @@ textarea {
 .cd10.sheet .sheet-main-content {
   width: 80%;
 }
-.cd10.sheet .image-box {
-  width: 20%;
-}
 .cd10.sheet .image-box img {
   background: url(assets/backgrounds/card_background.webp);
   border-style: solid;
@@ -732,8 +756,8 @@ textarea {
   border-image: radial-gradient(black, #dfbb61) 1;
   margin: 0 5px 10px 5px;
   padding: 4px;
-  min-width: 195px;
-  min-height: 200px;
+  width: 195px;
+  height: auto;
   box-shadow: 5px 10px 10px #000000;
 }
 .cd10.sheet .fa-angle-double-up {
@@ -766,12 +790,6 @@ textarea {
 }
 .cd10.sheet .sheet-sidebar .pad-top {
   padding-top: 4px;
-}
-.cd10.sheet .sheet-sidebar .d10-roll-icon img {
-  padding-top: 4px;
-  margin-left: 5px;
-  width: 15px;
-  border: none;
 }
 .cd10.sheet .sheet-sidebar input {
   width: 45px;

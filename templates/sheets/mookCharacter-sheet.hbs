@@ -3,104 +3,102 @@
         <div class="flex-row flex-between header-box">
             <div class="flex-col flex-start title-box">
                 <h1>
-                    <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "
-                        cd10.stats.name"}}" />
+                    <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "cd10.stats.name"}}" />
                 </h1>
-                <div class="character-stats">
+                <div class="body-box flex-col flex-start">
                     <h3 class="sheet-header">{{localize "cd10.sheet.health"}}
                     </h3>
+                    <div class="mook-health">
                     {{> "systems/cd10/templates/partials/sheet-tabs/character-stat-block.hbs"}}
-                </div>
-                <div class="body-box flex-col flex-start">
-                    <div class="cd10-card flex-row flex-even">
-                        <div>{{localize "cd10.sheet.positive"}}: {{data.posTraits.value}}</div>
-                        <div>{{localize "cd10.sheet.negative"}}: {{data.negTraits.value}}</div>
-                        <div>{{localize "cd10.sheet.total"}}: {{data.traitsValue.value}}</div>
                     </div>
-                    <div>
+                    <div class="margin-bottom">
                         {{> "systems/cd10/templates/partials/sheet-tabs/skill-list.hbs"}}
                     </div>
+                    <hr>
+                    <div class="quote">
+                        <textarea name="data.quote.value">{{data.quote.value}}</textarea>
+                    </div>
+                    <hr>
                 </div>
             </div>
             <div class="flex-col flex-center pad-4">
-                <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" class="actor-image" />
-                <div class="cd10-button">
-                    <a class="physical-save flex-row flex-even pad-top" title={{localize "cd10.sheet.roll" }}>
-                        <div class="d10-roll-icon">
-                            <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
+                <div class="image-box">
+                    <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" class="actor-image" />
+                </div>
+                <div class="cd10-card">
+                    <div class="cd10-button">
+                        <a class="physical-save flex-row flex-even pad-top" title={{localize "cd10.sheet.roll" }}>
+                            <div class="d10-roll-icon">
+                                <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
+                            </div>
+                            <div>
+                                <h3 class="sheet-header">
+                                    {{localize "cd10.sheet.save"}}
+                                </h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="cd10-button">
+                        <a class="cd10-roll-initiative flex-row flex-even pad-top" title={{localize "cd10.sheet.roll" }}>
+                            <div class="d10-roll-icon">
+                                <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
+                            </div>
+                            <div>
+                                <h3 class="sheet-header">
+                                    {{localize "cd10.sheet.initiative"}}
+                                </h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="cd10-button stressBox stressBoxContainer flex-even flex-row pad-8">
+                        <div class="stressBoxSelect">
+                            <i class="far fa-{{#if this.actor.data.data.stressing.value}}check-{{/if}}square"></i>
                         </div>
                         <div>
                             <h3 class="sheet-header">
-                                {{localize "cd10.sheet.save"}}
+                                {{localize "cd10.sheet.stress"}}
                             </h3>
                         </div>
-                    </a>
-                </div>
-                <div class="cd10-button">
-                    <a class="cd10-roll-initiative flex-row flex-even pad-top" title={{localize "cd10.sheet.roll" }}>
-                        <div class="d10-roll-icon">
-                            <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
-                        </div>
-                        <div>
-                            <h3 class="sheet-header">
-                                {{localize "cd10.sheet.initiative"}}
-                            </h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="cd10-button stressBox stressBoxContainer flex-even flex-row pad-8">
-                    <div class="stressBoxSelect">
-                        <i class="far fa-{{#if this.actor.data.data.stressing.value}}check-{{/if}}square"></i>
                     </div>
-                    <div>
-                        <h3 class="sheet-header">
-                            {{localize "cd10.sheet.stress"}}
-                        </h3>
+                    <div class="cd10-button">
+                        <ul class="flex-col flex-start pad-4">
+                            {{#each meleeWeapons as |weapon|}}
+                            <li class="item equippable-inventory-item flex-row flex-between" data-item-id="{{_id}}">
+                                {{weapon.name}}
+                                <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
+                                    <i class="far fa-{{#if data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
+                                </a>
+                            </li>
+                            {{/each}}
+                            {{#each rangedWeapons as |weapon|}}
+                            <li class="item equippable-inventory-item flex-row flex-between" data-item-id="{{_id}}">
+                                {{weapon.name}}
+                                <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
+                                    <i class="far fa-{{#if data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
+                                </a>
+                            </li>
+                            {{/each}}
+                            {{#each armors as |armor|}}
+                            <li class="item equippable-inventory-item flex-row flex-between" data-item-id="{{_id}}">
+                                {{armor.name}}
+                                <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
+                                    <i class="far fa-{{#if data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
+                                </a>
+                            </li>
+                            {{/each}}
+                            {{#each shields as |shield|}}
+                            <li class="item equippable-inventory-item flex-row flex-between" data-item-id="{{_id}}">
+                                {{shield.name}}
+                                <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
+                                    <i class="far fa-{{#if data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
+                                </a>
+                            </li>
+                            {{/each}}
+                        </ul>
                     </div>
-                </div>
-                <div class="cd10-button">
-                    <ul class="flex-col flex-start pad-4">
-                        {{#each meleeWeapons as |weapon|}}
-                        <li class="item equippable-inventory-item flex-row flex-between" data-item-id="{{_id}}">
-                            {{weapon.name}}
-                            <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
-                                <i class="far fa-{{#if data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
-                            </a>
-                        </li>
-                        {{/each}}
-                        {{#each rangedWeapons as |weapon|}}
-                        <li class="item equippable-inventory-item flex-row flex-between" data-item-id="{{_id}}">
-                            {{weapon.name}}
-                            <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
-                                <i class="far fa-{{#if data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
-                            </a>
-                        </li>
-                        {{/each}}
-                        {{#each armors as |armor|}}
-                        <li class="item equippable-inventory-item flex-row flex-between" data-item-id="{{_id}}">
-                            {{armor.name}}
-                            <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
-                                <i class="far fa-{{#if data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
-                            </a>
-                        </li>
-                        {{/each}}
-                        {{#each shields as |shield|}}
-                        <li class="item equippable-inventory-item flex-row flex-between" data-item-id="{{_id}}">
-                            {{shield.name}}
-                            <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
-                                <i class="far fa-{{#if data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
-                            </a>
-                        </li>
-                        {{/each}}
-                    </ul>
                 </div>
             </div>
         </div>
-        <hr>
-        <div class="quote">
-            <textarea name="data.quote.value">{{data.quote.value}}</textarea>
-        </div>
-        <hr>
     </div>
     <section class="sheet-combat-tab">
         {{#if equippedMeleeWeapon}}

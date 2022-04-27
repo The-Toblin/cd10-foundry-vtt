@@ -1,33 +1,41 @@
 <section class="health-info">
-    <div class="stat-element">
-        <label>
-            <h3 class="stattitle">
-                {{localize "cd10.sheet.modifier"}}
-            </h3>
-        </label>
-        <div class="stat-value{{#if (gte data.wounds.value 15)}} red{{/if}}">
-            {{#if (gte data.wounds.value 15)}}
-            {{data.debilitationType.value}}
-            {{else if (eq data.modifier.value 0)}}
-            0
-            {{else}}
-            -{{data.modifier.value}} {{data.debilitationType.value}}
-            {{/if}}
-            {{#if this.actor.data.data.stressing.value}}
-             ({{localize "cd10.sheet.stressing"}})
-            {{/if}}
-        </div>
-    </div>
-    <div class="stat-element"> <label>
-            <h3 class="stattitle">{{localize "cd10.injuries.wounds"}} {{data.wounds.value}}
-            </h3>
-        </label>
-        <div class="wounds-icons">
-            {{#times 15}}
-            <div class="dot-container{{#if (gte ../data.wounds.value 15)}} red{{else if (gte ../data.wounds.value @index)}} crossed{{/if}}">
-                <i class="fas fa-circle fa-xs"></i>
+    {{#if (eq actor.type "mook")}}
+    <div class="flex-row flex-between">
+    {{else}}
+    <div class="flex-col flex-start">
+    {{/if}}
+        <div class="stat-element {{#if (eq actor.type "mook")}}mook-health{{/if}}">
+            <label>
+                <h3 class="stattitle">
+                    {{localize "cd10.sheet.modifier"}}
+                </h3>
+            </label>
+            <div class="stat-value{{#if (gte data.wounds.value 15)}} red{{/if}}">
+                {{#if (gte data.wounds.value 15)}}
+                {{data.debilitationType.value}}
+                {{else if (eq data.modifier.value 0)}}
+                0
+                {{else}}
+                -{{data.modifier.value}} {{data.debilitationType.value}}
+                {{/if}}
+                {{#if this.actor.data.data.stressing.value}}
+                ({{localize "cd10.sheet.stressing"}})
+                {{/if}}
             </div>
-            {{/times}}
+        </div>
+        <div class="stat-element {{#if (eq actor.type "mook")}}mook-health{{/if}}">
+            <label>
+                <h3 class="stattitle">{{localize "cd10.injuries.wounds"}} {{data.wounds.value}}
+                </h3>
+            </label>
+            <div class="wounds-icons">
+                {{#times 15}}
+                <div
+                    class="dot-container{{#if (gte ../data.wounds.value 15)}} red{{else if (gte ../data.wounds.value @index)}} crossed{{/if}}">
+                    <i class="fas fa-circle fa-xs"></i>
+                </div>
+                {{/times}}
+            </div>
         </div>
     </div>
 </section>
