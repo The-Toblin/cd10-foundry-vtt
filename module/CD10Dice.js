@@ -309,11 +309,11 @@ const _performBaseCheck = async (actor, skillId, traitId, save, heroPoint) => {
 
 /**
  * Perform a standard skill check.
- * @param {object} checkData             An object holding the necessary data.
- * @param {object} checkData.actor       The actor object performing the skill check.
- * @param {string} checkData.skillId     (opt) The ID of the skill the actor is using.
- * @param {string} checkData.traitId     (opt) The ID of the trait the actor is using.
- * @param {boolean} checkData.heroPoint  (opt) Whether or not the Actor is spending a hero point on this check.
+ * @param {object}  checkData             An object holding the necessary data.
+ * @param {object}  checkData.actor       The actor object performing the skill check.
+ * @param {string}  checkData.skillId     (opt) The ID of the skill the actor is using.
+ * @param {string}  checkData.traitId     (opt) The ID of the trait the actor is using.
+ * @param {boolean} checkData.heroPoint   (opt) Whether or not the Actor is spending a hero point on this check.
  */
 export const SkillCheck = async ({actor = null, skillId = null, traitId = null, heroPoint = false} = {}) => {
   const messageTemplate = "systems/cd10/templates/partials/chat-messages/skill-check.hbs";
@@ -343,12 +343,12 @@ export const SkillCheck = async ({actor = null, skillId = null, traitId = null, 
 
 /**
  * Perform an attack check.
- * @param {object} param0             An object holding the necessary data.
- * @param {string} param0.actor       The actor object performing the skill check.
- * @param {string} param0.skillId     (opt) The ID of the skill the actor is using.
- * @param {string} param0.traitId     (opt) The ID of the trait the actor is using.
- * @param {boolean} param0.heroPoint  (opt) Whether or not the Actor is spending a hero point on this check.
- * @param {string} param0.damageType  (opt) The damagetype of the attack. Defaults to "slash".
+ * @param {object}  attackData             An object holding the necessary data.
+ * @param {string}  attackData.actor       The actor object performing the skill check.
+ * @param {string}  attackData.skillId     (opt) The ID of the skill the actor is using.
+ * @param {string}  attackData.traitId     (opt) The ID of the trait the actor is using.
+ * @param {boolean} attackData.heroPoint   (opt) Whether or not the Actor is spending a hero point on this check.
+ * @param {string}  attackData.damageType  (opt) The damagetype of the attack. Defaults to "slash".
  */
 export const AttackCheck = async ({actor = null, skillId = null, traitId = null, heroPoint = false, damageType = "slash"} = {}) => {
   const messageTemplate = "systems/cd10/templates/partials/chat-messages/attack-check.hbs";
@@ -390,12 +390,12 @@ export const AttackCheck = async ({actor = null, skillId = null, traitId = null,
 };
 /**
  * Perform a wound save.
- * @param {object} param0             An object holding the necessary data.
- * @param {string} param0.actor       The actor object performing the skill check.
- * @param {string} param0.traitId     (opt) The ID of the trait the actor is using.
- * @param {boolean} param0.heroPoint  (opt) Whether or not the Actor is spending a hero point on this check.
- * @param {number} param0.lethality   The Lethality the save is performed against.
- * @param {string} param0.damageType  (opt) The damagetype of the attack. Defaults to "slash".
+ * @param {object}  saveData             An object holding the necessary data.
+ * @param {string}  saveData.actor       The actor object performing the skill check.
+ * @param {string}  saveData.traitId     (opt) The ID of the trait the actor is using.
+ * @param {boolean} saveData.heroPoint   (opt) Whether or not the Actor is spending a hero point on this check.
+ * @param {number}  saveData.lethality   The Lethality the save is performed against.
+ * @param {string}  saveData.damageType  (opt) The damagetype of the attack. Defaults to "slash".
  */
 export const Save = async ({actor = null, traitId = null, heroPoint = false, lethality = 0, damageType = "slash"} = {}) => {
   const messageTemplate = "systems/cd10/templates/partials/chat-messages/save.hbs";

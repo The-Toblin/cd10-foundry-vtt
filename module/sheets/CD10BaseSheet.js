@@ -3,15 +3,12 @@ import * as Dice from "../CD10Dice.js";
 export default class CD10BaseSheet extends ActorSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      template: "systems/cd10/templates/sheets/namedCharacter-sheet.hbs",
-      classes: ["cd10", "sheet", "namedCharacter"],
+      template: "path-to-template",
+      classes: ["cd10", "sheet"],
       height: 750,
       width: 750,
       tabs: [
         {
-          navSelector: ".sheet-tabs",
-          contentSelector: ".sheet-body",
-          initial: "biography"
         }
       ]
     });
@@ -19,7 +16,7 @@ export default class CD10BaseSheet extends ActorSheet {
 
   // Define which template to be used by this actor type.
   get template() {
-    return "systems/cd10/templates/sheets/namedCharacter-sheet.hbs";
+    return "path-to-template";
   }
 
   /**

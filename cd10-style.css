@@ -72,6 +72,20 @@ h6 {
   color: #dfbb61 !important;
   font-family: "Russo One", sans-serif;
 }
+h1 {
+  font-size: 2em;
+  border: none;
+  padding: 3px;
+}
+h1,
+h3 {
+  text-align: center;
+}
+hr {
+  border-color: #dfbb61;
+  width: 150px;
+  margin-bottom: 20px;
+}
 .flex-row {
   display: flex;
   flex-direction: row;
@@ -225,148 +239,6 @@ textarea {
 }
 .tox .tox-icon {
   color: var(--font-color) !important;
-}
-.cd10.sheet .hidden {
-  display: none;
-}
-.cd10.sheet.namedCharacter {
-  min-height: 250px;
-  min-width: 510px;
-}
-.cd10.sheet.namedCharacter h1,
-.cd10.sheet.namedCharacter h2,
-.cd10.sheet.namedCharacter h3,
-.cd10.sheet.namedCharacter p,
-.cd10.sheet.namedCharacter label,
-.cd10.sheet.namedCharacter .sheet-header,
-.cd10.sheet.namedCharacter input,
-.cd10.sheet.namedCharacter textarea,
-.cd10.sheet.namedCharacter .stat-element {
-  color: #dfbb61;
-}
-.cd10.sheet.namedCharacter .window-content {
-  background: url(assets/backgrounds/sheet_background.webp);
-}
-.cd10.sheet.namedCharacter form {
-  color: #dfbb61;
-}
-.cd10.sheet.namedCharacter form select {
-  border: none;
-  color: inherit;
-  font-family: "Signika", sans-serif;
-  background: url(assets/backgrounds/card_detail_background.webp);
-}
-.cd10.sheet.namedCharacter form select option {
-  background-color: black;
-  font-family: "Signika", sans-serif;
-}
-.cd10.sheet.namedCharacter form input {
-  border: none;
-  background: none;
-  color: inherit;
-}
-.cd10.sheet.namedCharacter form .center-table {
-  margin-left: auto;
-  margin-right: auto;
-}
-.cd10.sheet.namedCharacter form table {
-  border: none;
-  border-collapse: separate;
-  border-spacing: 5px;
-}
-.cd10.sheet.namedCharacter form table tr {
-  background: unset;
-  background-color: unset;
-}
-.cd10.sheet.namedCharacter form table th,
-.cd10.sheet.namedCharacter form table td {
-  background: url(assets/backgrounds/card_detail_background.webp);
-  border-style: solid;
-  border-width: 1px;
-  border-image: radial-gradient(black, #6b6c65) 1;
-  box-shadow: inset 2px 2px 10px 5px black;
-  vertical-align: middle;
-  text-align: center;
-  padding: 4px 5px 4px 5px;
-  color: inherit;
-}
-.cd10.sheet.namedCharacter form .sheet-tabs {
-  margin-bottom: 10px;
-}
-.cd10.sheet.namedCharacter form h1 {
-  font-size: 2em;
-  border: none;
-  padding: 3px;
-}
-.cd10.sheet.namedCharacter form h1,
-.cd10.sheet.namedCharacter form h3 {
-  text-align: center;
-}
-.cd10.sheet.namedCharacter form hr {
-  border-color: #dfbb61;
-  width: 150px;
-  margin-bottom: 20px;
-}
-.cd10.sheet.namedCharacter form .sheet-main-content {
-  width: 80%;
-}
-.cd10.sheet.namedCharacter form .image-box {
-  width: 20%;
-}
-.cd10.sheet.namedCharacter form .image-box img {
-  background: url(assets/backgrounds/card_background.webp);
-  border-style: solid;
-  border-width: 3px;
-  border-image: radial-gradient(black, #dfbb61) 1;
-  margin: 0 5px 10px 5px;
-  padding: 4px;
-  min-width: 195px;
-  min-height: 200px;
-  box-shadow: 5px 10px 10px #000000;
-}
-.cd10.sheet.namedCharacter form .fa-angle-double-up {
-  padding-top: 5px;
-}
-.cd10.sheet.namedCharacter form .fifty {
-  width: 50%;
-}
-.cd10.sheet.namedCharacter form .fifteen {
-  width: 15%;
-}
-.cd10.sheet.namedCharacter form .twenty {
-  width: 20%;
-}
-.cd10.sheet.namedCharacter form .ammo-select .far {
-  padding-right: 8px;
-}
-.cd10.sheet.namedCharacter form .display-inline {
-  display: inline;
-}
-.cd10.sheet.namedCharacter form .sheet-sidebar {
-  padding: 10px;
-  min-width: 225px;
-}
-.cd10.sheet.namedCharacter form .sheet-sidebar .stressBoxSelect {
-  padding-top: 2px;
-}
-.cd10.sheet.namedCharacter form .sheet-sidebar .stressBox {
-  padding: 8px 0 2px 0;
-}
-.cd10.sheet.namedCharacter form .sheet-sidebar .pad-top {
-  padding-top: 4px;
-}
-.cd10.sheet.namedCharacter form .sheet-sidebar .d10-roll-icon img {
-  padding-top: 4px;
-  margin-left: 5px;
-  width: 15px;
-  border: none;
-}
-.cd10.sheet.namedCharacter form .sheet-sidebar input {
-  width: 45px;
-  text-align: center;
-}
-.cd10.sheet.namedCharacter form .sheet-sidebar .sheet-money .money {
-  padding-top: 4px;
 }
 .skill-card {
   margin-bottom: 10px;
@@ -798,82 +670,42 @@ textarea {
   text-align: center;
   margin-right: 3px;
 }
-.cd10.sheet.mookCharacter h1,
-.cd10.sheet.mookCharacter h2,
-.cd10.sheet.mookCharacter h3,
-.cd10.sheet.mookCharacter p,
-.cd10.sheet.mookCharacter label,
-.cd10.sheet.mookCharacter .sheet-header,
-.cd10.sheet.mookCharacter input,
-.cd10.sheet.mookCharacter textarea,
-.cd10.sheet.mookCharacter .stat-element,
-.cd10.sheet.mookCharacter .fa,
-.cd10.sheet.mookCharacter .far,
-.cd10.sheet.mookCharacter .fas {
-  color: #dfbb61;
+.cd10.sheet {
+  min-height: 250px;
+  min-width: 510px;
 }
-.cd10.sheet.mookCharacter .window-content {
+.cd10.sheet .hidden {
+  display: none;
+}
+.cd10.sheet h1,
+.cd10.sheet h2,
+.cd10.sheet h3,
+.cd10.sheet p,
+.cd10.sheet label,
+.cd10.sheet .sheet-header,
+.cd10.sheet input,
+.cd10.sheet textarea,
+.cd10.sheet .stat-element {
+  color: #dfbb61 !important;
+}
+.cd10.sheet .window-content {
   background: url(assets/backgrounds/sheet_background.webp);
 }
-.cd10.sheet.mookCharacter form {
-  display: flex;
-  flex-direction: column;
+.cd10.sheet .center-table {
+  margin-left: auto;
+  margin-right: auto;
 }
-.cd10.sheet.mookCharacter form select {
-  border: none;
-  color: #dfbb61;
-  background-color: black;
-  font-family: "Signika", sans-serif;
-  background: url(assets/backgrounds/card_detail_background.webp);
-}
-.cd10.sheet.mookCharacter form select option {
-  font-family: "Signika", sans-serif;
-}
-.cd10.sheet.mookCharacter form h1 {
-  font-size: 2em;
-  margin-right: 5px;
-  border: none;
-}
-.cd10.sheet.mookCharacter form h1 input {
-  height: auto;
-  padding: 5px;
-}
-.cd10.sheet.mookCharacter form h1,
-.cd10.sheet.mookCharacter form h3 {
-  text-align: center;
-}
-.cd10.sheet.mookCharacter form input {
-  border: none;
-  background: none;
-  text-align: center;
-}
-.cd10.sheet.mookCharacter form .actor-image {
-  background: url(assets/backgrounds/card_background.webp);
-  border-style: solid;
-  border-width: 3px;
-  border-image: radial-gradient(black, #dfbb61) 1;
-  box-shadow: 5px 10px 10px #000000;
-  margin: 0 5px 10px 5px;
-  padding: 4px;
-  max-height: 225px;
-}
-.cd10.sheet.mookCharacter form hr {
-  width: 150px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  border-color: #dfbb61;
-}
-.cd10.sheet.mookCharacter form table {
+.cd10.sheet table {
   border: none;
   border-collapse: separate;
   border-spacing: 5px;
 }
-.cd10.sheet.mookCharacter form table tr {
+.cd10.sheet table tr {
   background: unset;
   background-color: unset;
 }
-.cd10.sheet.mookCharacter form table th,
-.cd10.sheet.mookCharacter form table td {
+.cd10.sheet table th,
+.cd10.sheet table td {
   background: url(assets/backgrounds/card_detail_background.webp);
   border-style: solid;
   border-width: 1px;
@@ -884,47 +716,69 @@ textarea {
   padding: 4px 5px 4px 5px;
   color: inherit;
 }
-.cd10.sheet.mookCharacter form .header-box,
-.cd10.sheet.mookCharacter form .title-box,
-.cd10.sheet.mookCharacter form .equipment-list {
-  width: 100%;
+.cd10.sheet .sheet-tabs {
+  margin-bottom: 10px;
 }
-.cd10.sheet.mookCharacter form .title-box {
-  margin-right: 0 10px 0 10px;
+.cd10.sheet .sheet-main-content {
+  width: 80%;
 }
-.cd10.sheet.mookCharacter form .body-box {
-  padding: 10px;
+.cd10.sheet .image-box {
+  width: 20%;
 }
-.cd10.sheet.mookCharacter form .center {
-  text-align: center;
+.cd10.sheet .image-box img {
+  background: url(assets/backgrounds/card_background.webp);
+  border-style: solid;
+  border-width: 3px;
+  border-image: radial-gradient(black, #dfbb61) 1;
+  margin: 0 5px 10px 5px;
+  padding: 4px;
+  min-width: 195px;
+  min-height: 200px;
+  box-shadow: 5px 10px 10px #000000;
 }
-.cd10.sheet.mookCharacter form .quote textarea {
-  resize: none;
-  min-height: unset;
-  max-height: 27px;
-  text-align: center;
-  font-style: italic;
-  border: none;
-  background: none;
-  font-family: "Signika", sans-serif;
+.cd10.sheet .fa-angle-double-up {
+  padding-top: 5px;
 }
-.cd10.sheet.mookCharacter form .display-inline {
-  display: inline;
+.cd10.sheet .fifty {
+  width: 50%;
 }
-.cd10.sheet.mookCharacter form .weapon-item {
-  margin-right: 5px;
+.cd10.sheet .fifteen {
+  width: 15%;
 }
-.cd10.sheet.mookCharacter form .ammo-select .far {
+.cd10.sheet .twenty {
+  width: 20%;
+}
+.cd10.sheet .ammo-select .far {
   padding-right: 8px;
 }
-.cd10.sheet.mookCharacter form .d10-roll-icon img {
+.cd10.sheet .display-inline {
+  display: inline;
+}
+.cd10.sheet .sheet-sidebar {
+  padding: 10px;
+  min-width: 225px;
+}
+.cd10.sheet .sheet-sidebar .stressBoxSelect {
+  padding-top: 2px;
+}
+.cd10.sheet .sheet-sidebar .stressBox {
+  padding: 8px 0 2px 0;
+}
+.cd10.sheet .sheet-sidebar .pad-top {
+  padding-top: 4px;
+}
+.cd10.sheet .sheet-sidebar .d10-roll-icon img {
   padding-top: 4px;
   margin-left: 5px;
   width: 15px;
   border: none;
 }
-.cd10.sheet.mookCharacter form .item-delete .fas {
-  text-align: right;
+.cd10.sheet .sheet-sidebar input {
+  width: 45px;
+  text-align: center;
+}
+.cd10.sheet .sheet-sidebar .sheet-money .money {
+  padding-top: 4px;
 }
 .cd10-dialog {
   width: fit-content !important;

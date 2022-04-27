@@ -7,7 +7,7 @@ export default class CD10MookCharacterSheet extends CD10BaseSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       template: "systems/cd10/templates/sheets/mookCharacter-sheet.hbs",
-      classes: ["cd10", "sheet", "mookCharacter"],
+      classes: ["cd10", "sheet", "cd10-sheet"],
       height: 930,
       width: 800
     });
