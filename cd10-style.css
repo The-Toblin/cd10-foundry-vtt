@@ -3,7 +3,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/russoone/v13/Z9XUDmZRWg6M1LvRYsH-yA.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/russoone/v14/Z9XUDmZRWg6M1LvRYsH-yA.ttf) format('truetype');
 }
 .cd10-sheet {
   background: url(assets/backgrounds/sheet_background.webp);
@@ -76,10 +76,6 @@ h1 {
   font-size: 2em;
   border: none;
   padding: 3px;
-}
-h1,
-h3 {
-  text-align: center;
 }
 hr {
   border-color: #dfbb61;
@@ -690,6 +686,10 @@ textarea {
 .cd10.sheet textarea,
 .cd10.sheet .stat-element {
   color: #dfbb61 !important;
+}
+.cd10.sheet h1,
+.cd10.sheet h3 {
+  text-align: center;
 }
 .cd10.sheet .quote textarea {
   padding-top: 10px;

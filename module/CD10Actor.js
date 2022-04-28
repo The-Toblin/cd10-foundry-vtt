@@ -94,7 +94,7 @@ export default class CD10Actor extends Actor {
   }
 
   get getExp() {
-    return parseInt(this.data.data.exp.total);
+    return this.type === "named" ? parseInt(this.data.data.exp.total) : 0;
   }
 
   get getStress() {

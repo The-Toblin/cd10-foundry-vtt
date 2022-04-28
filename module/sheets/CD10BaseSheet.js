@@ -232,8 +232,8 @@ export default class CD10BaseSheet extends ActorSheet {
       html.find(".inline-edit").change(this._onSkillEdit.bind(this));
       html.find(".ammo-select").click(this._onAmmoSelect.bind(this));
       html.find(".skill-item").click(this._toggleSkillUp.bind(this));
-      html.find(".add-wound").click(this._modifyWoundsOnClick.bind(this()));
-      html.find(".remove-wound").click(this._modifyWoundsOnClick.bind(this()));
+      html.find(".add-wound").click(this._modifyWoundsOnClick.bind(this));
+      html.find(".remove-wound").click(this._modifyWoundsOnClick.bind(this));
       html.find(".wounds-icons").on("click contextmenu", this._onWoundsMarkChange.bind(this));
       html.find(".select-trait").on("click contextmenu", this._onClickTrait.bind(this));
 
@@ -417,8 +417,8 @@ export default class CD10BaseSheet extends ActorSheet {
   async _onItemEquip(event) {
     event.preventDefault();
 
-    let element = event.currentTarget;
-    let itemId = element.closest(".item").dataset.itemId;
+    const element = event.currentTarget;
+    const itemId = element.closest(".item").dataset.itemId;
     const item = this.actor.items.get(itemId);
     const type = item.type;
 
@@ -447,9 +447,13 @@ export default class CD10BaseSheet extends ActorSheet {
   }
 
   _modifyWoundsOnClick(event) {
-    // FIXME: This needs to be finished. Detect if it's increase or decrease and act accordingly.
     event.preventDefault();
-    console.log(event);
+
+    if (event.currentTarget.className.match("add")) {
+      this.actor.modifyWounds(1);
+    } else {
+      this.actor.modifyWounds(-1);
+    }
   }
 
   /**
@@ -552,9 +556,9 @@ export default class CD10BaseSheet extends ActorSheet {
     // If a hero point is spent, check if there's enough points.
     attackData.heroPoint = event.shiftKey ? this._checkHeroPoints() : false;
 
-    let damageType = event.currentTarget.dataset.damageType;
+    attackData.damageType = event.currentTarget.dataset.damageType;
     const weaponObj = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId).data;
-    let attackSkill = weaponObj.data.attackSkill.value;
+    const attackSkill = weaponObj.data.attackSkill.value;
 
     const skill = {};
     for (const item of this.getData().skills) {
@@ -583,18 +587,18 @@ export default class CD10BaseSheet extends ActorSheet {
 
     // Check if it's a ranged weapon and pick the correct, selected ammunition.
     if (weaponObj.type === "rangedWeapon") {
-      let ammo = this.actor.items.get(weaponObj.data.selectedAmmo.id);
-      if (ammo.data.data.damage.slash.selected) {
+      const ammo = this.actor.items.get(weaponObj.data.selectedAmmo.id).data.data;
+      if (ammo.damage.slash.selected) {
         damageType = "slash";
-      } else if (ammo.data.data.damage.pierce.selected) {
+      } else if (ammo.damage.pierce.selected) {
         damageType = "pierce";
-      } else if (ammo.data.data.damage.blunt.selected) {
+      } else if (ammo.damage.blunt.selected) {
         damageType = "blunt";
-      } else if (ammo.data.data.damage.energy.selected) {
+      } else if (ammo.damage.energy.selected) {
         damageType = "energy";
       }
-      if (ammo.data.data.count.value > 0) {
-        let count = ammo.data.data.count.value;
+      if (ammo.count.value > 0) {
+        let count = ammo.count.value;
         count -= 1;
 
         ammo.update({
@@ -622,8 +626,8 @@ export default class CD10BaseSheet extends ActorSheet {
         actor: this.actor,
         skillId: skill.id,
         traitId: trait.id,
-        heroPoint: event.shiftKey,
-        damageType: damageType
+        heroPoint: attackData.heroPoint,
+        damageType: attackData.damageType
       });
 
       // Reset traits selection.
