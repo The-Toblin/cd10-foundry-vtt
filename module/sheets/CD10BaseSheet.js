@@ -1,3 +1,8 @@
+/**
+ * Base Actor sheet. This holds all functions available to actor sheets and is extended by
+ * actor types for specific data.
+ */
+
 import * as Dice from "../CD10Dice.js";
 
 export default class CD10BaseSheet extends ActorSheet {
@@ -267,7 +272,7 @@ export default class CD10BaseSheet extends ActorSheet {
   /**
    * A helper function for fetching objects from game or actor.
    * @param {string} id         The itemId to fetch.
-   * @param {boolean} actor     (opt) Default: true. If fetching is to be performed on an actor.
+   * @param {boolean} actor     (opt) Default: true. If fetching is to be performed from this sheet's actor.
    * @returns {Promise<object>} The fetched object.
    */
   async _fetchObject(id, actor = true) {
@@ -304,7 +309,7 @@ export default class CD10BaseSheet extends ActorSheet {
 
   /**
    * Checks if the system is set to dump descriptions to chat, and then does so.
-   * @param {object}  item         The item-object with which to show the description.
+   * @param {object} item The item-object with which to show the description.
    */
   _rollItem(item) {
     if (game.settings.get("cd10", "systemDumpDescriptions")) item.roll();
