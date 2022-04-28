@@ -1,9 +1,8 @@
 import CD10BaseSheet from "./CD10BaseSheet.js";
 
 /**
- * This sheet inherits the base sheet completely, but is provided as its own file for convenience.
+ * Override parent class with different settings and templates.
  */
-
 export default class CD10NamedCharacterSheet extends CD10BaseSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {

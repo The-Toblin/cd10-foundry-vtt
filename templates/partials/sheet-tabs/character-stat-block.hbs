@@ -29,12 +29,14 @@
                 </h3>
             </label>
             <div class="wounds-icons">
+                <i class="fas remove-wound fa-minus"></i>
                 {{#times 15}}
                 <div
                     class="dot-container{{#if (gte ../data.wounds.value 15)}} red{{else if (gte ../data.wounds.value @index)}} crossed{{/if}}">
                     <i class="fas fa-circle fa-xs"></i>
                 </div>
                 {{/times}}
+                <i class="fas add-wound fa-plus"></i>
             </div>
         </div>
     </div>
