@@ -2,109 +2,40 @@
     "Actor": {
         "types": [
             "named",
-            "mook"
+            "major",
+            "mook",
+            "minor"
         ],
         "templates": {
             "commonStats": {
-                "species": {
-                    "type": "string",
-                    "label": "Species",
-                    "value": ""
-                },
+                "species": "",
                 "wounds": {
-                    "type": "number",
-                    "label": "Wounds",
                     "value": 0,
                     "max": 15,
                     "min": 0
                 },
-                "quote": {
-                    "type": "string",
-                    "label": "Quote",
-                    "value": ""
-                },
-                "stressing": {
-                    "type": "boolean",
-                    "label": "Stressing",
-                    "value": false
-                }
+                "quote": "",
+                "stressing": false
             }
         },
         "named": {
             "templates": [
                 "commonStats"
             ],
-            "playerName": {
-                "type": "string",
-                "label": "Player Name",
-                "value": ""
-            },
-            "exp": {
-                "type": "number",
-                "label": "Experience",
-                "total": 0,
-                "spent": 0
-            },
-            "birthplace": {
-                "type": "string",
-                "label": "Birthplace",
-                "value": ""
-            },
-            "family": {
-                "mother": {
-                    "type": "string",
-                    "label": "Mother's Name",
-                    "value": ""
-                },
-                "father": {
-                    "type": "string",
-                    "label": "Father's Name",
-                    "value": ""
-                },
-                "siblings": []
-            },
-            "title": {
-                "type": "string",
-                "label": "Title",
-                "value": ""
-            },
-            "age": {
-                "type": "number",
-                "label": "Age",
-                "value": 0
-            },
-            "faith": {
-                "type": "string",
-                "label": "Faith",
-                "value": ""
-            },
-            "sex": {
-                "type": "string",
-                "label": "Sex",
-                "value": ""
-            },
-            "gender": {
-                "type": "string",
-                "label": "Gender",
-                "value": ""
-            },
-            "mainHand": {
-                "type": "string",
-                "label": "Main Hand",
-                "value": "Right"
-            },
-            "goal": {
-                "type": "string",
-                "label": "Goal",
-                "value": ""
-            },
-            "notes": {
-                "type": "string",
-                "label": "Notes",
-                "value": "Notes"
-            }
+            "playerName": "",
+            "exp": 0,
+            "title": "",
+            "age": 0,
+            "sex": "",
+            "gender": "",
+            "notes": ""
         },
         "mook": {
+            "templates": [
+                "commonStats"
+            ]
+        },
+        "minor": {
             "templates": [
                 "commonStats"
             ]
@@ -263,7 +194,7 @@
                 "commonStats",
                 "itemDescription",
                 "equipment"
-            ],            
+            ],
             "defenseValue": {
                 "type": "number",
                 "label": "Defense Value",

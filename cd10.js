@@ -3,8 +3,8 @@ import CD10Migration from "./module/CD10Migration.js";
 import CD10Item from "./module/CD10Item.js";
 import CD10Actor from "./module/CD10Actor.js";
 import CD10ItemSheet from "./module/sheets/CD10ItemSheet.js";
-import CD10NamedCharacterSheet from "./module/sheets/CD10NamedCharacterSheet.js";
-import CD10MookCharacterSheet from "./module/sheets/CD10MookCharacterSheet.js";
+import CD10MajorCharacterSheet from "./module/sheets/CD10MajorCharacterSheet.js";
+import CD10MinorCharacterSheet from "./module/sheets/CD10MinorCharacterSheet.js";
 import CD10Combatant from "./module/combat/CD10Combatant.js";
 
 /**
@@ -116,16 +116,16 @@ Hooks.once("init", function() {
   });
 
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("cd10", CD10NamedCharacterSheet, {
-    types: ["named"],
+  Actors.registerSheet("cd10", CD10MajorCharacterSheet, {
+    types: ["major"],
     makeDefault: true,
-    label: "CD10 Hero/Villain Sheet"
+    label: "CD10 Major Character Sheet"
   });
 
-  Actors.registerSheet("cd10", CD10MookCharacterSheet, {
-    types: ["mook"],
+  Actors.registerSheet("cd10", CD10MinorCharacterSheet, {
+    types: ["minor"],
     makeDefault: true,
-    label: "CD10 Mook/Monster Sheet"
+    label: "CD10 Minor Character Sheet"
   });
 
   /* Load Handlebars helpers and partials */

@@ -130,6 +130,7 @@ export default async function MigrateWorld(currentVersion) {
         await scene.update(updateData);
       }
     } else if (type === "actors") {
+      // FIXME: What the fuck is going on here?
       let actorId;
       if (!updateData[0].actor && !updateData[0]._actor) {
         return;
@@ -190,12 +191,12 @@ export default async function MigrateWorld(currentVersion) {
 
     if (Object.keys(v050Data.actors).length > 0) {
       for (const a of v050Data.actors) {
-        await _performMigration("actors", [a, v050Data.updateData]);
+        await _performMigration("actors", a);
       }
     }
     if (Object.keys(v050Data.tokens).length > 0) {
       for (const t of v050Data.tokens) {
-        await _performMigration("actors", [t, v050Data.updateData]);
+        await _performMigration("actors", t);
       }
     }
   } catch(err) {
