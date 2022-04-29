@@ -959,3 +959,10 @@ textarea {
   color: #dfbb61 !important;
   font-family: "Signika", sans-serif;
 }
+.sheet-body .tab .editor {
+  height: 100%;
+}
+.sheet-body,
+.sheet-body .tab {
+  height: 100%;
+}
