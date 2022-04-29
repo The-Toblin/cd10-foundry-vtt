@@ -18,7 +18,7 @@ async function preloadHandlebarsTemplates() {
     "systems/cd10/templates/partials/sheet-tabs/spell-list.hbs",
     "systems/cd10/templates/partials/sheet-tabs/combat-tab.hbs",
     "systems/cd10/templates/partials/sheet-tabs/inventory-list.hbs",
-    "systems/cd10/templates/partials/equipment-cards/weapon-card.hbs",
+    "systems/cd10/templates/partials/equipment-cards/meleeWeapon-card.hbs",
     "systems/cd10/templates/partials/equipment-cards/rangedWeapon-card.hbs",
     "systems/cd10/templates/partials/equipment-cards/armor-card.hbs",
     "systems/cd10/templates/partials/equipment-cards/shield-card.hbs",

@@ -6,7 +6,7 @@ export default class CD10Item extends Item {
   }
 
   chatTemplate = {
-    weapon: "systems/cd10/templates/partials/weapon-card.hbs",
+    weapon: "systems/cd10/templates/partials/meleeWeapon-card.hbs",
     armor: "systems/cd10/templates/partials/armor-card.hbs",
     skill: "systems/cd10/templates/partials/spell-card.hbs",
     trait: "systems/cd10/templates/partials/spell-card.hbs",
