@@ -1,77 +1,81 @@
-// Hidden class for mouse-over elements 
+// Main sheet definitions
 .cd10.sheet {
-  .hidden {
-    display: none;
-  }
-}
-
-// Main sheet definitions 
-.cd10.sheet.namedCharacter {
-  min-height: 250px;
-  min-width: 510px;
-
-  h1,
-  h2,
-  h3,
-  p,
-  label,
-  .sheet-header,
-  input,
-  textarea,
-  .stat-element {
-    color: @colors[main-color];
-  }
-
-  .window-content {
-    background: url(./assets/backgrounds/sheet_background.webp);
-  }
-
-  form {
-    color: @colors[main-color];
-
-    select {
-      border: none;
-      color: inherit;
-      font-family: @font-base;
-      background: url(./assets/backgrounds/card_detail_background.webp);
+    min-height: 250px;
+    min-width: 510px;
+  
+    .hidden {
+      display: none;
     }
-
-    select option {
-      background-color: black;
-      font-family: @font-base;
+  
+    h1,
+    h2,
+    h3,
+    p,
+    label,
+    .sheet-header,
+    input,
+    textarea,
+    .stat-element {
+      .cd10-text();
     }
-
-    .editor {
-      height: 100%;
-      min-height: 100px;
-
-      .editor-content {
-        min-height: 100px;
-        color: inherit;
+  
+    h1,
+    h3 {
+      text-align: center;
+    }
+  
+    .quote {
+      textarea {
+        padding-top: 10px;
+        border: none;
+        text-align: center;
+        font-style: italic;
       }
     }
-
+  
     input {
       border: none;
       background: none;
-      color: inherit;
     }
-
+  
+    .window-content {
+      .cd10-sheet();
+    }
+  
+    .margin-bottom {
+      margin-bottom: 10px;
+    }
+  
+    .header-box,
+    .title-box,
+    .equipment-list {
+      width: 100%;
+    }
+  
+    .d10-roll-icon {
+      img {
+        padding-top: 4px;
+        margin-left: 5px;
+        width: 15px;
+        border: none;
+      }
+    }
+  
     .center-table {
       margin-left: auto;
       margin-right: auto;
     }
-
+  
     table {
       border: none;
       border-collapse: separate;
       border-spacing: 5px;
-
+  
       tr {
         background: unset;
         background-color: unset;
       }
-
+  
       th,
       td {
         background: url(./assets/backgrounds/card_detail_background.webp);
@@ -85,103 +89,71 @@
         color: inherit;
       }
     }
-
+  
     .sheet-tabs {
       margin-bottom: 10px;
     }
-
-    h1 {
-      font-size: 2em;
-      border: none;
-      padding: 3px;
-    }
-
-    h1,
-    h3 {
-      text-align: center;
-    }
-
-    hr {
-      border-color: @colors[main-color];
-      width: 150px;
-      margin-bottom: 20px;
-    }
-
+  
     .sheet-main-content {
       width: 80%;
     }
-
+  
     .image-box {
-      width: 20%;
-
       img {
-        min-width: 200px;
-        min-height: 200px;
+        .cd10-card();
+        width: 195px;
+        height: auto;
         box-shadow: 5px 10px 10px rgb(0, 0, 0, 0.5);
       }
     }
-
+  
     .fa-angle-double-up {
       padding-top: 5px;
     }
-
+  
     .fifty {
       width: 50%;
     }
-
+  
     .fifteen {
       width: 15%;
     }
-
+  
     .twenty {
       width: 20%;
     }
-
+  
     .ammo-select {
       .far {
         padding-right: 8px;
       }
     }
-
+  
     .display-inline {
       display: inline;
     }
-
+  
     .sheet-sidebar {
       padding: 10px;
       min-width: 225px;
-
+  
       .stressBoxSelect {
         padding-top: 2px;
       }
-
+  
       .stressBox {
         padding: 8px 0 2px 0;
       }
-
+  
       .pad-top {
         padding-top: 4px;
       }
-
-      .d10-roll-icon {
-        img {
-          padding-top: 4px;
-          margin-left: 5px;
-          width: 15px;
-          border: none;
-        }
-      }
-
-      .red {
-        color: red !important;
-        font-weight: 700 !important;
-      }
-
+  
       input {
         width: 45px;
         text-align: center;
       }
-
+  
       .sheet-money {
         .money {
           padding-top: 4px;
@@ -189,4 +161,3 @@
       }
     }
   }
-}

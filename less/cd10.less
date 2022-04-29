@@ -1,22 +1,5 @@
 @import "./config.less";
 
-.cd10-text {
-  font-family: @font-base;
-  color: @colors[main-color] !important;
-}
-
-p,
-b,
-i,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  .cd10-text();
-}
-
 // Containers for content
 .flex-row {
   display: flex;
@@ -48,42 +31,6 @@ h6 {
   align-content: flex-start;
 }
 
-// Overall styling classes
-.sheet-background {
-  background: url(./assets/backgrounds/sheet_background.webp);
-  color: @colors[main-color];
-}
-
-.sheet-card {
-  background: url(./assets/backgrounds/card_background.webp);
-  border-style: solid;
-  border-width: 3px;
-  border-image: radial-gradient(black, @colors[main-color]) 1;
-  padding: 5px;
-  box-shadow: 5px 10px 10px rgb(0, 0, 0, 0.5);
-  margin: 0 5px 10px 5px;
-  color: @colors[main-color];
-}
-
-.card-detail {
-  background: url(./assets/backgrounds/card_detail_background.webp);
-  border-style: solid;
-  border-width: 3px;
-  border-image: radial-gradient(black, @colors[accent-color]) 1;
-  box-shadow: inset 2px 2px 10px 5px black;
-  padding: 4px;
-  margin: 0 5px 10px 5px;
-}
-
-.item-roll {
-  img {
-    max-width: 15px;
-    margin-top: 5px;
-    margin-right: 5px;
-    border: none;
-  }
-}
-
 .pad-8 {
   padding: 8px;
 }
@@ -96,37 +43,9 @@ h6 {
   padding: 2px;
 }
 
-.sheet .editor-content {
-  .sheet-card();
-}
-
-.sheet-body .tab .editor {
-  height: 100%;
-}
-
-.sheet-body,
-.sheet-body .tab {
-  height: 100%;
-}
-
-.cd10-button {
-  background: url(./assets/backgrounds/card_detail_background.webp);
-  color: @colors[main-color];
-  border-style: solid;
-  border-width: 3px;
-  border-image: radial-gradient(black, @colors[accent-color]) 1;
-  border-radius: 10px;
-  padding: 4px;
-  margin: 0 5px 10px 5px;
-  box-shadow: 5px 10px 10px rgb(0, 0, 0, 0.5);
-}
-
-.cd10-button:hover {
-  box-shadow: inset 2px 2px 10px 5px black;
-}
-
 .window-content {
-  .sheet-background() !important;
+  .cd10-sheet() !important;
+  .cd10-text();
 }
 
 a.entity-link,
@@ -160,42 +79,64 @@ textarea {
   .cd10-text();
 }
 
+.header-search input {
+  .cd10-card-detail() !important;
+  .cd10-text() !important;
+  margin: 0 3px;
+
+  &::placeholder {
+    color: @colors[accent-color] !important;
+  }
+}
+
 #navigation {
   #nav-toggle {
-    .card-detail();
+    .cd10-card-detail();
   }
   #scene-list {
     .scene {
-      .card-detail();
+      .cd10-card-detail();
 
       .scene-name {
         .cd10-text();
       }
     }
     .active {
-      .card-detail() !important;
+      .cd10-card-detail() !important;
     }
 
     .view {
-      .sheet-card() !important;
+      .cd10-card() !important;
       filter: none !important;
     }
 
     .gm {
-      .card-detail() !important;
+      .cd10-card-detail() !important;
       filter: grayscale();
     }
   }
 }
 
+// TinyMCE Content
+.editor {
+  height: 100%;
+  min-height: 100px;
+
+  .editor-content {
+    padding: 8px;
+    min-height: 100px;
+    color: inherit;
+  }
+}
+
 .tox {
   &.tox-tinymce {
-    background: url(./assets/backgrounds/sheet_background.webp) !important;
+    background: rgba(0, 0, 0, 0) !important;
     padding: 2px;
   }
 
   .tox-edit-area__iframe {
-    background: url(./assets/backgrounds/card_background.webp) !important;
+    background: rgba(0, 0, 0, 0) !important;
   }
 
   .tox-toolbar__primary {
@@ -211,7 +152,6 @@ textarea {
   }
 }
 
-@import "./namedCharacter-sheet.less";
 @import "./skill-card.less";
 @import "./trait-card.less";
 @import "./armor-card.less";
@@ -223,8 +163,8 @@ textarea {
 @import "./character-stat-block.less";
 @import "./item-sheet.less";
 @import "./small-stats.less";
-@import "./mookCharacter-sheet.less";
+@import "./cd10-sheet.less";
 @import "./cd10-dialog.less";
 @import "./chat-physical-save.less";
-@import "./chat-attack-roll.less";
 @import "./chat.less";
+@import "./cd10-sheet.less";

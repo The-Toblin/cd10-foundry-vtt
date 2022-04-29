@@ -1,21 +1,93 @@
 @import "./config.less";
+// Generic Chat Styling
 .chat-message {
-  .sheet-card();
+  .cd10-card();
   border-radius: 5px;
 }
 
-.dice-roll,
+.message-content {
+  .cd10-text();
+  font-family: @font-base;
+}
+
+.cd10-image-container {
+  display: flex;
+  align-items: center;
+  .cd10-card();
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
 .dice-total,
-.statbox,
-.valuebox {
-  .card-detail();
+.stat-box,
+.value-box,
+.dice-formula {
+  .cd10-card-detail() !important;
+  .cd10-text();
+  .cd10-header();
+}
+
+.dice-tooltip {
+  .cd10-text() !important;
+}
+
+.dice-tooltip .dice-rolls .roll.failure,
+.dice-tooltip .dice-rolls .roll.min {
+  filter: sepia(0.5) hue-rotate(-60deg) brightness(0.5) !important;
+}
+
+.dice-tooltip .dice-rolls .roll.success,
+.dice-tooltip .dice-rolls .roll.max {
+  filter: sepia(0.5) hue-rotate(60deg) brightness(1.5) !important;
+}
+
+.roll {
+  margin-right: 5px !important;
+}
+
+.die {
+  color: @colors[main-color] !important;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.dice {
+  .cd10-card-detail();
+}
+
+.stat-box {
+  text-align: left;
+  width: 60%;
+  font-size: 0.8em;
+}
+
+.value-box {
+  text-align: center;
+  width: 38%;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.trait-box {
+  .cd10-text();
+  .cd10-header();
+  font-size: 0.8em;
+  margin-bottom: 5px;
 }
 
 #chat-controls .roll-type-select {
-  .card-detail();
+  .cd10-card-detail();
+  .cd10-text();
+  .cd10-base-text();
   padding: 0px;
 }
 
 #chat-form textarea {
-  .card-detail();
+  .cd10-card-detail();
+  .cd10-text();
+  .cd10-base-text();
 }

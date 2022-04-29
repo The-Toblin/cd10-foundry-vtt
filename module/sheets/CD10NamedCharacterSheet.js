@@ -204,6 +204,8 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
       html.find(".item-delete").click(this._onItemDelete.bind(this));
       html.find(".item-equip").click(this._onItemEquip.bind(this));
       html.find(".ammo-select").click(this._onAmmoSelect.bind(this));
+      html.find(".add-wound").click(this._modifyWoundsOnClick.bind(this));
+      html.find(".remove-wound").click(this._modifyWoundsOnClick.bind(this));
       html.find(".skill-item").click(this._toggleSkillUp.bind(this));
       html.find(".shock-icons").on("click contextmenu", this._onShockMarkChange.bind(this));
       html.find(".wounds-icons").on("click contextmenu", this._onWoundsMarkChange.bind(this));
@@ -687,6 +689,16 @@ export default class CD10NamedCharacterSheet extends ActorSheet {
       item.setSelectionStatus(1);
     } else {
       item.setSelectionStatus(2);
+    }
+  }
+
+  _modifyWoundsOnClick(event) {
+    event.preventDefault();
+
+    if (event.currentTarget.className.match("add")) {
+      this.actor.modifyWounds(1);
+    } else {
+      this.actor.modifyWounds(-1);
     }
   }
 }
