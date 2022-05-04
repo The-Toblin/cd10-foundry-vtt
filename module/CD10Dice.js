@@ -44,7 +44,8 @@ const _createRollData = async (skillLevel, traitLevel, modifier, save) => {
   if (save) {
     return {
       traitLevel: parseInt(traitLevel)
-    };} else {
+    };
+  } else {
     return {
       skillLevel: parseInt(skillLevel),
       traitLevel: parseInt(traitLevel),
@@ -99,7 +100,7 @@ const _rollD10 = async (rollFormula, rollData) => {
  * @param {object} rollData An object holding the modifiers to use for the roll.
  * @returns {Promise<object>} A object holding the roll, the total and any number of nines and zeroes.
  */
-const _doCD10Roll = async (rollFormula, rollData) => {
+const _evaluateCD10Roll = async (rollFormula, rollData) => {
   // Define all the variables we'll need.
   let stopValue = false;
   let nines = 0;
@@ -294,7 +295,7 @@ const _performBaseCheck = async (actor, skillId, traitId, save, heroPoint) => {
   const rollData = await _createRollData(skill.level, trait.level, actor.getModifier, save);
 
   // Perform and render the roll.
-  const rollResults = await _doCD10Roll(rollformula, rollData);
+  const rollResults = await _evaluateCD10Roll(rollformula, rollData);
   const renderedRoll = await _renderCD10Roll(rollResults.roll._formula, rollResults);
 
   return {
