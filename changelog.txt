@@ -11,6 +11,9 @@ Template data moved one step up from "Species": Value: <value> to "Species":
 <value>. Labels and types are deprecated.
 // [ ] TODO: Make postable cards for weapons, armor and spells. Item context menus (right click) now include an option to post the description to chat, along with any skill-/traitvalue. 
 // [x] TODO: Add + and - buttons to the health statblock, for mobile users.
+// [ ] TODO: Update codebase to Foundry V10.
+// [ ] TODO: Weapon's equipped status removed from item and move to the actor as actor.system.selectedWeapon.
+// [ ] TODO: Ranged weapon's selected ammo removed from ammo and put on the ranged weapon as item.system.selectedAmmo.
 
 Both Mooksheets and Charactersheets now extend a BaseSheet class to simplify code and make maintenance less of a pain.
 "Mook" type characters re-typed to "Minor" and "Named" characters are re-typed
@@ -30,9 +33,8 @@ Stable release.
 Removed erroneously placed roll function in the itemEquip function on the named character sheet.
 
 #Version 0.4.0
-This is a platform release. This is the version this system will stay on until the CD10 redesign is done. We
-will release bugfixes as necessary to this version, but expect a massive change when v0.5.0 is released, which
-will include the redesign changes.
+This is a platform release. This is a stable version you can keep using while the code rewrite and cleanup is perfomed. Version 0.5
+will include all upstream changes to the system, like the simplified parry/block system, revised injury system etc.
 
 == Major changes ==
 - Removed Hitlocation
