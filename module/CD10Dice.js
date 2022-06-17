@@ -101,6 +101,7 @@ const _rollD10 = async (rollFormula, rollData) => {
  * @returns {Promise<object>} A object holding the roll, the total and any number of nines and zeroes.
  */
 const _evaluateCD10Roll = async (rollFormula, rollData) => {
+  // TODO: Add check for explodingNines and disallow infinite explodes if it's set to false.
   // Define all the variables we'll need.
   let stopValue = false;
   let nines = 0;

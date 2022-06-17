@@ -46,6 +46,16 @@ async function preloadHandlebarsTemplates() {
  */
 function registerSystemSettings() {
   /* Register the settings for the system. */
+  /* Whether to allow infinitely exploding 9's or not. */
+  game.settings.register("cd10", "explodingNines", {
+    config: true,
+    scope: "world",
+    name: "SETTINGS.explodingNines.name",
+    hint: "SETTINGS.explodingNines.label",
+    type: Boolean,
+    default: true
+  });
+
   /* Setup how damage types are to be handled. If Simple is selected, each weapon defaults
         to their highest value. */
   game.settings.register("cd10", "systemDamageTypes", {

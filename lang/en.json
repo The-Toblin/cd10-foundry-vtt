@@ -286,6 +286,10 @@
     "modernity": {
       "name": "Is this a modern setting with firearms?",
       "label": "Determines if values such as rate of fire or magazine is shown."
+    },
+    "explodingNines": {
+      "name": "Infinitely exploding nines",
+      "label": "Whether or not the dice roller should allow more than one 9 to explode in a row. "
     }
   }
 }
