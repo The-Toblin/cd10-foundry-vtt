@@ -72,6 +72,7 @@ function registerSystemSettings() {
     default: "b"
   });
 
+  // Whether or not to include rate of fire, magazine and such stats.
   game.settings.register("cd10", "systemModernity", {
     config: true,
     scope: "world",
@@ -81,7 +82,7 @@ function registerSystemSettings() {
     default: false
   });
 
-  /* Option to use barter. Defaults to coinage. */
+  // Option to use barter. Defaults to coinage.
   game.settings.register("cd10", "systemBarter", {
     config: true,
     scope: "world",
@@ -97,6 +98,16 @@ function registerSystemSettings() {
     scope: "world",
     name: "SETTINGS.dumpDescriptions.name",
     hint: "SETTINGS.dumpDescriptions.label",
+    type: Boolean,
+    default: true
+  });
+
+  // Whether or not to include images in chat messages.
+  game.settings.register("cd10", "systemShowImageInChat", {
+    config: true,
+    scope: "world",
+    name: "SETTINGS.showImages.name",
+    hint: "SETTINGS.showImages.label",
     type: Boolean,
     default: true
   });

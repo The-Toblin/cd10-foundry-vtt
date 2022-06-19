@@ -28,6 +28,7 @@ export default class CD10ItemSheet extends ItemSheet {
     );
     sheetData.barterSetting = game.settings.get("cd10", "systemBarter");
     sheetData.modernity = game.settings.get("cd10", "systemModernity");
+    sheetData.showImages = game.settings.get("cd10", "systemShowImageInChat");
 
     /* Used for selecting skills for weapons. */
     sheetData.worldSkills = [];

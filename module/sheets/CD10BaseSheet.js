@@ -210,6 +210,7 @@ export default class CD10BaseSheet extends ActorSheet {
     sheetData.damageTypeSetting = game.settings.get("cd10", "systemDamageTypes");
     sheetData.barterSetting = game.settings.get("cd10", "systemBarter");
     sheetData.modernity = game.settings.get("cd10", "systemModernity");
+    sheetData.showImages = game.settings.get("cd10", "systemShowImageInChat");
 
     return sheetData;
   }
