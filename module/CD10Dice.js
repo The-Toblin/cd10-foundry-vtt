@@ -119,7 +119,6 @@ const _evaluateCD10Roll = async (rollFormula, rollData) => {
 
     if (result === 9) {
       nines += 1;
-      roll._total -= 5;
       roll.terms[0].results[iterator].rerolled = true;
       reroll = await _rollD10("1d10");
 

@@ -32,7 +32,8 @@
             "gear": {
                 "armor": "",
                 "shield": "",
-                "weapon": ""
+                "meleeWeapon": "",
+                "rangedWeapon": ""
             }
         },
         "mook": {

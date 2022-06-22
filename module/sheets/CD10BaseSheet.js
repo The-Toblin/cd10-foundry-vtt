@@ -169,6 +169,7 @@ export default class CD10BaseSheet extends ActorSheet {
     sheetData.data = sheetData.data.data;
 
     // Sort items alphabetically
+    // TODO: See if this is really necessary.
     sheetData.items.sort(function(a, b) {
       return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
     });
@@ -198,13 +199,12 @@ export default class CD10BaseSheet extends ActorSheet {
     );
 
     // The following is to detect if certain things are equipped, and thus toggle parts of the sheet on or off.
-    // FIXME: Move this to the item class's prepareDerivedData. An armor type that is equipped automatically
-    //  puts itself as actor.data.data.equipped[type] = this. Remember to include protection for item drawer items.
-    //  !this.actor, for instance.
-    sheetData.equippedMeleeWeapon = sheetData.meleeWeapons.some(w => w.data.isEquipped.value);
-    sheetData.equippedRangedWeapon = sheetData.rangedWeapons.some(w => w.data.isEquipped.value);
-    sheetData.equippedArmor = sheetData.armors.some(a => a.data.isEquipped.value);
-    sheetData.equippedShield = sheetData.shields.some(s => s.data.isEquipped.value);
+    // TODO: Double check the functionality of this code. What does it really return? More importantly, is it really necessary with this being embedded in the actor?
+
+    sheetData.equippedMeleeWeapon = this.actor.gear.meleeWeapon;
+    sheetData.equippedRangedWeapon = this.actor.gear.rangedWeapon;
+    sheetData.equippedArmor = this.actor.gear.armor;
+    sheetData.equippedShield = this.actor.gear.shield;
 
     /* Make system settings available for sheets to use for rendering */
     sheetData.damageTypeSetting = game.settings.get("cd10", "systemDamageTypes");
@@ -411,19 +411,20 @@ export default class CD10BaseSheet extends ActorSheet {
   }
 
   /**
-   * Function to facilitate equipping and unequipping items. Also makes sure to trigger the actor function for
-   * unequipping all other items of that same type before equipping the new one.
+   * Function to facilitate equipping and unequipping items.
    * @param {object} event The clicked event-data, used to fetch the itemId.
    */
   async _onItemEquip(event) {
     event.preventDefault();
+    // TODO: Test the fuck out of this function. I don't think it'll work the way I want.
 
     const element = event.currentTarget;
     const itemId = element.closest(".item").dataset.itemId;
     const item = this.actor.items.get(itemId);
     const type = item.type;
+    const updateData = {};
 
-    const updateData = updateData[`data.gear.${type}`] = itemId;
+    updateData[`data.gear.${type}`] = this.actor.gear[type] === itemId ? null : itemId;
     await this.actor.update(updateData);
   }
 
