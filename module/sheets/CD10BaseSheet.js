@@ -423,14 +423,8 @@ export default class CD10BaseSheet extends ActorSheet {
     const item = this.actor.items.get(itemId);
     const type = item.type;
 
-    let boolValue = item.data.data.isEquipped.value;
-    if (!boolValue) {
-      await this.actor.unequipItems(type);
-    }
-
-    await item.update({
-      "data.isEquipped.value": !boolValue
-    });
+    const updateData = updateData[`data.gear.${type}`] = itemId;
+    await this.actor.update(updateData);
   }
 
   /**

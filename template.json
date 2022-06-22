@@ -28,7 +28,12 @@
             "age": 0,
             "sex": "",
             "gender": "",
-            "notes": ""
+            "notes": "",
+            "gear": {
+                "armor": "",
+                "shield": "",
+                "weapon": ""
+            }
         },
         "mook": {
             "templates": [
@@ -68,19 +73,8 @@
                 "weight": 0,
                 "quantity": 0
             },
-            "equipment": {
-                "isEquipped": {
-                    "type": "boolean",
-                    "label": "Is it equipped?",
-                    "value": false
-                }
-            },
             "skillsTraits": {
-                "skillCategory": {
-                    "type": "string",
-                    "label": "Category",
-                    "value": ""
-                },
+                "skillCategory": "",
                 "skillLevel": {
                     "type": "number",
                     "label": "Level",
@@ -119,8 +113,7 @@
         "armor": {
             "templates": [
                 "commonStats",
-                "itemDescription",
-                "equipment"
+                "itemDescription"
             ],
             "protection": {
                 "slash": 0,
@@ -132,8 +125,7 @@
         "shield": {
             "templates": [
                 "commonStats",
-                "itemDescription",
-                "equipment"
+                "itemDescription"
             ],
             "defenseValue": 0
         },
@@ -161,8 +153,7 @@
         "meleeWeapon": {
             "templates": [
                 "commonStats",
-                "itemDescription",
-                "equipment"
+                "itemDescription"
             ],
             "attackSkill": "",
             "damage": {
@@ -176,8 +167,7 @@
         "rangedWeapon": {
             "templates": [
                 "commonStats",
-                "itemDescription",
-                "equipment"
+                "itemDescription"
             ],
             "attackSkill": "",
             "ammoGroup": "",
