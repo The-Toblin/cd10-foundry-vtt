@@ -101,7 +101,7 @@ const _rollD10 = async (rollFormula, rollData) => {
  * @returns {Promise<object>} A object holding the roll, the total and any number of nines and zeroes.
  */
 const _evaluateCD10Roll = async (rollFormula, rollData) => {
-  // TODO: Add check for explodingNines and disallow infinite explodes if it's set to false.
+  // [ ] Add check for explodingNines and disallow infinite explodes if it's set to false.
   // Define all the variables we'll need.
   let stopValue = false;
   let nines = 0;
@@ -230,6 +230,7 @@ const _getTraitData = async (actor, traitId) => {
  * @returns {Promise<object>} An object holding the equipped items.
  */
 const _getEquipment = async actor => {
+  // [ ] Rewrite this to match new equipment mechanics.
   const equipmentList = {
     armor: null,
     shield: null,
@@ -360,6 +361,7 @@ export const AttackCheck = async ({actor = null, skillId = null, traitId = null,
 
   // Determine the lethality of the weapon used and add any bonus damage from rolling 9's.
   checkResults.lethality = await _getLethality(checkResults.actor, checkResults.equipmentList, checkResults.damageType);
+  // [ ] Remove bonus damage, reinstate Excess.
   checkResults.bonusDamage = parseInt(checkResults.roll.nines * 4);
 
   const templateContext = {
@@ -404,5 +406,5 @@ export const Save = async ({actor = null, traitId = null, heroPoint = false, let
   console.warn(checkResults);
 
 
-  // TODO: Finish function and update the template
+  // [ ] Finish function and update the template
 };

@@ -169,7 +169,7 @@ export default class CD10BaseSheet extends ActorSheet {
     sheetData.data = sheetData.data.data;
 
     // Sort items alphabetically
-    // TODO: See if this is really necessary.
+    // [ ] See if this is really necessary.
     sheetData.items.sort(function(a, b) {
       return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
     });
@@ -199,7 +199,7 @@ export default class CD10BaseSheet extends ActorSheet {
     );
 
     // The following is to detect if certain things are equipped, and thus toggle parts of the sheet on or off.
-    // TODO: Double check the functionality of this code. What does it really return? More importantly, is it really necessary with this being embedded in the actor?
+    // [ ] Double check the functionality of this code. What does it really return? More importantly, is it really necessary with this being embedded in the actor?
 
     sheetData.equippedMeleeWeapon = this.actor.gear.meleeWeapon;
     sheetData.equippedRangedWeapon = this.actor.gear.rangedWeapon;
@@ -416,7 +416,7 @@ export default class CD10BaseSheet extends ActorSheet {
    */
   async _onItemEquip(event) {
     event.preventDefault();
-    // TODO: Test the fuck out of this function. I don't think it'll work the way I want.
+    // [ ] Test the fuck out of this function. I don't think it'll work the way I want.
 
     const element = event.currentTarget;
     const itemId = element.closest(".item").dataset.itemId;
@@ -456,7 +456,7 @@ export default class CD10BaseSheet extends ActorSheet {
    * Triggers the state of the actor stressing.
    * @param {object} event The clicked event-data.
    */
-  // TODO: Turn into an active effect that clears upon round change, rather than static value.
+  // [ ] Turn into an active effect that clears upon round change, rather than static value.
   _stressBoxClicked(event) {
     event.preventDefault();
 
