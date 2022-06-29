@@ -1,4 +1,5 @@
 #Version 0.5
+Updated for Foundry V10
 Big rewrite of most js-files, including CD10Dice.js.
 Massive CSS update. Foundry is now styled beyond CD10-specific sheets.
 // [ ] Template updates. Weapons no longer have a block/parry value. Shields no longer have protection.
