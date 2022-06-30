@@ -184,6 +184,7 @@ Hooks.once("init", function() {
   CONFIG.TinyMCE.content_css.push("systems/cd10/cd10-tinymce.css");
 });
 
+/*
 Hooks.once("ready", async () => {
   if (!game.user.isGM) {
     return;
@@ -212,3 +213,4 @@ Hooks.once("ready", async () => {
     console.log("==== CD10 | System up to date! Migration not needed. ====");
   }
 });
+*/

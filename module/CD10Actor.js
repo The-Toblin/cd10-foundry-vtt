@@ -6,11 +6,10 @@ export default class CD10Actor extends Actor {
   prepareBaseData() {}
 
   prepareDerivedData() {
-    const actorData = this.data;
-    const templateData = this.data.data;
+    const templateData = this.system;
 
     /* Update Traits totals */
-    let traits = this._prepareTraits(actorData);
+    let traits = this._prepareTraits(this.items);
 
     templateData.traitsValue = {
       type: "number",
@@ -69,36 +68,36 @@ export default class CD10Actor extends Actor {
     return this.data.items.filter(p => p.data.type === "trait");
   }
 
-  get getArmors() {
-    return this.data.items.filter(p => p.data.type === "armor");
+  get getArmor() {
+    return this.system.gear.armor;
   }
 
-  get getShields() {
-    return this.data.items.filter(p => p.data.type === "shield");
+  get getShield() {
+    return this.system.gear.shield;
   }
 
-  get getMeleeWeapons() {
-    return this.data.items.filter(p => p.data.type === "meleeWeapon");
+  get getMeleeWeapon() {
+    return this.system.gear.meleeWeapon;
   }
 
-  get getRangedWeapons() {
-    return this.data.items.filter(p => p.data.type === "rangedWeapon");
+  get getRangedWeapon() {
+    return this.system.gear.rangedWeapon;
   }
 
   get getWounds() {
-    return parseInt(this.data.data.wounds.value);
+    return parseInt(this.system.wounds.value);
   }
 
   get getModifier() {
-    return parseInt(this.data.data.modifier.value);
+    return parseInt(this.system.modifier.value);
   }
 
   get getExp() {
-    return this.type === "named" ? parseInt(this.data.data.exp.total) : 0;
+    return this.type === "named" ? parseInt(this.system.exp.total) : 0;
   }
 
   get getStress() {
-    return this.data.data.stressing.value;
+    return this.system.stressing.value;
   }
 
   /** ************************
@@ -107,22 +106,22 @@ export default class CD10Actor extends Actor {
    *                        *
    *************************/
 
-  _prepareTraits(data) {
+  _prepareTraits(items) {
     let totalValue = 0;
     let pos = 0;
     let neg = 0;
 
-    let totalTraits = data.items.filter(trait => trait.type === "trait");
+    let totalTraits = items.filter(trait => trait.type === "trait");
 
     for (let i = 0; i < totalTraits.length; i++) {
       let adder = 0;
-      adder = +parseInt(totalTraits[i].data.data.skillLevel.value);
+      adder = +parseInt(totalTraits[i].system.skillLevel.value);
 
       totalValue += adder;
     }
 
     totalTraits.forEach(p => {
-      if (p.data.data.skillLevel.value > 0) {
+      if (p.system.skillLevel.value > 0) {
         ++pos;
       } else {
         ++neg;
@@ -190,7 +189,7 @@ export default class CD10Actor extends Actor {
     let newWounds;
 
     if (amount > 0) {
-      newWounds = Math.min(currentWounds + amount, this.data.data.wounds.max);
+      newWounds = Math.min(currentWounds + amount, this.system.wounds.max);
     } else if (amount < 0) {
       newWounds = Math.max(currentWounds - 1, 0);
     }
@@ -214,39 +213,6 @@ export default class CD10Actor extends Actor {
     });
 
     await this.updateEmbeddedDocuments("Item", traitArray);
-  }
-
-  async unequipItems(item) {
-    let itemArray = [];
-    let itemUpdate = {};
-    let itemtype = item.match(/Weapon/) ? "weapon" : "armor";
-
-    for (const i of this.items) {
-      if (i.type.match(/Weapon/) && itemtype === "weapon") {
-        itemUpdate = {
-          _id: i.id,
-          data: {
-            isEquipped: {
-              value: false
-            }
-          }
-        };
-        if (Object.keys(itemUpdate).length > 1) itemArray.push(itemUpdate);
-      } else if (i.type === item) {
-        itemUpdate = {
-          _id: i.id,
-          data: {
-            isEquipped: {
-              value: false
-            }
-          }
-        };
-        if (Object.keys(itemUpdate).length > 1) {
-          itemArray.push(itemUpdate);
-        }
-      }
-      await this.updateEmbeddedDocuments("Item", itemArray);
-    }
   }
 
   async toggleStress(value) {

@@ -1,9 +1,7 @@
 {
     "Actor": {
         "types": [
-            "named",
             "major",
-            "mook",
             "minor"
         ],
         "templates": {
@@ -18,7 +16,7 @@
                 "stressing": false
             }
         },
-        "named": {
+        "major": {
             "templates": [
                 "commonStats"
             ],
@@ -35,11 +33,6 @@
                 "meleeWeapon": "",
                 "rangedWeapon": ""
             }
-        },
-        "mook": {
-            "templates": [
-                "commonStats"
-            ]
         },
         "minor": {
             "templates": [
@@ -58,8 +51,7 @@
             "skill",
             "spell",
             "shield",
-            "trait",
-            "weapon"
+            "trait"
         ],
         "templates": {
             "itemDescription": {
@@ -77,7 +69,6 @@
             "skillsTraits": {
                 "skillCategory": "",
                 "skillLevel": {
-                    "type": "number",
                     "label": "Level",
                     "value": 0,
                     "min": 0,

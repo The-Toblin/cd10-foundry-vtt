@@ -198,13 +198,10 @@ export default class CD10BaseSheet extends ActorSheet {
         && p.type !== "shield"
     );
 
-    // The following is to detect if certain things are equipped, and thus toggle parts of the sheet on or off.
-    // [ ] Double check the functionality of this code. What does it really return? More importantly, is it really necessary with this being embedded in the actor?
-
-    sheetData.equippedMeleeWeapon = this.actor.gear.meleeWeapon;
-    sheetData.equippedRangedWeapon = this.actor.gear.rangedWeapon;
-    sheetData.equippedArmor = this.actor.gear.armor;
-    sheetData.equippedShield = this.actor.gear.shield;
+    sheetData.equippedMeleeWeapon = this.actor.getMeleeWeapon;
+    sheetData.equippedRangedWeapon = this.actor.getRangedWeapon;
+    sheetData.equippedArmor = this.actor.armor;
+    sheetData.equippedShield = this.actor.getShield;
 
     /* Make system settings available for sheets to use for rendering */
     sheetData.damageTypeSetting = game.settings.get("cd10", "systemDamageTypes");
