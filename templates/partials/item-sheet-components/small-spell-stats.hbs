@@ -16,11 +16,11 @@
         </tr>
         <tr>
             <td>
-                <input name="data.teachable.value" type="checkbox" {{checked data.teachable.value}}
+                <input name="system.teachable.value" type="checkbox" {{checked data.teachable.value}}
                     data-dtype="{{data.teachable.type}}" />
             </td>
             <td>
-                <select name="data.skillType.value">
+                <select name="system.skillType.value">
                     {{#select data.skillType.value}}
                     {{#each config.skillCategories as |name type|}}
                     <option value="{{type}}">{{localize name}}</option>
@@ -32,7 +32,7 @@
                 {{data.skillLevel.min}} - {{data.skillLevel.max}}
             </td>
             <td>
-                <input name="data.difficulty.value" type="text" value="{{data.difficulty.value}}"/>
+                <input name="system.difficulty.value" type="text" value="{{data.difficulty.value}}"/>
             </td>
         </tr>
         <tr>
@@ -51,7 +51,7 @@
         </tr>
         <tr>
           <td>
-                <select name="data.cast.value">
+                <select name="system.cast.value">
                     {{#select data.cast.value}}
                     {{#each config.timeIndicators as |name type|}}
                     <option value="{{type}}">{{localize name}}</option>
@@ -60,7 +60,7 @@
                 </select>
             </td>
             <td>
-                <select name="data.duration.value">
+                <select name="system.duration.value">
                     {{#select data.duration.value}}
                     {{#each config.timeIndicators as |name type|}}
                     <option value="{{type}}">{{localize name}}</option>
@@ -69,7 +69,7 @@
                 </select>
             </td>
             <td>
-                <select name="data.range.value">
+                <select name="system.range.value">
                     {{#select data.range.value}}
                     {{#each config.areaIndicators as |name type|}}
                     <option value="{{type}}">{{localize name}}</option>
@@ -78,7 +78,7 @@
                 </select>
             </td>
             <td>
-                <select name="data.area.value">
+                <select name="system.area.value">
                     {{#select data.area.value}}
                     {{#each config.areaIndicators as |name type|}}
                     <option value="{{type}}">{{localize name}}</option>

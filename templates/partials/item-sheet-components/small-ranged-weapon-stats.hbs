@@ -10,7 +10,7 @@
         </tr>
         <tr>
             <td>
-                <select name="data.attackSkill.value">
+                <select name="system.attackSkill.value">
                     <option value="None">{{localize "cd10.sheet.none"}}</option>
                     {{#select data.attackSkill.value}}
                     {{#each worldSkills as |data id|}}
@@ -20,23 +20,23 @@
                 </select>
             </td>
             <td>
-                <input name="data.range.value.rangeClose" type="text" value="{{data.range.value.rangeClose}}"
+                <input name="system.range.value.rangeClose" type="text" value="{{data.range.value.rangeClose}}"
                     data-dtype="{{data.range.type}}" />
             </td>
             <td>
-                <input name="data.range.value.rangeNormal" type="text" value="{{data.range.value.rangeNormal}}"
+                <input name="system.range.value.rangeNormal" type="text" value="{{data.range.value.rangeNormal}}"
                     data-dtype="{{data.range.type}}" />
             </td>
             <td>
-                <input name="data.range.value.rangeLong" type="text" value="{{data.range.value.rangeLong}}"
+                <input name="system.range.value.rangeLong" type="text" value="{{data.range.value.rangeLong}}"
                     data-dtype="{{data.range.type}}" />
             </td>
             <td>
-                <input name="data.range.value.rangeMax" type="text" value="{{data.range.value.rangeMax}}"
+                <input name="system.range.value.rangeMax" type="text" value="{{data.range.value.rangeMax}}"
                     data-dtype="{{data.range.type}}" />
             </td>
             <td>
-                <select name="data.ammoGroup.value">
+                <select name="system.ammoGroup.value">
                     {{#select data.ammoGroup.value}}
                     {{#each config.ammunitionTypes as |name type|}}
                     <option value="{{type}}">{{localize name}}</option>
@@ -55,13 +55,13 @@
             <th>{{localize "cd10.rangedWeapon.fullAuto"}}</th>
         </tr>
         <tr>
-            <td><input name="data.accuracy.value" type="text" value="{{data.accuracy.value}}"
+            <td><input name="system.accuracy.value" type="text" value="{{data.accuracy.value}}"
                     data-dtype="{{data.accuracy.type}}" /></td>
-            <td><input name="data.magazine.value" type="text" value="{{data.magazine.value}}"
+            <td><input name="system.magazine.value" type="text" value="{{data.magazine.value}}"
                     data-dtype="{{data.magazine.type}}" /></td>
-            <td><input name="data.rof.value.burst" type="text" value="{{data.rof.value.burst}}"
+            <td><input name="system.rof.value.burst" type="text" value="{{data.rof.value.burst}}"
                     data-dtype="{{data.rof.type}}" /></td>
-            <td><input name="data.rof.value.fullAuto" type="text" value="{{data.rof.value.fullAuto}}"
+            <td><input name="system.rof.value.fullAuto" type="text" value="{{data.rof.value.fullAuto}}"
                     data-dtype="{{data.rof.type}}" /></td>
         </tr>
     </table>

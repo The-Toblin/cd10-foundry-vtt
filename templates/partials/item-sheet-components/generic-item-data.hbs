@@ -5,14 +5,14 @@
                 {{localize "cd10.item.availability"}}
             </th>
             <td>
-                <input name="data.availability.value" type="text" value="{{data.availability.value}}"
+                <input name="system.availability.value" type="text" value="{{data.availability.value}}"
                     data-dtype="{{data.availability.type}}" />
             </td>
             <th>
                 {{localize "cd10.item.trader"}}
             </th>
             <td>
-                <input name="data.trader.value" type="text" value="{{data.trader.value}}"
+                <input name="system.trader.value" type="text" value="{{data.trader.value}}"
                     data-dtype="{{data.trader.type}}" />
             </td>
         </tr>
@@ -22,7 +22,7 @@
                 {{localize "cd10.item.tradeGroup"}}
             </th>
             <td>
-                <input name="data.tradeGroup.value" type="text" value="{{data.tradeGroup.value}}"
+                <input name="system.tradeGroup.value" type="text" value="{{data.tradeGroup.value}}"
                     data-dtype="{{data.tradeGroup.type}}" />
             </td>
             {{else}}
@@ -30,7 +30,7 @@
                 {{localize "cd10.item.price"}} ({{localize "cd10.stats.currencyShort"}})
             </th>
             <td>
-                <input name="data.price.value" type="text" value="{{data.price.value}}"
+                <input name="system.price.value" type="text" value="{{data.price.value}}"
                     data-dtype="{{data.price.type}}" />
             </td>
             {{/if}}
@@ -38,13 +38,13 @@
                 {{localize "cd10.item.weight"}}
             </th>
             <td>
-                <input name="data.weight.value" type="text" value="{{data.weight.value}}"
+                <input name="system.weight.value" type="text" value="{{data.weight.value}}"
                     data-dtype="{{data.weight.type}}" />
             </td>
         </tr>
         <tr>
             <th>{{localize "cd10.item.count"}}</th>
-            <td><input name="data.count.value" type="text" value="{{data.count.value}}" data-dtype="{{data.count.type}}" placeholder=0 /></td>
+            <td><input name="system.count.value" type="text" value="{{data.count.value}}" data-dtype="{{data.count.type}}" placeholder=0 /></td>
         </tr>
     </table>
 

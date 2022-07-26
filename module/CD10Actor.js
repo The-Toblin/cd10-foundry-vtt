@@ -35,6 +35,7 @@ export default class CD10Actor extends Actor {
     /* Check stress and apply to modifier */
     if (templateData.stressing.value) {
       debilitation.modifier += 3;
+      // FIXME: Make this a flag
     }
 
     templateData.modifier = {
@@ -98,6 +99,7 @@ export default class CD10Actor extends Actor {
 
   get getStress() {
     return this.system.stressing.value;
+    // FIXME: Make this a flag
   }
 
   /** ************************
@@ -176,7 +178,7 @@ export default class CD10Actor extends Actor {
     let newExp = currentExp + amount;
 
     await this.update({
-      "data.exp.total": newExp
+      "system.exp.total": newExp
     });
   }
 
@@ -195,7 +197,7 @@ export default class CD10Actor extends Actor {
     }
 
     await this.update({
-      "data.wounds.value": newWounds
+      "system.wounds.value": newWounds
     });
   }
 
@@ -216,6 +218,7 @@ export default class CD10Actor extends Actor {
   }
 
   async toggleStress(value) {
+    // FIXME: Make this a flag
     this.update({
       data: {
         stressing: {

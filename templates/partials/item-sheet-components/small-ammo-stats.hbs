@@ -25,7 +25,7 @@
                 {{/if}}
             </tr>
                 <td>
-                    <select name="data.ammoType">
+                    <select name="system.ammoType">
                         {{#select data.ammoType}}
                             {{#each config.ammunitionTypes as |name type|}}
                                 <option value="{{type}}">{{localize name}}</option>
@@ -38,7 +38,7 @@
                     <a class="damage-select" data-type="text" data-damage-type="slash">
                         <i class="far fa-{{#if data.damage.slash.selected}}check-{{/if}}square"></i>
                     </a>
-                    <input name="data.damage.slash.value" type="text" value="{{data.damage.slash.value}}"
+                    <input name="system.damage.slash.value" type="text" value="{{data.damage.slash.value}}"
                         data-dtype="{{data.damage.slash.type}}" />
                 </td>
                 {{else}}
@@ -46,28 +46,28 @@
                     <a class="damage-select" data-type="text" data-damage-type="slash">
                         <i class="far fa-{{#if data.damage.slash.selected}}check-{{/if}}square"></i>
                     </a>
-                    <input name="data.damage.slash.value" type="text" value="{{data.damage.slash.value}}"
+                    <input name="system.damage.slash.value" type="text" value="{{data.damage.slash.value}}"
                         data-dtype="{{data.damage.slash.type}}" />
                 </td>
                 <td>
                     <a class="damage-select" data-type="text" data-damage-type="pierce">
                         <i class="far fa-{{#if data.damage.pierce.selected}}check-{{/if}}square"></i>
                     </a>
-                    <input name="data.damage.pierce.value" type="text" value="{{data.damage.pierce.value}}"
+                    <input name="system.damage.pierce.value" type="text" value="{{data.damage.pierce.value}}"
                         data-dtype="{{data.damage.pierce.type}}" />
                 </td>
                 <td>
                     <a class="damage-select" data-type="text" data-damage-type="blunt">
                         <i class="far fa-{{#if data.damage.blunt.selected}}check-{{/if}}square"></i>
                     </a>
-                    <input name="data.damage.blunt.value" type="text" value="{{data.damage.blunt.value}}"
+                    <input name="system.damage.blunt.value" type="text" value="{{data.damage.blunt.value}}"
                         data-dtype="{{data.damage.blunt.type}}" />
                 </td>
                 {{#if (eq damageTypeSetting "complex")}}
                 <a class="damage-select" data-type="text" data-damage-type="energy">
                         <i class="far fa-{{#if data.damage.energy.selected}}check-{{/if}}square"></i>
                     </a>
-                    <input name="data.damage.energy.value" type="text" value="{{data.damage.energy.value}}"
+                    <input name="system.damage.energy.value" type="text" value="{{data.damage.energy.value}}"
                         data-dtype="{{data.damage.energy.type}}" />
                 </td>
                 {{/if}}

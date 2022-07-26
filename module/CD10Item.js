@@ -1,12 +1,12 @@
 export default class CD10Item extends Item {
   get acceptedAmmoList() {
     return this.actor.sheet.ammoList.filter(
-      a => a.data.ammoType === this.data.data.acceptedAmmo
+      a => a.data.ammoType === this.system.acceptedAmmo
     );
   }
 
   get getSelectionStatus() {
-    return this.type === "trait" ? this.data.data.selected : false;
+    return this.type === "trait" ? this.system.selected : false;
   }
 
   chatTemplate = {
@@ -24,8 +24,8 @@ export default class CD10Item extends Item {
 
     if (!this.isEmbedded && this.type === "skill") {
       if (
-        typeof this.data.data.matchID === "undefined"
-        || this.data.data.matchID === ""
+        typeof this.system.matchID === "undefined"
+        || this.system.matchID === ""
       ) {
         await this.data.update({
           data: {
@@ -79,7 +79,7 @@ export default class CD10Item extends Item {
       }
 
       await this.update({
-        "data.selected": status
+        "system.selected": status
       });
     }
   }

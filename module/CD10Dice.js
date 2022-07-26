@@ -189,7 +189,7 @@ const _getSkillData = async (actor, skillId) => {
   if (skillId) {
     const skill = actor.items.get(skillId);
     return {
-      level: parseInt(skill.data.data.skillLevel.value),
+      level: parseInt(skill.system.skillLevel.value),
       name: skill.name
     };
   } else {
@@ -209,8 +209,8 @@ const _getSkillData = async (actor, skillId) => {
 const _getTraitData = async (actor, traitId) => {
   if (traitId) {
     const trait = actor.items.get(traitId);
-    const traitLevel = parseInt(trait.data.data.skillLevel.value);
-    const reversed = trait.data.data.selected === 2;
+    const traitLevel = parseInt(trait.system.skillLevel.value);
+    const reversed = trait.system.selected === 2;
 
     return {
       level: reversed ? (traitLevel * -1) : traitLevel,
@@ -238,13 +238,13 @@ const _getEquipment = async actor => {
     rangedWeapon: null
   };
   for (const item of actor.items.contents) {
-    if (item.type === "armor" && item.data.data.isEquipped?.value) {
+    if (item.type === "armor" && item.system.isEquipped?.value) {
       equipmentList.armor = item;
-    } else if (item.type === "shield" && item.data.data.isEquipped?.value) {
+    } else if (item.type === "shield" && item.system.isEquipped?.value) {
       equipmentList.shield = item;
-    } else if (item.type === "meleeWeapon" && item.data.data.isEquipped?.value) {
+    } else if (item.type === "meleeWeapon" && item.system.isEquipped?.value) {
       equipmentList.meleeWeapon = item;
-    } else if (item.type === "rangedWeapon" && item.data.data.isEquipped?.value) {
+    } else if (item.type === "rangedWeapon" && item.system.isEquipped?.value) {
       equipmentList.rangedWeapon = item;
     }
   }
@@ -262,10 +262,10 @@ const _getEquipment = async actor => {
  */
 const _getLethality = async (actor, equipmentList, damageType) => {
   if (equipmentList.meleeWeapon !== null) {
-    return parseInt(equipmentList.meleeWeapon.data.data.damage[damageType].value);
+    return parseInt(equipmentList.meleeWeapon.system.damage[damageType].value);
   } else if (equipmentList.rangedWeapon !== null) {
-    const ammo = actor.items.get(equipmentList.rangedWeapon.data.data.selectedAmmo.id);
-    const ammoProperties = Object.entries(ammo.data.data.damage);
+    const ammo = actor.items.get(equipmentList.rangedWeapon.system.selectedAmmo.id);
+    const ammoProperties = Object.entries(ammo.system.damage);
 
     // Loop through the properties of the ammo to find the selected ammo type and fetch its lethality value.
     for (const entry of ammoProperties) {

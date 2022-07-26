@@ -39,7 +39,7 @@
                             <th>{{localize "cd10.sheet.total"}}</th>
                         </tr>
                         <tr>
-                            <td><input name="data.exp.total" type="text" value="{{data.exp.total}}"
+                            <td><input name="system.exp.total" type="text" value="{{data.exp.total}}"
                                     data-dtype="{{data.exp.type}}" placeholder="{{localize "cd10.stats.exp"}}" />
                             </td>
                             <td>{{data.posTraits.value}}</td>
@@ -70,7 +70,7 @@
             <div class="tab sheet-notes" data-group="primary" data-tab="notes">
                 {{editor
                 content=data.notes.value
-                target="data.notes.value"
+                target="system.notes.value"
                 button=true
                 owner=owner
                 editable=editable}}
@@ -114,8 +114,8 @@
             </a>
         </div>
         <div class="cd10-button stressBox stressBoxContainer flex-even flex-row">
-            <div class="stressBoxSelect">
-                <i class="far fa-{{#if this.actor.data.data.stressing.value}}check-{{/if}}square"></i>
+            <div class="stressBoxSelect"> {{!// FIXME: Make this a flag}}
+                <i class="far fa-{{#if this.actor.system.stressing.value}}check-{{/if}}square"></i>
             </div>
             <div>
                 <h3 class="sheet-header">

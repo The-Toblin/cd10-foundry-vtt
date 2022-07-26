@@ -13,11 +13,11 @@
         </tr>
         <tr>
             <td>
-                <input name="data.teachable.value" type="checkbox" {{checked data.teachable.value}}
+                <input name="system.teachable.value" type="checkbox" {{checked data.teachable.value}}
                     data-dtype="{{data.teachable.type}}" />
             </td>
             <td>
-                <select name="data.skillType.value">
+                <select name="system.skillType.value">
                     {{#select data.skillType.value}}
                         {{#each config.skillCategories as |name type|}}
                             <option value="{{type}}">{{localize name}}</option>

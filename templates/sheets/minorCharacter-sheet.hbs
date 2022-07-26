@@ -16,7 +16,7 @@
                     </div>
                     <hr>
                     <div class="quote">
-                        <textarea name="data.quote.value">{{data.quote.value}}</textarea>
+                        <textarea name="system.quote.value">{{data.quote.value}}</textarea>
                     </div>
                     <hr>
                 </div>
@@ -51,8 +51,8 @@
                         </a>
                     </div>
                     <div class="cd10-button stressBox stressBoxContainer flex-even flex-row pad-8">
-                        <div class="stressBoxSelect">
-                            <i class="far fa-{{#if this.actor.data.data.stressing.value}}check-{{/if}}square"></i>
+                        <div class="stressBoxSelect"> {{!// FIXME: Make this a flag}}
+                            <i class="far fa-{{#if this.actor.system.stressing.value}}check-{{/if}}square"></i>
                         </div>
                         <div>
                             <h3 class="sheet-header">

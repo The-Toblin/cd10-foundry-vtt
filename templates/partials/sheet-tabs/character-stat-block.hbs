@@ -18,7 +18,8 @@
                     {{else}}
                     -{{data.modifier.value}} {{data.debilitationType.value}}
                     {{/if}}
-                    {{#if this.actor.data.data.stressing.value}}
+                    {{! // FIXME: Make this a flag}}
+                    {{#if this.actor.system.stressing.value}}
                     ({{localize "cd10.sheet.stressing"}})
                     {{/if}}
                 </div>

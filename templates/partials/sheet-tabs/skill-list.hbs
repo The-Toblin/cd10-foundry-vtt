@@ -6,7 +6,7 @@
                 {{skill.name}}
             </div>
             {{#if skill.data.levelUp.value}}<i class="fas fa-angle-double-up"></i>{{/if}}
-            <input class="attribute-value inline-edit" data-field="data.skillLevel.value"
+            <input class="attribute-value inline-edit" data-field="system.skillLevel.value"
                 data-dtype="{{skill.data.skillLevel.type}}" value="{{skill.data.skillLevel.value}}"
                 placeholder="{{localize "cd10.skill.skillLevel"}}" />
             <a class="item-roll hidden rollable skill-check" data-type="text" data-action-value="{{skill.data.skillLevel.value}}" title={{localize "cd10.sheet.roll"}}>
@@ -26,7 +26,7 @@
             <div class="attribute-name inventory-item item" data-item-id="{{trait._id}}">
                 {{trait.name}}
             </div>
-            <input class="attribute-value inline-edit" data-field="data.skillLevel.value"
+            <input class="attribute-value inline-edit" data-field="system.skillLevel.value"
                 data-dtype="{{trait.data.skillLevel.type}}" value="{{trait.data.skillLevel.value}}"
                 placeholder="{{localize "cd10.skill.skillLevel"}}" />
             <a class="item-roll hidden rollable skill-check" data-type="text" data-trait-value="{{trait.data.skillLevel.value}}" title={{localize "cd10.sheet.roll"}}>

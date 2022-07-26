@@ -1,35 +1,48 @@
 {
-    "name": "cd10",
+    "id": "cd10",
     "title": "Celenia D10 Roleplaying System",
-    "description": "A narratively focused, lightweight system focused on tension and rule of cool.",
-    "author": "The Toblin",
-    "authors": [],
-    "url": "https://github.com/The-Toblin/cd10-foundry-vtt/",
-    "flags": {},
-    "version": "0.5",
-    "minimumCoreVersion": "10",
-    "compatibleCoreVersion": "10",
-    "scripts": [],
+    "version": 0.50,
+    "compatibility": {
+        "minimum": "10",
+        "verified": "10.275",
+        "maximum": "10.275"
+    },
+    "authors": [
+        {
+            "name": "The Toblin",
+            "url": "http://www.celenia.se",
+            "email": "tobias@celenia.se",
+            "discord": "Toblin#2367"
+        }
+    ],
+    "relationships": {
+        "systems": [],
+        "requires": []
+    },
     "esmodules": [
         "cd10.js"
     ],
     "styles": [
         "cd10-style.css"
     ],
-    "languages": [{
-        "lang": "en",
-        "name": "English",
-        "path": "lang/en.json"
-    }],
-    "media": [{
-        "type": "cover",
-        "url": "https://www.worldanvil.com/uploads/images/fbacbcf8f76cbcfe7673ed8b7f4a826a.png"
-    }],
-    "packs": [],
-    "system": [],
-    "dependencies": [],
+    "languages": [
+        {
+            "lang": "en",
+            "name": "English",
+            "path": "lang/en.json",
+            "title": "Celenia D10 Roleplaying System - 2nd Edition",
+            "description": "A narratively focused RPG system, based on Vampire the Masquerade, Dune and Ten Candles. Focuses on narrative and player agency."
+        }
+    ],
+    "media": [
+        {
+            "type": "cover",
+            "url": "https://www.worldanvil.com/uploads/images/fbacbcf8f76cbcfe7673ed8b7f4a826a.png"
+        }
+    ],
     "socket": false,
-    "manifest": "https://raw.githubusercontent.com/The-Toblin/cd10-foundry-vtt/main/system.json",
+    "url": "https://github.com/The-Toblin/cd10-foundry-vtt/",
+    "update": "https://raw.githubusercontent.com/The-Toblin/cd10-foundry-vtt/main/system.json",
     "download": "https://github.com/The-Toblin/cd10-foundry-vtt/archive/refs/heads/main.zip",
     "protected": false,
     "gridDistance": 1.5,

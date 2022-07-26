@@ -34,7 +34,7 @@ export default class CD10ItemSheet extends ItemSheet {
     sheetData.worldSkills = [];
     for (const skill of game.items) {
       if (skill.type === "skill") sheetData.worldSkills.push({
-        matchID: skill.data.data.matchID,
+        matchID: skill.system.matchID,
         name: skill.name
       });
     }
@@ -52,7 +52,7 @@ export default class CD10ItemSheet extends ItemSheet {
     const damageType = event.currentTarget.dataset.damageType;
 
     await this.item.update({
-      "data.damage": {
+      "system.damage": {
         slash: {
           selected: false
         },

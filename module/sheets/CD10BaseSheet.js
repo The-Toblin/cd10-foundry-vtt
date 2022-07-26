@@ -49,7 +49,7 @@ export default class CD10BaseSheet extends ActorSheet {
       callback: element => {
         const itemId = element.data("item-id");
         const item = this.actor.items.get(itemId);
-        let boolValue = item.data.data.isEquipped.value;
+        let boolValue = item.system.isEquipped.value;
 
         item.update({
           data: {
@@ -100,10 +100,10 @@ export default class CD10BaseSheet extends ActorSheet {
         const itemId = element.data("item-id");
         const item = this.actor.items.get(itemId);
 
-        let levelUpValue = item.data.data.levelUp.value;
+        let levelUpValue = item.system.levelUp.value;
 
         item.update({
-          "data.levelUp.value": !levelUpValue
+          "system.levelUp.value": !levelUpValue
         });
       }
     },
@@ -166,7 +166,7 @@ export default class CD10BaseSheet extends ActorSheet {
   getData() {
     const sheetData = super.getData();
     sheetData.config = CONFIG.cd10;
-    sheetData.data = sheetData.data.data;
+    sheetData.data = sheetsystem.data;
 
     // Sort items alphabetically
     // [ ] See if this is really necessary.
@@ -322,16 +322,16 @@ export default class CD10BaseSheet extends ActorSheet {
     let ammoObj = this.actor.items.get(event.currentTarget.closest(".ammo-selector").dataset.itemId);
     let weaponObj = this.actor.items.get(event.currentTarget.closest(".ammo-selector").dataset.weaponId);
 
-    if (weaponObj.data.data.selectedAmmo.id === ammoObj.id) {
+    if (weaponObj.system.selectedAmmo.id === ammoObj.id) {
       await weaponObj.update({
-        "data.selectedAmmo": {
+        "system.selectedAmmo": {
           value: "None",
           id: "None"
         }
       });
     } else {
       await weaponObj.update({
-        "data.selectedAmmo": {
+        "system.selectedAmmo": {
           value: ammoObj.name,
           id: ammoObj.id
         }
@@ -457,10 +457,10 @@ export default class CD10BaseSheet extends ActorSheet {
   _stressBoxClicked(event) {
     event.preventDefault();
 
-    let value = this.actor.data.data.stressing.value;
+    let value = this.actor.system.stressing.value;
 
     this.actor.update({
-      "data.stressing.value": !value
+      "system.stressing.value": !value
     });
   }
 
@@ -475,10 +475,10 @@ export default class CD10BaseSheet extends ActorSheet {
     let itemId = element.closest(".item").dataset.itemId;
     let item = this.actor.items.get(itemId);
 
-    let levelUpValue = item.data.data.levelUp.value;
+    let levelUpValue = item.system.levelUp.value;
 
     await item.update({
-      "data.levelUp.value": !levelUpValue
+      "system.levelUp.value": !levelUpValue
     });
   }
 
@@ -571,7 +571,7 @@ export default class CD10BaseSheet extends ActorSheet {
     if (skill.id === undefined) {
       let correctSkill = null;
       for (const skill of game.items.contents) {
-        if (skill.data.data.matchID === weaponObj.data.attackSkill.value) {
+        if (skill.system.matchID === weaponObj.data.attackSkill.value) {
           correctSkill = skill.name;
         }
       }
@@ -675,7 +675,7 @@ export default class CD10BaseSheet extends ActorSheet {
     if (html.find("select#trait-selected").val() !== "None") {
       saveData.traitId = this.getData().traits[html.find("select#trait-selected").val()]._id;
       const selectValue = html.find("input#reverseTrait")[0].checked ? 2 : 1;
-      await this.actor.items.get(saveData.traitId).update({"data.selected": selectValue});
+      await this.actor.items.get(saveData.traitId).update({"system.selected": selectValue});
     }
     saveData.heroPoint = html.find("input#heroPoint")[0].checked;
     saveData.lethality = parseInt(html.find("input#lethality").val()) || 0;

@@ -10,14 +10,14 @@
                         {{localize "cd10.stats.playerName"}}
                     </th>
                     <td>
-                        <input name="data.playerName.value" type="text" value="{{data.playerName.value}}"
+                        <input name="system.playerName.value" type="text" value="{{data.playerName.value}}"
                             placeholder="{{localize "cd10.stats.playerName"}}" />
                     </td>
                     <th class="cd10-header">
                         {{localize "cd10.stats.title"}}
                     </th>
                     <td>
-                        <input name="data.title.value" type="text" value="{{data.title.value}}"
+                        <input name="system.title.value" type="text" value="{{data.title.value}}"
                             placeholder="{{localize "cd10.stats.title"}}" />
                     </td>
                 </tr>
@@ -26,14 +26,14 @@
                         {{localize "cd10.stats.species"}}
                     </th>
                     <td>
-                        <input name="data.species.value" type="text" value="{{data.species.value}}"
+                        <input name="system.species.value" type="text" value="{{data.species.value}}"
                             data-dtype="{{data.species.type}}" placeholder="{{localize "cd10.stats.species"}}" />
                     </td>
                     <th class="cd10-header">
                         {{localize "cd10.stats.faith"}}
                     </th>
                     <td>
-                        <input name="data.faith.value" type="text" value="{{data.faith.value}}"
+                        <input name="system.faith.value" type="text" value="{{data.faith.value}}"
                             data-dtype="{{data.faith.type}}" placeholder="{{localize "cd10.stats.faith"}}" />
                     </td>
                 </tr>
@@ -42,14 +42,14 @@
                         {{localize "cd10.stats.gender"}}
                     </th>
                     <td>
-                        <input name="data.gender.value" type="text" value="{{data.gender.value}}"
+                        <input name="system.gender.value" type="text" value="{{data.gender.value}}"
                             data-dtype="{{data.gender.type}}" placeholder="{{localize "cd10.stats.gender"}}" />
                     </td>
                     <th class="cd10-header">
                         {{localize "cd10.stats.sex"}}
                     </th>
                     <td>
-                        <input name="data.sex.value" type="text" value="{{data.sex.value}}"
+                        <input name="system.sex.value" type="text" value="{{data.sex.value}}"
                             data-dtype="{{data.sex.type}}" placeholder="{{localize "cd10.stats.sex"}}" />
                     </td>
                 </tr>
@@ -58,14 +58,14 @@
                         {{localize "cd10.stats.mainHand"}}
                     </th>
                     <td>
-                        <input name="data.mainHand.value" type="text" value="{{data.mainHand.value}}"
+                        <input name="system.mainHand.value" type="text" value="{{data.mainHand.value}}"
                             data-dtype="{{data.mainHand.type}}" placeholder="{{localize "cd10.stats.mainHand"}}" />
                     </td>
                     <th class="cd10-header">
                         {{localize "cd10.stats.age"}}
                     </th>
                     <td>
-                        <input name="data.age.value" type="text" value="{{data.age.value}}"
+                        <input name="system.age.value" type="text" value="{{data.age.value}}"
                             data-dtype="{{data.age.type}}" placeholder="{{localize "cd10.stats.age"}}" />
                     </td>
                 </tr>
@@ -79,7 +79,7 @@
             <div class="sheet-text">
                 {{editor
                 content=data.appearance.value
-                target="data.appearance.value"
+                target="system.appearance.value"
                 button=true
                 owner=owner
                 editable=editable
@@ -94,7 +94,7 @@
             <div class="sheet-text">
                 {{editor
                 content=data.personality.value
-                target="data.personality.value"
+                target="system.personality.value"
                 button=true
                 owner=owner
                 editable=editable
