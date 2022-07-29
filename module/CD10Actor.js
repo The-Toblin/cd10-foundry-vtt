@@ -58,15 +58,15 @@ export default class CD10Actor extends Actor {
    **********/
 
   get getSkills() {
-    return this.data.items.filter(p => p.data.type === "skill");
+    return this.items.filter(p => p.type === "skill");
   }
 
   get getSpells() {
-    return this.data.items.filter(p => p.data.type === "spell");
+    return this.items.filter(p => p.type === "spell");
   }
 
   get getTraits() {
-    return this.data.items.filter(p => p.data.type === "trait");
+    return this.items.filter(p => p.type === "trait");
   }
 
   get getArmor() {
@@ -139,9 +139,9 @@ export default class CD10Actor extends Actor {
     };
   }
 
-  _prepareDebilitation(data) {
+  _prepareDebilitation(system) {
     /* This function calculates the proper modifier and debilitation type for a character */
-    const wounds = data.wounds.value;
+    const wounds = system.wounds.value;
     const woundsModifier = Math.floor(wounds / 2);
 
     const physChecks = "on physical checks.";

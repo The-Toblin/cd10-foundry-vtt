@@ -54,7 +54,7 @@
         ],
         "templates": {
             "itemDescription": {
-                "description": ""
+                "description": "This is a description area."
             },
             "commonStats": {
                 "availability": "",

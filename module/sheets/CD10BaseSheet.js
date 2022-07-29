@@ -292,6 +292,7 @@ export default class CD10BaseSheet extends ActorSheet {
     if (rollObj.type === "skill") {
       skill.id = rollObj.id;
 
+      //FIXME: This should check the flags.
       for (const item of this.getData().traits) {
         if (item.data.selected > 0) trait.id = item._id;
       }

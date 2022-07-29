@@ -1,7 +1,7 @@
 export default class CD10Item extends Item {
   get acceptedAmmoList() {
     return this.actor.sheet.ammoList.filter(
-      a => a.data.ammoType === this.system.acceptedAmmo
+      a => a.system.ammoType === this.system.acceptedAmmo
     );
   }
 
@@ -27,7 +27,7 @@ export default class CD10Item extends Item {
         typeof this.system.matchID === "undefined"
         || this.system.matchID === ""
       ) {
-        await this.data.update({
+        await this.system.update({
           data: {
             matchID: randomID()
           }
@@ -39,27 +39,18 @@ export default class CD10Item extends Item {
   }
 
   static async create(data, options) {
-    /* Temporary error message to intercept the creation of 'weapon' type items.
-        They are deprecated, but to allow smooth migration, they remain in template.json.
-        They will be deleted eventually. */
-    if (data.type === "weapon") {
-      ui.notifications.error(
-        "The weapon type is deprecated. Use meleeWeapon or rangedWeapon instead. The type will be deleted in the next version."
-      );
-      return;
-    }
     return await super.create(data, options);
   }
 
   async roll() {
     let chatData = {
-      user: game.user.data._id,
+      user: game.user.id,
       speaker: ChatMessage.getSpeaker()
     };
 
     let cardData = {
       ...this.data,
-      owner: this.actor.data._id
+      owner: this.actor.id
     };
 
     chatData.content = await renderTemplate(

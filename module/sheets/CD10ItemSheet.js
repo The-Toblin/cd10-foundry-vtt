@@ -2,7 +2,7 @@ export default class CD10ItemSheet extends ItemSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       width: 725,
-      height: 600,
+      height: 640,
       classes: ["cd10", "sheet", "item"]
     });
   }
@@ -17,7 +17,7 @@ export default class CD10ItemSheet extends ItemSheet {
       owner: this.item.isOwner,
       editable: this.isEditable,
       item: baseData.item,
-      data: baseData.item.data.data,
+      system: baseData.item.system,
       config: CONFIG.cd10
     };
 

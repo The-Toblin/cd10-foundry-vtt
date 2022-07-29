@@ -8,10 +8,10 @@
                 {{skill.name}}
             </div>
             {{#if skill.system.levelUp}}<i class="fas fa-angle-double-up"></i>{{/if}} {{! //FIXME: Add flag for levelup}}
-            <input class="attribute-value inline-edit" data-field="system.skillLevel"
-                data-dtype="Number" value="{{skill.system.skillLevel}}"
+            <input class="attribute-value inline-edit" data-field="system.skillLevel.value"
+                data-dtype="Number" value="{{skill.system.skillLevel.value}}"
                 placeholder="{{localize "cd10.skill.skillLevel"}}" />
-            <a class="item-roll hidden rollable skill-check" data-type="text" data-action-value="{{skill.system.skillLevel}}" title={{localize "cd10.sheet.roll"}}>
+            <a class="item-roll hidden rollable skill-check" data-type="text" data-action-value="{{skill.system.skillLevel.value}}" title={{localize "cd10.sheet.roll"}}>
                 <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp"/>
             </a>
         </div>
@@ -31,10 +31,10 @@
             <div class="attribute-name inventory-item item" data-item-id="{{trait._id}}">
                 {{trait.name}}
             </div>
-            <input class="attribute-value inline-edit" data-field="system.skillLevel"
-                data-dtype="Number" value="{{trait.system.skillLevel}}"
+            <input class="attribute-value inline-edit" data-field="system.skillLevel.value"
+                data-dtype="Number" value="{{trait.system.skillLevel.value}}"
                 placeholder="{{localize "cd10.skill.skillLevel"}}" />
-            <a class="item-roll hidden rollable skill-check" data-type="text" data-trait-value="{{trait.system.skillLevel}}" title={{localize "cd10.sheet.roll"}}>
+            <a class="item-roll hidden rollable skill-check" data-type="text" data-trait-value="{{trait.system.skillLevel.value}}" title={{localize "cd10.sheet.roll"}}>
                 <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp"/>
             </a>
         </div>

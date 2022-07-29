@@ -1,35 +1,20 @@
 <form class="{{cssClass}}" autocomplete="off">
     <div class="item-sheet-header">
         <h1>
-            <input
-                name="name"
-                type="text"
-                value="{{item.name}}"
-                placeholder="{{localize "cd10.skill.name"}}"
-            />
+            <input name="name" type="text" value="{{item.name}}" placeholder="{{localize "cd10.skill.name"}}" />
         </h1>
     </div>
     <hr>
     <div class="item-sheet-main-content flex-row flex-evenly">
-        <img 
-            src="{{item.img}}"
-            data-edit="img"
-            title="{{item.name}}"
-        />
-        <div class="generic-info-box cd10-card ">
+        <img class="cd10-card-detail" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
+        <div class="generic-info-box cd10-card-detail">
             {{> "systems/cd10/templates/partials/item-sheet-components/generic-item-data.hbs" this }}
         </div>
     </div>
-    <div class="weapon-and-armor-stats cd10-card ">
+    <div class="weapon-and-armor-stats cd10-card-detail">
         {{> "systems/cd10/templates/partials/item-sheet-components/small-weapon-stats.hbs" this }}
     </div>
-    <div class="editor-box cd10-card-detail pad-8">
-        {{editor
-            content=data.description.value
-            target="system.description.value"
-            button=true
-            owner=owner
-            editable=editable
-        }}
+    <div class="cd10-card-detail sheet-text pad-8">
+        <textarea name="system.description">{{system.description}}</textarea>
     </div>
 </form>

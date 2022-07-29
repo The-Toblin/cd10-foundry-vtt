@@ -8,7 +8,7 @@ export default class CD10MajorCharacterSheet extends CD10BaseSheet {
     return mergeObject(super.defaultOptions, {
       template: "systems/cd10/templates/sheets/majorCharacter-sheet.hbs",
       classes: ["cd10", "sheet", "cd10-sheet"],
-      height: 750,
+      height: 775,
       width: 750,
       tabs: [
         {

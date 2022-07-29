@@ -577,7 +577,6 @@ textarea {
 .cd10.sheet.item img {
   width: 150px;
   height: 150px;
-  box-shadow: 5px 10px 10px #000000;
   background: url(assets/backgrounds/card_detail_background.webp);
 }
 .cd10.sheet.item input {
@@ -640,15 +639,9 @@ textarea {
   border-color: #dfbb61;
   width: 150px;
 }
-.cd10.sheet.item .window-content form .generic-info-box,
-.cd10.sheet.item .window-content form .weapon-and-armor-stats,
-.cd10.sheet.item .window-content form .editor-box {
-  margin: 0 10px 10px 0;
-}
 .cd10.sheet.item .window-content form .generic-info-box {
   width: 100%;
   height: 150px;
-  margin-left: 10px;
 }
 .cd10.sheet.item .window-content form .editor-box .editor {
   max-height: 140px;

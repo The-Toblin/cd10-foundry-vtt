@@ -77,7 +77,7 @@
                 {{localize "cd10.stats.appearance"}}
             </h3>
             <div class="sheet-text">
-                <textarea name="system.appearance">{{~system.appearance}}</textarea>
+                <textarea name="system.appearance">{{system.appearance}}</textarea>
             </div>
         </div>
         <div class="cd10-card-detail">
@@ -85,14 +85,7 @@
                 {{localize "cd10.stats.personality"}}
             </h3>
             <div class="sheet-text">
-                {{editor
-                content=data.personality
-                target="system.personality"
-                button=true
-                owner=owner
-                editable=editable
-                placeholder="Personality"
-                }}
+                <textarea name="system.personality">{{system.personality}}</textarea>
             </div>
         </div>
 </section>

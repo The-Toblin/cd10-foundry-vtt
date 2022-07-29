@@ -5,15 +5,15 @@
                 {{localize "cd10.item.availability"}}
             </th>
             <td>
-                <input name="system.availability.value" type="text" value="{{data.availability.value}}"
-                    data-dtype="{{data.availability.type}}" />
+                <input name="system.availability" type="text" value="{{system.availability}}"
+                    data-dtype="Text" />
             </td>
             <th>
                 {{localize "cd10.item.trader"}}
             </th>
             <td>
-                <input name="system.trader.value" type="text" value="{{data.trader.value}}"
-                    data-dtype="{{data.trader.type}}" />
+                <input name="system.trader" type="text" value="{{system.trader}}"
+                    data-dtype="Text" />
             </td>
         </tr>
         {{#if barterSetting}}
@@ -22,29 +22,29 @@
                 {{localize "cd10.item.tradeGroup"}}
             </th>
             <td>
-                <input name="system.tradeGroup.value" type="text" value="{{data.tradeGroup.value}}"
-                    data-dtype="{{data.tradeGroup.type}}" />
+                <input name="system.tradeGroup" type="text" value="{{system.tradeGroup}}"
+                    data-dtype="Text" />
             </td>
             {{else}}
             <th>
                 {{localize "cd10.item.price"}} ({{localize "cd10.stats.currencyShort"}})
             </th>
             <td>
-                <input name="system.price.value" type="text" value="{{data.price.value}}"
-                    data-dtype="{{data.price.type}}" />
+                <input name="system.price" type="text" value="{{system.price}}"
+                    data-dtype="Number" />
             </td>
             {{/if}}
             <th>
                 {{localize "cd10.item.weight"}}
             </th>
             <td>
-                <input name="system.weight.value" type="text" value="{{data.weight.value}}"
-                    data-dtype="{{data.weight.type}}" />
+                <input name="system.weight" type="text" value="{{system.weight}}"
+                    data-dtype="Number" />
             </td>
         </tr>
         <tr>
             <th>{{localize "cd10.item.count"}}</th>
-            <td><input name="system.count.value" type="text" value="{{data.count.value}}" data-dtype="{{data.count.type}}" placeholder=0 /></td>
+            <td><input name="system.count" type="text" value="{{system.count}}" data-dtype="Number" placeholder=0 /></td>
         </tr>
     </table>
 

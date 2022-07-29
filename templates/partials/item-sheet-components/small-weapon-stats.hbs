@@ -6,12 +6,12 @@
             </tr>
             <tr>
                 <td>
-                    <select name="system.attackSkill.value">
+                    <select name="system.attackSkill">
                         <option value="None">{{localize "cd10.sheet.none"}}</option>
-                        {{#select data.attackSkill.value}}
-                        {{#each worldSkills as |data id|}}
-                        <option value="{{data.matchID}}">{{data.name}}</option>
-                        {{/each}}
+                        {{#select system.attackSkill}}
+                            {{#each worldSkills as |system id|}}
+                                <option value="{{system.matchID}}">{{system.name}}</option>
+                            {{/each}}
                         {{/select}}
                     </select>
                 </td>
@@ -20,66 +20,61 @@
         <table>
             <tr>
                 {{#if (eq damageTypeSetting "simple")}}
-                <th>
-                    {{localize "cd10.chat.attack.lethality"}}
-                </th>
+                    <th>
+                        {{localize "cd10.chat.attack.lethality"}}
+                    </th>
                 {{else}}
-                <th>
-                    {{localize "cd10.weapon.slashDamage"}}
-                </th>
-                <th>
-                    {{localize "cd10.weapon.pierceDamage"}}
-                </th>
-                <th>
-                    {{localize "cd10.weapon.bluntDamage"}}
-                </th>
-                {{#if (eq damageTypeSetting "complex")}}
-                <th>
-                    {{localize "cd10.weapon.energyDamage"}}
-                </th>
-                {{/if}}
+                    <th>
+                        {{localize "cd10.weapon.slashDamage"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.weapon.pierceDamage"}}
+                    </th>
+                    <th>
+                        {{localize "cd10.weapon.bluntDamage"}}
+                    </th>
+                    {{#if (eq damageTypeSetting "complex")}}
+                        <th>
+                            {{localize "cd10.weapon.energyDamage"}}
+                        </th>
+                    {{/if}}
                 {{/if}}
                 <th>{{localize "cd10.weapon.reach"}}</th>
-                <th>{{localize "cd10.weapon.blockValue"}}</th>
             </tr>
             <tr>
                 {{#if (eq damageTypeSetting "simple")}}
-                <td>
-                    <input name="system.damage.slash.value" type="text" value="{{data.damage.slash.value}}"
-                        data-dtype="{{data.damage.slash.type}}" />
-                </td>
+                    <td>
+                        <input name="system.damage.slash" type="text" value="{{system.damage.slash}}"
+                               data-dtype="Number" />
+                    </td>
                 {{else}}
-                <td>
-                    <input name="system.damage.slash.value" type="text" value="{{data.damage.slash.value}}"
-                        data-dtype="{{data.damage.slash.type}}" />
-                </td>
-                <td>
-                    <input name="system.damage.pierce.value" type="text" value="{{data.damage.pierce.value}}"
-                        data-dtype="{{data.damage.pierce.type}}" />
-                </td>
-                <td>
-                    <input name="system.damage.blunt.value" type="text" value="{{data.damage.blunt.value}}"
-                        data-dtype="{{data.damage.blunt.type}}" />
-                </td>
-                {{#if (eq damageTypeSetting "complex")}}
-                <td>
-                    <input name="system.damage.energy.value" type="text" value="{{data.damage.energy.value}}"
-                        data-dtype="{{data.damage.energy.type}}" />
-                </td>
+                    <td>
+                        <input name="system.damage.slash" type="text" value="{{system.damage.slash}}"
+                               data-dtype="Number" />
+                    </td>
+                    <td>
+                        <input name="system.damage.pierce" type="text" value="{{system.damage.pierce}}"
+                               data-dtype="Number" />
+                    </td>
+                    <td>
+                        <input name="system.damage.blunt" type="text" value="{{system.damage.blunt}}"
+                               data-dtype="Number" />
+                    </td>
+                    {{#if (eq damageTypeSetting "complex")}}
+                        <td>
+                            <input name="system.damage.energy" type="text" value="{{system.damage.energy}}"
+                                   data-dtype="Number" />
+                        </td>
+                    {{/if}}
                 {{/if}}
-                {{/if}}
                 <td>
-                    <select name="system.reach.value">
-                        {{#select data.reach.value}}
-                        {{#each config.reach as |name type|}}
-                        <option value="{{type}}">{{localize name}}</option>
-                        {{/each}}
+                    <select name="system.reach">
+                        {{#select system.reach}}
+                            {{#each config.reach as |name type|}}
+                                <option value="{{type}}">{{localize name}}</option>
+                            {{/each}}
                         {{/select}}
                     </select>
-                </td>
-                <td>
-                    <input name="system.blockValue.value" type="text" value="{{data.blockValue.value}}"
-                        data-dtype="{{data.blockValue.type}}" />
                 </td>
         </table>
     </div>

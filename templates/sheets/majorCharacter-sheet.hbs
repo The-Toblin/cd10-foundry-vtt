@@ -67,13 +67,10 @@
                 {{> "systems/cd10/templates/partials/sheet-tabs/inventory-list.hbs"}}
             </div>
             {{!-- Notes Tab --}}
-            <div class="tab sheet-notes" data-group="primary" data-tab="notes">
-                {{editor
-                content=data.notes.value
-                target="system.notes.value"
-                button=true
-                owner=owner
-                editable=editable}}
+            <div class="tab sheet-text sheet-notes" data-group="primary" data-tab="notes">
+                <section class="cd10-card">
+                    <textarea class="cd10-card-detail" name="system.notes">{{system.notes}}</textarea>
+                </section>
             </div>
         </section>
     </div>
