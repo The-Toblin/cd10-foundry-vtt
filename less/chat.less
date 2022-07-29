@@ -1,8 +1,13 @@
 @import "./config.less";
+
 // Generic Chat Styling
 .chat-message {
   .cd10-card();
   border-radius: 5px;
+}
+
+.chat-message.whisper {
+  .cd10-card-detail() !important;
 }
 
 .message-content {

@@ -1,5 +1,4 @@
 import { cd10 } from "./module/config.js";
-import CD10Migration from "./module/CD10Migration.js";
 import CD10Item from "./module/CD10Item.js";
 import CD10Actor from "./module/CD10Actor.js";
 import CD10ItemSheet from "./module/sheets/CD10ItemSheet.js";
@@ -184,7 +183,7 @@ Hooks.once("init", function() {
   CONFIG.TinyMCE.content_css.push("systems/cd10/cd10-tinymce.css");
 });
 
-/*
+/* Disabled migration for v0.5 and on because of entire code restructure.
 Hooks.once("ready", async () => {
   if (!game.user.isGM) {
     return;

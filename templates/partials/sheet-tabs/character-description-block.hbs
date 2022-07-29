@@ -10,14 +10,14 @@
                         {{localize "cd10.stats.playerName"}}
                     </th>
                     <td>
-                        <input name="system.playerName.value" type="text" value="{{data.playerName.value}}"
+                        <input name="system.playerName" type="text" value="{{system.playerName}}"
                             placeholder="{{localize "cd10.stats.playerName"}}" />
                     </td>
                     <th class="cd10-header">
                         {{localize "cd10.stats.title"}}
                     </th>
                     <td>
-                        <input name="system.title.value" type="text" value="{{data.title.value}}"
+                        <input name="system.title" type="text" value="{{system.title}}"
                             placeholder="{{localize "cd10.stats.title"}}" />
                     </td>
                 </tr>
@@ -26,15 +26,15 @@
                         {{localize "cd10.stats.species"}}
                     </th>
                     <td>
-                        <input name="system.species.value" type="text" value="{{data.species.value}}"
-                            data-dtype="{{data.species.type}}" placeholder="{{localize "cd10.stats.species"}}" />
+                        <input name="system.species" type="text" value="{{system.species}}"
+                            data-dtype="text" placeholder="{{localize "cd10.stats.species"}}" />
                     </td>
                     <th class="cd10-header">
                         {{localize "cd10.stats.faith"}}
                     </th>
                     <td>
-                        <input name="system.faith.value" type="text" value="{{data.faith.value}}"
-                            data-dtype="{{data.faith.type}}" placeholder="{{localize "cd10.stats.faith"}}" />
+                        <input name="system.faith" type="text" value="{{system.faith}}"
+                            data-dtype="text" placeholder="{{localize "cd10.stats.faith"}}" />
                     </td>
                 </tr>
                 <tr>
@@ -42,15 +42,15 @@
                         {{localize "cd10.stats.gender"}}
                     </th>
                     <td>
-                        <input name="system.gender.value" type="text" value="{{data.gender.value}}"
-                            data-dtype="{{data.gender.type}}" placeholder="{{localize "cd10.stats.gender"}}" />
+                        <input name="system.gender" type="text" value="{{system.gender}}"
+                            data-dtype="text" placeholder="{{localize "cd10.stats.gender"}}" />
                     </td>
                     <th class="cd10-header">
                         {{localize "cd10.stats.sex"}}
                     </th>
                     <td>
-                        <input name="system.sex.value" type="text" value="{{data.sex.value}}"
-                            data-dtype="{{data.sex.type}}" placeholder="{{localize "cd10.stats.sex"}}" />
+                        <input name="system.sex" type="text" value="{{system.sex}}"
+                            data-dtype="{{system.sex.type}}" placeholder="{{localize "cd10.stats.sex"}}" />
                     </td>
                 </tr>
                 <tr>
@@ -58,15 +58,15 @@
                         {{localize "cd10.stats.mainHand"}}
                     </th>
                     <td>
-                        <input name="system.mainHand.value" type="text" value="{{data.mainHand.value}}"
-                            data-dtype="{{data.mainHand.type}}" placeholder="{{localize "cd10.stats.mainHand"}}" />
+                        <input name="system.mainHand" type="text" value="{{system.mainHand}}"
+                            data-dtype="{{system.mainHand.type}}" placeholder="{{localize "cd10.stats.mainHand"}}" />
                     </td>
                     <th class="cd10-header">
                         {{localize "cd10.stats.age"}}
                     </th>
                     <td>
-                        <input name="system.age.value" type="text" value="{{data.age.value}}"
-                            data-dtype="{{data.age.type}}" placeholder="{{localize "cd10.stats.age"}}" />
+                        <input name="system.age" type="text" value="{{system.age}}"
+                            data-dtype="{{system.age.type}}" placeholder="{{localize "cd10.stats.age"}}" />
                     </td>
                 </tr>
             </table>
@@ -77,14 +77,7 @@
                 {{localize "cd10.stats.appearance"}}
             </h3>
             <div class="sheet-text">
-                {{editor
-                content=data.appearance.value
-                target="system.appearance.value"
-                button=true
-                owner=owner
-                editable=editable
-                placeholder="Appearance"
-                }}
+                <textarea name="system.appearance">{{~system.appearance}}</textarea>
             </div>
         </div>
         <div class="cd10-card-detail">
@@ -93,8 +86,8 @@
             </h3>
             <div class="sheet-text">
                 {{editor
-                content=data.personality.value
-                target="system.personality.value"
+                content=data.personality
+                target="system.personality"
                 button=true
                 owner=owner
                 editable=editable

@@ -49,6 +49,7 @@ export default class CD10ItemSheet extends ItemSheet {
   async _onDamageSelect(event) {
     /* Monitor the state of damage types on Ammo Sheets. */
     event.preventDefault();
+    // FIXME: Make the selected type a flag instead.
     const damageType = event.currentTarget.dataset.damageType;
 
     await this.item.update({
@@ -69,7 +70,7 @@ export default class CD10ItemSheet extends ItemSheet {
     });
 
     await this.item.update({
-      [`data.damage.${damageType}.selected`]: true
+      [`system.damage.${damageType}.selected`]: true
     });
   }
 }

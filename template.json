@@ -12,7 +12,13 @@
                     "max": 15,
                     "min": 0
                 },
-                "quote": ""
+                "quote": "",
+                "gear": {
+                    "armor": "",
+                    "shield": "",
+                    "meleeWeapon": "",
+                    "rangedWeapon": ""
+                }
             }
         },
         "major": {
@@ -25,13 +31,7 @@
             "age": 0,
             "sex": "",
             "gender": "",
-            "notes": "",
-            "gear": {
-                "armor": "",
-                "shield": "",
-                "meleeWeapon": "",
-                "rangedWeapon": ""
-            }
+            "notes": ""            
         },
         "minor": {
             "templates": [
@@ -68,7 +68,6 @@
             "skillsTraits": {
                 "skillCategory": "",
                 "skillLevel": {
-                    "label": "Level",
                     "value": 0,
                     "min": 0,
                     "max": 12
@@ -83,22 +82,10 @@
             ],
             "type": "",
             "damage": {
-                "slash": {
-                    "value": 0,
-                    "selected": false
-                },
-                "pierce": {
-                    "value": 0,
-                    "selected": false
-                },
-                "blunt": {
-                    "value": 0,
-                    "selected": false
-                },
-                "energy": {
-                    "value": 0,
-                    "selected": false
-                }
+                "slash": 0,
+                "pierce": 0,
+                "blunt": 0,
+                "energy": 0
             }
         },
         "armor": {
@@ -124,10 +111,7 @@
             "templates": [
                 "skillsTraits",
                 "itemDescription"
-            ],
-            "levelUp": false,
-            "teachable": false,
-            "isPhysical": false
+            ]
         },
         "trait": {
             "templates": [
@@ -138,8 +122,7 @@
                 "min": -4,
                 "max": 4,
                 "value": 0
-            },
-            "selected": 0
+            }
         },
         "meleeWeapon": {
             "templates": [

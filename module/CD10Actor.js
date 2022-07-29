@@ -32,12 +32,12 @@ export default class CD10Actor extends Actor {
     /* Set debilitationtype and value */
     let debilitation = this._prepareDebilitation(templateData);
 
-    /* Check stress and apply to modifier */
+    /* Check stress and apply to modifier 
     if (templateData.stressing.value) {
       debilitation.modifier += 3;
       // FIXME: Make this a flag
     }
-
+    */
     templateData.modifier = {
       type: "number",
       label: "Modifier",
@@ -97,11 +97,13 @@ export default class CD10Actor extends Actor {
     return this.type === "named" ? parseInt(this.system.exp.total) : 0;
   }
 
+  /*
   get getStress() {
     return this.system.stressing.value;
     // FIXME: Make this a flag
   }
-
+  */
+ 
   /** ************************
    *                        *
    * Custom prepare methods *

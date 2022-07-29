@@ -166,7 +166,7 @@ export default class CD10BaseSheet extends ActorSheet {
   getData() {
     const sheetData = super.getData();
     sheetData.config = CONFIG.cd10;
-    sheetData.data = sheetsystem.data;
+    sheetData.system = this.actor.system;
 
     // Sort items alphabetically
     // [ ] See if this is really necessary.
@@ -184,8 +184,8 @@ export default class CD10BaseSheet extends ActorSheet {
     sheetData.rangedWeapons = sheetData.items.filter(p => p.type === "rangedWeapon");
     sheetData.skills = sheetData.items.filter(p => p.type === "skill");
     sheetData.traits = sheetData.items.filter(p => p.type === "trait");
-    sheetData.posTraits = sheetData.traits.filter(p => p.data.skillLevel.value > 0);
-    sheetData.negTraits = sheetData.traits.filter(p => p.data.skillLevel.value < 0);
+    sheetData.posTraits = sheetData.traits.filter(p => p.system.skillLevel.value > 0);
+    sheetData.negTraits = sheetData.traits.filter(p => p.system.skillLevel.value < 0);
     sheetData.spells = sheetData.items.filter(p => p.type === "spell");
     sheetData.normalItems = sheetData.items.filter(
       p =>
@@ -224,7 +224,7 @@ export default class CD10BaseSheet extends ActorSheet {
       html.find(".attack-check").click(this._attackCheck.bind(this));
       html.find(".physical-save").click(this._onSave.bind(this));
       html.find(".reveal-rollable").on("mouseover mouseout", this._onToggleRollable.bind(this));
-      html.find(".stressBox").click(this._stressBoxClicked.bind(this));
+      // FIXME: Temporarily commenting this out until active effects html.find(".stressBox").click(this._stressBoxClicked.bind(this));
       html.find(".item-delete").click(this._onItemDelete.bind(this));
       html.find(".item-equip").click(this._onItemEquip.bind(this));
       html.find(".inline-edit").change(this._onSkillEdit.bind(this));
@@ -421,7 +421,7 @@ export default class CD10BaseSheet extends ActorSheet {
     const type = item.type;
     const updateData = {};
 
-    updateData[`data.gear.${type}`] = this.actor.gear[type] === itemId ? null : itemId;
+    updateData[`system.gear.${type}`] = this.actor.gear[type] === itemId ? null : itemId;
     await this.actor.update(updateData);
   }
 
@@ -453,6 +453,7 @@ export default class CD10BaseSheet extends ActorSheet {
    * Triggers the state of the actor stressing.
    * @param {object} event The clicked event-data.
    */
+  /*
   // [ ] Turn into an active effect that clears upon round change, rather than static value.
   _stressBoxClicked(event) {
     event.preventDefault();
@@ -463,6 +464,7 @@ export default class CD10BaseSheet extends ActorSheet {
       "system.stressing.value": !value
     });
   }
+  */
 
   /**
    * Triggers the double-up chevron, indicating a skill is eligable for level up. This is not automated, and players
@@ -551,13 +553,13 @@ export default class CD10BaseSheet extends ActorSheet {
 
     attackData.damageType = event.currentTarget.dataset.damageType;
     const weaponObj = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId).data;
-    const attackSkill = weaponObj.data.attackSkill.value;
+    const attackSkill = weaponObj.system.attackSkill.value;
 
     const skill = {};
     for (const item of this.getData().skills) {
-      if (item.data.matchID === weaponObj.data.attackSkill.value) {
+      if (item.system.matchID === weaponObj.system.attackSkill.value) {
         skill.id = item._id;
-        skill.level = item.data.skillLevel.value;
+        skill.level = item.system.skillLevel.value;
       }
     }
 
@@ -571,7 +573,7 @@ export default class CD10BaseSheet extends ActorSheet {
     if (skill.id === undefined) {
       let correctSkill = null;
       for (const skill of game.items.contents) {
-        if (skill.system.matchID === weaponObj.data.attackSkill.value) {
+        if (skill.system.matchID === weaponObj.system.attackSkill.value) {
           correctSkill = skill.name;
         }
       }
@@ -580,7 +582,7 @@ export default class CD10BaseSheet extends ActorSheet {
 
     // Check if it's a ranged weapon and pick the correct, selected ammunition.
     if (weaponObj.type === "rangedWeapon") {
-      const ammo = this.actor.items.get(weaponObj.data.selectedAmmo.id).data.data;
+      const ammo = this.actor.items.get(weaponObj.system.selectedAmmo.id).system;
       if (ammo.damage.slash.selected) {
         damageType = "slash";
       } else if (ammo.damage.pierce.selected) {
@@ -610,7 +612,7 @@ export default class CD10BaseSheet extends ActorSheet {
     // Finally, check if a trait is checked and if so include it in the data.
     const trait = {};
     for (const item of this.getData().traits) {
-      if (item.data.selected > 0) trait.id = item.id;
+      if (item.system.selected > 0) trait.id = item.id;
     }
 
     // Perform the attack check

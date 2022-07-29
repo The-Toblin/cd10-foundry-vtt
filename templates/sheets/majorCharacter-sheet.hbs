@@ -18,10 +18,10 @@
         </nav>
         <section id="tabs" class="sheet-body">
             {{!-- Biography Tab --}}
-            <div class="tab sheet-bio cd10-card " data-group="primary" data-tab="biography">
-                {{> "systems/cd10/templates/partials/sheet-tabs/character-description-block.hbs"}}
+            <div class="tab sheet-bio cd10-card" data-group="primary" data-tab="biography">
+{{! DO NOT INDENT! Fixes a handlebars bug that adds whitespace to textareas.}}
+{{> "systems/cd10/templates/partials/sheet-tabs/character-description-block.hbs"}}
             </div>
-
             {{!-- Skills Tab --}}
             <div class="tab sheet-skills" data-group="primary" data-tab="skills">
                 <div class="cd10-card ">

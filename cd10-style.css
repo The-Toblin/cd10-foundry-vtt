@@ -48,19 +48,24 @@
 }
 .cd10-text {
   color: #dfbb61 !important;
+  font-family: inherit;
 }
 .cd10-base-text {
   color: #dfbb61 !important;
+  font-family: inherit;
   font-family: "Signika", sans-serif;
 }
 .cd10-header {
   color: #dfbb61 !important;
+  font-family: inherit;
+  border: none;
   font-family: "Russo One", sans-serif;
 }
 p,
 b,
 i {
   color: #dfbb61 !important;
+  font-family: inherit;
   font-family: "Signika", sans-serif;
 }
 h1,
@@ -70,6 +75,8 @@ h4,
 h5,
 h6 {
   color: #dfbb61 !important;
+  font-family: inherit;
+  border: none;
   font-family: "Russo One", sans-serif;
 }
 h1 {
@@ -118,6 +125,7 @@ hr {
 .window-content {
   background: url(assets/backgrounds/sheet_background.webp) !important;
   color: #dfbb61 !important;
+  font-family: inherit;
 }
 a.entity-link,
 a.content-link,
@@ -138,6 +146,7 @@ button {
 }
 select {
   color: #dfbb61 !important;
+  font-family: inherit;
 }
 select option {
   background-color: #06151d;
@@ -145,6 +154,7 @@ select option {
 input,
 textarea {
   color: #dfbb61 !important;
+  font-family: inherit;
 }
 .header-search input {
   background: url(assets/backgrounds/card_detail_background.webp) !important;
@@ -155,6 +165,7 @@ textarea {
   margin: 0 5px 5px 5px !important;
   padding: 4px !important;
   color: #dfbb61 !important;
+  font-family: inherit !important;
   margin: 0 3px;
 }
 .header-search input::placeholder {
@@ -180,6 +191,7 @@ textarea {
 }
 #navigation #scene-list .scene .scene-name {
   color: #dfbb61 !important;
+  font-family: inherit;
 }
 #navigation #scene-list .active {
   background: url(assets/backgrounds/card_detail_background.webp) !important;
@@ -686,10 +698,15 @@ textarea {
 .cd10.sheet textarea,
 .cd10.sheet .stat-element {
   color: #dfbb61 !important;
+  font-family: inherit;
 }
 .cd10.sheet h1,
 .cd10.sheet h3 {
   text-align: center;
+}
+.cd10.sheet textarea {
+  border: none;
+  min-height: 120px;
 }
 .cd10.sheet .quote textarea {
   padding-top: 10px;
@@ -864,8 +881,18 @@ textarea {
   padding: 4px;
   border-radius: 5px;
 }
+.chat-message.whisper {
+  background: url(assets/backgrounds/card_detail_background.webp) !important;
+  border-style: solid !important;
+  border-width: 3px !important;
+  border-image: radial-gradient(black, #6b6c65) 1 !important;
+  box-shadow: inset 2px 2px 10px 5px black !important;
+  margin: 0 5px 5px 5px !important;
+  padding: 4px !important;
+}
 .message-content {
   color: #dfbb61 !important;
+  font-family: inherit;
   font-family: "Signika", sans-serif;
 }
 .cd10-image-container {
@@ -895,10 +922,13 @@ textarea {
   margin: 0 5px 5px 5px !important;
   padding: 4px !important;
   color: #dfbb61 !important;
+  font-family: inherit;
+  border: none;
   font-family: "Russo One", sans-serif;
 }
 .dice-tooltip {
   color: #dfbb61 !important;
+  font-family: inherit !important;
 }
 .dice-tooltip .dice-rolls .roll.failure,
 .dice-tooltip .dice-rolls .roll.min {
@@ -938,6 +968,8 @@ textarea {
 }
 .trait-box {
   color: #dfbb61 !important;
+  font-family: inherit;
+  border: none;
   font-family: "Russo One", sans-serif;
   font-size: 0.8em;
   margin-bottom: 5px;
@@ -951,6 +983,7 @@ textarea {
   margin: 0 5px 5px 5px;
   padding: 4px;
   color: #dfbb61 !important;
+  font-family: inherit;
   font-family: "Signika", sans-serif;
   padding: 0px;
 }
@@ -963,6 +996,7 @@ textarea {
   margin: 0 5px 5px 5px;
   padding: 4px;
   color: #dfbb61 !important;
+  font-family: inherit;
   font-family: "Signika", sans-serif;
 }
 .sheet-body .tab .editor {
