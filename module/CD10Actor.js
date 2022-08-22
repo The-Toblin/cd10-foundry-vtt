@@ -1,4 +1,10 @@
 export default class CD10Actor extends Actor {
+  async _preCreate(data, options, user) {
+    this.setFlag("cd10", "stressing", false);
+
+    return await super._preCreate(data, options, user);
+  }
+
   prepareData() {
     super.prepareData();
   }
@@ -11,33 +17,18 @@ export default class CD10Actor extends Actor {
     /* Update Traits totals */
     let traits = this._prepareTraits(this.items);
 
-    templateData.traitsValue = {
-      type: "number",
-      label: "Total traits value",
-      value: traits.totalValue
-    };
-
-    templateData.posTraits = {
-      type: "number",
-      label: "Total positive traits",
-      value: traits.pos
-    };
-
-    templateData.negTraits = {
-      type: "number",
-      label: "Total negative traits",
-      value: traits.neg
-    };
+    templateData.traitsValue = traits.totalValue;
+    templateData.posTraits = traits.pos;
+    templateData.negTraits = traits.neg;
 
     /* Set debilitationtype and value */
     let debilitation = this._prepareDebilitation(templateData);
 
-    /* Check stress and apply to modifier 
-    if (templateData.stressing.value) {
+    if (this.getStress) {
       debilitation.modifier += 3;
-      // FIXME: Make this a flag
+
     }
-    */
+
     templateData.modifier = {
       type: "number",
       label: "Modifier",
@@ -97,13 +88,10 @@ export default class CD10Actor extends Actor {
     return this.type === "named" ? parseInt(this.system.exp.total) : 0;
   }
 
-  /*
   get getStress() {
-    return this.system.stressing.value;
-    // FIXME: Make this a flag
+    return this.getFlag("cd10", "stressing");
   }
-  */
- 
+
   /** ************************
    *                        *
    * Custom prepare methods *
@@ -219,14 +207,8 @@ export default class CD10Actor extends Actor {
     await this.updateEmbeddedDocuments("Item", traitArray);
   }
 
-  async toggleStress(value) {
-    // FIXME: Make this a flag
-    this.update({
-      data: {
-        stressing: {
-          value: value
-        }
-      }
-    });
+  async toggleStress() {
+    const currentValue = this.getStress();
+    this.setFlag("cd10", "stressing", !currentValue);
   }
 }

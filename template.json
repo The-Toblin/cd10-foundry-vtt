@@ -2,7 +2,9 @@
     "Actor": {
         "types": [
             "major",
-            "minor"
+            "minor",
+            "named",
+            "mook"
         ],
         "templates": {
             "commonStats": {
@@ -16,8 +18,7 @@
                 "gear": {
                     "armor": "",
                     "shield": "",
-                    "meleeWeapon": "",
-                    "rangedWeapon": ""
+                    "weapon": ""
                 }
             }
         },

@@ -23,15 +23,13 @@ export default class CD10Item extends Item {
         This is mainly used to match weapons with their combat skills. */
 
     if (!this.isEmbedded && this.type === "skill") {
-      if (
-        typeof this.system.matchID === "undefined"
-        || this.system.matchID === ""
-      ) {
-        await this.system.update({
-          data: {
-            matchID: randomID()
-          }
-        });
+      if (typeof this.system.matchID === "undefined" || this.system.matchID === "") {
+        const updateData = {};
+        const matchID = randomID();
+
+        updateData["system.matchID"] = matchID;
+
+        this.updateSource(updateData);
       }
     }
 
@@ -49,7 +47,7 @@ export default class CD10Item extends Item {
     };
 
     let cardData = {
-      ...this.data,
+      ...this.system,
       owner: this.actor.id
     };
 

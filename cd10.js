@@ -123,6 +123,7 @@ function registerSystemSettings() {
 Hooks.once("init", function() {
   console.log("==== CD10 | Initialising CD10 RPG System ====");
 
+
   /* Setup Config */
   CONFIG.cd10 = cd10;
   CONFIG.Item.documentClass = CD10Item;
@@ -182,34 +183,3 @@ Hooks.once("init", function() {
   console.log("==== CD10 | Pushing TinyMCE CSS ====");
   CONFIG.TinyMCE.content_css.push("systems/cd10/cd10-tinymce.css");
 });
-
-/* Disabled migration for v0.5 and on because of entire code restructure.
-Hooks.once("ready", async () => {
-  if (!game.user.isGM) {
-    return;
-  }
-
-  console.log("==== CD10 | Checking versions ====");
-
-  const currentVersion = game.settings.get("cd10", "systemMigrationVersion");
-  const NEEDS_MIGRATION_VERSION = "0.4.5";
-  let needsMigration =
-    !currentVersion || isNewerVersion(NEEDS_MIGRATION_VERSION, currentVersion);
-
-  if (needsMigration) {
-    console.log("==== CD10 | System out of date! Migration needed! ====");
-
-    try {
-      await CD10Migration(currentVersion);
-
-      console.log("==== CD10 | All migrations finished successfully. Updating settings version to", game.system.data.version, "from", currentVersion, "====");
-      game.settings.set("cd10", "systemMigrationVersion", game.system.data.version);
-
-    } catch(err) {
-      console.error("MIGRATION FAILED!", err);
-    }
-  } else {
-    console.log("==== CD10 | System up to date! Migration not needed. ====");
-  }
-});
-*/

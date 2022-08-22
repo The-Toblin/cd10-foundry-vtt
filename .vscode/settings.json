@@ -1,7 +1,8 @@
 {
   "less.compile": {
-    "main": ["cd10-style.less", "cd10-tinymce.less"],
+    "main": ["c2d10-style.less", "c2d10-tinymce.less"],
     "out": "../",
     "compress": false
-  }
+  },
+  "todo-tree.tree.scanMode": "workspace only"
 }

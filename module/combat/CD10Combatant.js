@@ -1,5 +1,6 @@
 export default class CD10Combatant extends Combatant {
   _getInitiativeFormula(combatant) {
+    // FIXME: Rewrite this shit to fit the new setup, and check all the data pathways.
     let baseFormula = super._getInitiativeFormula(combatant);
     const scene = game.scenes.get(this.data.sceneId);
     const token = scene.tokens.get(this.data.tokenId);

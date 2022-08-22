@@ -169,7 +169,6 @@ export default class CD10BaseSheet extends ActorSheet {
     sheetData.system = this.actor.system;
 
     // Sort items alphabetically
-    // [ ] See if this is really necessary.
     sheetData.items.sort(function(a, b) {
       return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
     });
@@ -198,10 +197,7 @@ export default class CD10BaseSheet extends ActorSheet {
         && p.type !== "shield"
     );
 
-    sheetData.equippedMeleeWeapon = this.actor.getMeleeWeapon;
-    sheetData.equippedRangedWeapon = this.actor.getRangedWeapon;
-    sheetData.equippedArmor = this.actor.armor;
-    sheetData.equippedShield = this.actor.getShield;
+    sheetData.stress = this.actor.getFlag("cd10", "stressing");
 
     /* Make system settings available for sheets to use for rendering */
     sheetData.damageTypeSetting = game.settings.get("cd10", "systemDamageTypes");
@@ -224,7 +220,7 @@ export default class CD10BaseSheet extends ActorSheet {
       html.find(".attack-check").click(this._attackCheck.bind(this));
       html.find(".physical-save").click(this._onSave.bind(this));
       html.find(".reveal-rollable").on("mouseover mouseout", this._onToggleRollable.bind(this));
-      // FIXME: Temporarily commenting this out until active effects html.find(".stressBox").click(this._stressBoxClicked.bind(this));
+      html.find(".stressBox").click(this._stressBoxClicked.bind(this));
       html.find(".item-delete").click(this._onItemDelete.bind(this));
       html.find(".item-equip").click(this._onItemEquip.bind(this));
       html.find(".inline-edit").change(this._onSkillEdit.bind(this));
@@ -285,20 +281,10 @@ export default class CD10BaseSheet extends ActorSheet {
    * @returns {Promise<object>} An object holding the necessary skill and trait data.
    */
   async _fetchRollData(event) {
-    const rollObj = await this._fetchObject(event.currentTarget.closest(".item").dataset.itemId, true);
-    let trait = {};
-    let skill = {};
+    const trait = this.getData().selectedTrait;
+    const skill = this.getData().selectedSkill;
 
-    if (rollObj.type === "skill") {
-      skill.id = rollObj.id;
-
-      //FIXME: This should check the flags.
-      for (const item of this.getData().traits) {
-        if (item.data.selected > 0) trait.id = item._id;
-      }
-    } else if (rollObj.type === "trait") {
-      trait.id = rollObj.id;
-    }
+    console.log(this.getData());
 
     return {
       trait: trait,
@@ -419,11 +405,14 @@ export default class CD10BaseSheet extends ActorSheet {
     const element = event.currentTarget;
     const itemId = element.closest(".item").dataset.itemId;
     const item = this.actor.items.get(itemId);
-    const type = item.type;
+    const type = item.type === "meleeWeapon" || item.type === "rangedWeapon" ? "weapon" : item.type;
     const updateData = {};
 
-    updateData[`system.gear.${type}`] = this.actor.gear[type] === itemId ? null : itemId;
+    updateData[`system.gear.${type}`] = this.actor.system.gear[type] === itemId ? null : itemId;
     await this.actor.update(updateData);
+
+    console.log(item.name, item.type, updateData);
+    console.log(this.actor.system.gear);
   }
 
   /**
@@ -454,18 +443,12 @@ export default class CD10BaseSheet extends ActorSheet {
    * Triggers the state of the actor stressing.
    * @param {object} event The clicked event-data.
    */
-  /*
-  // [ ] Turn into an active effect that clears upon round change, rather than static value.
+
   _stressBoxClicked(event) {
     event.preventDefault();
 
-    let value = this.actor.system.stressing.value;
-
-    this.actor.update({
-      "system.stressing.value": !value
-    });
+    this.actor.toggleStress();
   }
-  */
 
   /**
    * Triggers the double-up chevron, indicating a skill is eligable for level up. This is not automated, and players

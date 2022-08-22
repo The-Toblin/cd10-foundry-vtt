@@ -2,7 +2,6 @@
     {{#if skills}}
     <div class="skill-list cd10-card flex-col flex-start">
         {{#each skills as |skill|}}
-        {{log skill}}
         <div class="attribute-pair flex-row flex-evenly item reveal-rollable" data-item-id="{{skill._id}}">
             <div class="attribute-name skill-item" data-item-id="{{skill._id}}">
                 {{skill.name}}
