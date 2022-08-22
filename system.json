@@ -37,7 +37,8 @@
     "media": [
         {
             "type": "cover",
-            "url": "https://www.worldanvil.com/uploads/images/cce36b52b44c576bdf0874ef3a7e663f.webp"
+            "url": "https://www.worldanvil.com/uploads/images/cce36b52b44c576bdf0874ef3a7e663f.webp",
+            "caption": "Celenia D10 RPG System"
         }
     ],
     "socket": false,
