@@ -43,7 +43,7 @@
         </th>
     </tr>
     {{#each @root.ammunition as |ammo|}}
-    {{#if (eq ammo.data.ammoType ../data.ammoGroup.value)}}
+    {{#if (eq ammo.system.ammoType ../data.ammoGroup.value)}}
     <tr class="item equippable-inventory-item ammo-selector" data-item-id="{{ammo._id}}" data-weapon-id="{{../_id}}">
         <td>
             <img class="item-img display-inline" src="{{img}}" title="{{name}}" height="15" width="15" />
@@ -55,10 +55,10 @@
             <a class="attack-check item-roll hidden rollable" title={{localize "cd10.sheet.roll" }}>
                 <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
             </a>
-            {{#if data.damage.slash.selected}} {{data.damage.slash.value}} {{localize "cd10.weapon.slashDamage"}}
-            {{else if data.damage.pierce.selected}} {{data.damage.pierce.value}} {{localize "cd10.weapon.pierceDamage"}}
-            {{else if data.damage.blunt.selected}} {{data.blunt.pierce.value}} {{localize "cd10.weapon.bluntDamage"}}
-            {{else if data.damage.energy.selected}} {{data.damage.energy.value}} {{localize "cd10.weapon.energyDamage"}}
+            {{#if system.damage.slash.selected}} {{system.damage.slash.value}} {{localize "cd10.weapon.slashDamage"}}
+            {{else if system.damage.pierce.selected}} {{system.damage.pierce.value}} {{localize "cd10.weapon.pierceDamage"}}
+            {{else if system.damage.blunt.selected}} {{system.blunt.pierce.value}} {{localize "cd10.weapon.bluntDamage"}}
+            {{else if system.damage.energy.selected}} {{system.damage.energy.value}} {{localize "cd10.weapon.energyDamage"}}
             {{/if}}
         </td>
         <td>
@@ -66,7 +66,7 @@
         </td>
         <td>
             <a class="ammo-select" data-type="text">
-                <i class="far fa-{{#if (eq ../data.selectedAmmo.value ammo.name)}}check-{{/if}}square"></i>
+                <i class="far fa-{{#if (eq ../system.selectedAmmo.value ammo.name)}}check-{{/if}}square"></i>
             </a>
         </td>
     </tr>

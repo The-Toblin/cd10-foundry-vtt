@@ -1,7 +1,7 @@
 <div class="armor-card cd10-card flex-col item" data-item-id="{{_id}}">
     <div class="armor-info armor-name cd10-card-detail pad-8">
         <p><a class="item-equip" data-type="text">
-                <i class="far fa-{{#if this.data.isEquipped.value}}check-{{/if}}square"></i>
+                <i class="far fa-{{#if this.system.isEquipped.value}}check-{{/if}}square"></i>
             </a>
             {{name}}</p>
     </div>
@@ -13,7 +13,7 @@
                         {{localize "cd10.armor.protection"}}
                     </div>
                      <div class="armor-statvalue">
-                        {{#highest data.protection.slash.value data.protection.blunt.value data.protection.pierce.value data.protection.energy.value}}{{/highest}}
+                        {{#highest system.protection.slash.value system.protection.blunt.value system.protection.pierce.value system.protection.energy.value}}{{/highest}}
                     </div>
                 </div>
             {{else}}
@@ -22,7 +22,7 @@
                         {{localize "cd10.armor.slashProtection"}}
                     </div>
                     <div class="armor-statvalue">
-                        {{data.protection.slash.value}}
+                        {{system.protection.slash.value}}
                     </div>
                 </div>
                 <div class="armor-stats reveal-rollable">
@@ -30,7 +30,7 @@
                         {{localize "cd10.armor.pierceProtection"}}
                     </div>
                     <div class="armor-statvalue">
-                        {{data.protection.pierce.value}}
+                        {{system.protection.pierce.value}}
                     </div>
                 </div>
                 <div class="armor-stats reveal-rollable">
@@ -38,7 +38,7 @@
                         {{localize "cd10.armor.bluntProtection"}}
                     </div>
                     <div class="armor-statvalue">
-                        {{data.protection.blunt.value}}
+                        {{system.protection.blunt.value}}
                     </div>
                 </div>
                 {{#if (eq @root.damageTypeSetting "complex")}}
@@ -47,7 +47,7 @@
                         {{localize "cd10.armor.energyProtection"}}
                     </div>
                     <div class="armor-statvalue">
-                        {{data.protection.energy.value}}
+                        {{system.protection.energy.value}}
                     </div>
                 </div>
                 {{/if}}

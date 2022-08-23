@@ -60,6 +60,24 @@ export default class CD10Item extends Item {
     return ChatMessage.create(chatData);
   }
 
+  /**
+   * Function to make this item equipped, or to unequip it, to an actor. Only acts on equipment.
+   */
+  async equip() {
+    const sys = this.actor.system;
+    const type = this.type === "meleeWeapon" || this.type === "rangedWeapon" ? "weapon" : this.type;
+    const updateData = {};
+
+    console.log(sys.gear);
+
+    if (type === "weapon" || type === "armor" || type === "shield") {
+      updateData[`system.gear.${type}`] = sys.gear[type] !== this._id ? this._id : null;
+
+      console.log(updateData);
+      await this.actor.update(updateData);
+    }
+  }
+
   async setSelectionStatus(status) {
     if (this.type === "trait") {
       if (typeof status !== "number") {

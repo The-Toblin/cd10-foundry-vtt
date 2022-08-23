@@ -49,15 +49,7 @@ export default class CD10BaseSheet extends ActorSheet {
       callback: element => {
         const itemId = element.data("item-id");
         const item = this.actor.items.get(itemId);
-        let boolValue = item.system.isEquipped.value;
-
-        item.update({
-          data: {
-            isEquipped: {
-              value: !boolValue
-            }
-          }
-        });
+        item.equip();
       }
     },
     {
@@ -395,24 +387,15 @@ export default class CD10BaseSheet extends ActorSheet {
   }
 
   /**
-   * Function to facilitate equipping and unequipping items.
+   * Function to call an item's equip function.
    * @param {object} event The clicked event-data, used to fetch the itemId.
    */
   async _onItemEquip(event) {
     event.preventDefault();
-    // [ ] Test the fuck out of this function. I don't think it'll work the way I want.
-
     const element = event.currentTarget;
     const itemId = element.closest(".item").dataset.itemId;
     const item = this.actor.items.get(itemId);
-    const type = item.type === "meleeWeapon" || item.type === "rangedWeapon" ? "weapon" : item.type;
-    const updateData = {};
-
-    updateData[`system.gear.${type}`] = this.actor.system.gear[type] === itemId ? null : itemId;
-    await this.actor.update(updateData);
-
-    console.log(item.name, item.type, updateData);
-    console.log(this.actor.system.gear);
+    item.equip();
   }
 
   /**
@@ -536,7 +519,7 @@ export default class CD10BaseSheet extends ActorSheet {
     attackData.heroPoint = event.shiftKey ? this._checkHeroPoints() : false;
 
     attackData.damageType = event.currentTarget.dataset.damageType;
-    const weaponObj = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId).data;
+    const weaponObj = this.actor.items.get(event.currentTarget.closest(".item").dataset.itemId).system;
     const attackSkill = weaponObj.system.attackSkill.value;
 
     const skill = {};
