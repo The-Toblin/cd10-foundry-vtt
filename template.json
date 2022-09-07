@@ -2,9 +2,7 @@
     "Actor": {
         "types": [
             "major",
-            "minor",
-            "named",
-            "mook"
+            "minor"
         ],
         "templates": {
             "commonStats": {
