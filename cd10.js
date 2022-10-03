@@ -55,22 +55,6 @@ function registerSystemSettings() {
     default: true
   });
 
-  /* Setup how damage types are to be handled. If Simple is selected, each weapon defaults
-        to their highest value. */
-  game.settings.register("cd10", "systemDamageTypes", {
-    config: true,
-    scope: "world",
-    name: "SETTINGS.damageTypes.name",
-    hint: "SETTINGS.damageTypes.label",
-    type: String,
-    choices: {
-      simple: "Single damage type",
-      standard: "Slash, Blunt, Pierce",
-      complex: "Slash, Blunt, Pierce, Energy"
-    },
-    default: "b"
-  });
-
   // Whether or not to include rate of fire, magazine and such stats.
   game.settings.register("cd10", "systemModernity", {
     config: true,

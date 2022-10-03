@@ -30,7 +30,7 @@
             "age": 0,
             "sex": "",
             "gender": "",
-            "notes": ""            
+            "notes": ""
         },
         "minor": {
             "templates": [
@@ -40,9 +40,7 @@
     },
     "Item": {
         "types": [
-            "ammunition",
             "armor",
-            "disease",
             "genericItem",
             "meleeWeapon",
             "rangedWeapon",
@@ -74,30 +72,12 @@
                 "matchID": ""
             }
         },
-        "ammunition": {
-            "templates": [
-                "commonStats",
-                "itemDescription"
-            ],
-            "type": "",
-            "damage": {
-                "slash": 0,
-                "pierce": 0,
-                "blunt": 0,
-                "energy": 0
-            }
-        },
         "armor": {
             "templates": [
                 "commonStats",
                 "itemDescription"
             ],
-            "protection": {
-                "slash": 0,
-                "pierce": 0,
-                "blunt": 0,
-                "energy": 0
-            }
+            "protection": 0
         },
         "shield": {
             "templates": [
@@ -129,12 +109,7 @@
                 "itemDescription"
             ],
             "attackSkill": "",
-            "damage": {
-                "slash": 0,
-                "pierce": 0,
-                "blunt": 0,
-                "energy": 0
-            },
+            "damage": 0,
             "reach": "Normal"
         },
         "rangedWeapon": {
@@ -143,11 +118,6 @@
                 "itemDescription"
             ],
             "attackSkill": "",
-            "ammoGroup": "",
-            "selectedAmmo": {
-                "value": "No ammo selected",
-                "id": ""
-            },
             "magazine": 1,
             "ammoCount": 1,
             "range": {
