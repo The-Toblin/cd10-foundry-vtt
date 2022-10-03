@@ -162,10 +162,7 @@
     },
     "weapon": {
       "attackWith": "Skill",
-      "slashDamage": "Slash",
-      "pierceDamage": "Pierce",
-      "bluntDamage": "Blunt",
-      "energyDamage": "Energy",
+      "damage": "Damage",
       "lethality": "Lethality",
       "reach": "Reach",
       "blockValue": "Block",
@@ -271,10 +268,6 @@
     }
   },
   "SETTINGS": {
-    "damageTypes": {
-      "name": "Damage system complexity",
-      "label": "Determine which damage types are available in the system."
-    },
     "barter": {
       "name": "Use barter system?",
       "label": "Items will be displayed with relative value, rather than straight coinage."
