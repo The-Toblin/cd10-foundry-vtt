@@ -10,20 +10,18 @@
         </tr>
         <tr>
             <td>
-                <select name="system.skillType.value">
-                    {{#select data.skillType.value}}
+                <select name="system.skillType">
+                    {{#select system.skillType}}
                     {{#each config.traitCategories as |name type|}}
-                    <option value="{{type}}">{{localize name}}</option>
+                        <option value="{{type}}">{{localize name}}</option>
                     {{/each}}
                     {{/select}}
                 </select>
             </td>
             <td>
-                <input name="system.skillLevel.min" type="text" value="{{data.skillLevel.min}}" placeholder="{{localize "
-                    cd10.sheet.min"}}" />
+                <input name="system.skillLevel.min" type="text" value="{{system.skillLevel.min}}" placeholder="{{localize "cd10.sheet.min"}}"/>
                 {{localize "cd10.sheet.to"}}
-                <input name="system.skillLevel.max" type="text" value="{{data.skillLevel.max}}" placeholder="{{localize "
-                    cd10.sheet.max"}}" />
+                <input name="system.skillLevel.max" type="text" value="{{system.skillLevel.max}}" placeholder="{{localize "cd10.sheet.max"}}"/>
             </td>
         </tr>
     </table>

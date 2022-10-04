@@ -1,28 +1,11 @@
 <div class="weapon-card cd10-card flex-col item" data-item-id="{{_id}}">
     <div class="weapon-info weapon-name cd10-card-detail pad-8">
         <p><a class="item-equip" data-type="text">
-                <i class="far fa-{{#if system.isEquipped.value}}check-{{/if}}square"></i>
+                <i class="far fa-{{#if system.isEquipped}}check-{{/if}}square"></i>
             </a>
             {{name}}</p>
     </div>
     <div class="flex-row flex-start">
-        <div class="ammo-box cd10-card-detail pad-8">
-            {{localize "cd10.rangedWeapon.ammunition"}}
-            <hr>
-            <div class="flex-col">
-                {{#each @root.ammunition as |ammo|}}
-                    <div class="flex-row ammo-selector item" data-item-id="{{ammo._id}}" data-weapon-id="{{../_id}}">
-                        <a class="ammo-select" data-type="text" >
-                            <i class="far fa-{{#if (eq ../system.selectedAmmo.value ammo.name)}}check-{{/if}}square"></i>
-                        </a>
-                        {{ammo.name}}
-                        <a class="item-delete">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    </div>
-                {{/each}}
-            </div>
-        </div>
         <div class="weapon-box cd10-card-detail pad-8">
             <div class="weapon-stats reveal-rollable">
                 <div class="stat-name">

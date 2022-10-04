@@ -8,7 +8,7 @@
             </div>
             {{#if skill.system.levelUp}}<i class="fas fa-angle-double-up"></i>{{/if}} {{! //FIXME: Add flag for levelup}}
             <input class="attribute-value inline-edit" data-field="system.skillLevel.value"
-                data-dtype="Number" value="{{skill.system.skillLevel.value}}"
+                data-dtype="number" value="{{skill.system.skillLevel.value}}"
                 placeholder="{{localize "cd10.skill.skillLevel"}}" />
             <a class="item-roll hidden rollable skill-check" data-type="text" data-action-value="{{skill.system.skillLevel.value}}" title={{localize "cd10.sheet.roll"}}>
                 <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp"/>
@@ -23,7 +23,7 @@
         <div class="attribute-pair flex-row flex-evenly item reveal-rollable" data-item-id="{{trait._id}}">
             <div class="select-trait">
                 {{! //FIXME: Add flags for this.}}
-                <a class="select-trait" data-type="Number" data-trait-value="{{trait.system.selected}}" title={{localize "cd10.sheet.select"}}>
+                <a class="select-trait" data-type="number" data-trait-value="{{trait.system.selected}}" title={{localize "cd10.sheet.select"}}>
                     <i class="far fa-{{#if (eq this.system.selected 1)}}plus-{{else if (eq this.system.selected 2)}}minus-{{/if}}square"></i>
                 </a>
             </div>
@@ -31,7 +31,7 @@
                 {{trait.name}}
             </div>
             <input class="attribute-value inline-edit" data-field="system.skillLevel.value"
-                data-dtype="Number" value="{{trait.system.skillLevel.value}}"
+                data-dtype="number" value="{{trait.system.skillLevel.value}}"
                 placeholder="{{localize "cd10.skill.skillLevel"}}" />
             <a class="item-roll hidden rollable skill-check" data-type="text" data-trait-value="{{trait.system.skillLevel.value}}" title={{localize "cd10.sheet.roll"}}>
                 <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp"/>

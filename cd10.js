@@ -30,7 +30,6 @@ async function preloadHandlebarsTemplates() {
     "systems/cd10/templates/partials/item-sheet-components/small-ranged-weapon-stats.hbs",
     "systems/cd10/templates/partials/item-sheet-components/small-armor-stats.hbs",
     "systems/cd10/templates/partials/item-sheet-components/small-shield-stats.hbs",
-    "systems/cd10/templates/partials/item-sheet-components/small-ammo-stats.hbs",
     "systems/cd10/templates/partials/item-sheet-components/small-skill-stats.hbs",
     "systems/cd10/templates/partials/item-sheet-components/small-trait-stats.hbs",
     "systems/cd10/templates/partials/item-sheet-components/small-spell-stats.hbs",
@@ -160,4 +159,8 @@ Hooks.once("init", function() {
 
   console.log("==== CD10 | Pushing TinyMCE CSS ====");
   CONFIG.TinyMCE.content_css.push("systems/cd10/cd10-tinymce.css");
+});
+
+Hooks.on("renderPause", (_app, html, options) => {
+  html.find('img[src="icons/svg/clockwork.svg"]').attr("src", "systems/cd10/assets/icons/cd10-logo-circle.webp");
 });

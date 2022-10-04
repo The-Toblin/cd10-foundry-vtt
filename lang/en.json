@@ -2,6 +2,7 @@
   "ACTOR.TypeMajor": "Hero or Nemesis Character",
   "ACTOR.TypeMinor": "Mook",
   "ITEM.TypeArmor": "Armor",
+  "ITEM.TypeAmmunition": "Ammunition",
   "ITEM.TypeGenericitem": "Item",
   "ITEM.TypeMeleeweapon": "Melee Weapon",
   "ITEM.TypeRangedweapon": "Ranged Weapon",

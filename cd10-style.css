@@ -357,8 +357,7 @@ textarea {
   vertical-align: middle;
   text-align: center;
 }
-.weapon-card .description-box,
-.weapon-card .ammo-box {
+.weapon-card .description-box {
   width: 100%;
   max-height: 150px;
   overflow: auto;
@@ -781,9 +780,6 @@ textarea {
 }
 .cd10.sheet .twenty {
   width: 20%;
-}
-.cd10.sheet .ammo-select .far {
-  padding-right: 8px;
 }
 .cd10.sheet .display-inline {
   display: inline;

@@ -1,5 +1,5 @@
 <section class="sheet-combat-tab">
-    {{#if equippedMeleeWeapon}}
+    {{#if equippedWeapon}}
     <div class="weapon-card cd10-card ">
         <h3>{{localize "cd10.sheet.weapon"}}</h3>
         <table>
@@ -18,17 +18,11 @@
                     {{localize "cd10.sheet.equipShort"}}
                 </th>
             </tr>
-            {{#each meleeWeapons as |weapon|}}
-            {{#if weapon.system.isEquipped}}
             <tr>
-                {{> "systems/cd10/templates/partials/equipment-cards/meleeWeapon-card.hbs"}}
+                {{> "systems/cd10/templates/partials/equipment-cards/meleeWeapon-card.hbs" system.gear.weapon}}
             </tr>
-            {{/if}}
-            {{/each}}
-        </table>
+         </table>
     </div>
-    {{/if}}
-    {{#if equippedRangedWeapon}}
     <div class="weapon-card cd10-card ">
         <h3>{{localize "cd10.sheet.rangedWeapon"}}</h3>
         <table>
@@ -63,13 +57,9 @@
                     {{localize "cd10.sheet.equipShort"}}
                 </th>
             </tr>
-            {{#each rangedWeapons as |weapon|}}
-            {{#if weapon.system.isEquipped}}
             <tr>
-                {{> "systems/cd10/templates/partials/equipment-cards/rangedWeapon-card.hbs"}}
+                {{> "systems/cd10/templates/partials/equipment-cards/rangedWeapon-card.hbs" system.gear.weapon}}
             </tr>
-            {{/if}}
-            {{/each}}
         </table>
     </div>
     {{/if}}
@@ -86,13 +76,9 @@
                     {{localize "cd10.armor.protection"}}
                 </th>
             </tr>
-            {{#each armors as |armor|}}
-            {{#if armor.system.isEquipped}}
             <tr>
-                {{> "systems/cd10/templates/partials/equipment-cards/armor-card.hbs"}}
+                {{> "systems/cd10/templates/partials/equipment-cards/armor-card.hbs" system.gear.armor}}
             </tr>
-            {{/if}}
-            {{/each}}
         </table>
     </div>
     {{/if}}
@@ -115,13 +101,9 @@
                     {{localize "cd10.sheet.equipShort"}}
                 </th>
             </tr>
-            {{#each shields as |shield|}}
-            {{#if shield.system.isEquipped}}
             <tr>
-                {{> "systems/cd10/templates/partials/equipment-cards/shield-card.hbs"}}
+                {{> "systems/cd10/templates/partials/equipment-cards/shield-card.hbs" system.gear.shield}}
             </tr>
-            {{/if}}
-            {{/each}}
         </table>
     </div>
     {{/if}}

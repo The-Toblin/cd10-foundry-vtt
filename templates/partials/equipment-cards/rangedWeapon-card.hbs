@@ -5,67 +5,25 @@
     {{name}}
 </td>
 <td class="item equippable-inventory-item" data-item-id="{{_id}}">
-    {{data.range.value.rangeClose}}
+    {{system.damage}}
 </td>
 <td class="item equippable-inventory-item" data-item-id="{{_id}}">
-    {{data.range.value.rangeNormal}}
+    {{system.range.rangeClose}}
 </td>
 <td class="item equippable-inventory-item" data-item-id="{{_id}}">
-    {{system.range.value.rangeLong}}
+    {{system.range.rangeNormal}}
 </td>
 <td class="item equippable-inventory-item" data-item-id="{{_id}}">
-    {{system.range.value.rangeMax}}
+    {{system.range.rangeLong}}
 </td>
 <td class="item equippable-inventory-item" data-item-id="{{_id}}">
-    {{system.ammoGroup.value}}
+    {{system.range.rangeMax}}
+</td>
+<td class="item equippable-inventory-item" data-item-id="{{_id}}">
+    {{system.ammoGroup}}
 </td>
 <td class="item equippable-inventory-item" data-item-id="{{_id}}">
     <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
-        <i class="far fa-{{#if system.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
+        <i class="far fa-{{#if system.isEquipped}}minus{{else}}plus{{/if}}-square"></i>
     </a>
 </td>
-<table>
-    <tr>
-        <th>
-
-        </th>
-        <th>
-            {{localize "cd10.stats.name"}}
-        </th>
-        <th>
-            {{localize "cd10.weapon.lethality"}}
-        </th>
-        <th>
-            {{localize "cd10.item.count"}}
-        </th>
-        <th>
-            {{localize "cd10.sheet.selected"}}
-        </th>
-    </tr>
-    {{#each @root.ammunition as |ammo|}}
-    {{#if (eq ammo.system.ammoType ../data.ammoGroup.value)}}
-    <tr class="item equippable-inventory-item ammo-selector" data-item-id="{{ammo._id}}" data-weapon-id="{{../_id}}">
-        <td>
-            <img class="item-img display-inline" src="{{img}}" title="{{name}}" height="15" width="15" />
-        </td>
-        <td>
-            {{name}}
-        </td>
-        <td class="{{#if (eq ../data.selectedAmmo.value ammo.name)}}reveal-rollable{{/if}} item equippable-inventory-item" data-item-id="{{../_id}}">
-            <a class="attack-check item-roll hidden rollable" title={{localize "cd10.sheet.roll" }}>
-                <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
-            </a>
-            {{system.damage}} {{localize "cd10.weapon.damage"}}
-        </td>
-        <td>
-            {{system.count.value}}
-        </td>
-        <td>
-            <a class="ammo-select" data-type="text">
-                <i class="far fa-{{#if (eq ../system.selectedAmmo.value ammo.name)}}check-{{/if}}square"></i>
-            </a>
-        </td>
-    </tr>
-    {{/if}}
-    {{/each}}
-</table>

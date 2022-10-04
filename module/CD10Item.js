@@ -1,9 +1,4 @@
 export default class CD10Item extends Item {
-  get acceptedAmmoList() {
-    return this.actor.sheet.ammoList.filter(
-      a => a.system.ammoType === this.system.acceptedAmmo
-    );
-  }
 
   get getSelectionStatus() {
     return this.type === "trait" ? this.system.selected : false;
@@ -71,7 +66,7 @@ export default class CD10Item extends Item {
     console.log(sys.gear);
 
     if (type === "weapon" || type === "armor" || type === "shield") {
-      updateData[`system.gear.${type}`] = sys.gear[type] !== this._id ? this._id : null;
+      updateData[`system.gear.${type}`] = sys.gear[type] !== this ? this : null;
 
       console.log(updateData);
       await this.actor.update(updateData);

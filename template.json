@@ -30,7 +30,8 @@
             "age": 0,
             "sex": "",
             "gender": "",
-            "notes": ""
+            "notes": "",
+            "money": 0
         },
         "minor": {
             "templates": [
@@ -54,9 +55,9 @@
                 "description": "This is a description area."
             },
             "commonStats": {
-                "availability": "",
+                "availability": "Common",
                 "trader": "",
-                "count": 0,
+                "count": 1,
                 "tradeGroup": 0,
                 "price": 0,
                 "weight": 0,

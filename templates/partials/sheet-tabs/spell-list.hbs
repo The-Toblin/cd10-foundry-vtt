@@ -5,10 +5,10 @@
             <div class="attribute-name">
                 {{spell.name}}
             </div>
-            <input class="attribute-value inline-edit" data-field="system.skillLevel.value"
-                data-dtype="{{spell.data.skillLevel.type}}" value="{{spell.data.skillLevel.value}}"
+            <input class="attribute-value inline-edit" data-field="system.skillLevel"
+                data-dtype="number" value="{{spell.system.skillLevel}}"
                 placeholder="{{localize "cd10.skill.skillLevel"}}" />
-            <a class="item-roll hidden rollable skill-check" data-type="text" data-action-value="{{spell.data.skillLevel.value}}" title={{localize "cd10.sheet.roll"}}>
+            <a class="item-roll hidden rollable skill-check" data-type="text" data-action-value="{{spell.system.skillLevel}}" title={{localize "cd10.sheet.roll"}}>
                 <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp"/>
             </a>
         </div>
@@ -20,7 +20,7 @@
                             {{localize "cd10.spell.difficulty"}}
                         </th>
                         <td>
-                            {{data.difficulty.value}}
+                            {{system.difficulty}}
                         </td>
                     </tr>
                     <tr>
@@ -28,7 +28,7 @@
                             {{localize "cd10.spell.cast"}}
                         </th>
                         <td>
-                            {{data.cast.value}}
+                            {{system.cast}}
                         </td>
                     </tr>
                     <tr>
@@ -36,7 +36,7 @@
                             {{localize "cd10.spell.duration"}}
                         </th>
                         <td>
-                            {{data.duration.value}}
+                            {{system.duration}}
                         </td>
                     </tr>
                     <tr>
@@ -44,7 +44,7 @@
                             {{localize "cd10.spell.range"}}
                         </th>
                         <td>
-                            {{data.range.value}}
+                            {{system.range}}
                         </td>
                     </tr>
                     <tr>
@@ -52,19 +52,19 @@
                             {{localize "cd10.spell.area"}}
                         </th>
                         <td>
-                            {{data.area.value}}
+                            {{system.area}}
                         </td>
                     </tr>
                 </table>
             </div>
             <div class="spell-description">
-                {{{data.description.value}}}
+                {{{system.description}}}
             </div>
         </div>
         <div>
-            {{#if data.reagents.value}}
+            {{#if system.reagents}}
             <div class="spell-reagents">
-                {{{data.reagents.value}}}
+                {{{system.reagents}}}
             </div>
             {{/if}}
         </div>

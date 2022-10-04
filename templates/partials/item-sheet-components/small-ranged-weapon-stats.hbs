@@ -2,11 +2,11 @@
     <table>
         <tr>
             <th>{{localize "cd10.rangedWeapon.attackWith"}}</th>
+            <th>{{localize "cd10.weapon.damage"}}</th>
             <th>{{localize "cd10.rangedWeapon.rangeClose"}}</th>
             <th>{{localize "cd10.rangedWeapon.rangeNormal"}}</th>
             <th>{{localize "cd10.rangedWeapon.rangeLong"}}</th>
             <th>{{localize "cd10.rangedWeapon.rangeMax"}}</th>
-            <th>{{localize "cd10.rangedWeapon.ammunition"}}</th>
         </tr>
         <tr>
             <td>
@@ -20,28 +20,23 @@
                 </select>
             </td>
             <td>
+                <input name="system.damage" type="text" value="{{system.damage}}"
+                       data-dtype="number" />
+            </td>
+            <td>
                 <input name="system.range.rangeClose" type="text" value="{{system.range.rangeClose}}"
-                       data-dtype="Number" />
+                       data-dtype="number" />
             </td>
             <td>
                 <input name="system.range.rangeNormal" type="text" value="{{system.range.rangeNormal}}"
-                       data-dtype="Number" />
+                       data-dtype="number" />
             </td>
             <td>
                 <input name="system.range.rangeLong" type="text" value="{{system.range.rangeLong}}"
-                       data-dtype="Number" />
+                       data-dtype="number" />
             </td>
             <td>
-                <input name="system.range.rangeMax" type="text" value="{{system.range.rangeMax}}" data-dtype="Number" />
-            </td>
-            <td>
-                <select name="system.ammoGroup">
-                    {{#select system.ammoGroup}}
-                        {{#each config.ammunitionTypes as |name type|}}
-                            <option value="{{type}}">{{localize name}}</option>
-                        {{/each}}
-                    {{/select}}
-                </select>
+                <input name="system.range.rangeMax" type="text" value="{{system.range.rangeMax}}" data-dtype="number" />
             </td>
         </tr>
     </table>
@@ -54,10 +49,10 @@
                 <th>{{localize "cd10.rangedWeapon.fullAuto"}}</th>
             </tr>
             <tr>
-                <td><input name="system.accuracy" type="text" value="{{system.accuracy}}" data-dtype="Number" /></td>
-                <td><input name="system.magazine" type="text" value="{{system.magazine}}" data-dtype="Number" /></td>
-                <td><input name="system.rof.burst" type="text" value="{{system.rof.burst}}" data-dtype="Number" /></td>
-                <td><input name="system.rof.fullAuto" type="text" value="{{system.rof.fullAuto}}" data-dtype="Number" />
+                <td><input name="system.accuracy" type="text" value="{{system.accuracy}}" data-dtype="number" /></td>
+                <td><input name="system.magazine" type="text" value="{{system.magazine}}" data-dtype="number" /></td>
+                <td><input name="system.rof.burst" type="text" value="{{system.rof.burst}}" data-dtype="number" /></td>
+                <td><input name="system.rof.fullAuto" type="text" value="{{system.rof.fullAuto}}" data-dtype="number" />
                 </td>
             </tr>
         </table>

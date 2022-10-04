@@ -166,7 +166,6 @@ export default class CD10BaseSheet extends ActorSheet {
     });
 
     // Create properties for Handlebars templates to access.
-    sheetData.ammunition = sheetData.items.filter(p => p.type === "ammunition");
     sheetData.allArmors = sheetData.items.filter(p => p.type === "armor" || p.type === "shield");
     sheetData.armors = sheetData.items.filter(p => p.type === "armor");
     sheetData.shields = sheetData.items.filter(p => p.type === "shield");
@@ -175,8 +174,8 @@ export default class CD10BaseSheet extends ActorSheet {
     sheetData.rangedWeapons = sheetData.items.filter(p => p.type === "rangedWeapon");
     sheetData.skills = sheetData.items.filter(p => p.type === "skill");
     sheetData.traits = sheetData.items.filter(p => p.type === "trait");
-    sheetData.posTraits = sheetData.traits.filter(p => p.system.skillLevel.value > 0);
-    sheetData.negTraits = sheetData.traits.filter(p => p.system.skillLevel.value < 0);
+    sheetData.posTraits = sheetData.traits.filter(p => p.system.skillLevel > 0);
+    sheetData.negTraits = sheetData.traits.filter(p => p.system.skillLevel < 0);
     sheetData.spells = sheetData.items.filter(p => p.type === "spell");
     sheetData.normalItems = sheetData.items.filter(
       p =>
@@ -188,6 +187,10 @@ export default class CD10BaseSheet extends ActorSheet {
         && p.type !== "rangedWeapon"
         && p.type !== "shield"
     );
+
+    sheetData.equippedWeapon = sheetData.system.gear.weapon;
+    sheetData.equippedArmor = sheetData.system.gear.armor;
+    sheetData.equippedShield = sheetData.system.gear.shield;
 
     sheetData.stress = this.actor.getFlag("cd10", "stressing");
 
@@ -215,7 +218,6 @@ export default class CD10BaseSheet extends ActorSheet {
       html.find(".item-delete").click(this._onItemDelete.bind(this));
       html.find(".item-equip").click(this._onItemEquip.bind(this));
       html.find(".inline-edit").change(this._onSkillEdit.bind(this));
-      html.find(".ammo-select").click(this._onAmmoSelect.bind(this));
       html.find(".skill-item").click(this._toggleSkillUp.bind(this));
       html.find(".add-wound").click(this._modifyWoundsOnClick.bind(this));
       html.find(".remove-wound").click(this._modifyWoundsOnClick.bind(this));
@@ -290,33 +292,6 @@ export default class CD10BaseSheet extends ActorSheet {
   _rollItem(item) {
     if (game.settings.get("cd10", "systemDumpDescriptions")) item.roll();
   }
-
-  /**
-   * Triggered from selecting ammo on weapons or in the inventory. Makes sure the proper ammo gets
-   * its selected value set.
-   * @param {HTML} event The HTML event. Only used to access the itemId from the dataset.
-   */
-  async _onAmmoSelect(event) {
-    let ammoObj = this.actor.items.get(event.currentTarget.closest(".ammo-selector").dataset.itemId);
-    let weaponObj = this.actor.items.get(event.currentTarget.closest(".ammo-selector").dataset.weaponId);
-
-    if (weaponObj.system.selectedAmmo.id === ammoObj.id) {
-      await weaponObj.update({
-        "system.selectedAmmo": {
-          value: "None",
-          id: "None"
-        }
-      });
-    } else {
-      await weaponObj.update({
-        "system.selectedAmmo": {
-          value: ammoObj.name,
-          id: ammoObj.id
-        }
-      });
-    }
-  }
-
 
   /**
    * Sheet functions. These are clickable somewhere on the sheet and perform a function based on what was clicked.
@@ -546,26 +521,7 @@ export default class CD10BaseSheet extends ActorSheet {
       ui.notifications.info(`You do not have the prerequisite skill for ${weaponObj.name}, which is ${correctSkill}. Making blank check.`);
     }
 
-    // Check if it's a ranged weapon and pick the correct, selected ammunition.
-    if (weaponObj.type === "rangedWeapon") {
-      const ammo = this.actor.items.get(weaponObj.system.selectedAmmo.id).system;
-
-      if (ammo.count.value > 0) {
-        let count = ammo.count.value;
-        count -= 1;
-
-        ammo.update({
-          system: {
-            count: {
-              value: count
-            }
-          }
-        });
-      } else {
-        ui.notifications.error("You are out of that ammo type! Select another!");
-        return;
-      }
-    }
+    // [ ] Don't forget to check for range weapon ammo. (Or, you know, drop it)
 
     // Finally, check if a trait is checked and if so include it in the data.
     const trait = {};

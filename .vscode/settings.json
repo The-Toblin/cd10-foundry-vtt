@@ -1,6 +1,6 @@
 {
   "less.compile": {
-    "main": ["c2d10-style.less", "c2d10-tinymce.less"],
+    "main": ["cd10-style.less"],
     "out": "../",
     "compress": false
   },

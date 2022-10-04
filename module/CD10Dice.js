@@ -255,7 +255,7 @@ const _getEquipment = async actor => {
 
 /**
  * Determines the lethality caused by a weapon being used.
- * @param {object} actor           The Actor object. Required for finding the ammunition for ranged weapons.
+ * @param {object} actor           The Actor object.
  * @param {object} equipmentList  An object holding the actor's equipped items.
  * @returns {Promise<number>}     Returns a number for the lethality.
  */

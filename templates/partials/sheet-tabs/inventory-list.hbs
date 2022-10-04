@@ -9,8 +9,7 @@
                 {{localize "cd10.stats.currency"}}
             </th>
             <td>
-                <input name="system.money.value" type="text" value="{{data.money.value}}" data-dtype="{{data.money.type}}"
-                    placeholder=0 />
+                <input name="system.money" type="text" value="{{system.money}}" data-dtype="number" placeholder=0/>
             </td>
         </tr>
     </table>
@@ -61,20 +60,20 @@
                         {{name}}
                     </td>
                     <td>
-                        {{item.data.weight.value}} {{localize "cd10.item.weightMarker"}}
+                        {{item.system.weight}} {{localize "cd10.item.weightMarker"}}
                     </td>
                     {{#if ../barterSetting}}
                     <td>
-                        G{{item.data.tradeGroup.value}}
+                        G{{item.system.tradeGroup}}
                     </td>
                     {{else}}
                     <td>
-                        {{item.data.price.value}} {{localize "cd10.stats.currencyShort"}}
+                        {{item.system.price}} {{localize "cd10.stats.currencyShort"}}
                     </td>
                     {{/if}}
                     <td>
                         <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
-                            <i class="far fa-{{#if item.data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
+                            <i class="far fa-{{#if item.system.isEquipped}}minus{{else}}plus{{/if}}-square"></i>
                         </a>
                     </td>
                     <td>
@@ -135,20 +134,20 @@
                         {{name}}
                     </td>
                     <td>
-                        {{item.data.weight.value}} {{localize "cd10.item.weightMarker"}}
+                        {{item.system.weight}} {{localize "cd10.item.weightMarker"}}
                     </td>
                     {{#if ../barterSetting}}
                     <td>
-                        G{{item.data.tradeGroup.value}}
+                        G{{item.system.tradeGroup}}
                     </td>
                     {{else}}
                     <td>
-                        {{item.data.price.value}} {{localize "cd10.stats.currencyShort"}}
+                        {{item.system.price}} {{localize "cd10.stats.currencyShort"}}
                     </td>
                     {{/if}}
                     <td>
                         <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
-                            <i class="far fa-{{#if item.data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
+                            <i class="far fa-{{#if item.system.isEquipped}}minus{{else}}plus{{/if}}-square"></i>
                         </a>
                     </td>
                     <td>
@@ -209,19 +208,19 @@
                         {{name}}
                     </td>
                     <td>
-                        {{item.data.weight.value}} {{localize "cd10.item.weightMarker"}}
+                        {{item.system.weight}} {{localize "cd10.item.weightMarker"}}
                     </td>
                     {{#if ../barterSetting}}
                     <td>
-                        G{{item.data.tradeGroup.value}}
+                        G{{item.system.tradeGroup}}
                     </td>
                     {{else}}
                     <td>
-                        {{item.data.price.value}} {{localize "cd10.stats.currencyShort"}}
+                        {{item.system.price}} {{localize "cd10.stats.currencyShort"}}
                     </td>
                     {{/if}}
                     <td>
-                        {{item.data.count.value}}
+                        {{item.system.count}}
                     </td>
                     <td>
                         <a class="item-delete" data-type="text" title={{localize "cd10.sheet.remove" }}>
