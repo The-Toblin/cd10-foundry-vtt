@@ -7,45 +7,12 @@
     </div>
     <div class="flex-row flex-between">
         <div class="stat-box pad-4">
-            {{localize "cd10.armor.protection"}} vs
-            {{#if (eq type "slash")}}
-            {{localize "cd10.attack.slash"}}
-            {{else if (eq type "pierce")}}
-            {{localize "cd10.attack.pierce"}}
-            {{else if (eq type "blunt")}}
-            {{localize "cd10.attack.blunt"}}
-            {{else if (eq type "energy")}}
-            {{localize "cd10.attack.energy"}}
-            {{/if}}
+            {{localize "cd10.armor.protection"}}
         </div>
         <div class="value-box">
             {{armorDamageProtection}}
         </div>
     </div>
-    {{#if usingShield}}
-    <div class="flex-row flex-between">
-        <h3>
-            {{localize "cd10.armor.shield"}}
-        </h3>
-    </div>
-    <div class="flex-row flex-between">
-        <div class="stat-box pad-4">
-            {{localize "cd10.armor.protection"}} vs
-            {{#if (eq type "slash")}}
-            {{localize "cd10.attack.slash"}}
-            {{else if (eq type "pierce")}}
-            {{localize "cd10.attack.pierce"}}
-            {{else if (eq type "blunt")}}
-            {{localize "cd10.attack.blunt"}}
-            {{else if (eq type "energy")}}
-            {{localize "cd10.attack.energy"}}
-            {{/if}}
-        </div>
-        <div class="value-box">
-            {{shieldDamageProtection}}
-        </div>
-    </div>
-    {{/if}}
     <div class="flex-row flex-between">
         <h3>
             {{localize "cd10.chat.attack.attack"}}

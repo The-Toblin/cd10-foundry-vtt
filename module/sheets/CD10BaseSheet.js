@@ -549,21 +549,13 @@ export default class CD10BaseSheet extends ActorSheet {
     // Check if it's a ranged weapon and pick the correct, selected ammunition.
     if (weaponObj.type === "rangedWeapon") {
       const ammo = this.actor.items.get(weaponObj.system.selectedAmmo.id).system;
-      if (ammo.damage.slash.selected) {
-        damageType = "slash";
-      } else if (ammo.damage.pierce.selected) {
-        damageType = "pierce";
-      } else if (ammo.damage.blunt.selected) {
-        damageType = "blunt";
-      } else if (ammo.damage.energy.selected) {
-        damageType = "energy";
-      }
+
       if (ammo.count.value > 0) {
         let count = ammo.count.value;
         count -= 1;
 
         ammo.update({
-          data: {
+          system: {
             count: {
               value: count
             }
@@ -587,8 +579,7 @@ export default class CD10BaseSheet extends ActorSheet {
         actor: this.actor,
         skillId: skill.id,
         traitId: trait.id,
-        heroPoint: attackData.heroPoint,
-        damageType: attackData.damageType
+        heroPoint: attackData.heroPoint
       });
 
       // Reset traits selection.
@@ -605,9 +596,8 @@ export default class CD10BaseSheet extends ActorSheet {
    * @param {event} event             The clicked data. Always provided, but not used.
    * @param {object} data             An object holding provided data to populate the dialog.
    * @param {number} data.lethality   Default=0 The Lethality value of the inflicted attack.
-   * @param {string} data.damageType  Default="slash" The DamageType of the inflicted attack.
    */
-  async _onSave(event, {lethality = 0, damageType = "slash"}={}) {
+  async _onSave(event, {lethality = 0}={}) {
     event.preventDefault();
 
     let dialogOptions = {
@@ -647,7 +637,6 @@ export default class CD10BaseSheet extends ActorSheet {
     }
     saveData.heroPoint = html.find("input#heroPoint")[0].checked;
     saveData.lethality = parseInt(html.find("input#lethality").val()) || 0;
-    saveData.damageType = html.find("select#damage-type").val() || "slash";
 
     if (saveData.lethality <= 0) {
       ui.notifications.error("Please select a non-zero value for Lethality!");
@@ -664,8 +653,7 @@ export default class CD10BaseSheet extends ActorSheet {
         actor: this.actor,
         traitId: saveData.traitId,
         heroPoint: saveData.heroPoint,
-        lethality: saveData.lethality,
-        damageType: saveData.damageType
+        lethality: saveData.lethality
       });
 
       // Reset traits selection.

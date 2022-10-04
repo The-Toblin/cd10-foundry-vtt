@@ -5,53 +5,16 @@
     {{name}}
 </td>
 <td class="item equippable-inventory-item" data-item-id="{{_id}}">
-    {{#if (eq data.reach.value "grappling")}}
-    {{localize "cd10.reach.grappling"}}
-    {{else if (eq data.reach.value "close")}}
-    {{localize "cd10.reach.close"}}
-    {{else if (eq data.reach.value "normal")}}
-    {{localize "cd10.reach.normal"}}
-    {{else if (eq data.reach.value "long")}}
-    {{localize "cd10.reach.long"}}
-    {{else if (eq data.reach.value "vlong")}}
-    {{localize "cd10.reach.vlong"}}
-    {{/if}}
-</td>
-{{#if (eq @root.damageTypeSetting "simple")}}
-<td class="item equippable-inventory-item" data-item-id="{{_id}}">
-    {{#highest data.damage.slash.value data.damage.blunt.value data.damage.pierce.value
-    data.damage.energy.value}}{{/highest}}
-</td>
-{{else}}
-<td class="reveal-rollable item equippable-inventory-item" data-item-id="{{_id}}">
-    <a class="attack-check item-roll hidden rollable" data-damage-type="slash" title={{localize "cd10.sheet.roll"}}>
-        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
-    </a>
-    {{data.damage.slash.value}}
+    {{localize (concat "cd10.reach." system.reach)}}
 </td>
 <td class="reveal-rollable item equippable-inventory-item" data-item-id="{{_id}}">
-    <a class="attack-check item-roll hidden rollable" data-damage-type="pierce" title={{localize "cd10.sheet.roll"}}>
+    <a class="attack-check item-roll hidden rollable" title={{localize "cd10.sheet.roll"}}>
         <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
     </a>
-    {{data.damage.pierce.value}}
+    {{system.damage}}
 </td>
-<td class="reveal-rollable item equippable-inventory-item" data-item-id="{{_id}}">
-    <a class="attack-check item-roll hidden rollable" data-damage-type="blunt" title={{localize "cd10.sheet.roll"}}>
-        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
-    </a>
-    {{data.damage.blunt.value}}
-</td>
-{{/if}}
-{{#if (eq @root.damageTypeSetting "complex")}}
-<td class="reveal-rollable item equippable-inventory-item" data-item-id="{{_id}}">
-    <a class="attack-check item-roll hidden rollable" data-damage-type="energy" title={{localize "cd10.sheet.roll"}}>
-        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
-    </a>
-    {{data.damage.energy.value}}
-</td>
-{{/if}}
 <td class="item equippable-inventory-item" data-item-id="{{_id}}">
     <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
-        <i class="far fa-{{#if data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
+        <i class="far fa-{{#if system.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
     </a>
 </td>

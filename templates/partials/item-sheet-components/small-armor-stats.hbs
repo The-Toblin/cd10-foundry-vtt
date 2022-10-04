@@ -2,24 +2,10 @@
     <div class="armor pad">
         <table>
             <tr>
-                {{#if (eq damageTypeSetting "simple")}}
                 <th>
-                    {{localize "cd10.chat.attack.lethality"}}
+                    {{localize "cd10.armor.protection"}}
                 </th>
-                {{else if (eq damageTypeSetting "standard")}}
-                    {{#each config.standardDamageTypes as | name |}}
-                        <th>
-                            {{localize name}}
-                        </th>
-                    {{/each}}
-                {{else if (eq damageTypeSetting "complex")}}
-                    {{#each config.complexDamageTypes as | name |}}
-                        <th>
-                            {{localize name}}
-                        </th>
-                    {{/each}}
-                {{/if}}
-                {{#if (eq this.item.data.type "shield")}}
+                {{#if (eq this.item.type "shield")}}
                 <th>
                     {{localize "cd10.armor.defenseValueShort"}}
                 </th>
@@ -27,46 +13,12 @@
             </tr>
 
             <tr>
-                {{#if (eq damageTypeSetting "simple")}}
+                <td>
+                    <input name="system.protection" type="text" value="{{system.protection}}" data-dtype="number"/>
+                </td>
+                {{#if (eq this.item.type "shield")}}
                     <td>
-                        <input name="system.protection.slash.value" type="text" value="{{data.protection.slash.value}}"
-                            data-dtype="{{data.protection.slash.type}}" />
-                    </td>
-                {{else if (eq damageTypeSetting "standard")}}
-                    <td>
-                        <input name="system.protection.slash.value" type="text" value="{{data.protection.slash.value}}"
-                            data-dtype="{{data.protection.slash.type}}" />
-                    </td>
-                    <td>
-                        <input name="system.protection.pierce.value" type="text" value="{{data.protection.pierce.value}}"
-                            data-dtype="{{data.protection.pierce.type}}" />
-                    </td>
-                    <td>
-                        <input name="system.protection.blunt.value" type="text" value="{{data.protection.blunt.value}}"
-                            data-dtype="{{data.protection.blunt.type}}" />
-                    </td>
-                {{else if (eq damageTypeSetting "complex")}}
-                    <td>
-                        <input name="system.protection.slash.value" type="text" value="{{data.protection.slash.value}}"
-                            data-dtype="{{data.protection.slash.type}}" />
-                    </td>
-                    <td>
-                        <input name="system.protection.pierce.value" type="text" value="{{data.protection.pierce.value}}"
-                            data-dtype="{{data.protection.pierce.type}}" />
-                    </td>
-                    <td>
-                        <input name="system.protection.blunt.value" type="text" value="{{data.protection.blunt.value}}"
-                            data-dtype="{{data.protection.blunt.type}}" />
-                    </td>
-                    <td>
-                        <input name="system.protection.energy.value" type="text" value="{{data.protection.energy.value}}"
-                            data-dtype="{{data.protection.energy.type}}" />
-                    </td>
-                {{/if}}
-                {{#if (eq this.item.data.type "shield")}}
-                    <td>
-                        <input name="system.defenseValue.value" type="text" value="{{data.defenseValue.value}}"
-                        data-dtype="{{data.defenseValue.type}}" />
+                        <input name="system.defenseValue" type="text" value="{{system.defenseValue}}"/>
                     </td>
                 {{/if}}
             </tr>

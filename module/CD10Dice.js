@@ -257,12 +257,11 @@ const _getEquipment = async actor => {
  * Determines the lethality caused by a weapon being used.
  * @param {object} actor           The Actor object. Required for finding the ammunition for ranged weapons.
  * @param {object} equipmentList  An object holding the actor's equipped items.
- * @param {string} damageType     The damage type, pulled from the click on the sheet.
  * @returns {Promise<number>}     Returns a number for the lethality.
  */
-const _getLethality = async (actor, equipmentList, damageType) => {
+const _getLethality = async (actor, equipmentList) => {
   if (equipmentList.meleeWeapon !== null) {
-    return parseInt(equipmentList.meleeWeapon.system.damage[damageType].value);
+    return parseInt(equipmentList.meleeWeapon.system.damage);
   } else if (equipmentList.rangedWeapon !== null) {
     const ammo = actor.items.get(equipmentList.rangedWeapon.system.selectedAmmo.id);
     const ammoProperties = Object.entries(ammo.system.damage);
@@ -349,20 +348,17 @@ export const SkillCheck = async ({actor = null, skillId = null, traitId = null, 
  * @param {string}  attackData.skillId     (opt) The ID of the skill the actor is using.
  * @param {string}  attackData.traitId     (opt) The ID of the trait the actor is using.
  * @param {boolean} attackData.heroPoint   (opt) Whether or not the Actor is spending a hero point on this check.
- * @param {string}  attackData.damageType  (opt) The damagetype of the attack. Defaults to "slash".
  */
-export const AttackCheck = async ({actor = null, skillId = null, traitId = null, heroPoint = false, damageType = "slash"} = {}) => {
+export const AttackCheck = async ({actor = null, skillId = null, traitId = null, heroPoint = false} = {}) => {
   const messageTemplate = "systems/cd10/templates/partials/chat-messages/attack-check.hbs";
   const checkResults = await _performBaseCheck(actor, skillId, traitId, false, heroPoint);
-  checkResults.damageType = damageType;
 
   // Get a list of equipped items.
   checkResults.equipmentList = await _getEquipment(checkResults.actor);
 
   // Determine the lethality of the weapon used and add any bonus damage from rolling 9's.
-  checkResults.lethality = await _getLethality(checkResults.actor, checkResults.equipmentList, checkResults.damageType);
+  checkResults.lethality = await _getLethality(checkResults.actor, checkResults.equipmentList);
   // [ ] Remove bonus damage, reinstate Excess.
-  checkResults.bonusDamage = parseInt(checkResults.roll.nines * 4);
 
   const templateContext = {
     skillName: checkResults.skill.name,
@@ -397,9 +393,8 @@ export const AttackCheck = async ({actor = null, skillId = null, traitId = null,
  * @param {string}  saveData.traitId     (opt) The ID of the trait the actor is using.
  * @param {boolean} saveData.heroPoint   (opt) Whether or not the Actor is spending a hero point on this check.
  * @param {number}  saveData.lethality   The Lethality the save is performed against.
- * @param {string}  saveData.damageType  (opt) The damagetype of the attack. Defaults to "slash".
  */
-export const Save = async ({actor = null, traitId = null, heroPoint = false, lethality = 0, damageType = "slash"} = {}) => {
+export const Save = async ({actor = null, traitId = null, heroPoint = false, lethality = 0} = {}) => {
   const messageTemplate = "systems/cd10/templates/partials/chat-messages/save.hbs";
   const checkResults = await _performBaseCheck(actor, null, traitId, true, heroPoint);
   checkResults.damageType = damageType;

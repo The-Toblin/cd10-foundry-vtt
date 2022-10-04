@@ -7,51 +7,14 @@
     </div>
     <div class="flex-row flex-start image-stats-box">
         <div class="armor-box cd10-card-detail pad-8">
-            {{#if (eq @root.damageTypeSetting "simple")}}
-                <div class="armor-stats reveal-rollable">
-                    <div class="stat-name">
-                        {{localize "cd10.armor.protection"}}
-                    </div>
-                     <div class="armor-statvalue">
-                        {{#highest system.protection.slash.value system.protection.blunt.value system.protection.pierce.value system.protection.energy.value}}{{/highest}}
-                    </div>
+            <div class="armor-stats reveal-rollable">
+                <div class="stat-name">
+                    {{localize "cd10.armor.protection"}}
                 </div>
-            {{else}}
-                <div class="armor-stats reveal-rollable">
-                    <div class="stat-name">
-                        {{localize "cd10.armor.slashProtection"}}
-                    </div>
-                    <div class="armor-statvalue">
-                        {{system.protection.slash.value}}
-                    </div>
+                <div class="armor-statvalue">
+                    {{system.protection}}
                 </div>
-                <div class="armor-stats reveal-rollable">
-                    <div class="stat-name">
-                        {{localize "cd10.armor.pierceProtection"}}
-                    </div>
-                    <div class="armor-statvalue">
-                        {{system.protection.pierce.value}}
-                    </div>
-                </div>
-                <div class="armor-stats reveal-rollable">
-                    <div class="stat-name">
-                        {{localize "cd10.armor.bluntProtection"}}
-                    </div>
-                    <div class="armor-statvalue">
-                        {{system.protection.blunt.value}}
-                    </div>
-                </div>
-                {{#if (eq @root.damageTypeSetting "complex")}}
-                <div class="armor-stats reveal-rollable">
-                    <div class="stat-name">
-                        {{localize "cd10.armor.energyProtection"}}
-                    </div>
-                    <div class="armor-statvalue">
-                        {{system.protection.energy.value}}
-                    </div>
-                </div>
-                {{/if}}
-            {{/if}}
+            </div>
         </div>
     </div>
 </div>

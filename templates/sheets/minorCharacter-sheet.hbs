@@ -16,7 +16,7 @@
                     </div>
                     <hr>
                     <div class="quote">
-                        <textarea name="system.quote.value">{{data.quote.value}}</textarea>
+                        <textarea name="system.quote.value">{{system.quote}}</textarea>
                     </div>
                     <hr>
                 </div>
@@ -65,177 +65,131 @@
         </div>
     </div>
     <section class="sheet-combat-tab">
-        {{#if meleeWeapons}}
-        <div class="weapon-card cd10-card ">
-            <h3>{{localize "cd10.sheet.weapon"}}</h3>
-            <table>
-                <tr>
-                    <th></th>
-                    <th>
-                        {{localize "cd10.stats.name"}}
-                    </th>
-                    <th>
-                        {{localize "cd10.weapon.reach"}}
-                    </th>
-                    {{#if (eq @root.damageTypeSetting "simple")}}
-                    <th>
-                        {{localize "cd10.weapon.lethality"}}
-                    </th>
-                    {{else}}
-                    <th>
-                        {{localize "cd10.weapon.slashDamage"}}
-                    </th>
-                    <th>
-                        {{localize "cd10.weapon.pierceDamage"}}
-                    </th>
-                    <th>
-                        {{localize "cd10.weapon.bluntDamage"}}
-                    </th>
-                    {{/if}}
-                    {{#if (eq @root.damageTypeSetting "complex")}}
-                    <th>
-                        {{localize "cd10.weapon.energyDamage"}}
-                    </th>
-                    {{/if}}
-                    <th>
-                        {{localize "cd10.sheet.equipShort"}}
-                    </th>
-                </tr>
-                {{#each meleeWeapons as |weapon|}}
-                <tr>
-                    {{> "systems/cd10/templates/partials/equipment-cards/meleeWeapon-card.hbs"}}
-                </tr>
-                {{/each}}
-            </table>
-        </div>
-        {{/if}}
-        {{#if rangedWeapons}}
-        <div class="weapon-card cd10-card ">
-            <h3>{{localize "cd10.sheet.rangedWeapon"}}</h3>
-            <table>
-                <tr>
-                    <th></th>
-                    <th>
-                        {{localize "cd10.stats.name"}}
-                    </th>
-                    <th>
-                        {{localize "cd10.rangedWeapon.rangeClose"}}
-                    </th>
+    {{#if equippedMeleeWeapon}}
+    <div class="weapon-card cd10-card ">
+        <h3>{{localize "cd10.sheet.weapon"}}</h3>
+        <table>
+            <tr>
+                <th></th>
+                <th>
+                    {{localize "cd10.stats.name"}}
+                </th>
+                <th>
+                    {{localize "cd10.weapon.reach"}}
+                </th>
+                <th>
+                    {{localize "cd10.weapon.lethality"}}
+                </th>
+                <th>
+                    {{localize "cd10.sheet.equipShort"}}
+                </th>
+            </tr>
+            {{#each meleeWeapons as |weapon|}}
+            {{#if weapon.system.isEquipped}}
+            <tr>
+                {{> "systems/cd10/templates/partials/equipment-cards/meleeWeapon-card.hbs"}}
+            </tr>
+            {{/if}}
+            {{/each}}
+        </table>
+    </div>
+    {{/if}}
+    {{#if equippedRangedWeapon}}
+    <div class="weapon-card cd10-card ">
+        <h3>{{localize "cd10.sheet.rangedWeapon"}}</h3>
+        <table>
+            <tr>
+                <th></th>
+                <th>
+                    {{localize "cd10.stats.name"}}
+                </th>
+                <th>
+                    {{localize "cd10.rangedWeapon.rangeClose"}}
+                </th>
 
-                    <th>
-                        {{localize "cd10.rangedWeapon.rangeNormal"}}
-                    </th>
+                <th>
+                    {{localize "cd10.rangedWeapon.rangeNormal"}}
+                </th>
 
-                    <th>
-                        {{localize "cd10.rangedWeapon.rangeLong"}}
-                    </th>
-                    <th>
-                        {{localize "cd10.rangedWeapon.rangeMax"}}
-                    </th>
-                    <th>
-                        {{localize "cd10.rangedWeapon.ammunition"}}
-                    </th>
-                    {{#if modernity}}
-                    <th>
-                        {{localize "cd10.weapon.energyDamage"}}
-                    </th>
-                    <th>
-                        {{localize "cd10.sheet.equipShort"}}
-                    </th>
-                    {{/if}}
-                </tr>
-                {{#each rangedWeapons as |weapon|}}
-                <tr>
-                    {{> "systems/cd10/templates/partials/equipment-cards/rangedWeapon-card.hbs"}}
-                </tr>
-                {{/each}}
-            </table>
-        </div>
-        {{/if}}
-        {{#if armors}}
-        <div class="weapon-card cd10-card ">
-            <h3>{{localize "cd10.sheet.armor"}}</h3>
-            <table>
-                <tr>
-                    <th></th>
-                    <th>
-                        {{localize "cd10.stats.name"}}
-                    </th>
-                    {{#if (eq @root.damageTypeSetting "simple")}}
-                    <th>
-                        {{localize "cd10.armor.protection"}}
-                    </th>
-                    {{else}}
-                    <th>
-                        {{localize "cd10.armor.slashProtection"}}
-                    </th>
-                    <th>
-                        {{localize "cd10.armor.pierceProtection"}}
-                    </th>
-                    <th>
-                        {{localize "cd10.armor.bluntProtection"}}
-                    </th>
-                    {{/if}}
-                    {{#if (eq @root.damageTypeSetting "complex")}}
-                    <th>
-                        {{localize "cd10.armor.energyProtection"}}
-                    </th>
-                    {{/if}}
-                    <th>
-                        {{localize "cd10.sheet.equipShort"}}
-                    </th>
-                </tr>
-                {{#each armors as |armor|}}
-                <tr>
-                    {{> "systems/cd10/templates/partials/equipment-cards/armor-card.hbs"}}
-                </tr>
-                {{/each}}
-            </table>
-        </div>
-        {{/if}}
-        {{#if shields}}
-        <div class="weapon-card cd10-card ">
-            <h3>{{localize "cd10.sheet.shield"}}</h3>
-            <table>
-                <tr>
-                    <th></th>
-                    <th>
-                        {{localize "cd10.stats.name"}}
-                    </th>
-                    <th>
-                        {{localize "cd10.armor.defenseValue"}}
-                    </th>
-                    {{#if (eq @root.damageTypeSetting "simple")}}
-                    <th>
-                        {{localize "cd10.armor.protection"}}
-                    </th>
-                    {{else}}
-                    <th>
-                        {{localize "cd10.armor.slashProtection"}}
-                    </th>
-                    <th>
-                        {{localize "cd10.armor.pierceProtection"}}
-                    </th>
-                    <th>
-                        {{localize "cd10.armor.bluntProtection"}}
-                    </th>
-                    {{/if}}
-                    {{#if (eq @root.damageTypeSetting "complex")}}
-                    <th>
-                        {{localize "cd10.armor.energyProtection"}}
-                    </th>
-                    {{/if}}
-                    <th>
-                        {{localize "cd10.sheet.equipShort"}}
-                    </th>
-                </tr>
-                {{#each shields as |shield|}}
-                <tr>
-                    {{> "systems/cd10/templates/partials/equipment-cards/shield-card.hbs"}}
-                </tr>
-                {{/each}}
-            </table>
-        </div>
-        {{/if}}
-    </section>
+                <th>
+                    {{localize "cd10.rangedWeapon.rangeLong"}}
+                </th>
+                <th>
+                    {{localize "cd10.rangedWeapon.rangeMax"}}
+                </th>
+                <th>
+                    {{localize "cd10.rangedWeapon.ammunition"}}
+                </th>
+                {{#if modernity}}
+                <th>
+                    {{localize "cd10.weapon.energyDamage"}}
+                </th>
+                {{/if}}
+                <th>
+                    {{localize "cd10.sheet.equipShort"}}
+                </th>
+            </tr>
+            {{#each rangedWeapons as |weapon|}}
+            {{#if weapon.system.isEquipped}}
+            <tr>
+                {{> "systems/cd10/templates/partials/equipment-cards/rangedWeapon-card.hbs"}}
+            </tr>
+            {{/if}}
+            {{/each}}
+        </table>
+    </div>
+    {{/if}}
+    {{#if equippedArmor}}
+    <div class="weapon-card cd10-card ">
+        <h3>{{localize "cd10.sheet.armor"}}</h3>
+        <table>
+            <tr>
+                <th></th>
+                <th>
+                    {{localize "cd10.stats.name"}}
+                </th>
+                <th>
+                    {{localize "cd10.armor.protection"}}
+                </th>
+            </tr>
+            {{#each armors as |armor|}}
+            {{#if armor.system.isEquipped}}
+            <tr>
+                {{> "systems/cd10/templates/partials/equipment-cards/armor-card.hbs"}}
+            </tr>
+            {{/if}}
+            {{/each}}
+        </table>
+    </div>
+    {{/if}}
+    {{#if equippedShield}}
+    <div class="weapon-card cd10-card ">
+         <h3>{{localize "cd10.sheet.shield"}}</h3>
+        <table>
+            <tr>
+                <th></th>
+                <th>
+                    {{localize "cd10.stats.name"}}
+                </th>
+                <th>
+                    {{localize "cd10.armor.defenseValue"}}
+                </th>
+                <th>
+                    {{localize "cd10.armor.protection"}}
+                </th>
+                <th>
+                    {{localize "cd10.sheet.equipShort"}}
+                </th>
+            </tr>
+            {{#each shields as |shield|}}
+            {{#if shield.system.isEquipped}}
+            <tr>
+                {{> "systems/cd10/templates/partials/equipment-cards/shield-card.hbs"}}
+            </tr>
+            {{/if}}
+            {{/each}}
+        </table>
+    </div>
+    {{/if}}
+</section>
 </form>

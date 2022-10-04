@@ -11,32 +11,15 @@
                 <th>
                     {{localize "cd10.weapon.reach"}}
                 </th>
-                {{#if (eq @root.damageTypeSetting "simple")}}
                 <th>
                     {{localize "cd10.weapon.lethality"}}
                 </th>
-                {{else}}
-                <th>
-                    {{localize "cd10.weapon.slashDamage"}}
-                </th>
-                <th>
-                    {{localize "cd10.weapon.pierceDamage"}}
-                </th>
-                <th>
-                    {{localize "cd10.weapon.bluntDamage"}}
-                </th>
-                {{/if}}
-                {{#if (eq @root.damageTypeSetting "complex")}}
-                <th>
-                    {{localize "cd10.weapon.energyDamage"}}
-                </th>
-                {{/if}}
                 <th>
                     {{localize "cd10.sheet.equipShort"}}
                 </th>
             </tr>
             {{#each meleeWeapons as |weapon|}}
-            {{#if weapon.data.isEquipped.value}}
+            {{#if weapon.system.isEquipped}}
             <tr>
                 {{> "systems/cd10/templates/partials/equipment-cards/meleeWeapon-card.hbs"}}
             </tr>
@@ -81,7 +64,7 @@
                 </th>
             </tr>
             {{#each rangedWeapons as |weapon|}}
-            {{#if weapon.data.isEquipped.value}}
+            {{#if weapon.system.isEquipped}}
             <tr>
                 {{> "systems/cd10/templates/partials/equipment-cards/rangedWeapon-card.hbs"}}
             </tr>
@@ -99,32 +82,12 @@
                 <th>
                     {{localize "cd10.stats.name"}}
                 </th>
-                {{#if (eq @root.damageTypeSetting "simple")}}
                 <th>
                     {{localize "cd10.armor.protection"}}
                 </th>
-                {{else}}
-                <th>
-                    {{localize "cd10.armor.slashProtection"}}
-                </th>
-                <th>
-                    {{localize "cd10.armor.pierceProtection"}}
-                </th>
-                <th>
-                    {{localize "cd10.armor.bluntProtection"}}
-                </th>
-                {{/if}}
-                {{#if (eq @root.damageTypeSetting "complex")}}
-                <th>
-                    {{localize "cd10.armor.energyProtection"}}
-                </th>
-                {{/if}}
-                <th>
-                    {{localize "cd10.sheet.equipShort"}}
-                </th>
             </tr>
             {{#each armors as |armor|}}
-            {{#if armor.data.isEquipped.value}}
+            {{#if armor.system.isEquipped}}
             <tr>
                 {{> "systems/cd10/templates/partials/equipment-cards/armor-card.hbs"}}
             </tr>
@@ -145,32 +108,15 @@
                 <th>
                     {{localize "cd10.armor.defenseValue"}}
                 </th>
-                {{#if (eq @root.damageTypeSetting "simple")}}
                 <th>
                     {{localize "cd10.armor.protection"}}
                 </th>
-                {{else}}
-                <th>
-                    {{localize "cd10.armor.slashProtection"}}
-                </th>
-                <th>
-                    {{localize "cd10.armor.pierceProtection"}}
-                </th>
-                <th>
-                    {{localize "cd10.armor.bluntProtection"}}
-                </th>
-                {{/if}}
-                {{#if (eq @root.damageTypeSetting "complex")}}
-                <th>
-                    {{localize "cd10.armor.energyProtection"}}
-                </th>
-                {{/if}}
                 <th>
                     {{localize "cd10.sheet.equipShort"}}
                 </th>
             </tr>
             {{#each shields as |shield|}}
-            {{#if shield.data.isEquipped.value}}
+            {{#if shield.system.isEquipped}}
             <tr>
                 {{> "systems/cd10/templates/partials/equipment-cards/shield-card.hbs"}}
             </tr>

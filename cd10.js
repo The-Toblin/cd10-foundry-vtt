@@ -150,12 +150,6 @@ Hooks.once("init", function() {
     return result;
   });
 
-  Handlebars.registerHelper("highest", function(slash, blunt, pierce, energy) {
-  // Helper for converting a 4 damage type weapon into a simple, single type weapon if simple damage model is set.
-    let highest = Math.max(slash, blunt, pierce, energy);
-    return highest;
-  });
-
   Handlebars.registerHelper("skills", function() {
     let skills = [];
     game.items.forEach(s => {

@@ -13,16 +13,7 @@
       {{localize "cd10.chat.attack.lethality"}}
     </div>
     <div class="value-box">
-      {{weaponDamage}}
-      {{#if (eq type "slash")}}
-        {{localize "cd10.attack.slash"}}
-      {{else if (eq type "pierce")}}
-        {{localize "cd10.attack.pierce"}}
-      {{else if (eq type "blunt")}}
-        {{localize "cd10.attack.blunt"}}
-      {{else if (eq type "energy")}}
-        {{localize "cd10.attack.energy"}}
-      {{/if}}
+      {{weaponDamage}} {{localize "cd10.attack.damage"}}
     </div>
   </div>
   <div class="flex-row flex-between">
@@ -75,15 +66,6 @@
     </div>
     <div class="value-box">
       {{lethality}}
-      {{#if (eq type "slash")}}
-        {{localize "cd10.attack.slash"}}
-      {{else if (eq type "pierce")}}
-        {{localize "cd10.attack.pierce"}}
-      {{else if (eq type "blunt")}}
-        {{localize "cd10.attack.blunt"}}
-      {{else if (eq type "energy")}}
-        {{localize "cd10.attack.energy"}}
-      {{/if}}
     </div>
   </div>
 </div>

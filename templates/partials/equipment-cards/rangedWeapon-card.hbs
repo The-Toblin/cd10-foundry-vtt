@@ -11,17 +11,17 @@
     {{data.range.value.rangeNormal}}
 </td>
 <td class="item equippable-inventory-item" data-item-id="{{_id}}">
-    {{data.range.value.rangeLong}}
+    {{system.range.value.rangeLong}}
 </td>
 <td class="item equippable-inventory-item" data-item-id="{{_id}}">
-    {{data.range.value.rangeMax}}
+    {{system.range.value.rangeMax}}
 </td>
 <td class="item equippable-inventory-item" data-item-id="{{_id}}">
-    {{data.ammoGroup.value}}
+    {{system.ammoGroup.value}}
 </td>
 <td class="item equippable-inventory-item" data-item-id="{{_id}}">
     <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
-        <i class="far fa-{{#if data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
+        <i class="far fa-{{#if system.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
     </a>
 </td>
 <table>
@@ -55,14 +55,10 @@
             <a class="attack-check item-roll hidden rollable" title={{localize "cd10.sheet.roll" }}>
                 <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
             </a>
-            {{#if system.damage.slash.selected}} {{system.damage.slash.value}} {{localize "cd10.weapon.slashDamage"}}
-            {{else if system.damage.pierce.selected}} {{system.damage.pierce.value}} {{localize "cd10.weapon.pierceDamage"}}
-            {{else if system.damage.blunt.selected}} {{system.blunt.pierce.value}} {{localize "cd10.weapon.bluntDamage"}}
-            {{else if system.damage.energy.selected}} {{system.damage.energy.value}} {{localize "cd10.weapon.energyDamage"}}
-            {{/if}}
+            {{system.damage}} {{localize "cd10.weapon.damage"}}
         </td>
         <td>
-            {{data.count.value}}
+            {{system.count.value}}
         </td>
         <td>
             <a class="ammo-select" data-type="text">

@@ -38,35 +38,6 @@ export default class CD10ItemSheet extends ItemSheet {
   }
 
   activateListeners(html) {
-    html.find(".damage-select").click(this._onDamageSelect.bind(this));
     super.activateListeners(html);
-  }
-
-  async _onDamageSelect(event) {
-    /* Monitor the state of damage types on Ammo Sheets. */
-    event.preventDefault();
-    // FIXME: Make the selected type a flag instead.
-    const damageType = event.currentTarget.dataset.damageType;
-
-    await this.item.update({
-      "system.damage": {
-        slash: {
-          selected: false
-        },
-        pierce: {
-          selected: false
-        },
-        blunt: {
-          selected: false
-        },
-        energy: {
-          selected: false
-        }
-      }
-    });
-
-    await this.item.update({
-      [`system.damage.${damageType}.selected`]: true
-    });
   }
 }

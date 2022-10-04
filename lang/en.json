@@ -136,10 +136,8 @@
       "sling": "Sling",
       "throwing": "Throwing",
       "twoHandedWeapons": "Two-handed weapons",
-      "slash": "Slash",
-      "pierce": "Pierce",
-      "blunt": "Blunt",
-      "energy": "Energy"
+      "damage": "Damage",
+      "lethality": "Lethality"
     },
     "skill": {
       "teachableYes": "Requires a teacher.",
@@ -195,11 +193,6 @@
     },
     "armor": {
       "protection": "Protection",
-      "slashProtection": "Slash",
-      "pierceProtection": "Pierce",
-      "bluntProtection": "Blunt",
-      "energyProtection": "Energy",
-      "blockValue": "Block",
       "defenseValue": "Defensive Value",
       "defenseValueShort": "DV",
       "shield": "Shield"

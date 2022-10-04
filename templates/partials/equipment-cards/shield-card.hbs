@@ -5,31 +5,13 @@
     {{name}}
 </td>
 <td>
-    {{data.defenseValue.value}}
-</td>
-{{#if (eq @root.damageTypeSetting "simple")}}
-<td class="item equippable-inventory-item" data-item-id="{{_id}}">
-    {{#highest data.protection.slash.value data.protection.blunt.value data.protection.pierce.value
-    data.protection.energy.value}}{{/highest}}
-</td>
-{{else}}
-<td class="item equippable-inventory-item" data-item-id="{{_id}}">
-    {{data.protection.slash.value}}
+    {{system.defenseValue.value}}
 </td>
 <td class="item equippable-inventory-item" data-item-id="{{_id}}">
-    {{data.protection.pierce.value}}
+    {{system.protection}}
 </td>
-<td class="item equippable-inventory-item" data-item-id="{{_id}}">
-    {{data.protection.blunt.value}}
-</td>
-{{/if}}
-{{#if (eq @root.damageTypeSetting "complex")}}
-<td class="item equippable-inventory-item" data-item-id="{{_id}}">
-    {{data.protection.energy.value}}
-</td>
-{{/if}}
 <td class="item equippable-inventory-item" data-item-id="{{_id}}">
     <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
-        <i class="far fa-{{#if data.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
+        <i class="far fa-{{#if system.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
     </a>
 </td>

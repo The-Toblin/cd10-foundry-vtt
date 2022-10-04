@@ -2,45 +2,15 @@
     <table>
         <tr>
             <th>{{localize "cd10.armor.defenseValueShort"}}</th>
-            {{#if (eq damageTypeSetting "simple")}}
                 <th>{{localize "cd10.armor.Protection"}}</th>
-            {{else}}
-                <th>{{localize "cd10.armor.slashProtection"}}</th>
-                <th>{{localize "cd10.armor.pierceProtection"}}</th>
-                <th>{{localize "cd10.armor.bluntProtection"}}</th>
-                {{#if (eq damageTypeSetting "complex")}}
-                    <th>{{localize "cd10.armor.energyProtection"}}</th>
-                {{/if}}
-            {{/if}}
         </tr>
         <tr>
             <td>
-                <input name="system.defenseValue.value" type="text" value="{{data.defenseValue.value}}"
-                    data-dtype="{{data.defenseValue.type}}" />
-            </td>
-            {{#if (eq damageTypeSetting "simple")}}
-                <td><input name="system.protection.slash.value" type="text" value="{{data.protection.slash.value}}"
-                    data-dtype="{{data.protection.slash.type}}" /></td>
-            {{else}}
-            <td>
-                <input name="system.protection.slash.value" type="text" value="{{data.protection.slash.value}}"
-                    data-dtype="{{data.protection.slash.type}}" />
+                <input name="system.defenseValue" type="text" value="{{system.defenseValue}}" data-dtype="number"/>
             </td>
             <td>
-                <input name="system.protection.pierce.value" type="text" value="{{data.protection.pierce.value}}"
-                    data-dtype="{{data.protection.pierce.type}}" />
+                <input name="system.protection" type="text" value="{{system.protection}}" data-dtype="number"/>
             </td>
-            <td>
-                <input name="system.protection.blunt.value" type="text" value="{{data.protection.blunt.value}}"
-                    data-dtype="{{data.protection.blunt.type}}" />
-            </td>
-                {{#if (eq damageTypeSetting "complex")}}
-                <td>
-                    <input name="system.protection.energy.value" type="text" value="{{data.protection.energy.value}}"
-                        data-dtype="{{data.protection.energy.type}}" />
-                </td>
-                {{/if}}
-            {{/if}}
         </tr>
     </table>
 </div>

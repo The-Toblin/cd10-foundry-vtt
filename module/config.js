@@ -9,20 +9,6 @@ CD10.ammunitionTypes = {
   rockets: "cd10.ammunition.rockets",
   shells: "cd10.ammunition.shells"
 };
-CD10.simpleDamageTypes = {
-  lethality: "cd10.chat.attack.lethality"
-};
-CD10.standardDamageTypes = {
-  slash: "cd10.attack.slash",
-  pierce: "cd10.attack.pierce",
-  blunt: "cd10.attack.blunt"
-};
-CD10.complexDamageTypes = {
-  slash: "cd10.attack.slash",
-  pierce: "cd10.attack.pierce",
-  blunt: "cd10.attack.blunt",
-  energy: "cd10.attack.energy"
-};
 CD10.reach = {
   normal: "cd10.reach.normal",
   grappling: "cd10.reach.grappling",

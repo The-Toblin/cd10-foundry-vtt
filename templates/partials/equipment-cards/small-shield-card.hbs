@@ -1,65 +1,28 @@
 <div class="armor-card cd10-card flex-col item" data-item-id="{{_id}}">
     <div class="armor-info armor-name cd10-card-detail pad-8">
         <p><a class="item-equip" data-type="text">
-                <i class="far fa-{{#if this.data.isEquipped.value}}check-{{/if}}square"></i>
+                <i class="far fa-{{#if this.system.isEquipped.value}}check-{{/if}}square"></i>
             </a>
             {{name}}</p>
     </div>
     <div class="flex-row flex-start image-stats-box">
         <div class="armor-box cd10-card-detail pad-8">
             <div class="armor-stats">
-                    <div class="stat-name">
-                        {{localize "cd10.armor.defenseValue"}}
-                    </div>
-                    <div class="armor-statvalue">
-                        {{data.defenseValue.value}}
-                    </div>
+                <div class="stat-name">
+                    {{localize "cd10.armor.defenseValue"}}
                 </div>
-            {{#if (eq @root.damageTypeSetting "simple")}}
-                <div class="armor-stats reveal-rollable">
-                    <div class="stat-name">
-                        {{localize "cd10.armor.protection"}}
-                    </div>
-                     <div class="armor-statvalue">
-                        {{#highest data.protection.slash.value data.protection.blunt.value data.protection.pierce.value data.protection.energy.value}}{{/highest}}
-                    </div>
+                <div class="armor-statvalue">
+                    {{system.defenseValue}}
                 </div>
-            {{else}}
-                <div class="armor-stats reveal-rollable">
-                    <div class="stat-name">
-                        {{localize "cd10.armor.slashProtection"}}
-                    </div>
-                    <div class="armor-statvalue">
-                        {{data.protection.slash.value}}
-                    </div>
+            </div>
+            <div class="armor-stats reveal-rollable">
+                <div class="stat-name">
+                    {{localize "cd10.armor.protection"}}
                 </div>
-                <div class="armor-stats reveal-rollable">
-                    <div class="stat-name">
-                        {{localize "cd10.armor.pierceProtection"}}
-                    </div>
-                    <div class="armor-statvalue">
-                        {{data.protection.pierce.value}}
-                    </div>
+                <div class="armor-statvalue">
+                    {{system.protection}}
                 </div>
-                <div class="armor-stats reveal-rollable">
-                    <div class="stat-name">
-                        {{localize "cd10.armor.bluntProtection"}}
-                    </div>
-                    <div class="armor-statvalue">
-                        {{data.protection.blunt.value}}
-                    </div>
-                </div>
-                {{#if (eq @root.damageTypeSetting "complex")}}
-                <div class="armor-stats reveal-rollable">
-                    <div class="stat-name">
-                        {{localize "cd10.armor.energyProtection"}}
-                    </div>
-                    <div class="armor-statvalue">
-                        {{data.protection.energy.value}}
-                    </div>
-                </div>
-                {{/if}}
-            {{/if}}
-        </div>
+            </div>
+    </div>
     </div>
 </div>
