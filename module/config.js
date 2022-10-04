@@ -1,6 +1,6 @@
-export const cd10 = {};
+export const CD10 = {};
 
-cd10.ammunitionTypes = {
+CD10.ammunitionTypes = {
   none: "cd10.attack.none",
   arrows: "cd10.ammunition.arrows",
   bolts: "cd10.ammunition.bolts",
@@ -9,28 +9,28 @@ cd10.ammunitionTypes = {
   rockets: "cd10.ammunition.rockets",
   shells: "cd10.ammunition.shells"
 };
-cd10.simpleDamageTypes = {
+CD10.simpleDamageTypes = {
   lethality: "cd10.chat.attack.lethality"
 };
-cd10.standardDamageTypes = {
+CD10.standardDamageTypes = {
   slash: "cd10.attack.slash",
   pierce: "cd10.attack.pierce",
   blunt: "cd10.attack.blunt"
 };
-cd10.complexDamageTypes = {
+CD10.complexDamageTypes = {
   slash: "cd10.attack.slash",
   pierce: "cd10.attack.pierce",
   blunt: "cd10.attack.blunt",
   energy: "cd10.attack.energy"
 };
-cd10.reach = {
+CD10.reach = {
   normal: "cd10.reach.normal",
   grappling: "cd10.reach.grappling",
   close: "cd10.reach.close",
   long: "cd10.reach.long",
   vlong: "cd10.reach.vlong"
 };
-cd10.skillCategories = {
+CD10.skillCategories = {
   category: "cd10.sheet.category",
   communication: "cd10.skill.communication",
   crafts: "cd10.skill.crafts",
@@ -41,13 +41,13 @@ cd10.skillCategories = {
   occultism: "cd10.skill.occultism",
   willpower: "cd10.skill.willpower"
 };
-cd10.traitCategories = {
+CD10.traitCategories = {
   category: "cd10.sheet.category",
   situational: "cd10.trait.situational",
   uncheckable: "cd10.trait.uncheckable",
   value: "cd10.trait.value"
 };
-cd10.timeIndicators = {
+CD10.timeIndicators = {
   concentration: "cd10.time.concentration",
   circle: "cd10.time.circle",
   immediate: "cd10.time.immediate",
@@ -63,7 +63,7 @@ cd10.timeIndicators = {
   year: "cd10.time.year",
   life: "cd10.time.life"
 };
-cd10.areaIndicators = {
+CD10.areaIndicators = {
   circle: "cd10.area.circle",
   self: "cd10.area.self",
   person: "cd10.area.person",

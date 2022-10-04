@@ -1,4 +1,4 @@
-import { cd10 } from "./module/config.js";
+import { CD10 } from "./module/config.js";
 import CD10Item from "./module/CD10Item.js";
 import CD10Actor from "./module/CD10Actor.js";
 import CD10ItemSheet from "./module/sheets/CD10ItemSheet.js";
@@ -109,7 +109,7 @@ Hooks.once("init", function() {
 
 
   /* Setup Config */
-  CONFIG.cd10 = cd10;
+  CONFIG.cd10 = CD10;
   CONFIG.Item.documentClass = CD10Item;
   CONFIG.Actor.documentClass = CD10Actor;
   CONFIG.Combatant.documentClass = CD10Combatant;

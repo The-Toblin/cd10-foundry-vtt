@@ -1,4 +1,15 @@
 {
+  "ACTOR.TypeMajor": "Hero or Nemesis Character",
+  "ACTOR.TypeMinor": "Mook",
+  "ITEM.TypeArmor": "Armor",
+  "ITEM.TypeGenericitem": "Item",
+  "ITEM.TypeMeleeweapon": "Melee Weapon",
+  "ITEM.TypeRangedweapon": "Ranged Weapon",
+  "ITEM.TypeSkill": "Skill",
+  "ITEM.TypeTrait": "Trait",
+  "ITEM.TypeSpell": "Spell",
+  "ITEM.TypeShield": "Shield",
+
   "cd10": {
     "ammunition": {
       "type": "Type",

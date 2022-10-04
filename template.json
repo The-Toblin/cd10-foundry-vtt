@@ -40,14 +40,14 @@
     },
     "Item": {
         "types": [
-            "armor",
             "genericItem",
+            "skill",
+            "trait",
+            "armor",
             "meleeWeapon",
             "rangedWeapon",
-            "skill",
-            "spell",
             "shield",
-            "trait"
+            "spell"
         ],
         "templates": {
             "itemDescription": {
