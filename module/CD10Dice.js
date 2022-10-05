@@ -259,8 +259,8 @@ const _performBaseCheck = async (actor, skillId, traitId, save, heroPoint) => {
 
 /**
  * Check the lethality of an attack
- * @param {object} checkData The data from the roll itself, including weapon.
- * @returns {number] The returned lethality
+ * @param {object}    checkResults    The data from the roll itself, including weapon.
+ * @returns {number}                  The returned lethality
  */
 const _getLethality = async checkResults => {
   let total = checkResults.roll.roll._total > 9 ? parseInt(checkResults.roll.roll._total - 9) : 0;
@@ -358,9 +358,8 @@ export const AttackCheck = async ({actor = null, skillId = null, traitId = null,
 export const Save = async ({actor = null, traitId = null, heroPoint = false, lethality = 0} = {}) => {
   const messageTemplate = "systems/cd10/templates/partials/chat-messages/save.hbs";
   const checkResults = await _performBaseCheck(actor, null, traitId, true, heroPoint);
-  checkResults.damageType = damageType;
   console.warn(checkResults);
 
 
-  // [ ] Finish function and update the template
+  // [ ] Finish function and update the template. Include option for pre-filled values from clicking a chat message.
 };
