@@ -265,7 +265,7 @@ const _performBaseCheck = async (actor, skillId, traitId, save, heroPoint) => {
 const _getLethality = async checkResults => {
   let total = checkResults.roll.roll._total > 9 ? parseInt(checkResults.roll.roll._total - 9) : 0;
   total += parseInt(9 * checkResults.roll.nines);
-  total += parseInt(checkResults.weaponDamage);
+  total += parseInt(checkResults.weapon.system.damage);
 
   return total;
 };
