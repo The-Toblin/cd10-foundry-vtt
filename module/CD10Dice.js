@@ -257,6 +257,11 @@ const _performBaseCheck = async (actor, skillId, traitId, save, heroPoint) => {
   };
 };
 
+/**
+ * Check the lethality of an attack
+ * @param {object} checkData The data from the roll itself, including weapon.
+ * @returns {number] The returned lethality
+ */
 const _getLethality = async checkResults => {
   let total = checkResults.roll.roll._total > 9 ? parseInt(checkResults.roll.roll._total - 9) : 0;
   total += parseInt(9 * checkResults.roll.nines);
