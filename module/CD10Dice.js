@@ -225,56 +225,6 @@ const _getTraitData = async (actor, traitId) => {
 };
 
 /**
- * Helper function that returns a list of all equipped items of an actor.
- * @param {object} actor      The actor whose items you want to check.
- * @returns {Promise<object>} An object holding the equipped items.
- */
-const _getEquipment = async actor => {
-  // [ ] Rewrite this to match new equipment mechanics.
-  const equipmentList = {
-    armor: null,
-    shield: null,
-    meleeWeapon: null,
-    rangedWeapon: null
-  };
-  for (const item of actor.items.contents) {
-    if (item.type === "armor" && item.system.isEquipped?.value) {
-      equipmentList.armor = item;
-    } else if (item.type === "shield" && item.system.isEquipped?.value) {
-      equipmentList.shield = item;
-    } else if (item.type === "meleeWeapon" && item.system.isEquipped?.value) {
-      equipmentList.meleeWeapon = item;
-    } else if (item.type === "rangedWeapon" && item.system.isEquipped?.value) {
-      equipmentList.rangedWeapon = item;
-    }
-  }
-
-  return equipmentList;
-
-};
-
-/**
- * Determines the lethality caused by a weapon being used.
- * @param {object} actor           The Actor object.
- * @param {object} equipmentList  An object holding the actor's equipped items.
- * @returns {Promise<number>}     Returns a number for the lethality.
- */
-const _getLethality = async (actor, equipmentList) => {
-  if (equipmentList.meleeWeapon !== null) {
-    return parseInt(equipmentList.meleeWeapon.system.damage);
-  } else if (equipmentList.rangedWeapon !== null) {
-    const ammo = actor.items.get(equipmentList.rangedWeapon.system.selectedAmmo.id);
-    const ammoProperties = Object.entries(ammo.system.damage);
-
-    // Loop through the properties of the ammo to find the selected ammo type and fetch its lethality value.
-    for (const entry of ammoProperties) {
-      if (entry[1].selected) return parseInt(entry[1].value);
-    }
-  }
-
-};
-
-/**
  * Gathers up the necessary data to proceed with the check. It will define which actor is performing the check,
  * what skill is being used, if a trait is being used and if it's reversed, the outcome of the rolls, as well
  * as the HTML template used to render the chatmessage.
@@ -305,6 +255,14 @@ const _performBaseCheck = async (actor, skillId, traitId, save, heroPoint) => {
     roll: rollResults,
     render: renderedRoll
   };
+};
+
+const _getLethality = async checkResults => {
+  let total = checkResults.roll.roll._total > 9 ? parseInt(checkResults.roll.roll._total - 9) : 0;
+  total += parseInt(9 * checkResults.roll.nines);
+  total += parseInt(checkResults.weaponDamage);
+
+  return total;
 };
 
 /**
@@ -353,11 +311,11 @@ export const AttackCheck = async ({actor = null, skillId = null, traitId = null,
   const messageTemplate = "systems/cd10/templates/partials/chat-messages/attack-check.hbs";
   const checkResults = await _performBaseCheck(actor, skillId, traitId, false, heroPoint);
 
-  // Get a list of equipped items.
-  checkResults.equipmentList = await _getEquipment(checkResults.actor);
+  // Get the equipped weapon.
+  checkResults.weapon = await actor.system.gear.weapon;
 
   // Determine the lethality of the weapon used and add any bonus damage from rolling 9's.
-  checkResults.lethality = await _getLethality(checkResults.actor, checkResults.equipmentList);
+  checkResults.lethality = await _getLethality(checkResults);
   // [ ] Remove bonus damage, reinstate Excess.
 
   const templateContext = {
@@ -365,11 +323,9 @@ export const AttackCheck = async ({actor = null, skillId = null, traitId = null,
     skillLevel: parseInt(checkResults.skill.level),
     traitName: checkResults.trait.name,
     traitLevel: parseInt(checkResults.trait.level),
-    weapon: checkResults.equipmentList.meleeWeapon || checkResults.equipmentList.rangedWeapon,
-    weaponDamage: parseInt(checkResults.lethality),
-    lethality: parseInt(checkResults.lethality) + parseInt(checkResults.bonusDamage),
-    bonusDamage: parseInt(checkResults.bonusDamage),
-    type: checkResults.damageType,
+    weapon: checkResults.weapon,
+    weaponDamage: parseInt(checkResults.weapon.system.damage),
+    lethality: parseInt(checkResults.lethality),
     nines: parseInt(checkResults.roll.nines),
     zeroes: parseInt(checkResults.roll.zeroes),
     total: parseInt(checkResults.roll.roll._total),
