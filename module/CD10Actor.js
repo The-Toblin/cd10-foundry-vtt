@@ -14,8 +14,11 @@ export default class CD10Actor extends Actor {
   prepareDerivedData() {
     const templateData = this.system;
 
+    /* Create a value to use for tokens */
+    templateData.wounds.token = parseInt(templateData.wounds.max - templateData.wounds.value);
+
     /* Update Traits totals */
-    let traits = this._prepareTraits(this.items);
+    const traits = this._prepareTraits(this.items);
 
     templateData.traitsValue = traits.totalValue;
     templateData.posTraits = traits.pos;
@@ -24,10 +27,7 @@ export default class CD10Actor extends Actor {
     /* Set debilitationtype and value */
     let debilitation = this._prepareDebilitation(templateData);
 
-    if (this.getStress) {
-      debilitation.modifier += 3;
-
-    }
+    debilitation.modifier += this.getStress ? 3 : 0;
 
     templateData.modifier = {
       type: "number",
@@ -42,11 +42,7 @@ export default class CD10Actor extends Actor {
     };
   }
 
-  /** *********
-   *         *
-   * Getters *
-   *         *
-   **********/
+  //  * Getters *
 
   get getSkills() {
     return this.items.filter(p => p.type === "skill");
@@ -68,35 +64,27 @@ export default class CD10Actor extends Actor {
     return this.system.gear.shield;
   }
 
-  get getMeleeWeapon() {
-    return this.system.gear.meleeWeapon;
-  }
-
-  get getRangedWeapon() {
-    return this.system.gear.rangedWeapon;
+  get getWeapon() {
+    return this.system.gear.weapon;
   }
 
   get getWounds() {
-    return parseInt(this.system.wounds.value);
+    return parseInt(this.system.wounds);
   }
 
   get getModifier() {
-    return parseInt(this.system.modifier.value);
+    return parseInt(this.system.modifier);
   }
 
   get getExp() {
-    return this.type === "named" ? parseInt(this.system.exp.total) : 0;
+    return this.type === "major" ? parseInt(this.system.exp.total) : 0;
   }
 
   get getStress() {
     return this.getFlag("cd10", "stressing");
   }
 
-  /** ************************
-   *                        *
-   * Custom prepare methods *
-   *                        *
-   *************************/
+  //   * Custom prepare methods *
 
   _prepareTraits(items) {
     let totalValue = 0;
@@ -107,13 +95,13 @@ export default class CD10Actor extends Actor {
 
     for (let i = 0; i < totalTraits.length; i++) {
       let adder = 0;
-      adder = +parseInt(totalTraits[i].system.skillLevel.value);
+      adder = +parseInt(totalTraits[i].system.skillLevel);
 
       totalValue += adder;
     }
 
     totalTraits.forEach(p => {
-      if (p.system.skillLevel.value > 0) {
+      if (p.system.skillLevel > 0) {
         ++pos;
       } else {
         ++neg;
@@ -177,7 +165,7 @@ export default class CD10Actor extends Actor {
       ui.notifications.error("Not a number for wounds update!");
       return;
     }
-    let currentWounds = this.getWounds;
+    const currentWounds = this.getWounds;
     let newWounds;
 
     if (amount > 0) {
