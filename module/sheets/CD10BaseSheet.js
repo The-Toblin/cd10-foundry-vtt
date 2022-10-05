@@ -92,10 +92,10 @@ export default class CD10BaseSheet extends ActorSheet {
         const itemId = element.data("item-id");
         const item = this.actor.items.get(itemId);
 
-        let levelUpValue = item.system.levelUp.value;
+        let levelUpValue = item.system.levelUp;
 
         item.update({
-          "system.levelUp.value": !levelUpValue
+          "system.levelUp": !levelUpValue
         });
       }
     },
