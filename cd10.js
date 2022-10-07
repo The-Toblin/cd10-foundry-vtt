@@ -157,10 +157,11 @@ Hooks.once("init", function() {
     return skills;
   });
 
-  console.log("==== CD10 | Pushing TinyMCE CSS ====");
-  CONFIG.TinyMCE.content_css.push("systems/cd10/cd10-tinymce.css");
+//  console.log("==== CD10 | Pushing TinyMCE CSS ====");
+//  CONFIG.TinyMCE.content_css.push("systems/cd10/cd10-tinymce.css");
 });
 
+// Override the spinning pause Icon with a CD10 Logo.
 Hooks.on("renderPause", (_app, html, options) => {
   html.find('img[src="icons/svg/clockwork.svg"]').attr("src", "systems/cd10/assets/icons/cd10-logo-circle.webp");
 });

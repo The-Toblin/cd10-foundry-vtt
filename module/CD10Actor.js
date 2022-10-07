@@ -15,7 +15,11 @@ export default class CD10Actor extends Actor {
     const templateData = this.system;
 
     /* Create a value to use for tokens */
-    templateData.wounds.token = parseInt(templateData.wounds.max - templateData.wounds.value);
+    templateData.health = {
+      value: parseInt(templateData.wounds.max - templateData.wounds.value),
+      max: 15,
+      min: 0
+    };
 
     /* Update Traits totals */
     const traits = this._prepareTraits(this.items);
@@ -28,18 +32,8 @@ export default class CD10Actor extends Actor {
     let debilitation = this._prepareDebilitation(templateData);
 
     debilitation.modifier += this.getStress ? 3 : 0;
-
-    templateData.modifier = {
-      type: "number",
-      label: "Modifier",
-      value: debilitation.modifier
-    };
-
-    templateData.debilitationType = {
-      type: "string",
-      label: "Debilitation",
-      value: debilitation.type
-    };
+    templateData.modifier = debilitation.modifier;
+    templateData.debilitationType = debilitation.type;
   }
 
   //  * Getters *

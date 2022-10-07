@@ -1,6 +1,6 @@
 {
   "ACTOR.TypeMajor": "Hero or Nemesis Character",
-  "ACTOR.TypeMinor": "Mook",
+  "ACTOR.TypeMinor": "Mook Character",
   "ITEM.TypeArmor": "Armor",
   "ITEM.TypeAmmunition": "Ammunition",
   "ITEM.TypeGenericitem": "Item",
@@ -275,7 +275,7 @@
   "SETTINGS": {
     "barter": {
       "name": "Use barter system?",
-      "label": "Items will be displayed with relative value, rather than straight coinage."
+      "label": "Items will be displayed with relative value, ie trade group, rather than straight coinage."
     },
     "dumpDescriptions": {
       "name": "Dump skill descriptions on use?",
