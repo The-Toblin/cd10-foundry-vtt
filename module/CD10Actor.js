@@ -9,7 +9,9 @@ export default class CD10Actor extends Actor {
     super.prepareData();
   }
 
-  prepareBaseData() {}
+  prepareBaseData() {
+    super.prepareBaseData();
+  }
 
   prepareDerivedData() {
     const templateData = this.system;
