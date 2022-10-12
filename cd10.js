@@ -157,11 +157,26 @@ Hooks.once("init", function() {
     return skills;
   });
 
-//  console.log("==== CD10 | Pushing TinyMCE CSS ====");
+//  Console.log("==== CD10 | Pushing TinyMCE CSS ====");
 //  CONFIG.TinyMCE.content_css.push("systems/cd10/cd10-tinymce.css");
 });
 
 // Override the spinning pause Icon with a CD10 Logo.
 Hooks.on("renderPause", (_app, html, options) => {
   html.find('img[src="icons/svg/clockwork.svg"]').attr("src", "systems/cd10/assets/icons/cd10-logo-circle.webp");
+});
+
+// Change the GM's tag to "Keeper".
+Hooks.on("renderPlayerList", html => {
+  const players = html.element.find(".player-name");
+
+  for (let player of players) {
+    const playerCharacterName = player.innerText;
+    const playerName = playerCharacterName.substring(0, playerCharacterName.indexOf("[")).trim();
+    const userId = game.users.find(x => x.name === playerName)?.id;
+    const user = game.users.get(userId);
+    if (user.isGM) {
+      player.innerText = `${playerName} [Keeper]`;
+    }
+  }
 });
