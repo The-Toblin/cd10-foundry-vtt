@@ -6,7 +6,8 @@ export class CeleniaDie extends Die {
   constructor(termData = {}) {
     const explode = game.settings.get("cd10", "explodingNines") ? "x" : "xo";
     termData.modifiers = [
-      `${explode}9`
+      `${explode}9`,
+      "r0"
     ];
     termData.faces = 10;
 
@@ -30,6 +31,7 @@ export class CeleniaDie extends Die {
       roll.nines += 1;
     }
     this.results.push(roll);
+    console.warn(roll.result);
     return roll;
   }
 

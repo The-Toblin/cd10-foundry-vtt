@@ -182,3 +182,37 @@ Hooks.on("renderPlayerList", html => {
     }
   }
 });
+
+// Add DiceSoNice presets
+Hooks.once("diceSoNiceReady", dice3d => {
+  dice3d.addSystem({ id: "cd10", name: "Celenia" }, true);
+
+  dice3d.addColorset({
+    name: "main",
+    description: "CD10 Regular Dice",
+    category: "CD10",
+    foreground: "#000000",
+    background: "#dfbb61",
+    texture: "none",
+    edge: "#dfbb61",
+    material: "glass",
+    font: "Signika",
+    fontScale: {
+      d6: 1.1,
+      dr: 1.2
+    }
+  }, "default");
+
+  dice3d.addDicePreset({
+    type: "dr",
+    labels: [
+      "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"
+    ],
+    values: {
+      min: 1,
+      max: 10
+    },
+    colorset: "main",
+    system: "cd10"
+  }, "d10");
+});
