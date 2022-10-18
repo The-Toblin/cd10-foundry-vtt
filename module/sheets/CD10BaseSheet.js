@@ -274,10 +274,9 @@ export default class CD10BaseSheet extends ActorSheet {
    * @returns {Promise<object>} An object holding the necessary skill and trait data.
    */
   async _fetchRollData(event) {
-    const trait = this.getData().selectedTrait;
-    const skill = this.getData().selectedSkill;
-
-    console.log(this.getData());
+    const itemId = event.currentTarget.closest(".item").dataset.itemId;
+    const skill = this.actor.items.get(itemId);
+    const trait = this.actor.system.selectedTrait;
 
     return {
       trait: trait,
@@ -466,8 +465,9 @@ export default class CD10BaseSheet extends ActorSheet {
     try {
       await Roll.SkillCheck({
         actor: this.actor,
-        skillId: rollData.skill.id,
-        traitId: rollData.trait.id,
+        skillId: rollData.skill ? rollData.skill.id : null,
+        traitId: rollData.trait ? rollData.trait.value.id : null,
+        reversed: rollData.trait ? rollData.trait.reversed : false,
         heroPoint: heroPoint
       });
 

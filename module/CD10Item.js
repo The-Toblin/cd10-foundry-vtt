@@ -1,9 +1,5 @@
 export default class CD10Item extends Item {
 
-  get getSelectionStatus() {
-    return this.type === "trait" ? this.system.selected : false;
-  }
-
   chatTemplate = {
     meleeWeapon: "systems/cd10/templates/partials/equipment-cards/meleeWeapon-card.hbs",
     rangedWeapon: "systems/cd10/templates/equipment-cards/partials/rangedWeapon-card.hbs",
@@ -73,16 +69,11 @@ export default class CD10Item extends Item {
     }
   }
 
-  async setSelectionStatus(status) {
-    if (this.type === "trait") {
-      if (typeof status !== "number") {
-        ui.errors.notifications("Not a number!");
-        return;
-      }
+  async setSelection(actor, reversed) {
+    if (this.type !== "trait") return;
 
-      await this.update({
-        "system.selected": status
-      });
-    }
+    await actor.update({
+      "system.selectedTrait": {value: this, reversed: reversed}
+    });
   }
 }

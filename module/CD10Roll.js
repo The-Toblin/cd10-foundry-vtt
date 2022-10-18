@@ -19,7 +19,7 @@
  */
 const _createDiceFormula = async ({skillLevel, traitLevel, modifier, save, heroPoint} = {}) => {
 
-  let rollFormula = heroPoint ? "2d10" : "1d10";
+  let rollFormula = heroPoint ? "2dr" : "1dr";
 
   if (skillLevel > 0) rollFormula += " + @skillLevel";
   if (traitLevel > 0) {
@@ -84,71 +84,7 @@ const _rollD10 = async (rollFormula, rollData) => {
   const CD10Roll = new Roll(rollFormula, rollData);
   await CD10Roll.evaluate({async: true});
 
-  // Shift die to 0-9 and remove the equal amount from the total sum.
-  for (let i = 0; i < CD10Roll.terms[0].results.length; i++) {
-    CD10Roll.terms[0].results[i].result -= 1;
-    CD10Roll._total -= 1;
-  }
-
   return CD10Roll;
-};
-
-/**
- * Handle the actual roll evaluation, based on rolled 9's and 0's. Will automatically
- * call for rerolls on those results and add those to the array of results.
- * @param {string} rollFormula The rollformula to use for rolls.
- * @param {object} rollData An object holding the modifiers to use for the roll.
- * @returns {Promise<object>} A object holding the roll, the total and any number of nines and zeroes.
- */
-const _evaluateCD10Roll = async (rollFormula, rollData) => {
-  // [ ] Add check for explodingNines and disallow infinite explodes if it's set to false.
-  // Define all the variables we'll need.
-  let stopValue = false;
-  let nines = 0;
-  let zeroes = 0;
-  let iterator = 0;
-  let reroll;
-
-  // Perform a roll
-  const roll = await _rollD10(rollFormula, rollData);
-
-  /* This loop checks the roll if it's 9 or 0 and makes a new roll. The reroll is added to the results of the roll,
-  * and rechecked in this loop. It ends when the result is either double zeroes or the reroll is not a 9. */
-  while (!stopValue) {
-    let result = roll.terms[0].results[iterator].result;
-
-    if (result === 9) {
-      nines += 1;
-      roll.terms[0].results[iterator].rerolled = true;
-      reroll = await _rollD10("1d10");
-
-    } else if (result === 0 && zeroes === 0 && nines === 0) {
-      zeroes += 1;
-      roll.terms[0].results[iterator].rerolled = true;
-      reroll = await _rollD10("1d10");
-    }
-
-    if (reroll) {
-      roll.terms[0].results.push({
-        result: reroll.terms[0].results[0].result,
-        active: true
-      });
-      roll._total += reroll.terms[0].results[0].result;
-      reroll = null;
-    }
-
-    ++iterator;
-
-    if (result === 0) {
-      stopValue = zeroes === 1;
-    } else if (result !== 9) stopValue = true;
-  }
-
-  return {
-    roll: roll,
-    nines: nines,
-    zeroes: zeroes
-  };
 };
 
 /**
@@ -245,9 +181,12 @@ const _performBaseCheck = async (actor, skillId, traitId, save, heroPoint) => {
   const rollData = await _createRollData(skill.level, trait.level, actor.getModifier, save);
 
   // Perform and render the roll.
-  const rollResults = await _evaluateCD10Roll(rollformula, rollData);
-  const renderedRoll = await _renderCD10Roll(rollResults.roll._formula, rollResults);
+  const rollResults = await _rollD10(rollformula, rollData);
+  console.log(rollResults);
 
+  // Const renderedRoll = await _renderCD10Roll(rollResults.roll._formula, rollResults);
+
+  /*
   return {
     actor: actor,
     skill: skill,
@@ -255,6 +194,7 @@ const _performBaseCheck = async (actor, skillId, traitId, save, heroPoint) => {
     roll: rollResults,
     render: renderedRoll
   };
+  */
 };
 
 /**

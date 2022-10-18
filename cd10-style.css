@@ -63,7 +63,8 @@
 }
 p,
 b,
-i {
+i,
+.package-list .package .package-overview .package-title {
   color: #dfbb61 !important;
   font-family: inherit;
   font-family: "Signika", sans-serif;

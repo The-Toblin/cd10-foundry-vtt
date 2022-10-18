@@ -1,9 +1,10 @@
 /**
- * Extend the basic Die to show custom CD10 icons on a d10.
+ * Extend the basic Die class in order to include CD10 mechanics and change it to 0-9 D10.
  * @extends {Die}
  */
 export class CeleniaDie extends Die {
   constructor(termData = {}) {
+    // Determine if nines can explode infinitely nor not, based on game setting and add rerolling on zeroes.
     const explode = game.settings.get("cd10", "explodingNines") ? "x" : "xo";
     termData.modifiers = [
       `${explode}9`,
@@ -17,82 +18,70 @@ export class CeleniaDie extends Die {
   /** @override */
   static DENOMINATION = "r";
 
+  // Add to the default roll function by adding number of nines and changing 10 to 0.
   roll() {
-    const roll = {result: undefined, active: true, zero: false, nines: 0};
+    const roll = {result: undefined, active: true, nines: 0};
     roll.result = Math.ceil(CONFIG.Dice.randomUniform() * this.faces);
 
-    if (roll.result === 10 && !roll.zero) {
+    if (roll.result === 10) {
       roll.result = 0;
-      roll.zero = true;
-      roll.success = false;
     }
 
     if (roll.result === 9) {
       roll.nines += 1;
     }
     this.results.push(roll);
-    console.warn(roll.result);
     return roll;
   }
 
-  /**
-   * Explode the Die, rolling additional results for any values which match the target set.
-   * If no target number is specified, explode the highest possible result.
-   * Explosion can be a "small explode" using a lower-case x or a "big explode" using an upper-case "X"
-   *
-   * @param {string} modifier     The matched modifier query
-   * @param {boolean} recursive   Explode recursively, such that new rolls can also explode?
-   */
-  explode(modifier, {recursive=true}={}) {
+  // We're copying the default reroll function here, to add a check to only reroll the very first zero rolled.
+  reroll(modifier, {recursive=false}={}) {
+    // If this isn't the first zero rolled, skip rerolling it, since CD10 only rerolls a "naked" zero.
+    for (const result of this.results) {
+      if (this.results[0].result !== 0) {
+        return;
+      }
+    }
 
-    // Match the "explode" or "explode once" modifier
-    const rgx = /xo?([0-9]+)?([<>=]+)?([0-9]+)?/i;
+    // Match the re-roll modifier
+    const rgx = /rr?([0-9]+)?([<>=]+)?([0-9]+)?/i;
     const match = modifier.match(rgx);
     if ( !match ) return false;
     let [max, comparison, target] = match.slice(1);
 
-    // If no comparison or target are provided, treat the max as the target value
+    // If no comparison or target are provided, treat the max as the target
     if ( max && !(target || comparison) ) {
       target = max;
       max = null;
     }
 
     // Determine target values
-    target = Number.isNumeric(target) ? parseInt(target) : this.faces;
+    max = Number.isNumeric(max) ? parseInt(max) : null;
+    target = Number.isNumeric(target) ? parseInt(target) : 1;
     comparison = comparison || "=";
 
-    // Determine the number of allowed explosions
-    max = Number.isNumeric(max) ? parseInt(max) : null;
-
-    // Recursively explode until there are no remaining results to explode
+    // Recursively reroll until there are no remaining results to reroll
     let checked = 0;
-    const initial = this.results.length;
+    let initial = this.results.length;
     while ( checked < this.results.length ) {
       let r = this.results[checked];
       checked++;
       if (!r.active) continue;
 
-      // Maybe we have run out of explosions
+      // Maybe we have run out of rerolls
       if ( (max !== null) && (max <= 0) ) break;
 
-      // Determine whether to explode the result and roll again!
+      // Determine whether to re-roll the result
       if ( DiceTerm.compareResult(r.result, comparison, target) ) {
-        r.exploded = true;
+        r.rerolled = true;
+        r.active = false;
         this.roll();
         if ( max !== null ) max -= 1;
       }
 
       // Limit recursion
-      if ( !recursive && (checked === initial) ) break;
+      if ( !recursive && (checked >= initial) ) checked = this.results.length;
       if ( checked > 1000 ) throw new Error("Maximum recursion depth for exploding dice roll exceeded");
     }
-  }
-
-  /**
-   * @param modifier
-   * @see {@link Die#explode}
-   */
-  explodeOnce(modifier) {
-    return this.explode(modifier, {recursive: false});
   }
 }
