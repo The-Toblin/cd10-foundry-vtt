@@ -1,4 +1,5 @@
 import { CD10 } from "./module/config.js";
+import { CeleniaDie } from "./module/CD10Die.js";
 import CD10Item from "./module/CD10Item.js";
 import CD10Actor from "./module/CD10Actor.js";
 import CD10ItemSheet from "./module/sheets/CD10ItemSheet.js";
@@ -106,6 +107,7 @@ function registerSystemSettings() {
 Hooks.once("init", function() {
   console.log("==== CD10 | Initialising CD10 RPG System ====");
 
+  CONFIG.Dice.terms.r = CeleniaDie;
 
   /* Setup Config */
   CONFIG.cd10 = CD10;

@@ -3,7 +3,7 @@
  * actor types for specific data.
  */
 
-import * as Dice from "../CD10Dice.js";
+import * as Roll from "../CD10Roll.js";
 
 export default class CD10BaseSheet extends ActorSheet {
   static get defaultOptions() {
@@ -464,7 +464,7 @@ export default class CD10BaseSheet extends ActorSheet {
     const rollData = await this._fetchRollData(event);
 
     try {
-      await Dice.SkillCheck({
+      await Roll.SkillCheck({
         actor: this.actor,
         skillId: rollData.skill.id,
         traitId: rollData.trait.id,
@@ -531,7 +531,7 @@ export default class CD10BaseSheet extends ActorSheet {
 
     // Perform the attack check
     try {
-      await Dice.AttackCheck({
+      await Roll.AttackCheck({
         actor: this.actor,
         skillId: skill.id,
         traitId: trait.id,
@@ -605,7 +605,7 @@ export default class CD10BaseSheet extends ActorSheet {
 
     // Roll the save.
     try {
-      Dice.Save({
+      Roll.Save({
         actor: this.actor,
         traitId: saveData.traitId,
         heroPoint: saveData.heroPoint,
