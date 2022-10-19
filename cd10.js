@@ -201,7 +201,7 @@ Hooks.once("diceSoNiceReady", dice3d => {
       d6: 1.1,
       dr: 1.2
     }
-  }, "default");
+  }, "preferred");
 
   dice3d.addDicePreset({
     type: "dr",
@@ -212,7 +212,6 @@ Hooks.once("diceSoNiceReady", dice3d => {
       min: 1,
       max: 10
     },
-    colorset: "main",
     system: "cd10"
   }, "d10");
 });
