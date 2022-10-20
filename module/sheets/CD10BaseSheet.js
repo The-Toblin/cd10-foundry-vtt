@@ -58,7 +58,6 @@ export default class CD10BaseSheet extends ActorSheet {
       callback: element => {
         const itemId = element.data("item-id");
         const item = this.actor.items.get(itemId);
-
         item.roll();
       }
     },
@@ -225,7 +224,6 @@ export default class CD10BaseSheet extends ActorSheet {
       html.find(".select-trait").on("click contextmenu", this._onClickTrait.bind(this));
 
       /* ContextMenu listeners */
-      new ContextMenu(html, ".weapon-card", this.equippableItemContextMenu);
       new ContextMenu(html, ".armor-card", this.equippableItemContextMenu);
       new ContextMenu(html, ".equippable-inventory-item", this.equippableItemContextMenu);
       new ContextMenu(html, ".inventory-item", this.itemContextMenu);

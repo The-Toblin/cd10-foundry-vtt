@@ -1,110 +1,21 @@
 <section class="sheet-combat-tab">
     {{#if equippedWeapon}}
-    <div class="weapon-card cd10-card ">
-        <h3>{{localize "cd10.sheet.weapon"}}</h3>
-        <table>
-            <tr>
-                <th></th>
-                <th>
-                    {{localize "cd10.stats.name"}}
-                </th>
-                <th>
-                    {{localize "cd10.weapon.reach"}}
-                </th>
-                <th>
-                    {{localize "cd10.weapon.lethality"}}
-                </th>
-                <th>
-                    {{localize "cd10.sheet.equipShort"}}
-                </th>
-            </tr>
-            <tr>
-                {{> "systems/cd10/templates/partials/equipment-cards/meleeWeapon-card.hbs" system.gear.weapon}}
-            </tr>
-         </table>
-    </div>
-    <div class="weapon-card cd10-card ">
-        <h3>{{localize "cd10.sheet.rangedWeapon"}}</h3>
-        <table>
-            <tr>
-                <th></th>
-                <th>
-                    {{localize "cd10.stats.name"}}
-                </th>
-                <th>
-                    {{localize "cd10.rangedWeapon.rangeClose"}}
-                </th>
-
-                <th>
-                    {{localize "cd10.rangedWeapon.rangeNormal"}}
-                </th>
-
-                <th>
-                    {{localize "cd10.rangedWeapon.rangeLong"}}
-                </th>
-                <th>
-                    {{localize "cd10.rangedWeapon.rangeMax"}}
-                </th>
-                <th>
-                    {{localize "cd10.rangedWeapon.ammunition"}}
-                </th>
-                {{#if modernity}}
-                <th>
-                    {{localize "cd10.weapon.energyDamage"}}
-                </th>
-                {{/if}}
-                <th>
-                    {{localize "cd10.sheet.equipShort"}}
-                </th>
-            </tr>
-            <tr>
-                {{> "systems/cd10/templates/partials/equipment-cards/rangedWeapon-card.hbs" system.gear.weapon}}
-            </tr>
-        </table>
-    </div>
+    {{#if (eq system.gear.weapon.value.type "meleeWeapon")}}
+        {{> "systems/cd10/templates/partials/equipment-cards/meleeWeapon-card.hbs" system.gear.weapon inSheet=true}}
+    {{else}}
+        {{> "systems/cd10/templates/partials/equipment-cards/rangedWeapon-card.hbs" system.gear.weapon inSheet=true}}
+    {{/if}}
     {{/if}}
     {{#if equippedArmor}}
-    <div class="weapon-card cd10-card ">
+    <div class="weapon-card cd10-card">
         <h3>{{localize "cd10.sheet.armor"}}</h3>
-        <table>
-            <tr>
-                <th></th>
-                <th>
-                    {{localize "cd10.stats.name"}}
-                </th>
-                <th>
-                    {{localize "cd10.armor.protection"}}
-                </th>
-            </tr>
-            <tr>
-                {{> "systems/cd10/templates/partials/equipment-cards/armor-card.hbs" system.gear.armor}}
-            </tr>
-        </table>
+        {{> "systems/cd10/templates/partials/equipment-cards/armor-card.hbs" system.gear.armor inSheet=true}}
     </div>
     {{/if}}
     {{#if equippedShield}}
-    <div class="weapon-card cd10-card ">
+    <div class="weapon-card cd10-card">
          <h3>{{localize "cd10.sheet.shield"}}</h3>
-        <table>
-            <tr>
-                <th></th>
-                <th>
-                    {{localize "cd10.stats.name"}}
-                </th>
-                <th>
-                    {{localize "cd10.armor.defenseValue"}}
-                </th>
-                <th>
-                    {{localize "cd10.armor.protection"}}
-                </th>
-                <th>
-                    {{localize "cd10.sheet.equipShort"}}
-                </th>
-            </tr>
-            <tr>
-                {{> "systems/cd10/templates/partials/equipment-cards/shield-card.hbs" system.gear.shield}}
-            </tr>
-        </table>
+        {{> "systems/cd10/templates/partials/equipment-cards/shield-card.hbs" system.gear.shield inSheet=true}}
     </div>
     {{/if}}
 </section>

@@ -15,7 +15,7 @@
   border-image: radial-gradient(black, #dfbb61) 1;
   box-shadow: 5px 10px 10px #000000;
   margin: 0 5px 10px 5px;
-  padding: 4px;
+  padding: 10px 4px 4px 4px;
 }
 .cd10-card-detail {
   background: url(assets/backgrounds/card_detail_background.webp);
@@ -123,6 +123,27 @@ hr {
 .pad-2 {
   padding: 2px;
 }
+.w-100 {
+  width: 100%;
+}
+.w-80 {
+  width: 79%;
+}
+.w-60 {
+  width: 59%;
+}
+.w-50 {
+  width: 49%;
+}
+.w-40 {
+  width: 39%;
+}
+.w-25 {
+  width: 24%;
+}
+.w-20 {
+  width: 19%;
+}
 .window-content {
   background: url(assets/backgrounds/sheet_background.webp) !important;
   color: #dfbb61 !important;
@@ -210,7 +231,7 @@ textarea {
   border-image: radial-gradient(black, #dfbb61) 1 !important;
   box-shadow: 5px 10px 10px #000000 !important;
   margin: 0 5px 10px 5px !important;
-  padding: 4px !important;
+  padding: 10px 4px 4px 4px !important;
   filter: none !important;
 }
 #navigation #scene-list .gm {
@@ -340,12 +361,6 @@ textarea {
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-}
-.weapon-card .item-img {
-  display: block;
-  max-width: 100px;
-  max-height: 100px;
 }
 .weapon-card .d10-roll-icon {
   height: 10px;
@@ -765,7 +780,7 @@ textarea {
   border-width: 3px;
   border-image: radial-gradient(black, #dfbb61) 1;
   margin: 0 5px 10px 5px;
-  padding: 4px;
+  padding: 10px 4px 4px 4px;
   width: 195px;
   height: auto;
   box-shadow: 5px 10px 10px #000000;
@@ -868,7 +883,7 @@ textarea {
   border-image: radial-gradient(black, #dfbb61) 1;
   box-shadow: 5px 10px 10px #000000;
   margin: 0 5px 10px 5px;
-  padding: 4px;
+  padding: 10px 4px 4px 4px;
   border-radius: 5px;
 }
 .chat-message.whisper {
@@ -894,7 +909,7 @@ textarea {
   border-image: radial-gradient(black, #dfbb61) 1;
   box-shadow: 5px 10px 10px #000000;
   margin: 0 5px 10px 5px;
-  padding: 4px;
+  padding: 10px 4px 4px 4px;
 }
 .cd10-image-container img {
   width: 100%;

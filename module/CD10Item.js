@@ -9,6 +9,10 @@ export default class CD10Item extends Item {
     spell: "systems/cd10/templates/partials/skill-card.hbs"
   };
 
+  prepareDerivedData() {
+    this.system.id = this.id;
+  }
+
   async _preCreate(data, options, user) {
     /* Hijack preCreate to create a matchID for items that is persistent across characters.
         This is mainly used to match weapons with their combat skills. */
@@ -38,7 +42,7 @@ export default class CD10Item extends Item {
     };
 
     let cardData = {
-      ...this.system,
+      ...this,
       owner: this.actor.id
     };
 
@@ -46,7 +50,6 @@ export default class CD10Item extends Item {
       this.chatTemplate[this.type],
       cardData
     );
-    chatData.roll = true;
 
     return ChatMessage.create(chatData);
   }
@@ -59,12 +62,8 @@ export default class CD10Item extends Item {
     const type = this.type === "meleeWeapon" || this.type === "rangedWeapon" ? "weapon" : this.type;
     const updateData = {};
 
-    console.log(sys.gear);
-
     if (type === "weapon" || type === "armor" || type === "shield") {
       updateData[`system.gear.${type}`] = sys.gear[type] !== this ? this : null;
-
-      console.log(updateData);
       await this.actor.update(updateData);
     }
   }

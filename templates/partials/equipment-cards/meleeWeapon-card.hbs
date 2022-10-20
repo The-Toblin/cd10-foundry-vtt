@@ -1,20 +1,37 @@
-<td class="item equippable-inventory-item" data-item-id="{{_id}}">
-    <img class="item-img display-inline" src="{{img}}" title="{{name}}" height="15" width="15" />
-</td>
-<td class="item equippable-inventory-item" data-item-id="{{_id}}">
-    {{name}}
-</td>
-<td class="item equippable-inventory-item" data-item-id="{{_id}}">
-    {{localize (concat "cd10.reach." system.reach)}}
-</td>
-<td class="reveal-rollable item equippable-inventory-item" data-item-id="{{_id}}">
-    <a class="attack-check item-roll hidden rollable" title={{localize "cd10.sheet.roll"}}>
-        <img class="d10-roll-icon" src="/systems/cd10/assets/icons/roll_cd10.webp" />
-    </a>
-    {{system.damage}}
-</td>
-<td class="item equippable-inventory-item" data-item-id="{{_id}}">
-    <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
-        <i class="far fa-{{#if system.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
-    </a>
-</td>
+<section class="{{#if inSheet}}cd10-card{{else}}cd10-card-detai{{/if}} litem-card weapon-card equippable-inventory-item" data-item-id="{{system.id}}">
+    {{log this}}
+    {{#if inSheet}}
+    <div class="flex-row">
+    {{/if}}
+        <img class="item-img cd10-card-detail {{#if inSheet}}w-40{{/if}}" src="{{img}}" title="{{name}}"/>
+        <div class="cd10-card-detail {{#if inSheet}}w-100{{/if}}">
+            <h3 class="weapon-name">{{name}}</h3>
+            <hr>
+            <div class="flex-col">
+                <div class="flex-row">
+                    <div class="w-50 cd10-card-detail">
+                        {{localize "cd10.weapon.lethality"}}
+                    </div>
+                    <div class="w-50 cd10-card-detail align-center" style="text-align: right;">
+                        {{system.damage}}
+                    </div>
+                </div>
+                <div class="flex-row">
+                    <div class="w-50 cd10-card-detail">
+                        {{localize "cd10.weapon.reach"}}
+                    </div>
+                    <div class="w-50 cd10-card-detail" style="text-transform: capitalize; text-align: right;">
+                        {{system.reach}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{#if inSheet}}
+    </div>
+    {{/if}}
+    {{#unless inSheet}}
+    <div class="cd10-card-detail pad-8">
+        {{system.description}}
+    </div>
+    {{/unless}}
+</section>
