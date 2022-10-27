@@ -1,6 +1,6 @@
 <section class="health-info">
-    {{#if (eq actor.type "mook")}} // FIXME: Remove all references to "mook"
-    <div class="flex-row flex-between">
+    {{#if (eq actor.type "minor")}}
+        <div class="flex-row flex-between">
         {{else}}
         <div class="flex-col flex-start">
             {{/if}}
@@ -10,30 +10,29 @@
                         {{localize "cd10.sheet.modifier"}} 
                     </h3>
                 </label>
-                <div class="stat-value{{#if (gte data.wounds.value 15)}} red{{/if}}">
-                    {{#if (gte data.wounds.value 15)}}
-                    {{data.debilitationType.value}}
-                    {{else if (eq data.modifier.value 0)}}
+                <div class="stat-value{{#if (gte system.wounds.value 15)}} red{{/if}}">
+                    {{#if (gte system.wounds.value 15)}}
+                    {{system.debilitationType}}
+                    {{else if (eq system.modifier 0)}}
                     0
                     {{else}}
-                    -{{data.modifier.value}} {{data.debilitationType.value}}
+                    -{{system.modifier}} {{system.debilitationType}}
                     {{/if}}
-                    {{! // FIXME: Make this a flag}}
-                    {{#if this.actor.system.stressing.value}}
+                    {{#if stress}}
                     ({{localize "cd10.sheet.stressing"}})
                     {{/if}}
                 </div>
             </div>
             <div class="stat-element {{#if (eq actor.type "mook")}}mook-health{{/if}}">
                 <label>
-                    <h3 class="stattitle"><i class="far fa-minus-square remove-wound"></i> {{localize "cd10.injuries.wounds"}} {{data.wounds.value}} <i
+                    <h3 class="stattitle"><i class="far fa-minus-square remove-wound"></i> {{localize "cd10.injuries.wounds"}} {{system.wounds.value}} <i
                             class="far fa-plus-square add-wound"></i>
                     </h3>
                 </label>
                 <div class="wounds-icons">
                     {{#times 15}}
                     <div
-                        class="dot-container{{#if (gte ../data.wounds.value 15)}} red{{else if (gte ../data.wounds.value @index)}} crossed{{/if}}">
+                        class="dot-container{{#if (gte ../system.wounds.value 15)}} red{{else if (gte ../system.wounds.value @index)}} crossed{{/if}}">
                         <i class="fas fa-circle fa-xs"></i>
                     </div>
                     {{/times}}

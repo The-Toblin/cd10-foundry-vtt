@@ -1,14 +1,28 @@
-<td class="item equippable-inventory-item" data-item-id="{{_id}}">
-    <img class="item-img display-inline" src="{{img}}" title="{{name}}" height="15" width="15" />
-</td>
-<td class="item equippable-inventory-item" data-item-id="{{_id}}">
-    {{name}}
-</td>
-<td class="item equippable-inventory-item" data-item-id="{{_id}}">
-    {{system.protection}}
-</td>
-<td class="item equippable-inventory-item" data-item-id="{{_id}}">
-    <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
-        <i class="far fa-{{#if system.isEquipped.value}}minus{{else}}plus{{/if}}-square"></i>
-    </a>
-</td>
+<section class="{{#if inSheet}}cd10-card{{else}}cd10-card-detai{{/if}} cd10-item-card equippable-inventory-item" data-item-id="{{system.id}}">
+    {{#if inSheet}}
+    <div class="flex-row">
+    {{/if}}
+        <img class="item-img cd10-card-detail {{#if inSheet}}w-40{{/if}}" src="{{img}}" title="{{name}}"/>
+        <div class="cd10-card-detail {{#if inSheet}}w-100{{/if}}">
+            <h3 class="cd10-item-name">{{name}}</h3>
+            <hr>
+            <div class="flex-col">
+                <div class="flex-row">
+                    <div class="w-50 cd10-card-detail cd10-item-statname">
+                        {{localize "cd10.armor.protection"}}
+                    </div>
+                    <div class="w-50 cd10-card-detail cd10-item-statvalue">
+                        {{system.protection}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{#if inSheet}}
+    </div>
+    {{/if}}
+    {{#unless inSheet}}
+    <div class="cd10-card-detail pad-8">
+        {{system.description}}
+    </div>
+    {{/unless}}
+</section>

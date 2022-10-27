@@ -2,7 +2,7 @@ export default class CD10Item extends Item {
 
   chatTemplate = {
     meleeWeapon: "systems/cd10/templates/partials/equipment-cards/meleeWeapon-card.hbs",
-    rangedWeapon: "systems/cd10/templates/equipment-cards/partials/rangedWeapon-card.hbs",
+    rangedWeapon: "systems/cd10/templates/partials/equipment-cards/rangedWeapon-card.hbs",
     armor: "systems/cd10/templates/partials/equipment-cards/armor-card.hbs",
     skill: "systems/cd10/templates/partials/skill-card.hbs",
     trait: "systems/cd10/templates/partials/skill-card.hbs",
@@ -63,7 +63,7 @@ export default class CD10Item extends Item {
     const updateData = {};
 
     if (type === "weapon" || type === "armor" || type === "shield") {
-      updateData[`system.gear.${type}`] = sys.gear[type] !== this ? this : null;
+      updateData[`system.gear.${type}`] = sys.gear[type] !== this.id ? this.id : null;
       await this.actor.update(updateData);
     }
   }

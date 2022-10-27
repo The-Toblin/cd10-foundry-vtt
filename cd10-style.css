@@ -270,142 +270,46 @@ textarea {
 .tox .tox-icon {
   color: var(--font-color) !important;
 }
-.skill-card {
-  margin-bottom: 10px;
-  color: #dfbb61;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-.skill-card .skill-name {
-  padding: 5px 2px 0 2px;
-  text-align: left;
-  width: calc(100% - 2px);
-}
-.skill-card .skill-value {
-  padding: 2px 2px 0 2px;
-  text-align: center;
-  width: 25%;
-}
-.trait-card .trait-box {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-.trait-card .trait-box .trait-name {
-  padding: 5px 2px 0 2px;
-  text-align: left;
-}
-.trait-card .trait-box .trait-value {
-  padding: 2px 2px 0 2px;
-  text-align: center;
-  width: 25%;
-}
-.armor-card {
+.cd10-item-card {
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-.armor-card .item-img {
+.cd10-item-card .cd10-item-statname,
+.cd10-item-card .cd10-item-statvalue {
+  padding: 2px 5px;
+  text-transform: capitalize;
+}
+.cd10-item-card .cd10-item-statname {
+  text-align: left;
+}
+.cd10-item-card .cd10-item-statvalue {
+  text-align: right;
+}
+.cd10-item-card .item-img {
   display: block;
   min-width: 150px;
   min-height: 150px;
+  height: 100%;
   margin: 0 10px 0 3px;
 }
-.armor-card .d10-roll-icon {
+.cd10-item-card .d10-roll-icon {
   height: 10px;
   margin-right: 0px;
   margin-left: 2px;
 }
-.armor-card .armor-name {
-  text-align: left;
+.cd10-item-card .cd10-item-name {
   font-size: 1.25em;
   vertical-align: middle;
   text-align: center;
   margin-bottom: 10px;
 }
-.armor-card .description-box {
+.cd10-item-card .description-box {
   padding: 8px;
   width: 100%;
   max-height: 150px;
   overflow: auto;
-}
-.armor-card .armor-box {
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  padding: 8px;
-  margin-right: 10px;
-  min-width: 150px;
-}
-.armor-card .armor-box .armor-stats {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  box-shadow: 2px 2px 2px black;
-}
-.armor-card .armor-box .armor-stats .stat-name,
-.armor-card .armor-box .armor-stats .armor-statvalue {
-  padding: 2px 5px 2px 0px;
-}
-.armor-card .armor-box .armor-stats .stat-name {
-  text-align: left;
-  text-transform: capitalize;
-}
-.armor-card .armor-box .armor-stats .armor-statvalue {
-  text-align: right;
-  text-transform: capitalize;
-}
-.weapon-card {
-  margin-bottom: 10px;
-  display: flex;
-  flex-direction: column;
-}
-.weapon-card .d10-roll-icon {
-  height: 10px;
-  margin-right: 0px;
-  margin-left: 2px;
-}
-.weapon-card .weapon-name {
-  text-align: left;
-  font-size: 1em;
-  vertical-align: middle;
-  text-align: center;
-}
-.weapon-card .description-box {
-  width: 100%;
-  max-height: 150px;
-  overflow: auto;
-}
-.weapon-card .center-table {
-  margin-left: auto;
-  margin-right: auto;
-}
-.weapon-card .weapon-box {
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  margin-right: 10px;
-  min-width: 150px;
-}
-.weapon-card .weapon-box .weapon-stats {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  box-shadow: 2px 2px 2px black;
-}
-.weapon-card .weapon-box .weapon-stats .stat-name,
-.weapon-card .weapon-box .weapon-stats .weapon-statvalue {
-  padding: 2px 5px 2px 0px;
-}
-.weapon-card .weapon-box .weapon-stats .stat-name {
-  text-align: left;
-  text-transform: capitalize;
-}
-.weapon-card .weapon-box .weapon-stats .weapon-statvalue {
-  text-align: right;
-  text-transform: capitalize;
 }
 .skill-list,
 .traits-list {

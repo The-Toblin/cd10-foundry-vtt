@@ -187,9 +187,9 @@ export default class CD10BaseSheet extends ActorSheet {
         && p.type !== "shield"
     );
 
-    sheetData.equippedWeapon = sheetData.system.gear.weapon;
-    sheetData.equippedArmor = sheetData.system.gear.armor;
-    sheetData.equippedShield = sheetData.system.gear.shield;
+    sheetData.equippedWeapon = sheetData.system.gear.weapon ? this.actor.items.get(sheetData.system.gear.weapon): null;
+    sheetData.equippedArmor = sheetData.system.gear.armor ? this.actor.items.get(sheetData.system.gear.armor): null;
+    sheetData.equippedShield = sheetData.system.gear.shield ? this.actor.items.get(sheetData.system.gear.shield): null;
 
     sheetData.stress = this.actor.getFlag("cd10", "stressing");
 
@@ -384,13 +384,9 @@ export default class CD10BaseSheet extends ActorSheet {
   }
 
   _modifyWoundsOnClick(event) {
-    event.preventDefault();
-
-    if (event.currentTarget.className.match("add")) {
-      this.actor.modifyWounds(1);
-    } else {
-      this.actor.modifyWounds(-1);
-    }
+    event.preventDefault(); // BUG: This fudges up right clicks. Remove the boxes and allow LMB, RMB and Shift+LMB to modify.
+    const isIncrease = !!event.currentTarget.className.match("add");
+    this.actor.modifyWounds(isIncrease);
   }
 
   /**
@@ -415,10 +411,10 @@ export default class CD10BaseSheet extends ActorSheet {
     let itemId = element.closest(".item").dataset.itemId;
     let item = this.actor.items.get(itemId);
 
-    let levelUpValue = item.system.levelUp.value;
+    let levelUpValue = item.system.levelUp;
 
     await item.update({
-      "system.levelUp.value": !levelUpValue
+      "system.levelUp": !levelUpValue
     });
   }
 

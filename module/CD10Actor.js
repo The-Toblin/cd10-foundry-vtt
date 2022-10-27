@@ -33,7 +33,7 @@ export default class CD10Actor extends Actor {
     /* Set debilitationtype and value */
     let debilitation = this._prepareDebilitation(templateData);
 
-    debilitation.modifier += this.getStress ? 3 : 0;
+    debilitation.modifier += this.getFlag("cd10", "stressing") ? 3 : 0;
     templateData.modifier = debilitation.modifier;
     templateData.debilitationType = debilitation.type;
   }
@@ -50,34 +50,6 @@ export default class CD10Actor extends Actor {
 
   get getTraits() {
     return this.items.filter(p => p.type === "trait");
-  }
-
-  get getArmor() {
-    return this.system.gear.armor;
-  }
-
-  get getShield() {
-    return this.system.gear.shield;
-  }
-
-  get getWeapon() {
-    return this.system.gear.weapon;
-  }
-
-  get getWounds() {
-    return parseInt(this.system.wounds);
-  }
-
-  get getModifier() {
-    return parseInt(this.system.modifier);
-  }
-
-  get getExp() {
-    return this.type === "major" ? parseInt(this.system.exp.total) : 0;
-  }
-
-  get getStress() {
-    return this.getFlag("cd10", "stressing");
   }
 
   //   * Custom prepare methods *
@@ -156,18 +128,14 @@ export default class CD10Actor extends Actor {
     });
   }
 
-  async modifyWounds(amount) {
-    if (typeof amount !== "number") {
-      ui.notifications.error("Not a number for wounds update!");
-      return;
-    }
-    const currentWounds = this.getWounds;
+  async modifyWounds(isIncrease) {
+    const currentWounds = this.system.wounds.value;
     let newWounds;
 
-    if (amount > 0) {
-      newWounds = Math.min(currentWounds + amount, this.system.wounds.max);
-    } else if (amount < 0) {
-      newWounds = Math.max(currentWounds - 1, 0);
+    if (isIncrease) {
+      newWounds = Math.min(currentWounds + 1, this.system.wounds.max);
+    } else {
+      newWounds = Math.max(currentWounds - 1, this.system.wounds.min);
     }
 
     await this.update({
@@ -192,7 +160,7 @@ export default class CD10Actor extends Actor {
   }
 
   async toggleStress() {
-    const currentValue = this.getStress();
+    const currentValue = this.getFlag("cd10", "stressing");
     this.setFlag("cd10", "stressing", !currentValue);
   }
 }

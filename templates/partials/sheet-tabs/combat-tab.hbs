@@ -1,21 +1,18 @@
 <section class="sheet-combat-tab">
     {{#if equippedWeapon}}
-    {{#if (eq system.gear.weapon.value.type "meleeWeapon")}}
-        {{> "systems/cd10/templates/partials/equipment-cards/meleeWeapon-card.hbs" system.gear.weapon inSheet=true}}
+    <h3>{{localize "cd10.sheet.weapon"}}</h3>
+    {{#if (eq equippedWeapon.type "meleeWeapon")}}
+    {{> "systems/cd10/templates/partials/equipment-cards/meleeWeapon-card.hbs" equippedWeapon inSheet=true}}
     {{else}}
-        {{> "systems/cd10/templates/partials/equipment-cards/rangedWeapon-card.hbs" system.gear.weapon inSheet=true}}
+    {{> "systems/cd10/templates/partials/equipment-cards/rangedWeapon-card.hbs" equippedWeapon inSheet=true}}
     {{/if}}
     {{/if}}
     {{#if equippedArmor}}
-    <div class="weapon-card cd10-card">
-        <h3>{{localize "cd10.sheet.armor"}}</h3>
-        {{> "systems/cd10/templates/partials/equipment-cards/armor-card.hbs" system.gear.armor inSheet=true}}
-    </div>
+    <h3>{{localize "cd10.sheet.armor"}}</h3>
+    {{> "systems/cd10/templates/partials/equipment-cards/armor-card.hbs" equippedArmor inSheet=true}}
     {{/if}}
     {{#if equippedShield}}
-    <div class="weapon-card cd10-card">
-         <h3>{{localize "cd10.sheet.shield"}}</h3>
-        {{> "systems/cd10/templates/partials/equipment-cards/shield-card.hbs" system.gear.shield inSheet=true}}
-    </div>
+    <h3>{{localize "cd10.sheet.shield"}}</h3>
+    {{> "systems/cd10/templates/partials/equipment-cards/shield-card.hbs" equippedShield inSheet=true}}
     {{/if}}
 </section>

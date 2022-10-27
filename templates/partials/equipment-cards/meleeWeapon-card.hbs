@@ -1,26 +1,25 @@
-<section class="{{#if inSheet}}cd10-card{{else}}cd10-card-detai{{/if}} litem-card weapon-card equippable-inventory-item" data-item-id="{{system.id}}">
-    {{log this}}
+<section class="{{#if inSheet}}cd10-card{{else}}cd10-card-detai{{/if}} cd10-item-card equippable-inventory-item" data-item-id="{{system.id}}">
     {{#if inSheet}}
     <div class="flex-row">
     {{/if}}
         <img class="item-img cd10-card-detail {{#if inSheet}}w-40{{/if}}" src="{{img}}" title="{{name}}"/>
         <div class="cd10-card-detail {{#if inSheet}}w-100{{/if}}">
-            <h3 class="weapon-name">{{name}}</h3>
+            <h3 class="cd10-item-name">{{name}}</h3>
             <hr>
             <div class="flex-col">
                 <div class="flex-row">
-                    <div class="w-50 cd10-card-detail">
+                    <div class="w-50 cd10-card-detail cd10-item-statname">
                         {{localize "cd10.weapon.lethality"}}
                     </div>
-                    <div class="w-50 cd10-card-detail align-center" style="text-align: right;">
+                    <div class="w-50 cd10-card-detail cd10-item-statvalue">
                         {{system.damage}}
                     </div>
                 </div>
                 <div class="flex-row">
-                    <div class="w-50 cd10-card-detail">
+                    <div class="w-50 cd10-card-detail cd10-item-statname">
                         {{localize "cd10.weapon.reach"}}
                     </div>
-                    <div class="w-50 cd10-card-detail" style="text-transform: capitalize; text-align: right;">
+                    <div class="w-50 cd10-card-detail cd10-item-statvalue">
                         {{system.reach}}
                     </div>
                 </div>

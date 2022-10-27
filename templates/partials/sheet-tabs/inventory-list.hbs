@@ -73,7 +73,7 @@
                     {{/if}}
                     <td>
                         <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
-                            <i class="far fa-{{#if item.system.isEquipped}}minus{{else}}plus{{/if}}-square"></i>
+                            <i class="far fa-{{#if (eq item._id ../equippedArmor.id)}}minus{{else}}plus{{/if}}-square"></i>
                         </a>
                     </td>
                     <td>
@@ -125,7 +125,7 @@
                         {{localize "cd10.sheet.removeShort"}}
                     </th>
                 </tr>
-                {{#each allWeapons as |item id|}}
+                {{#each allWeapons as |item|}}
                 <tr class="equippable-inventory-item item" data-item-id="{{_id}}">
                     <td>
                         <img class="item-img" src="{{item.img}}" title="{{item.name}}" height="15" width="15" />
@@ -147,7 +147,7 @@
                     {{/if}}
                     <td>
                         <a class="item-equip" data-type="text" title={{localize "cd10.sheet.equip" }}>
-                            <i class="far fa-{{#if item.system.isEquipped}}minus{{else}}plus{{/if}}-square"></i>
+                            <i class="far fa-{{#if (eq item._id ../equippedWeapon.id)}}minus{{else}}plus{{/if}}-square"></i>
                         </a>
                     </td>
                     <td>

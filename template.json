@@ -17,7 +17,8 @@
                     "armor": "",
                     "shield": "",
                     "weapon": ""
-                }
+                },
+                "selectedTrait": ""
             }
         },
         "major": {
