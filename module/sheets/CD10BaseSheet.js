@@ -218,8 +218,6 @@ export default class CD10BaseSheet extends ActorSheet {
       html.find(".item-equip").click(this._onItemEquip.bind(this));
       html.find(".inline-edit").change(this._onSkillEdit.bind(this));
       html.find(".skill-item").click(this._toggleSkillUp.bind(this));
-      html.find(".add-wound").click(this._modifyWoundsOnClick.bind(this));
-      html.find(".remove-wound").click(this._modifyWoundsOnClick.bind(this));
       html.find(".wounds-icons").on("click contextmenu", this._onWoundsMarkChange.bind(this));
       html.find(".select-trait").on("click contextmenu", this._onClickTrait.bind(this));
 
@@ -375,17 +373,7 @@ export default class CD10BaseSheet extends ActorSheet {
    */
   _onWoundsMarkChange(event) {
     event.preventDefault();
-
-    if (event.type === "click") {
-      this.actor.modifyWounds(1);
-    } else {
-      this.actor.modifyWounds(-1);
-    }
-  }
-
-  _modifyWoundsOnClick(event) {
-    event.preventDefault(); // BUG: This fudges up right clicks. Remove the boxes and allow LMB, RMB and Shift+LMB to modify.
-    const isIncrease = !!event.currentTarget.className.match("add");
+    const isIncrease = (event.type === "click" && !event.shiftKey);
     this.actor.modifyWounds(isIncrease);
   }
 
