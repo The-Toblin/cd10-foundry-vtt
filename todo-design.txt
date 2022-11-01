@@ -1,0 +1,42 @@
+actor
+    items
+        skills
+        traits
+        weapons
+        armor
+        spells
+        shields
+
+    flags
+        stress
+        physical-impairment
+        total-impairment
+
+items
+    skills
+        level
+            min
+            max
+            value
+        category
+            (setting-specific categories)
+        
+        flags
+            levelup
+            requiresteacher (not a flag?)
+            isphysical (not a flag?)
+    
+    traits
+        level
+            min
+            max
+            value
+        type
+            value
+            situational
+            unrollable
+        
+        flags
+            selected
+            reversed
+            
