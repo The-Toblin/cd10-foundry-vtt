@@ -6,7 +6,7 @@
             <div class="attribute-name skill-item" data-item-id="{{skill._id}}">
                 {{skill.name}}
             </div>
-            {{#if skill.system.levelUp}}<i class="fas fa-angle-double-up"></i>{{/if}} {{! //FIXME: Add flag for levelup}}
+            {{#if skill.flags.c2d10.levelUp}}<i class="fas fa-angle-double-up"></i>{{/if}} {{! //FIXME: Add flag for levelup}}
             <input class="attribute-value inline-edit" data-field="system.skillLevel.value"
                 data-dtype="number" value="{{skill.system.skillLevel.value}}"
                 placeholder="{{localize "cd10.skill.skillLevel"}}" />
@@ -23,8 +23,8 @@
         <div class="attribute-pair flex-row flex-evenly item reveal-rollable" data-item-id="{{trait._id}}">
             <div class="select-trait">
                 {{! //FIXME: Add flags for this.}}
-                <a class="select-trait" data-type="number" data-trait-value="{{trait.system.selected}}" title={{localize "cd10.sheet.select"}}>
-                    <i class="far fa-{{#if (eq this.system.selected 1)}}plus-{{else if (eq this.system.selected 2)}}minus-{{/if}}square"></i>
+                <a class="select-trait" data-type="number" data-trait-value="{{this.flags.c2d10.selected}}" title={{localize "cd10.sheet.select"}}>
+                    <i class="far fa-{{#if (eq this.flags.c2d10.selected 1)}}plus-{{else if (eq this.flags.c2d10.selected 2)}}minus-{{/if}}square"></i>
                 </a>
             </div>
             <div class="attribute-name inventory-item item" data-item-id="{{trait._id}}">

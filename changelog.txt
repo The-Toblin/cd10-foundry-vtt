@@ -10,26 +10,25 @@ A WORLD FROM BEFORE 0.5 WILL NOT MIGRATE TO 0.5! DO NOT UPDATE IF YOU HAVE AN ON
 - Update codebase to Foundry V10 standards.
 - Templates re-written, moving most data up one step for instance "Species: <Value>" to "Species".
 - Labels and data types removed from templates.
-- Item's equipped status removed from Item class. Moved to Actor.system.gear.
-- A character can now only equip one weapon (ranged or melee), one shield and one armor.
-- Major and Minor characters now derive their sheet class from a common BaseSheet.js
+- Item's equipped status removed from Item class. Moved to actor.system.gear.
+- A character can now only equip one weapon (ranged or melee), one shield and one armor at a time.
+- Major and Minor characters now derive their sheet class from a common [CD10BaseSheet.js](module/CD10BaseSheet.js)
 - Damage Types deprecated. 
 - Shock removed.
+- Big rewrite of most js-files, especially CD10Dice.js. It has been renamed CD10Roll.js.
+- [CD10Roll.js](module/CD10Roll.js) is now much more structured and segmented, re-using code where possible.
+- Custom die class [CD10Die.js](module/CD10Die.js) implemented. Handles all detailed roll functionality (such as checking for 9s and 0s).
 
 ## Major Changes
 - Wounds updated to current CD10 mechanics.
 - Massive CSS update. Foundry is now styled beyond CD10-specific sheets.
-- Big rewrite of most js-files, especially CD10Dice.js.
-- [CD10Dice.js](module/CD10Dice.js) is now much more structured and segmented, re-using code where possible.
 - Deprecated use of TinyMCE. Textareas have replaced where-ever it was used.
 - Weapons and shields no longer have a parry value.
 // [ ] - Parry changed from a number to a simple -50% reduction in lethality.
 - Shields have a defense value that reduces lethality before halving on a parry.
-- Substantial bugs in dice roller fixed. Now rolls a 0-9 D10 and handles 0's and 9's properly.
 - Roll presentation updated. 9's and 0's are now presented in chat.
-// [ ] Setting added for capping exploding 9's to a single instance.
+// [x] Setting added for capping exploding 9's to a single instance.
 // [ ] All cards (skill, trait, weapon, armor etc) updated to be postable to chat and have a uniform look.
-// [x] Add + and - buttons to the health statblock, for mobile users.
 
 #Version 0.4.4
 == Bugfixes ==
