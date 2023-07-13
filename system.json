@@ -1,11 +1,11 @@
 {
     "id": "cd10",
     "title": "Celenia D10 Roleplaying System",
-    "version": 0.50,
+    "version": 0.60,
     "compatibility": {
         "minimum": "10",
         "verified": "10.275",
-        "maximum": "10"
+        "maximum": "11"
     },
     "authors": [
         {
